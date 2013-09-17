@@ -13,10 +13,10 @@ public class PlayerCar extends Actor {
 	
 	public PlayerCar(TrafficGame trafficGame) {
 		this.trafficGame = trafficGame;
-		setWidth(160);
-		setHeight(85);
+		setWidth(80);
+		setHeight(80);
 		lane = 1;
-		setPosition(100, trafficGame.lane1 - getHeight()/2);
+		setPosition(getWidth()/2, getHeight()/20);
 		setColor(Color.YELLOW);
 	}
 	
