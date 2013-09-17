@@ -43,8 +43,8 @@ public class GameScreen implements Screen, GestureListener {
 	
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-		if (velocityY < -100) trafficGame.playerCar.tryMoveUp();
-		if (velocityY > 100) trafficGame.playerCar.tryMoveDown();
+		if (velocityX < -100) trafficGame.playerCar.tryMoveLeft();
+		if (velocityX > 100) trafficGame.playerCar.tryMoveRight();
 		return false;
 	}
 

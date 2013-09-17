@@ -11,8 +11,8 @@ public class EnemyCar extends Actor {
 	private Rectangle bounds = new Rectangle();
 	
 	public EnemyCar(float x, float y) {
-		setWidth(160);
-		setHeight(85);
+		setWidth(80);
+		setHeight(80);
 		setPosition(x, y - getHeight()/2);
 
 		int rnd = MathUtils.random(0, 3);
@@ -21,7 +21,7 @@ public class EnemyCar extends Actor {
 		if (rnd == 2) setColor(Color.WHITE);
 		if (rnd == 3) setColor(Color.BLUE);
 		
-		addAction(moveTo(-getWidth(), getY(), MathUtils.random(4.0f, 6.0f)));
+		addAction(moveTo(x, -getHeight(), MathUtils.random(4.0f, 6.0f)));
 	}
 	
 	@Override

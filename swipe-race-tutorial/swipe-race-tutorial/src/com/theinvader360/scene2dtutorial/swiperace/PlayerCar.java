@@ -36,11 +36,11 @@ public class PlayerCar extends Actor {
 		bounds.set(getX(), getY(), getWidth(), getHeight());
 	}
 
-	public void tryMoveUp() {
+	public void tryMoveRight() {
 		if ((getActions().size == 0) && (lane != 2)) moveToLane(lane+1);
 	}
 
-	public void tryMoveDown() {
+	public void tryMoveLeft() {
 		if ((getActions().size == 0) && (lane != 0)) moveToLane(lane-1);
 	}
 	
@@ -49,13 +49,13 @@ public class PlayerCar extends Actor {
 		
 		switch (lane) {
 			case 0:
-				addAction(moveTo(getX(), trafficGame.lane0 - getHeight()/2, 0.5f));
+				addAction(moveTo(0, 0 , 0.5f));
 				break;
 			case 1:
-				addAction(moveTo(getX(), trafficGame.lane1 - getHeight()/2, 0.5f));
+				addAction(moveTo(MyGame.WIDTH/2-80, 0 , 0.5f));
 				break;
 			case 2:
-				addAction(moveTo(getX(), trafficGame.lane2 - getHeight()/2, 0.5f));
+				addAction(moveTo(MyGame.WIDTH-80, 0 , 0.5f));
 				break;
 		}
 	}

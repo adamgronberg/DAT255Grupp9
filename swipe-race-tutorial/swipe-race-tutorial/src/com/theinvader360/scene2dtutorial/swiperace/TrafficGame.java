@@ -36,7 +36,7 @@ public class TrafficGame extends Table {
 		Iterator<EnemyCar> iter = enemyCars.iterator();
 		while (iter.hasNext()) {
 			EnemyCar enemyCar = iter.next();
-			if (enemyCar.getBounds().x + enemyCar.getWidth() <= 0) {
+			if (enemyCar.getBounds().y + enemyCar.getHeight() <= 0) {
 				iter.remove();
 				removeActor(enemyCar);
 			}
@@ -56,11 +56,11 @@ public class TrafficGame extends Table {
 
 	private void spawnCar() {
 		int lane = MathUtils.random(0, 2);
-		float yPos = 0;
-		if (lane == 0) yPos = lane0;
-		if (lane == 1) yPos = lane1;
-		if (lane == 2) yPos = lane2;
-		EnemyCar enemyCar = new EnemyCar(getWidth(), yPos);
+		float xPos = 0;
+		if (lane == 0) xPos = lane0;
+		if (lane == 1) xPos = lane1;
+		if (lane == 2) xPos = lane2;
+		EnemyCar enemyCar = new EnemyCar(xPos, getHeight());
 		enemyCars.add(enemyCar);
 		addActor(enemyCar);
 		lastCarTime = TimeUtils.nanoTime();
