@@ -9,8 +9,6 @@
 .class
 
 # Java library
-.jar
-.so
 
 # generated files
 bin/
@@ -20,5 +18,3 @@ gen/
 local.properties
 
 # Eclipse project files
-.classpath
-.project
