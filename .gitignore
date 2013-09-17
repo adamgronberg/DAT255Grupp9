@@ -6,7 +6,11 @@
 *.dex
 
 # Java class files
-*.class
+.class
+
+# Java library
+.jar
+.so
 
 # generated files
 bin/
