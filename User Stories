@@ -12,7 +12,7 @@ Sprint = 1 vecka med deadline på fredagar
 
 ID: FR01
 Namn: Rör en fyrkant med hjälp utav två knappar
-Beskrivning: En fyrkant, lokaliserad vid skärmens nedre mitt, skall flyttas i positiv x-led när den högra utav de två knapparna, lokaliserade vid skärmens nedre vänstra hörn, aktiveras. Fyrkanten skall flyttas i negativ x-led när den vänstra utav de två knapparna aktiveras.
+Beskrivning: En fyrkant, lokaliserad vid skärmens nedre mitt, skall flyttas i positiv x-led när den högra utav de två 	knapparna, lokaliserade vid skärmens nedre vänstra hörn, aktiveras. Fyrkanten skall flyttas i negativ x-led när den 	vänstra utav de två knapparna aktiveras.
 Testfall:	    1.   Aktivera den högra knappen
 2. Notera att fyrkanten rör sig i positiv x-led
 3. Aktivera den vänstra knappen
