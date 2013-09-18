@@ -8,14 +8,18 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
+//import com.badlogic.gdx.scenes.scene2d.ui.Button;
+//import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+//import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+/**
+ * 
+ * @author Grupp9
+ *
+ */
 public class GameScreen implements Screen, GestureListener {
 	private Stage stage;
-	private Button button;
-	private ButtonStyle buttonStyle;
+//	private Button button;
+//	private ButtonStyle buttonStyle;
 	private GameLogic gameLogic;
 
 	public static final String LOG = GameScreen.class.getSimpleName();
@@ -29,11 +33,18 @@ public class GameScreen implements Screen, GestureListener {
 		stage.addActor(gameLogic);
 	}
 	
+	/**
+	 * Called on screen resize
+	 * eg. Always on launch
+	 */
 	public void resize(int width, int height) {
 		stage.setViewport(MyGame.WIDTH, MyGame.HEIGHT, true);
 		stage.getCamera().translate(-stage.getGutterWidth(), -stage.getGutterHeight(), 0);
 	}
-
+	/**
+	 * Render loop. 
+	 * TODO: Should input be handled here?
+	 */
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -44,12 +55,11 @@ public class GameScreen implements Screen, GestureListener {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			
-			//bucket.x = touchPos.x - 64 / 2;
-			if (touchPos.x <= 90 && touchPos.y >= 710) {
+			if (touchPos.x <= 90 && touchPos.y >= 750) {		//TODO: Should use buttons instead of areas
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
 				gameLogic.playerShip.tryMoveLeft();
 			}
-			if (touchPos.x >= 400 && touchPos.y >= 710) {
+			if (touchPos.x >= 400 && touchPos.y >= 750) {		//TODO: Should use buttons instead of areas
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
 				gameLogic.playerShip.tryMoveRight();
 			}
@@ -70,8 +80,8 @@ public class GameScreen implements Screen, GestureListener {
 	
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-		if (velocityX < -100) gameLogic.playerShip.tryMoveLeft();
-		if (velocityX > 100) gameLogic.playerShip.tryMoveRight();
+//		if (velocityX < -100) gameLogic.playerShip.tryMoveLeft();
+//		if (velocityX > 100) gameLogic.playerShip.tryMoveRight();
 		return false;
 	}
 
@@ -79,11 +89,7 @@ public class GameScreen implements Screen, GestureListener {
 	@Override public void pause() {}
 	@Override public void dispose() {}	
 	@Override public boolean tap(float x, float y, int count, int button) {return false;}
-	@Override public boolean touchDown(float x, float y, int pointer, int button) {
-		//Gdx.app.log( GameScreen.LOG, "Pressed x :" + x + " y : " + y  );
-		
-		return false;
-	}
+	@Override public boolean touchDown(float x, float y, int pointer, int button) {return false;}
 	@Override public boolean longPress(float x, float y) {return false;}
 	@Override public boolean pan(float x, float y, float deltaX, float deltaY) {return false;}
 	@Override public boolean zoom(float initialDistance, float distance) {return false;}
