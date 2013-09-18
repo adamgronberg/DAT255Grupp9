@@ -7,13 +7,18 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+
 /**
  * 
  * @author Grupp9
  *
  */
 public class GameLogic extends Table {
-	private InfiniteScrollBg backgroundRoad;
+
+	
+	private InfiniteScrollBg backgroundSpace;
+	private InteractionButton moveLeftButton;
+	private InteractionButton moveRightButton;
 	private Array<EnemyShip> enemyShips;
 	private long lastEnemyShipTime = 0;	//TODO: For release 1 demo
 	private int nrOfShip;				//TODO: For release 1 demo
@@ -28,16 +33,23 @@ public class GameLogic extends Table {
 	public GameLogic() {
 		setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT);
 		setClip(true);
-		backgroundRoad = new InfiniteScrollBg(getWidth(), getHeight());
-		addActor(backgroundRoad);		
+		backgroundSpace = new InfiniteScrollBg(getWidth(), getHeight());
+		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveLeftButton);
+		moveRightButton = new InteractionButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
+				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveRightButton);
+		addActor(backgroundSpace);
+		addActor(moveLeftButton);
+		addActor(moveRightButton);
+		
+		
 		nrOfShip = 0;
-		totalNrOfShips =10;
+		totalNrOfShips = 10;
 		playerShip = new PlayerShip(this);
 		addActor(playerShip);
 		enemyShips = new Array<EnemyShip>();		
 	}
 	/**
-	 * Called 
+	 *  
 	 */
 	@Override
 	public void act(float delta) {
@@ -68,21 +80,21 @@ public class GameLogic extends Table {
 	
 	private void spawnShip() {
 		if(nrOfShip<totalNrOfShips){
-			
-			int spawnLocation = MathUtils.random(0,480-EnemyShip.ENEMY_WIDTH);
+			int spawnLocation = MathUtils.random(0,MyGame.WIDTH-EnemyShip.ENEMY_WIDTH);
 			float xPos = spawnLocation;
 			EnemyShip enemyShip = new EnemyShip(xPos, getHeight() + EnemyShip.ENEMY_HEIGHT);
 			enemyShips.add(enemyShip);
 			addActor(enemyShip);
 			lastEnemyShipTime = TimeUtils.nanoTime();
-			nrOfShip++;
-			
+			nrOfShip++;	
 		}
-		}
+	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(Color.WHITE);
 		super.draw(batch, parentAlpha);
+		
+		
 	}
 }

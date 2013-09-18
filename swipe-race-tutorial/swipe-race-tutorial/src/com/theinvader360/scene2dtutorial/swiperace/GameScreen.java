@@ -8,9 +8,6 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-//import com.badlogic.gdx.scenes.scene2d.ui.Button;
-//import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-//import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 /**
  * 
  * @author Grupp9
@@ -18,17 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  */
 public class GameScreen implements Screen, GestureListener {
 	private Stage stage;
-//	private Button button;
-//	private ButtonStyle buttonStyle;
 	private GameLogic gameLogic;
+	
+	public static final int MOVMENT_BUTTON_SIZE = 70;
 
 	public static final String LOG = GameScreen.class.getSimpleName();
 	
 	
 	public GameScreen() {
 		stage = new Stage();
-//		buttonStyle.checked.draw(batch, 0, 0, 15,15);
-//		button = new Button();
 		gameLogic = new GameLogic();
 		stage.addActor(gameLogic);
 	}
@@ -55,11 +50,11 @@ public class GameScreen implements Screen, GestureListener {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			
-			if (touchPos.x <= 90 && touchPos.y >= 750) {		//TODO: Should use buttons instead of areas
+			if (touchPos.x <= MOVMENT_BUTTON_SIZE && touchPos.y >= MyGame.HEIGHT-MOVMENT_BUTTON_SIZE) {		//TODO: Should use buttons instead of areas
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
 				gameLogic.playerShip.tryMoveLeft();
 			}
-			if (touchPos.x >= 400 && touchPos.y >= 750) {		//TODO: Should use buttons instead of areas
+			if (touchPos.x >= MyGame.WIDTH-MOVMENT_BUTTON_SIZE && touchPos.y >= MyGame.HEIGHT-MOVMENT_BUTTON_SIZE) {		//TODO: Should use buttons instead of areas
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
 				gameLogic.playerShip.tryMoveRight();
 			}

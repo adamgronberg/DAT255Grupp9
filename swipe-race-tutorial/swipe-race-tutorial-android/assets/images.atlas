@@ -3,17 +3,24 @@ images.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-road
+Arrow_Left
   rotate: false
-  xy: 1, 1
-  size: 120, 120
-  orig: 120, 120
+  xy: 2, 2
+  size: 62, 63
+  orig: 62, 63
   offset: 0, 0
   index: -1
-car
+Arrow_Right
   rotate: false
-  xy: 123, 57
-  size: 120, 64
-  orig: 120, 64
+  xy: 422, 430
+  size: 62, 63
+  orig: 62, 63
+  offset: 0, 0
+  index: -1
+playerShip
+  rotate: false
+  xy: 2, 67
+  size: 418, 426
+  orig: 418, 426
   offset: 0, 0
   index: -1

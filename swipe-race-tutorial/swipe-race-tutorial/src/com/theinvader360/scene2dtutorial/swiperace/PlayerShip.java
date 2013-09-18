@@ -15,9 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class PlayerShip extends Actor {
 	
-	private Rectangle bounds = new Rectangle();	// The position of the player
-	public static final int PLAYER_SIZE = 50;	// The size of the player
+	private Rectangle bounds = new Rectangle();			// The position of the player
+	public static final int PLAYER_SIZE = 50;			// The size of the player
 	public static final float PLAYER_MOVMENTSPEED = 5;
+	public static final float PLAYER_SPAWNLOCATION = 0.1f;
 	
 	/**
 	 * Constructor
@@ -28,12 +29,12 @@ public class PlayerShip extends Actor {
 	public PlayerShip(GameLogic gameLogic) {
 		setWidth(PLAYER_SIZE);
 		setHeight(PLAYER_SIZE);
-		setPosition(MyGame.WIDTH/2, MyGame.HEIGHT/20);
+		setPosition(MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION);	//Height where the player moves
 		//setColor(Color.YELLOW);
 	}
 	
 	/**
-	 * Called when added as actor to a stage
+	 * Called when "act" is called in its stage
 	 * Updates its position.
 	 */
 	@Override
@@ -43,7 +44,7 @@ public class PlayerShip extends Actor {
 	}
 	
 	/**
-	 * Draws the player.
+	 * Called when "draw" is called in its stage
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -63,21 +64,20 @@ public class PlayerShip extends Actor {
 	 * If the player is out of screen he will be moved back
 	 */
 	public void tryMoveRight() {
-		addAction(moveTo(getX()+PLAYER_MOVMENTSPEED, MyGame.HEIGHT/20 , 0));
+		addAction(moveTo(getX()+PLAYER_MOVMENTSPEED, MyGame.HEIGHT*PLAYER_SPAWNLOCATION , 0));
 		if (getX()+PlayerShip.PLAYER_SIZE>=MyGame.WIDTH){
-			addAction(moveTo(MyGame.WIDTH-PlayerShip.PLAYER_SIZE, MyGame.HEIGHT/20 , 0));
+			addAction(moveTo(MyGame.WIDTH-PlayerShip.PLAYER_SIZE, MyGame.HEIGHT*PLAYER_SPAWNLOCATION , 0));
 		}
 	}
 	
 	/**
-	 * tryMoveLeft()
 	 * Tries to move the player to the left. 
 	 * If the player is out of screen he will be moved back
 	 */
 	public void tryMoveLeft() {
-		addAction(moveTo(getX()-PLAYER_MOVMENTSPEED, MyGame.HEIGHT/20 , 0));
+		addAction(moveTo(getX()-PLAYER_MOVMENTSPEED, MyGame.HEIGHT*PLAYER_SPAWNLOCATION , 0));
 		if (getX()<=0){
-			addAction(moveTo(0, MyGame.HEIGHT/20 , 0));
+			addAction(moveTo(0, MyGame.HEIGHT*PLAYER_SPAWNLOCATION , 0));
 		}
 	}
 	
