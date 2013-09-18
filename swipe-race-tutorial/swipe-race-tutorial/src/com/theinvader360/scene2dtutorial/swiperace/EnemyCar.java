@@ -9,10 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class EnemyCar extends Actor {
 	private Rectangle bounds = new Rectangle();
+	public final static int ENEMY_HEIGHT=80;
+	public final static int ENEMY_WIDTH=80;
 	
 	public EnemyCar(float x, float y) {
-		setWidth(80);
-		setHeight(80);
+		setWidth(ENEMY_WIDTH);
+		setHeight(ENEMY_HEIGHT);
 		setPosition(x, y - getHeight()/2);
 
 		int rnd = MathUtils.random(0, 3);
@@ -52,4 +54,5 @@ public class EnemyCar extends Actor {
 	public Rectangle getBounds() {
 		return bounds;
 	}
+	
 }

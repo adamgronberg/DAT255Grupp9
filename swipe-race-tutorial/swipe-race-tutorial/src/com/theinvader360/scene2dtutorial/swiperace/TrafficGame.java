@@ -12,10 +12,10 @@ public class TrafficGame extends Table {
 	private InfiniteScrollBg backgroundRoad;
 	private Array<EnemyCar> enemyCars;
 	private long lastCarTime = 0;
-	public final float lane2 = 390;
-	public final float lane1 = 240;
-	public final float lane0 = 90;
 	public PlayerCar playerCar;
+	private int nrOfCars;
+	private int totalNrOfCars;
+	
 	
 	public TrafficGame() {
 		setBounds(0, 0, 480, 800);
@@ -24,7 +24,10 @@ public class TrafficGame extends Table {
 		addActor(backgroundRoad);
 		playerCar = new PlayerCar(this);
 		addActor(playerCar);
-		enemyCars = new Array<EnemyCar>();		
+		enemyCars = new Array<EnemyCar>();	
+		
+		nrOfCars = 0;
+		totalNrOfCars =10;
 	}
 	
 	@Override
@@ -55,15 +58,18 @@ public class TrafficGame extends Table {
 	}
 
 	private void spawnCar() {
-		int lane = MathUtils.random(0, 2);
-		float xPos = 0;
-		if (lane == 0) xPos = lane0;
-		if (lane == 1) xPos = lane1;
-		if (lane == 2) xPos = lane2;
-		EnemyCar enemyCar = new EnemyCar(xPos, getHeight());
-		enemyCars.add(enemyCar);
-		addActor(enemyCar);
-		lastCarTime = TimeUtils.nanoTime();
+		if(nrOfCars<totalNrOfCars){
+			
+			int lane = MathUtils.random(0,480-EnemyCar.ENEMY_WIDTH);
+			float xPos = lane;
+			EnemyCar enemyCar = new EnemyCar(xPos, getHeight());
+			enemyCars.add(enemyCar);
+			addActor(enemyCar);
+			lastCarTime = TimeUtils.nanoTime();
+			nrOfCars++;
+			
+		}
+		
 	}
 	
 	@Override
