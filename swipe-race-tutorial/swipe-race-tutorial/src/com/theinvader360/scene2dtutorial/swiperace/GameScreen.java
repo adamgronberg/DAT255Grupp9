@@ -10,12 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class GameScreen implements Screen, GestureListener {
 	private Stage stage;
-	private TrafficGame trafficGame;
+	private GameLogic gameLogic;
 
 	public GameScreen() {
 		stage = new Stage();
-		trafficGame = new TrafficGame();
-		stage.addActor(trafficGame);
+		gameLogic = new GameLogic();
+		stage.addActor(gameLogic);
 	}
 	
 	public void resize(int width, int height) {
@@ -43,8 +43,8 @@ public class GameScreen implements Screen, GestureListener {
 	
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-		if (velocityX < -100) trafficGame.playerCar.tryMoveLeft();
-		if (velocityX > 100) trafficGame.playerCar.tryMoveRight();
+		if (velocityX < -100) gameLogic.playerShip.tryMoveLeft();
+		if (velocityX > 100) gameLogic.playerShip.tryMoveRight();
 		return false;
 	}
 

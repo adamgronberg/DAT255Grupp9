@@ -15,6 +15,6 @@ public class InfiniteScrollBg extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		batch.draw(Assets.road, getX(), getY(), getWidth(), getHeight());
+		batch.draw(Assets.space, getX(), getY(), getWidth(), getHeight());
 	}
 }
