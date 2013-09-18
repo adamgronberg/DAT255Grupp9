@@ -19,10 +19,16 @@ public class GameLogic extends Table {
 	private InfiniteScrollBg backgroundSpace;
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
+	
 	private Array<EnemyShip> enemyShips;
+	private Array<Missile> missiles;
+	
 	private long lastEnemyShipTime = 0;	//TODO: For release 1 demo
 	private int nrOfShip;				//TODO: For release 1 demo
 	private int totalNrOfShips;			//TODO: For release 1 demo
+	
+	private float reloadTime = 0;
+	
 	public PlayerShip playerShip;
 
 	
@@ -46,7 +52,8 @@ public class GameLogic extends Table {
 		totalNrOfShips = 10;
 		playerShip = new PlayerShip(this);
 		addActor(playerShip);
-		enemyShips = new Array<EnemyShip>();		
+		enemyShips = new Array<EnemyShip>();
+		missiles = new Array<Missile>();
 	}
 	/**
 	 *  
@@ -56,28 +63,50 @@ public class GameLogic extends Table {
 		super.act(delta);
 		
 		if (TimeUtils.nanoTime() - lastEnemyShipTime > 3000000000f) spawnShip();
+		if (TimeUtils.nanoTime() - reloadTime > 300000000f) spawnMissile();
 		
+
 		Iterator<EnemyShip> iter = enemyShips.iterator();
 		while (iter.hasNext()) {
 			EnemyShip enemyShip = iter.next();
-			if (enemyShip.getBounds().y + enemyShip.getHeight() <= 0) {
+			if (enemyShip.getBounds().y + enemyShip.getHeight() <= 0) {				//Check for col with out screen
 				iter.remove();
 				removeActor(enemyShip);
 			}
-			if (enemyShip.getBounds().overlaps(playerShip.getBounds())) {
-                iter.remove();
-                if (enemyShip.getX() > playerShip.getX()) {
-                    if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(true, true);
-                    else enemyShip.crash(true, false);
+			else if (enemyShip.getBounds().overlaps(playerShip.getBounds())) {		//check for col with player
+				iter.remove();
+				if (enemyShip.getX() > playerShip.getX()) {
+					if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(true, true);		//Check what direction
+					else enemyShip.crash(true, false);
+				}
+				else {
+					if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(false, true);		//check what direction
+					else enemyShip.crash(false, false);
                 }
-                else {
-                    if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(false, true);
-                    else enemyShip.crash(false, false);
-                }
+			}	
+			else{
+//				Iterator<Missile> iterM = missiles.iterator();									//check if col with missiles
+//				while(iterM.hasNext()){
+//					Missile missile = iterM.next();
+//					if (enemyShip.getBounds().overlaps(missile.getBounds())) {
+//						iter.remove();
+//						removeActor(enemyShip);
+//						iterM.remove();
+//						removeActor(missile);
+//
+//					}
+//				}
 			}
 		}
 	}
 	
+	private void spawnMissile() {
+		Missile missile = new Missile(playerShip.getX()+25, playerShip.getY()+25);
+		missiles.add(missile);
+		addActor(missile);
+		reloadTime = TimeUtils.nanoTime();
+		
+	}
 	private void spawnShip() {
 		if(nrOfShip<totalNrOfShips){
 			int spawnLocation = MathUtils.random(0,MyGame.WIDTH-EnemyShip.ENEMY_WIDTH);

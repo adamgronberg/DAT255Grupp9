@@ -13,12 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  *
  * The player ship. 
  */
-public class PlayerShip extends Actor {
+public class PlayerShip extends MovableEntity {
 	
-	private Rectangle bounds = new Rectangle();			// The position of the player
+
 	public static final int PLAYER_SIZE = 50;			// The size of the player
 	public static final float PLAYER_MOVMENTSPEED = 5;
-	public static final float PLAYER_SPAWNLOCATION = 0.1f;
+	public static final float PLAYER_SPAWNLOCATION = 0.1f; //Height where the player moves
 	
 	/**
 	 * Constructor
@@ -29,19 +29,9 @@ public class PlayerShip extends Actor {
 	public PlayerShip(GameLogic gameLogic) {
 		setWidth(PLAYER_SIZE);
 		setHeight(PLAYER_SIZE);
-		setPosition(MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION);	//Height where the player moves
-		//setColor(Color.YELLOW);
+		setPosition(MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION);	
 	}
-	
-	/**
-	 * Called when "act" is called in its stage
-	 * Updates its position.
-	 */
-	@Override
-	public void act(float delta){
-		super.act(delta);
-		updateBounds();
-	}
+
 	
 	/**
 	 * Called when "draw" is called in its stage
@@ -52,12 +42,7 @@ public class PlayerShip extends Actor {
 		batch.draw(Assets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 	
-	/**
-	 * Called when the player has moved
-	 */
-	private void updateBounds() {
-		bounds.set(getX(), getY(), getWidth(), getHeight());
-	}
+
 	
 	/**
 	 * Tries to move the player to the Right. 
@@ -81,11 +66,5 @@ public class PlayerShip extends Actor {
 		}
 	}
 	
-	/**
-	 * Use this in collision ect
-	 * @return The rectangle that contains the position of the player.
-	 */
-	public Rectangle getBounds() {
-		return bounds;
-	}
+
 }

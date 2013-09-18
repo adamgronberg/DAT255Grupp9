@@ -13,8 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * @author Grupp9
  *
  */
-public class EnemyShip extends Actor {
-	private Rectangle bounds = new Rectangle();
+public class EnemyShip extends MovableEntity {
 	public final static int ENEMY_HEIGHT=50;
 	public final static int ENEMY_WIDTH=50;
 	
@@ -41,20 +40,12 @@ public class EnemyShip extends Actor {
 		addAction(moveTo(x, -getHeight(), MathUtils.random(4.0f, 6.0f)));
 	}
 	
-	@Override
-	public void act(float delta){
-		super.act(delta);
-		updateBounds();
-	}
+
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
 		batch.draw(Assets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
-	}
-	
-	private void updateBounds() {
-		bounds.set(getX(), getY(), getWidth(), getHeight());
 	}
 	
 	/**
@@ -71,8 +62,5 @@ public class EnemyShip extends Actor {
 		if (!front && !above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(-200, -200, 1.5f)), removeActor()));
 	}
 
-	public Rectangle getBounds() {
-		return bounds;
-	}
 	
 }
