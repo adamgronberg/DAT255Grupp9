@@ -7,14 +7,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class EnemyCar extends Actor {
+public class EnemyShip extends Actor {
 	private Rectangle bounds = new Rectangle();
 	public final static int ENEMY_HEIGHT=80;
 	public final static int ENEMY_WIDTH=80;
 	
+<<<<<<< HEAD:swipe-race-tutorial/swipe-race-tutorial/src/com/theinvader360/scene2dtutorial/swiperace/EnemyCar.java
 	public EnemyCar(float x, float y) {
 		setWidth(ENEMY_WIDTH);
 		setHeight(ENEMY_HEIGHT);
+=======
+	public EnemyShip(float x, float y) {
+		setWidth(80);
+		setHeight(80);
+>>>>>>> 5618c64a5620bc24e5bd224bfb172ce787db0bc4:swipe-race-tutorial/swipe-race-tutorial/src/com/theinvader360/scene2dtutorial/swiperace/EnemyShip.java
 		setPosition(x, y - getHeight()/2);
 
 		int rnd = MathUtils.random(0, 3);
@@ -35,7 +41,7 @@ public class EnemyCar extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
-		batch.draw(Assets.car, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
+		batch.draw(Assets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 	
 	private void updateBounds() {

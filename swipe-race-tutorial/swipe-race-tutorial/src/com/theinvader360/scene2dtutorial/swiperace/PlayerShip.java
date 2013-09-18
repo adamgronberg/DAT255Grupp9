@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class PlayerCar extends Actor {
-	private TrafficGame trafficGame;
+public class PlayerShip extends Actor {
+	private GameLogic gameLogic;
 	private Rectangle bounds = new Rectangle();
 	private int lane;
 	
-	public PlayerCar(TrafficGame trafficGame) {
-		this.trafficGame = trafficGame;
+	public PlayerShip(GameLogic gameLogic) {
+		this.gameLogic = gameLogic;
 		setWidth(80);
 		setHeight(80);
 		lane = 1;
@@ -29,7 +29,7 @@ public class PlayerCar extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
-		batch.draw(Assets.car, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
+		batch.draw(Assets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 	
 	private void updateBounds() {
