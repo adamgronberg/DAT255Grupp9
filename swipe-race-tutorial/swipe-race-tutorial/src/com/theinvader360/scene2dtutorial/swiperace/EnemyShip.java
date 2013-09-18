@@ -12,19 +12,10 @@ public class EnemyShip extends Actor {
 	public final static int ENEMY_HEIGHT=80;
 	public final static int ENEMY_WIDTH=80;
 	
-<<<<<<< HEAD:swipe-race-tutorial/swipe-race-tutorial/src/com/theinvader360/scene2dtutorial/swiperace/EnemyShip.java
 	public EnemyShip(float x, float y) {
-=======
-<<<<<<< HEAD:swipe-race-tutorial/swipe-race-tutorial/src/com/theinvader360/scene2dtutorial/swiperace/EnemyCar.java
-	public EnemyCar(float x, float y) {
->>>>>>> adb2fab79c3d02aa47c903c93551b79c201af47f:swipe-race-tutorial/swipe-race-tutorial/src/com/theinvader360/scene2dtutorial/swiperace/EnemyShip.java
 		setWidth(ENEMY_WIDTH);
 		setHeight(ENEMY_HEIGHT);
-=======
-	public EnemyShip(float x, float y) {
-		setWidth(80);
-		setHeight(80);
->>>>>>> 5618c64a5620bc24e5bd224bfb172ce787db0bc4:swipe-race-tutorial/swipe-race-tutorial/src/com/theinvader360/scene2dtutorial/swiperace/EnemyShip.java
+
 		setPosition(x, y - getHeight()/2);
 
 		int rnd = MathUtils.random(0, 3);
