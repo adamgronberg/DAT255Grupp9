@@ -16,17 +16,17 @@ public class GameScreen implements Screen, GestureListener {
 	private Stage stage;
 	private Button button;
 	private ButtonStyle buttonStyle;
-	private TrafficGame trafficGame;
+	private GameLogic gameLogic;
 
 	public static final String LOG = GameScreen.class.getSimpleName();
 	
 	
 	public GameScreen() {
 		stage = new Stage();
-		trafficGame = new TrafficGame();
-		//buttonStyle.checked.draw(batch, 0, 0, 15,15);
-//			button = new Button();
-		stage.addActor(trafficGame);
+//		buttonStyle.checked.draw(batch, 0, 0, 15,15);
+//		button = new Button();
+		gameLogic = new GameLogic();
+		stage.addActor(gameLogic);
 	}
 	
 	public void resize(int width, int height) {
@@ -47,11 +47,11 @@ public class GameScreen implements Screen, GestureListener {
 			//bucket.x = touchPos.x - 64 / 2;
 			if (touchPos.x <= 90 && touchPos.y >= 710) {
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
-				trafficGame.playerCar.tryMoveLeft();
+				gameLogic.playerCar.tryMoveLeft();
 			}
 			if (touchPos.x >= 400 && touchPos.y >= 710) {
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
-				trafficGame.playerCar.tryMoveRight();
+				gameLogic.playerCar.tryMoveRight();
 			}
 		}
 		
@@ -70,8 +70,8 @@ public class GameScreen implements Screen, GestureListener {
 	
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-		if (velocityX < -100) trafficGame.playerCar.tryMoveLeft();
-		if (velocityX > 100) trafficGame.playerCar.tryMoveRight();
+		if (velocityX < -100) gameLogic.playerShip.tryMoveLeft();
+		if (velocityX > 100) gameLogic.playerShip.tryMoveRight();
 		return false;
 	}
 
