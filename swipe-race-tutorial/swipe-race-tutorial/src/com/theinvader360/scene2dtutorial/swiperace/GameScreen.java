@@ -47,11 +47,11 @@ public class GameScreen implements Screen, GestureListener {
 			//bucket.x = touchPos.x - 64 / 2;
 			if (touchPos.x <= 90 && touchPos.y >= 710) {
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
-				gameLogic.playerCar.tryMoveLeft();
+				gameLogic.playerShip.tryMoveLeft();
 			}
 			if (touchPos.x >= 400 && touchPos.y >= 710) {
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
-				gameLogic.playerCar.tryMoveRight();
+				gameLogic.playerShip.tryMoveRight();
 			}
 		}
 		
