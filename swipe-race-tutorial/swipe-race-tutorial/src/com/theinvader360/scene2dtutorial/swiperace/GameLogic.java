@@ -8,26 +8,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class TrafficGame extends Table {
+public class GameLogic extends Table {
 	private InfiniteScrollBg backgroundRoad;
-	private Array<EnemyCar> enemyCars;
+	private Array<EnemyShip> enemyShips;
 	private long lastCarTime = 0;
-	public PlayerCar playerCar;
 	private int nrOfCars;
 	private int totalNrOfCars;
-	
-	
-	public TrafficGame() {
+	public PlayerShip playerShip;
+
+	public GameLogic() {
 		setBounds(0, 0, 480, 800);
 		setClip(true);
 		backgroundRoad = new InfiniteScrollBg(getWidth(),getHeight());
-		addActor(backgroundRoad);
-		playerCar = new PlayerCar(this);
-		addActor(playerCar);
-		enemyCars = new Array<EnemyCar>();	
-		
+		addActor(backgroundRoad);		
 		nrOfCars = 0;
 		totalNrOfCars =10;
+		playerShip = new PlayerShip(this);
+		addActor(playerShip);
+		enemyShips = new Array<EnemyShip>();		
 	}
 	
 	@Override
@@ -36,22 +34,22 @@ public class TrafficGame extends Table {
 		
 		if (TimeUtils.nanoTime() - lastCarTime > 3000000000f) spawnCar();
 		
-		Iterator<EnemyCar> iter = enemyCars.iterator();
+		Iterator<EnemyShip> iter = enemyShips.iterator();
 		while (iter.hasNext()) {
-			EnemyCar enemyCar = iter.next();
-			if (enemyCar.getBounds().y + enemyCar.getHeight() <= 0) {
+			EnemyShip enemyShip = iter.next();
+			if (enemyShip.getBounds().y + enemyShip.getHeight() <= 0) {
 				iter.remove();
-				removeActor(enemyCar);
+				removeActor(enemyShip);
 			}
-			if (enemyCar.getBounds().overlaps(playerCar.getBounds())) {
+			if (enemyShip.getBounds().overlaps(playerShip.getBounds())) {
                 iter.remove();
-                if (enemyCar.getX() > playerCar.getX()) {
-                    if (enemyCar.getY() > playerCar.getY()) enemyCar.crash(true, true);
-                    else enemyCar.crash(true, false);
+                if (enemyShip.getX() > playerShip.getX()) {
+                    if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(true, true);
+                    else enemyShip.crash(true, false);
                 }
                 else {
-                    if (enemyCar.getY() > playerCar.getY()) enemyCar.crash(false, true);
-                    else enemyCar.crash(false, false);
+                    if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(false, true);
+                    else enemyShip.crash(false, false);
                 }
 			}
 		}
@@ -60,17 +58,16 @@ public class TrafficGame extends Table {
 	private void spawnCar() {
 		if(nrOfCars<totalNrOfCars){
 			
-			int lane = MathUtils.random(0,480-EnemyCar.ENEMY_WIDTH);
+			int lane = MathUtils.random(0,480-EnemyShip.ENEMY_WIDTH);
 			float xPos = lane;
-			EnemyCar enemyCar = new EnemyCar(xPos, getHeight());
-			enemyCars.add(enemyCar);
-			addActor(enemyCar);
+			EnemyShip enemyShip = new EnemyShip(xPos, getHeight());
+			enemyShips.add(enemyShip);
+			addActor(enemyShip);
 			lastCarTime = TimeUtils.nanoTime();
 			nrOfCars++;
 			
 		}
-		
-	}
+		}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
