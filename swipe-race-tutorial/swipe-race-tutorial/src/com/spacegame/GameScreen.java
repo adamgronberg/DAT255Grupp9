@@ -1,4 +1,4 @@
-package com.theinvader360.scene2dtutorial.swiperace;
+package com.spacegame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

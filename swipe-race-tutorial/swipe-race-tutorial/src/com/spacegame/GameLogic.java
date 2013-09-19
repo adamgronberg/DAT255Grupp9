@@ -1,6 +1,8 @@
-package com.theinvader360.scene2dtutorial.swiperace;
+package com.spacegame;
 
 import java.util.Iterator;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -48,7 +50,7 @@ public class GameLogic extends Table {
 		addActor(moveRightButton);
 		
 		
-		nrOfShip = 0;
+		nrOfShip = 1;
 		totalNrOfShips = 10;
 		playerShip = new PlayerShip(this);
 		addActor(playerShip);
@@ -83,32 +85,45 @@ public class GameLogic extends Table {
 					if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(false, true);		//check what direction
 					else enemyShip.crash(false, false);
                 }
+				removeActor(enemyShip);
 			}	
 			else{
-//				Iterator<Missile> iterM = missiles.iterator();									//check if col with missiles
-//				while(iterM.hasNext()){
-//					Missile missile = iterM.next();
-//					if (enemyShip.getBounds().overlaps(missile.getBounds())) {
-//						iter.remove();
-//						removeActor(enemyShip);
-//						iterM.remove();
-//						removeActor(missile);
-//
-//					}
-//				}
+				Iterator<Missile> iterM = missiles.iterator();									//check if col with missiles
+				while(iterM.hasNext()){
+					Missile missile = iterM.next();
+					if (enemyShip.getBounds().overlaps(missile.getBounds())) {
+						Gdx.app.log( GameScreen.LOG, "Hit!"  );
+						iter.remove();
+						removeActor(enemyShip);
+						iterM.remove();
+						removeActor(missile);
+						break;
+					}
+					else if(missile.getBounds().y>MyGame.HEIGHT){
+						iterM.remove();
+						removeActor(missile);
+					}
+				}
 			}
 		}
 	}
-	
+	/**
+	 * Spawns missiles at player front
+	 */
 	private void spawnMissile() {
-		Missile missile = new Missile(playerShip.getX()+25, playerShip.getY()+25);
+		Missile missile = new Missile(playerShip.getX()+PlayerShip.PLAYER_SIZE/2, playerShip.getY()+PlayerShip.PLAYER_SIZE);
 		missiles.add(missile);
 		addActor(missile);
 		reloadTime = TimeUtils.nanoTime();
 		
 	}
+	
+	/**
+	 * 
+	 */
 	private void spawnShip() {
-		if(nrOfShip<totalNrOfShips){
+		if(nrOfShip<=totalNrOfShips){
+			Gdx.app.log( GameScreen.LOG, "" + nrOfShip  );
 			int spawnLocation = MathUtils.random(0,MyGame.WIDTH-EnemyShip.ENEMY_WIDTH);
 			float xPos = spawnLocation;
 			EnemyShip enemyShip = new EnemyShip(xPos, getHeight() + EnemyShip.ENEMY_HEIGHT);

@@ -1,10 +1,7 @@
-package com.theinvader360.scene2dtutorial.swiperace;
+package com.spacegame;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-//import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.theinvader360.scene2dtutorial.swiperace;
+package com.spacegame;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
