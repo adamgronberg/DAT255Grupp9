@@ -23,9 +23,8 @@ public class PlayerShip extends MovableEntity {
 	 * Sets player starting variables
 	 * @param gameLogic
 	 */
-	public PlayerShip(GameLogic gameLogic) {
-		setWidth(PLAYER_SIZE);
-		setHeight(PLAYER_SIZE);
+	public PlayerShip() {
+		super(PLAYER_SIZE, PLAYER_SIZE);
 		setPosition(MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION);	
 	}
 

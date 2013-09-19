@@ -6,13 +6,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Missile extends MovableEntity{
-
+	public static final float MISSILEHEIGHT = 10;
+	public static final float MISSILEWIDTH = 5;
+	
+	
 	public Missile(float x, float y){
-		setWidth(5);
-		setHeight(10);
+		super(MISSILEWIDTH, MISSILEHEIGHT);
 		setPosition(x, y);
 		setColor(Color.GREEN);
-		addAction(moveTo(x, MyGame.HEIGHT, 1f));
+		addAction(moveTo(x, MyGame.HEIGHT + MISSILEHEIGHT, 1f));
 	}
 	
 	@Override

@@ -7,6 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class MovableEntity extends Actor {
 	protected Rectangle bounds = new Rectangle();
 	
+	public MovableEntity(float width, float height) {
+		setWidth(width);
+		setHeight(height);
+	}
+	
 	
 	/**
 	 * Use this in collision ect

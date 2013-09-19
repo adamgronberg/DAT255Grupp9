@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.TimeUtils;
  *
  */
 public class GameLogic extends Table {
-
 	
 	private InfiniteScrollBg backgroundSpace;
 	private InteractionButton moveLeftButton;
@@ -25,9 +24,9 @@ public class GameLogic extends Table {
 	private Array<EnemyShip> enemyShips;
 	private Array<Missile> missiles;
 	
-	private long lastEnemyShipTime = 0;	//TODO: For release 1 demo
-	private int nrOfShip;				//TODO: For release 1 demo
-	private int totalNrOfShips;			//TODO: For release 1 demo
+	private long lastEnemyShipTime = 0;	//For release 1 demo
+	private int nrOfShip;				//For release 1 demo
+	private boolean playerIsAlive = true;
 	
 	private float reloadTime = 0;
 	
@@ -51,8 +50,7 @@ public class GameLogic extends Table {
 		
 		
 		nrOfShip = 1;
-		totalNrOfShips = 10;
-		playerShip = new PlayerShip(this);
+		playerShip = new PlayerShip();
 		addActor(playerShip);
 		enemyShips = new Array<EnemyShip>();
 		missiles = new Array<Missile>();
@@ -64,34 +62,30 @@ public class GameLogic extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		
-		if (TimeUtils.nanoTime() - lastEnemyShipTime > 3000000000f) spawnShip();
-		if (TimeUtils.nanoTime() - reloadTime > 300000000f) spawnMissile();
 		
-
+		if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();
+		if (TimeUtils.nanoTime() - reloadTime > 300000000f && playerIsAlive) spawnMissile();
+		
+		Iterator<Missile> iterM;
 		Iterator<EnemyShip> iter = enemyShips.iterator();
 		while (iter.hasNext()) {
 			EnemyShip enemyShip = iter.next();
-			if (enemyShip.getBounds().y + enemyShip.getHeight() <= 0) {				//Check for col with out screen
+			iterM = missiles.iterator();
+			if (checkOutOfBoundsY(enemyShip)) {				//Check for col with out screen
 				iter.remove();
 				removeActor(enemyShip);
 			}
-			else if (enemyShip.getBounds().overlaps(playerShip.getBounds())) {		//check for col with player
+			else if (collisionControl(enemyShip, playerShip)) {		//check for col with player
 				iter.remove();
-				if (enemyShip.getX() > playerShip.getX()) {
-					if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(true, true);		//Check what direction
-					else enemyShip.crash(true, false);
-				}
-				else {
-					if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(false, true);		//check what direction
-					else enemyShip.crash(false, false);
-                }
 				removeActor(enemyShip);
-			}	
-			else{
-				Iterator<Missile> iterM = missiles.iterator();									//check if col with missiles
+				removeActor(playerShip);
+				playerIsAlive = false;
+				break;
+			}										//check if col with missiles
+			else {
 				while(iterM.hasNext()){
 					Missile missile = iterM.next();
-					if (enemyShip.getBounds().overlaps(missile.getBounds())) {
+					if (collisionControl(enemyShip, missile)) {
 						Gdx.app.log( GameScreen.LOG, "Hit!"  );
 						iter.remove();
 						removeActor(enemyShip);
@@ -99,46 +93,69 @@ public class GameLogic extends Table {
 						removeActor(missile);
 						break;
 					}
-					else if(missile.getBounds().y>MyGame.HEIGHT){
-						iterM.remove();
-						removeActor(missile);
-					}
 				}
 			}
 		}
+		iterM = missiles.iterator();
+		while(iterM.hasNext()){
+			Missile missile = iterM.next();
+			if (checkOutOfBoundsY(missile)){
+				iterM.remove();
+				removeActor(missile);
+			}
+		}
 	}
+	
+	private boolean checkOutOfBoundsY(MovableEntity movableObj){
+		if (movableObj.bounds.y < -movableObj.getBounds().getHeight() || movableObj.bounds.y >= 
+				MyGame.HEIGHT+movableObj.getBounds().getHeight()){
+			return true; 
+		}
+		return false;
+	}
+	
+	private boolean collisionControl(MovableEntity movableObj1, MovableEntity movableObj2){
+		return movableObj1.getBounds().overlaps(movableObj2.getBounds());
+	}
+	
 	/**
 	 * Spawns missiles at player front
 	 */
 	private void spawnMissile() {
-		Missile missile = new Missile(playerShip.getX()+PlayerShip.PLAYER_SIZE/2, playerShip.getY()+PlayerShip.PLAYER_SIZE);
+		Missile missile = new Missile(playerShip.getX()+PlayerShip.PLAYER_SIZE/2, 
+				playerShip.getY()+PlayerShip.PLAYER_SIZE);
 		missiles.add(missile);
 		addActor(missile);
-		reloadTime = TimeUtils.nanoTime();
-		
+		reloadTime = TimeUtils.nanoTime();	
 	}
 	
 	/**
 	 * 
 	 */
 	private void spawnShip() {
-		if(nrOfShip<=totalNrOfShips){
-			Gdx.app.log( GameScreen.LOG, "" + nrOfShip  );
-			int spawnLocation = MathUtils.random(0,MyGame.WIDTH-EnemyShip.ENEMY_WIDTH);
-			float xPos = spawnLocation;
-			EnemyShip enemyShip = new EnemyShip(xPos, getHeight() + EnemyShip.ENEMY_HEIGHT);
-			enemyShips.add(enemyShip);
-			addActor(enemyShip);
-			lastEnemyShipTime = TimeUtils.nanoTime();
-			nrOfShip++;	
-		}
+		Gdx.app.log( GameScreen.LOG, "" + nrOfShip  );
+		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-EnemyShip.ENEMY_WIDTH);
+		float xPos = spawnLocation;
+		EnemyShip enemyShip = new EnemyShip(xPos, MyGame.HEIGHT+EnemyShip.ENEMY_HEIGHT);
+		enemyShips.add(enemyShip);
+		addActor(enemyShip);
+		lastEnemyShipTime = TimeUtils.nanoTime();
+		nrOfShip++;
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(Color.WHITE);
 		super.draw(batch, parentAlpha);
-		
-		
 	}
+	
+	
+//	if (enemyShip.getX() > playerShip.getX()) {
+//	if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(true, true);		//Check what direction
+//	else enemyShip.crash(true, false);
+//}
+//else {
+//	if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(false, true);		//check what direction
+//	else enemyShip.crash(false, false);
+//}
 }

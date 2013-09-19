@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.MathUtils;
 public class EnemyShip extends MovableEntity {
 	public final static int ENEMY_HEIGHT=50;
 	public final static int ENEMY_WIDTH=50;
+	private final static float ENEMYSPEED = 4.0f;
 	
 	
 	/**
@@ -23,10 +24,9 @@ public class EnemyShip extends MovableEntity {
 	 * @param y Enemy spawn location y-led
 	 */
 	public EnemyShip(float x, float y) {
-		setWidth(ENEMY_WIDTH);
-		setHeight(ENEMY_HEIGHT);
+		super(ENEMY_WIDTH, ENEMY_HEIGHT);
 
-		setPosition(x, y - getHeight()/2);
+		setPosition(x, y);
 		setRotation(180);
 
 		int rnd = MathUtils.random(0, 3);
@@ -35,7 +35,7 @@ public class EnemyShip extends MovableEntity {
 		if (rnd == 2) setColor(Color.WHITE);
 		if (rnd == 3) setColor(Color.YELLOW);
 		
-		addAction(moveTo(x, -getHeight(), MathUtils.random(4.0f, 6.0f)));
+		addAction(moveTo(x, -getHeight()-0.1f, ENEMYSPEED));	// Have to move a little further then the screen end
 	}
 	
 
@@ -52,14 +52,12 @@ public class EnemyShip extends MovableEntity {
 	 * @param above If the enemy was hit in the right
 	 */
 	public void crash(boolean front, boolean above) {
-		clearActions();
-		
-//		addAction(fadeOut(1f));
-//		if (front && above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(200, 200, 1.5f)), removeActor()));
-//		if (front && !above) addAction(sequence(parallel(rotateBy(360, 1.5f), moveBy(200, -200, 1.5f)), removeActor()));
-//		if (!front && above) addAction(sequence(parallel(rotateBy(360, 1.5f), moveBy(-200, 200, 1.5f)), removeActor()));
-//		if (!front && !above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(-200, -200, 1.5f)), removeActor()));
 	}
-
 	
 }
+//clearActions();
+//addAction(fadeOut(1f));
+//if (front && above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(200, 200, 1.5f)), removeActor()));
+//if (front && !above) addAction(sequence(parallel(rotateBy(360, 1.5f), moveBy(200, -200, 1.5f)), removeActor()));
+//if (!front && above) addAction(sequence(parallel(rotateBy(360, 1.5f), moveBy(-200, 200, 1.5f)), removeActor()));
+//if (!front && !above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(-200, -200, 1.5f)), removeActor()));
