@@ -11,8 +11,8 @@ import com.spacegame.MyGame;
  */
 public class ScoutShip extends EnemyShip{
 	
-	public final static float HEIGHT = 40;
-	public final static float WIDTH = 40;
+	public final static int HEIGHT = 40;
+	public final static int WIDTH = 40;
 	private final static float SHIPSPEED_X = 2.0f;
 	private final static float SHIPSPEED_Y = 3.0f;
 	private boolean movingLeft = true;

@@ -1,7 +1,5 @@
 package com.enemyShips;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
 
@@ -15,7 +13,7 @@ import com.spacegame.Assets;
  *
  */
 public class BasicShip extends EnemyShip {
-	private final static float SHIPSPEED = 5.0f;
+	private final static float SHIPSPEED = 3.0f;
 	public final static int HEIGHT=50;
 	public final static int WIDTH=50;
 	
@@ -27,7 +25,6 @@ public class BasicShip extends EnemyShip {
 	 */
 	public BasicShip(float x, float y) {
 		super(x, y, WIDTH, HEIGHT);
-		addAction(moveTo(x, -getHeight()-0.1f, SHIPSPEED));	// "-0.1f" Have to move a little further then the screen end
 	}
 	
 	/**
@@ -37,6 +34,16 @@ public class BasicShip extends EnemyShip {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
 		batch.draw(Assets.enemyBasicShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
+	}
+	
+	/**
+	 * Called when "act" is called in its stage
+	 * Updates its position.
+	 */
+	@Override
+	public void act(float delta){
+		setY(getY()-SHIPSPEED);
+		super.act(delta);
 	}
 
 }
