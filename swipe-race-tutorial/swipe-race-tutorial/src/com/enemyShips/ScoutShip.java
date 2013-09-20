@@ -1,4 +1,4 @@
-package com.enemyShips;
+package com.enemyships;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
@@ -8,6 +8,8 @@ import com.spacegame.MyGame;
  * 
  * @author Grupp9
  *
+ *
+ *	A ship that moves in y led as well as x led
  */
 public class ScoutShip extends EnemyShip{
 	
@@ -32,7 +34,7 @@ public class ScoutShip extends EnemyShip{
 	
 	
 	/**
-	 * 
+	 * Draws the ship
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {

@@ -1,4 +1,4 @@
-package com.enemyShips;
+package com.enemyships;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
@@ -8,8 +8,7 @@ import com.spacegame.Assets;
  * @author Grupp9
  *
  *	The Basic enemy
- *	50x50 big and moderate speed. Don't move in y-led. Moves to bottom in X-led
- *	Does not shoot
+ *  Only has y led moment
  *
  */
 public class BasicShip extends EnemyShip {
@@ -44,6 +43,14 @@ public class BasicShip extends EnemyShip {
 	public void act(float delta){
 		setY(getY()-SHIPSPEED);
 		super.act(delta);
+	}
+	
+	/**
+	 * Plays On-Death-animation
+	 * @param left	If the enemy was hit in the left
+	 * @param right If the enemy was hit in the right
+	 */
+	public void crash(boolean left, boolean right) {
 	}
 
 }

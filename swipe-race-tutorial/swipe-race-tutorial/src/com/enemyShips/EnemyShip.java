@@ -1,22 +1,25 @@
-package com.enemyShips;
+package com.enemyships;
 
 import com.spacegame.MovableEntity;
 
 
 /**
  * 
+ * Base class for enemy ships. Enemy ships should extend this class
+ * 
  * @author Grupp9
  *	
- *
+ *	
  */
 public class EnemyShip extends MovableEntity {
 	
 	
 	/**
-	 * Constructor
 	 * 
-	 * @param x Enemy spawn location x-led
-	 * @param y Enemy spawn location y-led
+	 * @param x x-led Spawn location
+	 * @param y y-led Spawn location
+	 * @param width The width of the EnemyShip
+	 * @param height The height of the EnemyShip
 	 */
 	public EnemyShip(float x, float y, float width, float height) {
 		super(width, height);
@@ -30,7 +33,6 @@ public class EnemyShip extends MovableEntity {
 	 */
 	public void crash(boolean left, boolean right) {
 	}
-	
 }
 //clearActions();
 //addAction(fadeOut(1f));

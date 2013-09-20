@@ -2,7 +2,7 @@ package com.spacegame;
 
 import java.util.Iterator;
 
-import spawnlogic.SpawnPattern;
+
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,23 +11,29 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.enemyShips.BasicShip;
-import com.enemyShips.EnemyShip;
-import com.enemyShips.ScoutShip;
+import com.enemyships.BasicShip;
+import com.enemyships.EnemyShip;
+import com.enemyships.ScoutShip;
+import com.playerweapons.ExplosionDummy;
+import com.playerweapons.PlayerLaser;
+import com.playerweapons.PlayerMissile;
+import com.playerweapons.Projectile;
+import com.spawnlogic.SpawnPattern;
 
 /**
  * 
  * @author Grupp9
+ * TODO: Move out stuff from this class, handles to much
  *
  */
 public class GameLogic extends Table {
 	
-	private InfiniteScrollBg backgroundSpace;
+	private Background backgroundSpace;
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
 	
 	private Array<EnemyShip> enemyShips;
-	private Array<Missile> missiles;
+	private Array<Projectile> playerProjectiles;
 	private Array<SpawnPattern> patterns;
 	
 	private long lastEnemyShipTime = 0;		//For testing
@@ -35,6 +41,8 @@ public class GameLogic extends Table {
 	private float lastMissileTime = 0;      //For testing
 	private int nrOfShip;					//For testing
 	private boolean playerIsAlive = true;   //For testing
+	private boolean useLaser = true;		//For testing
+	private boolean useMissiles = false;	//For testing
 	
 	public PlayerShip playerShip;
 
@@ -46,7 +54,7 @@ public class GameLogic extends Table {
 	public GameLogic() {
 		setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT);
 		setClip(true);
-		backgroundSpace = new InfiniteScrollBg(getWidth(), getHeight());
+		backgroundSpace = new Background(getWidth(), getHeight());
 		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveLeftButton);
 		moveRightButton = new InteractionButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveRightButton);
@@ -59,7 +67,7 @@ public class GameLogic extends Table {
 		playerShip = new PlayerShip();
 		addActor(playerShip);
 		enemyShips = new Array<EnemyShip>();
-		missiles = new Array<Missile>();
+		playerProjectiles = new Array<Projectile>();
 		patterns = new Array<SpawnPattern>();
 
 	}
@@ -72,16 +80,18 @@ public class GameLogic extends Table {
 		
 		if (playerIsAlive){
 			if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();
-			if (TimeUtils.nanoTime() - lastMissileTime > 300000000f) spawnMissile();
 			if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();
+			spawnPlayerProjectile();
+
+
 		}
 		
-		Iterator<Missile> iterM;
+		Iterator<Projectile> iterM;
 		Iterator<EnemyShip> iter = enemyShips.iterator();
 		while (iter.hasNext()) {
 			EnemyShip enemyShip = iter.next();
-			iterM = missiles.iterator();
-			if (checkOutOfBoundsY(enemyShip)) {				
+			iterM = playerProjectiles.iterator();
+			if (isOutOfBoundsY(enemyShip)) {				
 				iter.remove();
 				removeActor(enemyShip);
 			}
@@ -94,22 +104,30 @@ public class GameLogic extends Table {
 			}										
 			else {
 				while(iterM.hasNext()){
-					Missile missile = iterM.next();
-					if (collisionControl(enemyShip, missile)) {
-						Gdx.app.log( GameScreen.LOG, "Hit!"  );
-						iter.remove();
-						removeActor(enemyShip);
+					Projectile projectile = iterM.next();
+					if(projectile.isDespawnReady()){
+						removeActor(projectile);
 						iterM.remove();
-						removeActor(missile);
+					}
+					if (collisionControl(enemyShip, projectile)) {
+						Gdx.app.log( GameScreen.LOG, "Hit!"  );
+						if(!(projectile.getClass() == ExplosionDummy.class)){
+							removeActor(projectile);
+							iterM.remove();
+						}
+						removeActor(enemyShip);
+						iter.remove();
+						projectile = projectile.explode(this);
+						if(projectile != null) playerProjectiles.add(projectile);
 						break;
 					}
 				}
 			}
 		}
-		iterM = missiles.iterator();
+		iterM = playerProjectiles.iterator();
 		while(iterM.hasNext()){
-			Missile missile = iterM.next();
-			if (checkOutOfBoundsY(missile)){
+			Projectile missile = iterM.next();
+			if (isOutOfBoundsY(missile)){
 				iterM.remove();
 				removeActor(missile);
 			}
@@ -119,9 +137,9 @@ public class GameLogic extends Table {
 	/**
 	 * Checks if a obj is out of bounds on y-led
 	 * @param movableObj
-	 * @return
+	 * @return	returns true if out of bounds
 	 */
-	private boolean checkOutOfBoundsY(MovableEntity movableObj){
+	private boolean isOutOfBoundsY(MovableEntity movableObj){
 		if (movableObj.bounds.y < -movableObj.getBounds().getHeight() || movableObj.bounds.y >= 
 				MyGame.HEIGHT+movableObj.getBounds().getHeight()){
 			return true; 
@@ -140,14 +158,28 @@ public class GameLogic extends Table {
 	}
 	
 	/**
-	 * Spawns missiles in front of the player
+	 * Spawns projectiles in front of the player
+	 * Current weapons:
+	 * -Laser
+	 * -Missiles
 	 */
-	private void spawnMissile() {
-		Missile missile = new Missile(playerShip.getX()+PlayerShip.PLAYER_SIZE/2, 
-				playerShip.getY()+PlayerShip.PLAYER_SIZE);
-		missiles.add(missile);
-		addActor(missile);
-		lastMissileTime = TimeUtils.nanoTime();	
+	private void spawnPlayerProjectile() {
+		Projectile projectile;
+		if (useMissiles && TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) {
+			projectile = new PlayerMissile(playerShip.getX()+PlayerShip.PLAYER_SIZE/2, 
+										   playerShip.getY()+PlayerShip.PLAYER_SIZE);
+			playerProjectiles.add(projectile);
+			addActor(projectile);
+			lastMissileTime = TimeUtils.nanoTime();
+		}
+		else if(useLaser && TimeUtils.nanoTime() - lastMissileTime > PlayerLaser.RATEOFFIRE) {
+			projectile = new PlayerLaser(playerShip.getX()+PlayerShip.PLAYER_SIZE/2, 
+										 playerShip.getY()+PlayerShip.PLAYER_SIZE);
+			playerProjectiles.add(projectile);
+			addActor(projectile);
+			lastMissileTime = TimeUtils.nanoTime();
+		}
+
 	}
 	
 	/**
@@ -173,6 +205,9 @@ public class GameLogic extends Table {
 		nrOfShip++;
 	}
 	
+	/**
+	 * Sets up a SpawnPattern for scoutShips
+	 */
 	private void spawnPattern(){		
 		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-ScoutShip.WIDTH);
 		float xPos = spawnLocation;
@@ -182,16 +217,35 @@ public class GameLogic extends Table {
 		
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 	}
-	
+	/**
+	 * Draws all actors on stage
+	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(Color.WHITE);
 		super.draw(batch, parentAlpha);
 	}
-	
+	/**
+	 * Adds a enemy to gameLogics collision detection
+	 * @param enemy
+	 */
 	public void addEnemyShips(EnemyShip enemy){
 		enemyShips.add(enemy);
 		addActor(enemy);
+	}
+
+	/**
+	 * Swaps players weapon
+	 */
+	public void switchWeapon(){
+		if(useLaser) { 
+			useMissiles = true;
+			useLaser = false;
+		}
+		else if(useMissiles) { 
+			useMissiles = false;
+			useLaser = true;
+		}
 	}
 	
 	
