@@ -1,24 +1,39 @@
 package com.enemyShips;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
+import com.spacegame.MyGame;
 
+/**
+ * 
+ * @author Grupp9
+ *
+ */
 public class ScoutShip extends EnemyShip{
 	
-	public final static float HEIGHT = 50;
-	public final static float WIDTH = 50;
-	private final static float SHIPSPEED = 5.0f;
+	public final static float HEIGHT = 40;
+	public final static float WIDTH = 40;
+	private final static float SHIPSPEED_X = 2.0f;
+	private final static float SHIPSPEED_Y = 3.0f;
+	private boolean movingLeft = true;
+	private final float movmentLenght = 50;
+	private float currentMovmentLenght;
 	
-	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public ScoutShip(float x, float y){
 		super(x, y, WIDTH, HEIGHT);
-		addAction(moveTo(getX(), -getHeight()-0.1f, SHIPSPEED));	// "-0.1f" Have to move a little further then the screen end
+		setRotation(-45);
+		currentMovmentLenght = 0;
 	}
 	
 	
-	
+	/**
+	 * 
+	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
@@ -31,7 +46,27 @@ public class ScoutShip extends EnemyShip{
 	 */
 	@Override
 	public void act(float delta){
-		super.act(delta);	
+		setY(getY()-SHIPSPEED_Y);
+		
+		if(movingLeft){
+			if(getX() < 0 || currentMovmentLenght > movmentLenght){
+				currentMovmentLenght = 0;
+				setRotation(45);
+				movingLeft = false;
+			}
+			setX(getX()-SHIPSPEED_X);
+			currentMovmentLenght++;
+		}
+		else {
+			if(getX() > MyGame.WIDTH-WIDTH || currentMovmentLenght > movmentLenght){
+				currentMovmentLenght = 0;
+				setRotation(-45);
+				movingLeft = true;
+			}
+			setX(getX()+SHIPSPEED_X);
+			currentMovmentLenght++;
+		}
+		super.act(delta);
 	}
 	
 }
