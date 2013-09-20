@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 /**
+ * Draws everything on GameScreen and handles input
+ * Tells all actors to draw and act
  * 
  * @author Grupp9
  *
@@ -21,7 +23,10 @@ public class GameScreen implements Screen, GestureListener {
 
 	public static final String LOG = GameScreen.class.getSimpleName();
 	
-	
+	/**
+	 * Constructor
+	 * Adds gameLogic as actor, starting the game
+	 */
 	public GameScreen() {
 		stage = new Stage();
 		gameLogic = new GameLogic();
@@ -38,14 +43,13 @@ public class GameScreen implements Screen, GestureListener {
 	}
 	/**
 	 * Render loop. 
-	 * TODO: Should input be handled here?
 	 */
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		stage.act(delta);
-		stage.draw();
+		stage.act(delta);				//Tells all actors to move
+		stage.draw();					//Tells all actors to draw
 		if(Gdx.input.isTouched()) {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -58,28 +62,32 @@ public class GameScreen implements Screen, GestureListener {
 				Gdx.app.log( GameScreen.LOG, "Pressed x :" + touchPos.x + " y : " + touchPos.y  );
 				gameLogic.playerShip.tryMoveRight();
 			}
-		}
-		
-		
+		}	
 	}
-
+	/**
+	 * Shows screen
+	 */
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(new GestureDetector(this));
 	}
-
+	/**
+	 * Hides screen
+	 */
 	@Override 
     public void hide() {
     	Gdx.input.setInputProcessor(null);
     }
-	
+	/**
+	 * Fling up or down to swap weapons
+	 */
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-//		if (velocityX < -100) gameLogic.playerShip.tryMoveLeft();
-//		if (velocityX > 100) gameLogic.playerShip.tryMoveRight();
+		if (velocityY < -100) gameLogic.switchWeapon();
+		if (velocityY > 100) gameLogic.switchWeapon();
 		return false;
 	}
-
+	
 	@Override public void resume() {}
 	@Override public void pause() {}
 	@Override public void dispose() {}	
