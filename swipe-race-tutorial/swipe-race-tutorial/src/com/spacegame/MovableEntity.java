@@ -4,6 +4,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+
+/**
+ * 
+ * @author Group9
+ *
+ *
+ *	Movable actor on stage.
+ */
 public class MovableEntity extends Actor {
 	protected Rectangle bounds = new Rectangle();
 	
@@ -38,8 +46,6 @@ public class MovableEntity extends Actor {
 		updateBounds();
 	}
 	
-	public void crash(boolean front, boolean above) {
-	}
 	
 	/**
 	 * Called when "draw" is called in its stage

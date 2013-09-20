@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 	public static TextureAtlas atlas;
 	public static TextureRegion playerShip;
+	public static TextureRegion enemyBasicShip;
+	public static TextureRegion enemyScoutShip;
 	public static TextureRegion space;
 	public static TextureRegion moveLeftButton;
 	public static TextureRegion moveRightButton;
@@ -22,10 +24,10 @@ public class Assets {
 
 	public static void load() {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
-		//moveLeftButton = atlas.findRegion("Arrow_Left");
-		//moveRightButton = atlas.findRegion("Arrow_Right");
 		playerShip = atlas.findRegion("playerShip");
 		playerLaser = atlas.findRegion("laser");
+		enemyBasicShip = atlas.findRegion("enemyShip");
+		enemyScoutShip = atlas.findRegion("scoutShip");
 
 		moveRightButton = new TextureRegion ( new Texture(Gdx.files.internal("Arrow_Right.png")));
 		moveLeftButton = new TextureRegion ( new Texture(Gdx.files.internal("Arrow_Left.png")));

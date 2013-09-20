@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.enemyShips.BasicShip;
+import com.enemyShips.EnemyShip;
+import com.enemyShips.ScoutShip;
 
 /**
  * 
@@ -134,11 +137,19 @@ public class GameLogic extends Table {
 	 */
 	private void spawnShip() {
 		Gdx.app.log( GameScreen.LOG, "" + nrOfShip  );
-		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-EnemyShip.ENEMY_WIDTH);
+		
+		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-BasicShip.WIDTH);
 		float xPos = spawnLocation;
-		EnemyShip enemyShip = new EnemyShip(xPos, MyGame.HEIGHT+EnemyShip.ENEMY_HEIGHT);
+		EnemyShip enemyShip = new BasicShip(xPos, MyGame.HEIGHT+BasicShip.HEIGHT);
 		enemyShips.add(enemyShip);
 		addActor(enemyShip);
+		
+		spawnLocation = MathUtils.random(0,MyGame.WIDTH-BasicShip.WIDTH);
+		xPos = spawnLocation;
+		enemyShip = new ScoutShip(xPos, MyGame.HEIGHT+ScoutShip.HEIGHT);
+		enemyShips.add(enemyShip);
+		addActor(enemyShip);
+		
 		lastEnemyShipTime = TimeUtils.nanoTime();
 		nrOfShip++;
 	}

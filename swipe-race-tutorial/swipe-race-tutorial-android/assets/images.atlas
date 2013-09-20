@@ -17,6 +17,20 @@ Arrow_Right
   orig: 62, 63
   offset: 0, 0
   index: -1
+enemyShip
+  rotate: false
+  xy: 238, 39
+  size: 35, 33
+  orig: 35, 33
+  offset: 0, 0
+  index: -1
+highScoreButton
+  rotate: false
+  xy: 66, 38
+  size: 84, 34
+  orig: 84, 34
+  offset: 0, 0
+  index: -1
 laser
   rotate: false
   xy: 2, 2
@@ -24,10 +38,24 @@ laser
   orig: 3, 5
   offset: 0, 0
   index: -1
+newGameButton
+  rotate: false
+  xy: 152, 38
+  size: 84, 34
+  orig: 84, 34
+  offset: 0, 0
+  index: -1
 playerShip
   rotate: false
   xy: 2, 74
   size: 418, 426
   orig: 418, 426
+  offset: 0, 0
+  index: -1
+scoutShip
+  rotate: false
+  xy: 422, 403
+  size: 57, 32
+  orig: 57, 32
   offset: 0, 0
   index: -1
