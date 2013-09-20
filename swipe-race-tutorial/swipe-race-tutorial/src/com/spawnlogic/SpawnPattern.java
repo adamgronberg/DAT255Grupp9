@@ -3,9 +3,9 @@ package com.spawnlogic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.enemyships.BasicShip;
-import com.enemyships.EnemyShip;
-import com.enemyships.ScoutShip;
+import com.enemyship.BasicShip;
+import com.enemyship.EnemyShip;
+import com.enemyship.ScoutShip;
 import com.spacegame.GameLogic;
 import com.spacegame.GameScreen;
 

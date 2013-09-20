@@ -1,4 +1,4 @@
-package com.enemyships;
+package com.enemyship;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;

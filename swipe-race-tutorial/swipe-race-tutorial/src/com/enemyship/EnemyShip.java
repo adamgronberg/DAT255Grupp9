@@ -1,4 +1,4 @@
-package com.enemyships;
+package com.enemyship;
 
 import com.spacegame.MovableEntity;
 
