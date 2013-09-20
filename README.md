@@ -2,10 +2,6 @@ DAT255Grupp9
 ============
 
 
-
-
-
-
 ALPHA RELEASE 0.1 
 
 features:
