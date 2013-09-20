@@ -21,3 +21,4 @@ local.properties
 
 # OS-generated files
 Thumbs.db
+*.db
