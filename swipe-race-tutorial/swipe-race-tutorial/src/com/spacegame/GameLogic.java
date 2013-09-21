@@ -36,13 +36,17 @@ public class GameLogic extends Table {
 	private Array<Projectile> playerProjectiles;
 	private Array<SpawnPattern> patterns;
 	
-	private long lastEnemyShipTime = 0;		//For testing
-	private float lastSpawnPatternTime = 0; //For testing
-	private float lastMissileTime = 0;      //For testing
-	private int nrOfShip;					//For testing
-	private boolean playerIsAlive = true;   //For testing
-	private boolean useLaser = true;		//For testing
-	private boolean useMissiles = false;	//For testing
+	
+	private long lastEnemyShipTime = 0;			//For testing
+	private float lastSpawnPatternTime = 0;		//For testing
+	private float lastMissileTime = 0;      	//For testing
+	private int nrOfShip;						//For testing
+	private boolean playerIsAlive = true;  		//For testing
+	private boolean useLaser = true;			//For testing
+	private boolean useMissiles = false;		//For testing
+	private int currentRespawnTime = 0;			//For testing
+	private static final int respawnTime = 50;	//For testing
+	private boolean shooting = false;
 	
 	public PlayerShip playerShip;
 
@@ -78,58 +82,72 @@ public class GameLogic extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		
-		if (playerIsAlive){
-			if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();
-			if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();
-			spawnPlayerProjectile();
-
-
+		if (!playerIsAlive && currentRespawnTime > respawnTime) {							//For testing
+			addActor(playerShip);
+			currentRespawnTime = 0;
+			playerIsAlive = true;
 		}
 		
-		Iterator<Projectile> iterM;
-		Iterator<EnemyShip> iter = enemyShips.iterator();
-		while (iter.hasNext()) {
-			EnemyShip enemyShip = iter.next();
-			iterM = playerProjectiles.iterator();
-			if (isOutOfBoundsY(enemyShip)) {				
-				iter.remove();
-				removeActor(enemyShip);
-			}
-			else if (collisionControl(enemyShip, playerShip)) {		
-				iter.remove();
-				removeActor(enemyShip);
-				removeActor(playerShip);
-				playerIsAlive = false;
-				break;
-			}										
-			else {
-				while(iterM.hasNext()){
-					Projectile projectile = iterM.next();
-					if(projectile.isDespawnReady()){
-						removeActor(projectile);
-						iterM.remove();
-					}
-					if (collisionControl(enemyShip, projectile)) {
-						Gdx.app.log( GameScreen.LOG, "Hit!"  );
-						if(!(projectile.getClass() == ExplosionDummy.class)){
+		if (playerIsAlive){
+			if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();		//For testing
+			if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();	//For testing
+			if (GameScreen.getOptionAutoShoot() || shooting) spawnPlayerProjectile();		//For testing
+		}
+		else currentRespawnTime++;															//For testing
+		
+		///////////////////////////// For testing
+		if(GameScreen.getOptionControlLayout()) {				
+			moveRightButton.moveButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, moveRightButton.getY());
+		}
+		else{
+			moveRightButton.moveButton(GameScreen.MOVMENT_BUTTON_SIZE, moveRightButton.getY());
+		}
+		/////////////////////////////
+		
+		if(playerIsAlive) {
+			Iterator<Projectile> iterM;
+			Iterator<EnemyShip> iter = enemyShips.iterator();
+			while (iter.hasNext()) {
+				EnemyShip enemyShip = iter.next();
+				iterM = playerProjectiles.iterator();
+				if (isOutOfBoundsY(enemyShip)) {				
+					iter.remove();
+					removeActor(enemyShip);
+				}
+				else if(collisionControl(enemyShip, playerShip)) {
+					clearScreen();
+					playerIsAlive = false;
+					break;
+				}									
+				else {
+					while(iterM.hasNext()){
+						Projectile projectile = iterM.next();
+						if(projectile.isDespawnReady()){
 							removeActor(projectile);
 							iterM.remove();
 						}
-						removeActor(enemyShip);
-						iter.remove();
-						projectile = projectile.explode(this);
-						if(projectile != null) playerProjectiles.add(projectile);
-						break;
+						if (collisionControl(enemyShip, projectile)) {
+							Gdx.app.log( GameScreen.LOG, "Hit!"  );
+							if(!(projectile.getClass() == ExplosionDummy.class)){
+								removeActor(projectile);
+								iterM.remove();
+							}
+							removeActor(enemyShip);
+							iter.remove();
+							projectile = projectile.explode(this);
+							if(projectile != null) playerProjectiles.add(projectile);
+							break;
+						}
 					}
 				}
 			}
-		}
-		iterM = playerProjectiles.iterator();
-		while(iterM.hasNext()){
-			Projectile missile = iterM.next();
-			if (isOutOfBoundsY(missile)){
-				iterM.remove();
-				removeActor(missile);
+			iterM = playerProjectiles.iterator();
+			while(iterM.hasNext()){
+				Projectile missile = iterM.next();
+				if (isOutOfBoundsY(missile)){
+					iterM.remove();
+					removeActor(missile);
+				}
 			}
 		}
 	}
@@ -163,7 +181,7 @@ public class GameLogic extends Table {
 	 * -Laser
 	 * -Missiles
 	 */
-	private void spawnPlayerProjectile() {
+	public void spawnPlayerProjectile() {
 		Projectile projectile;
 		if (useMissiles && TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) {
 			projectile = new PlayerMissile(playerShip.getX()+PlayerShip.PLAYER_SIZE/2, 
@@ -183,8 +201,8 @@ public class GameLogic extends Table {
 	}
 	
 	/**
-	 * Temporary spawn
 	 * Spawns a BasicShip and a ScoutShip on a random x coordinate above the screen
+	 * For testing
 	 */
 	private void spawnShip() {
 		Gdx.app.log( GameScreen.LOG, "" + nrOfShip  );
@@ -207,6 +225,7 @@ public class GameLogic extends Table {
 	
 	/**
 	 * Sets up a SpawnPattern for scoutShips
+	 * For testing
 	 */
 	private void spawnPattern(){		
 		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-ScoutShip.WIDTH);
@@ -214,7 +233,6 @@ public class GameLogic extends Table {
 		SpawnPattern spawnPattern = new SpawnPattern(xPos, MyGame.HEIGHT, 5, 200000000f, "ScoutShip", this);
 		patterns.add(spawnPattern);
 		addActor(spawnPattern);
-		
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 	}
 	/**
@@ -247,14 +265,31 @@ public class GameLogic extends Table {
 			useLaser = true;
 		}
 	}
+	/**
+	 * Toggles shooting on or off
+	 */
+	public void toggleShooting(){
+		shooting = !shooting;
+	}
 	
-	
-//	if (enemyShip.getX() > playerShip.getX()) {
-//	if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(true, true);		//Check what direction
-//	else enemyShip.crash(true, false);
-//}
-//else {
-//	if (enemyShip.getY() > playerShip.getY()) enemyShip.crash(false, true);		//check what direction
-//	else enemyShip.crash(false, false);
-//}
+	/**
+	 * 	Removes all Enemies, projectile, patterns and the player from screen 
+	 *  and arrays (Player get removed as actor but won't get uninitialized )
+	 */
+	private void clearScreen(){
+		for(EnemyShip enemy: enemyShips){
+			removeActor(enemy);
+		}
+		enemyShips.clear();
+		for(Projectile porjectile: playerProjectiles){
+			removeActor(porjectile);
+		}
+		playerProjectiles.clear();
+		for(SpawnPattern pattern: patterns){
+			removeActor(pattern);
+		}
+		patterns.clear();
+		
+		removeActor(playerShip);		
+	}
 }

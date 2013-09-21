@@ -13,15 +13,17 @@ public class MyGame extends Game {
 	public final static int WIDTH = 480;
 	public final static int HEIGHT = 800;
 	private GameScreen gameScreen;
+	
 	/**
 	 * Load assets and creates and adds the GameScreen
 	 */
 	@Override
 	public void create() {
 		Assets.load();
-		gameScreen = new GameScreen();	
+		gameScreen = new GameScreen(this);	
 		setScreen(gameScreen);		//TODO: First screen should be a menu/splashscreen
 	}
+	
 	/**
 	 * Disposes all assets and closes game
 	 */
@@ -30,4 +32,5 @@ public class MyGame extends Game {
 		Assets.dispose();
 		gameScreen.dispose();
 	}
+	
 }

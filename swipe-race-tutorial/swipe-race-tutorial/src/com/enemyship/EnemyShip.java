@@ -28,13 +28,11 @@ public class EnemyShip extends MovableEntity {
 	
 	/**
 	 * Plays On-Death-animation
-	 * @param left	If the enemy was hit in the left
-	 * @param right If the enemy was hit in the right
 	 */
-	public void crash(boolean left, boolean right) {
+	public void crash() {
 	}
 }
-//clearActions();
+//clearActions();						Example of how to use animations. Should be done in a separate class
 //addAction(fadeOut(1f));
 //if (front && above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(200, 200, 1.5f)), removeActor()));
 //if (front && !above) addAction(sequence(parallel(rotateBy(360, 1.5f), moveBy(200, -200, 1.5f)), removeActor()));

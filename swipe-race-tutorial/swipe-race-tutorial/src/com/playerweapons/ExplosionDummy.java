@@ -53,7 +53,7 @@ public class ExplosionDummy extends Projectile{
 	 * Returns true if lingerTime has ended
 	 */
 	public boolean isDespawnReady() {	
-		if (lastLingerTime == lingerTime) return true;
+		if (lastLingerTime >= lingerTime) return true;
 		else return false;
 	}
 

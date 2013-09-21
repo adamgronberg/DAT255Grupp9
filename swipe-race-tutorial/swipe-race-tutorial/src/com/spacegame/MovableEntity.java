@@ -20,7 +20,6 @@ public class MovableEntity extends Actor {
 		setHeight(height);
 	}
 	
-	
 	/**
 	 * Use this in collision ect
 	 * @return The rectangle that contains the position of the player.
@@ -45,7 +44,6 @@ public class MovableEntity extends Actor {
 		super.act(delta);
 		updateBounds();
 	}
-	
 	
 	/**
 	 * Called when "draw" is called in its stage

@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * 
  * @author Grupp9
  * Draws a texture on screen
- * TODO: Could merge this with "Background.java" does more or less the same thing
  */
 public class InteractionButton extends Actor {
 	
@@ -17,13 +16,14 @@ public class InteractionButton extends Actor {
 	
 	/**
 	 * Constructor
+	 * (bottom left corner is 0,0)
 	 * @param x			
 	 * @param y
 	 * @param width
 	 * @param height	
 	 * @param texture	What texture to draw
 	 */
-	public InteractionButton(int x, int y, float width, float height, TextureRegion texture) {
+	public InteractionButton(float x, float y, float width, float height, TextureRegion texture) {
 		this.texture = texture;
 		setWidth(width);
 		setHeight(height);
@@ -38,4 +38,15 @@ public class InteractionButton extends Actor {
 		super.draw(batch, parentAlpha);
 		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
 	}
+	
+	/**
+	 * Moves the button 
+	 * @param x
+	 * @param y
+	 */
+	public void moveButton(float x, float y){
+		setPosition(x, y);
+	}
+	
+	
 }
