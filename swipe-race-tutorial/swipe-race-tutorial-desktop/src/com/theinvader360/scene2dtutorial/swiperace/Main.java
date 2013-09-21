@@ -7,7 +7,7 @@ import com.spacegame.MyGame;
 public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "swipe-race-tutorial";
+		cfg.title = "GalaxyDefender";
 		cfg.useGL20 = true;
 		cfg.width = 480;
 		cfg.height = 800;
