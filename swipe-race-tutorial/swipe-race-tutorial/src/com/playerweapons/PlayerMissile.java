@@ -32,7 +32,7 @@ public class PlayerMissile extends Projectile {
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
+		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);
 		batch.draw(Assets.playerMissile, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 	

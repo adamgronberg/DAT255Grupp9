@@ -30,6 +30,7 @@ public class GameScreen implements Screen{
 	
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
+	private Background backgroundSpace;
 	
 
 	
@@ -38,15 +39,20 @@ public class GameScreen implements Screen{
 	 * Adds gameLogic as actor, starting the game
 	 */
 	public GameScreen(MyGame myGame) {
-		stage = new Stage();
+		
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this);
-		stage.addActor(gameLogic);
+		stage = new Stage();
+
+
 		
 		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveLeftButton);
 		moveRightButton = new InteractionButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveRightButton);
+		backgroundSpace = new Background(MyGame.WIDTH, MyGame.HEIGHT);
 		
+		stage.addActor(backgroundSpace);	
+		stage.addActor(gameLogic);
 		stage.addActor(moveLeftButton);
 		stage.addActor(moveRightButton);
 	}
@@ -61,18 +67,14 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Converts input from mouse/touch to correct coordinate system
+	 * @return corrected x,y coordinates (y is not corrected)
 	 */
 	public Vector3 unProjectCoordinates(float x, float y){
 		Vector3 vector = new Vector3();
 		vector.set(x, y, 0);
 		stage.getCamera().unproject(vector);
 		return vector;
-	}
-	
-	public Stage getStage(){
-		return stage;
 	}
 	
 	/**
@@ -84,13 +86,16 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
-	 * 
-	 * @return If optionAutoShoot is on or off
+	 * Toggles optionAutoShoot on/off
 	 */
 	public void toggleOptionAutoShoot(){
 		optionAutoShoot = !optionAutoShoot;
 	}
 	
+	/**
+	 * Returns the current layout
+	 * @return
+	 */
 	public ControlLayout getCurrentLayout(){
 		return currentLayout;
 	}
@@ -126,14 +131,13 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-		stage.act(delta);				//Tells all actors to move
+		stage.act(delta);				//Tells all actors to act
 		stage.draw();					//Tells all actors to draw
 	}
 	
 	/**
-	 * Shows screen
-	 * Depending on what device its running on it uses different input systems (Desktop/android)
+	 * Shows screen and adds input control 
+	 * Called when app is resumed on android
 	 */
 	@Override
 	public void show() {
@@ -144,7 +148,8 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
-	 * Hides screen
+	 * Hides screen and removes input control
+	 * Called when game pauses(Home button on android)
 	 */	
 	@Override 
     public void hide() {

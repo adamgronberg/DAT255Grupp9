@@ -44,8 +44,7 @@ public class PlayerShip extends MovableEntity {
 	/**
 	 * Called when "draw" is called in its stage
 	 */
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void drawAbove(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
 		batch.draw(Assets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
@@ -114,8 +113,7 @@ public class PlayerShip extends MovableEntity {
 	public void spawnPlayerProjectile() {
 		Projectile projectile;
 		if (currentWeapon == AvailableWeapons.MISSILE && TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) {
-			projectile = new PlayerMissile(getX()+PlayerShip.PLAYER_SIZE/2, 
-										   getY()+PlayerShip.PLAYER_SIZE);
+			projectile = new PlayerMissile(getX()+PlayerShip.PLAYER_SIZE/2-PlayerMissile.WIDTH/2, getY());
 			gameLogic.addProjectileToCollision(projectile);
 			gameLogic.addActor(projectile);
 			lastMissileTime = TimeUtils.nanoTime();

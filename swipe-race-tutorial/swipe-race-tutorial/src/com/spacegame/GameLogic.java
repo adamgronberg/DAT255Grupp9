@@ -27,8 +27,6 @@ public class GameLogic extends Table {
 	
 	private GameScreen gameScreen;
 	
-	private Background backgroundSpace;
-	
 	private Array<EnemyShip> enemyShips;
 	private Array<Projectile> playerProjectiles;
 	private Array<SpawnPattern> patterns;
@@ -36,7 +34,7 @@ public class GameLogic extends Table {
 	
 	private long lastEnemyShipTime = 0;			//For testing
 	private float lastSpawnPatternTime = 0;		//For testing
-	private int nrOfShip;						//For testing
+	private int nrOfShip= 1;					//For testing
 	private boolean playerIsAlive = true;  		//For testing
 	private int currentRespawnTime = 0;			//For testing
 	private static final int respawnTime = 50;	//For testing
@@ -53,10 +51,6 @@ public class GameLogic extends Table {
 		this.gameScreen = gameScreen;
 		setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT);
 		setClip(true);
-		backgroundSpace = new Background(getWidth(), getHeight());
-		addActor(backgroundSpace);
-
-		nrOfShip = 1;
 		playerShip = new PlayerShip(this);
 		addActor(playerShip);
 		enemyShips = new Array<EnemyShip>();
@@ -198,6 +192,7 @@ public class GameLogic extends Table {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(Color.WHITE);
 		super.draw(batch, parentAlpha);
+		if(playerIsAlive) playerShip.drawAbove(batch, parentAlpha);
 	}
 	/**
 	 * Adds a enemy to gameLogics collision detection
@@ -228,20 +223,11 @@ public class GameLogic extends Table {
 	 *  and arrays (Player get removed as actor but won't get uninitialized )
 	 */
 	private void clearScreen(){
-		for(EnemyShip enemy: enemyShips){
-			removeActor(enemy);
-		}
 		enemyShips.clear();
-		for(Projectile porjectile: playerProjectiles){
-			removeActor(porjectile);
-		}
 		playerProjectiles.clear();
-		for(SpawnPattern pattern: patterns){
-			removeActor(pattern);
-		}
 		patterns.clear();
-		
-		removeActor(playerShip);		
+		clear();
+			
 	}
 	
 	/**

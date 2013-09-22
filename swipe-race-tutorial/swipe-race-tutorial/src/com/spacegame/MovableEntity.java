@@ -50,7 +50,6 @@ public class MovableEntity extends Actor {
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-
 	}
 }
 
