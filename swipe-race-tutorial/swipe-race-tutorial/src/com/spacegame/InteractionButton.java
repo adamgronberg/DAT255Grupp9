@@ -1,5 +1,6 @@
 package com.spacegame;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -36,6 +37,7 @@ public class InteractionButton extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
+		batch.setColor(Color.WHITE);
 		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
 	}
 	

@@ -1,20 +1,31 @@
 package com.spacegame;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.playerweapons.PlayerLaser;
+import com.playerweapons.PlayerMissile;
+import com.playerweapons.Projectile;
 
 /**
  * 
  * @author Grupp9
  *
- * The player ship. Methods for moving and drawing
+ * The player ship. Methods for moving ,drawing and shooting
  */
 public class PlayerShip extends MovableEntity {
 	
 	public static enum Direction {LEFT, RIGHT, NONE;}
-	public static final int PLAYER_SIZE = 50;			// The size of the player
-	private static final float SPEED = 5;				// number of pixels the player moves every act
+	private static enum AvailableWeapons {MISSILE, LASER;} 	//Implemented weapons
+	public static final int PLAYER_SIZE = 50;				// The size of the player
+	private static final float SPEED = 5;					// number of pixels the player moves every act
 	private static final float PLAYER_SPAWNLOCATION = 0.1f; //Height where the player moves
+	
+	private float lastMissileTime = 0;      	//For testing
+	
+	private GameLogic gameLogic;
+	
 	private Direction movmentDirection = Direction.NONE;
+	private AvailableWeapons currentWeapon = AvailableWeapons.LASER;
 	
 	
 	/**
@@ -23,8 +34,9 @@ public class PlayerShip extends MovableEntity {
 	 * Sets player starting variables
 	 * @param gameLogic
 	 */
-	public PlayerShip() {
+	public PlayerShip(GameLogic gameLogic) {
 		super(PLAYER_SIZE, PLAYER_SIZE);
+		this.gameLogic = gameLogic;
 		setPosition(MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION);	
 	}
 
@@ -92,5 +104,40 @@ public class PlayerShip extends MovableEntity {
 	public Direction getMovmentDirection(){
 		return movmentDirection;
 	}
-
+	
+	/**
+	 * Spawns projectiles in front of the player
+	 * Current weapons:
+	 * -Laser
+	 * -Missiles
+	 */
+	public void spawnPlayerProjectile() {
+		Projectile projectile;
+		if (currentWeapon == AvailableWeapons.MISSILE && TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) {
+			projectile = new PlayerMissile(getX()+PlayerShip.PLAYER_SIZE/2, 
+										   getY()+PlayerShip.PLAYER_SIZE);
+			gameLogic.addProjectileToCollision(projectile);
+			gameLogic.addActor(projectile);
+			lastMissileTime = TimeUtils.nanoTime();
+		}
+		else if(currentWeapon == AvailableWeapons.LASER && TimeUtils.nanoTime() - lastMissileTime > PlayerLaser.RATEOFFIRE) {
+			projectile = new PlayerLaser(getX()+PlayerShip.PLAYER_SIZE/2, 
+										 getY()+PlayerShip.PLAYER_SIZE);
+			gameLogic.addProjectileToCollision(projectile);
+			gameLogic.addActor(projectile);
+			lastMissileTime = TimeUtils.nanoTime();
+		}
+	}
+	
+	/**
+	 * Swaps players weapon
+	 */
+	public void switchWeapon(){
+		if(currentWeapon == AvailableWeapons.LASER) { 
+			currentWeapon = AvailableWeapons.MISSILE;
+		}
+		else if(currentWeapon == AvailableWeapons.MISSILE) { 
+			currentWeapon = AvailableWeapons.LASER;
+		}
+	}
 }

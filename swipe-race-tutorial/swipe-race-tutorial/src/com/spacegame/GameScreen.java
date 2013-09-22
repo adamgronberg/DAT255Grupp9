@@ -21,10 +21,15 @@ public class GameScreen implements Screen{
 	private GameLogic gameLogic;
 	private InputControl inputController;
 	private boolean optionAutoShoot = true;
-	private boolean optionControlLayout = true;
+	
+	public static enum ControlLayout {LAYOUT1, LAYOUT2}
+	public ControlLayout currentLayout = ControlLayout.LAYOUT1;
 	
 	public static final int MOVMENT_BUTTON_SIZE = 70;
 	public static final String LOG = GameScreen.class.getSimpleName();
+	
+	private InteractionButton moveLeftButton;
+	private InteractionButton moveRightButton;
 	
 
 	
@@ -37,6 +42,13 @@ public class GameScreen implements Screen{
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this);
 		stage.addActor(gameLogic);
+		
+		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveLeftButton);
+		moveRightButton = new InteractionButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
+				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveRightButton);
+		
+		stage.addActor(moveLeftButton);
+		stage.addActor(moveRightButton);
 	}
 	
 	/**
@@ -79,20 +91,24 @@ public class GameScreen implements Screen{
 		optionAutoShoot = !optionAutoShoot;
 	}
 	
-	
-	/**
-	 * 
-	 * @return What button layout to use on android device
-	 */
-	public boolean getOptionControlLayout(){
-		return optionControlLayout;
+	public ControlLayout getCurrentLayout(){
+		return currentLayout;
 	}
 	
 	/**
 	 * Change android layout
 	 */
 	public void changeOptionControlLayout(){
-		optionControlLayout = !optionControlLayout;
+		switch(currentLayout){
+			case LAYOUT1:
+				currentLayout = ControlLayout.LAYOUT2;
+				moveRightButton.moveButton(GameScreen.MOVMENT_BUTTON_SIZE, moveRightButton.getY());
+				break;
+			case LAYOUT2:
+				currentLayout = ControlLayout.LAYOUT1;
+				moveRightButton.moveButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, moveRightButton.getY());
+				break;
+		}
 	}
 	
 	/**
@@ -110,6 +126,7 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
 		stage.act(delta);				//Tells all actors to move
 		stage.draw();					//Tells all actors to draw
 	}

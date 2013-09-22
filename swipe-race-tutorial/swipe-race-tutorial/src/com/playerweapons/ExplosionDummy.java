@@ -40,6 +40,14 @@ public class ExplosionDummy extends Projectile{
 	}
 	
 	/**
+	 * Explosion should not despawn on collision
+	 * @return
+	 */
+	public boolean despawnesOnCollision(){
+		return false;
+	}
+	
+	/**
 	 * Called when "act" is called in its stage
 	 * Updates its position.
 	 */

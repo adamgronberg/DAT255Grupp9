@@ -29,8 +29,8 @@ public class InputControl implements GestureListener, InputProcessor {
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		Gdx.app.log( GameScreen.LOG, "velocityX :" + velocityX + " velocityY : " + velocityY  );		//TODO: Debug
-		if (velocityY < -2000 && velocityX < 1000 && velocityX > -1000) gameLogic.switchWeapon();
-		if (velocityY > 2000 && velocityX < 1000 && velocityX > -1000) gameLogic.switchWeapon();
+		if (velocityY < -2000 && velocityX < 1000 && velocityX > -1000) gameLogic.switchPlayerWeapon();
+		if (velocityY > 2000 && velocityX < 1000 && velocityX > -1000) gameLogic.switchPlayerWeapon();
 		if (velocityX < -2000 && velocityY < 1000 && velocityY > -1000) gameScreen.changeOptionAutoShoot();
 		if (velocityX > 2000 && velocityY < 1000 && velocityY > -1000) gameScreen.changeOptionControlLayout();
 		return false;
@@ -56,10 +56,11 @@ public class InputControl implements GestureListener, InputProcessor {
 	public boolean keyUp(int keycode) {
 		if(keycode == Input.Keys.LEFT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.LEFT)  gameLogic.playerShip.stay();
 		if(keycode == Input.Keys.RIGHT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.RIGHT)  gameLogic.playerShip.stay();
-		if(keycode == Input.Keys.DOWN)  gameLogic.switchWeapon();
-		if(keycode == Input.Keys.UP)  gameLogic.switchWeapon();
+		if(keycode == Input.Keys.DOWN)  gameLogic.switchPlayerWeapon();
+		if(keycode == Input.Keys.UP)  gameLogic.switchPlayerWeapon();
 		if(keycode == Input.Keys.SPACE)  gameLogic.toggleShooting();						//For testing, should be in a option menu
 		if(keycode == Input.Keys.CONTROL_LEFT) gameScreen.toggleOptionAutoShoot();			//For testing, should be in a option menu
+		if(keycode == Input.Keys.SHIFT_LEFT) gameScreen.changeOptionControlLayout();		//For testing, only android
 		return false;
 	}
 
@@ -68,7 +69,7 @@ public class InputControl implements GestureListener, InputProcessor {
 	 */
 	@Override public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		Vector3 touchPos = gameScreen.unProjectCoordinates(screenX, screenY);
-		if(gameScreen.getOptionControlLayout()){
+		if(gameScreen.getCurrentLayout() == GameScreen.ControlLayout.LAYOUT1){
 			if (touchPos.x <= GameScreen.MOVMENT_BUTTON_SIZE && touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {						//TODO: Should use buttons instead of areas
 				gameLogic.playerShip.stay();
 			}
@@ -93,7 +94,7 @@ public class InputControl implements GestureListener, InputProcessor {
 	 */
 	@Override public boolean touchDragged(int screenX, int screenY, int pointer) {
 		Vector3 touchPos = gameScreen.unProjectCoordinates(screenX, screenY);
-		if(gameScreen.getOptionControlLayout()){
+		if(gameScreen.getCurrentLayout() == GameScreen.ControlLayout.LAYOUT1){
 			if (touchPos.x <= GameScreen.MOVMENT_BUTTON_SIZE && touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {						//TODO: Should use buttons instead of areas
 				gameLogic.playerShip.moveLeft();
 			}

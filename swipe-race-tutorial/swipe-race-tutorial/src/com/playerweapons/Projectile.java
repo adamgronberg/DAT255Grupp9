@@ -33,6 +33,14 @@ public class Projectile extends MovableEntity{
 	}
 	
 	/**
+	 * Override this method if projectiles should not despawn on collision
+	 * @return
+	 */
+	public boolean despawnesOnCollision(){
+		return true;
+	}
+	
+	/**
 	 * Override this method to make something linger (look at ExplosionDummy for example)
 	 * @return 
 	 */
