@@ -28,6 +28,8 @@ import com.spawnlogic.SpawnPattern;
  */
 public class GameLogic extends Table {
 	
+	private GameScreen gameScreen;
+	
 	private Background backgroundSpace;
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
@@ -55,7 +57,8 @@ public class GameLogic extends Table {
 	 * Constructor
 	 * TODO: Should set up unique levels and not spawn set number of enemies randomly (Release 1 demo)
 	 */
-	public GameLogic() {
+	public GameLogic(GameScreen gameScreen) {
+		this.gameScreen = gameScreen;
 		setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT);
 		setClip(true);
 		backgroundSpace = new Background(getWidth(), getHeight());
@@ -73,7 +76,6 @@ public class GameLogic extends Table {
 		enemyShips = new Array<EnemyShip>();
 		playerProjectiles = new Array<Projectile>();
 		patterns = new Array<SpawnPattern>();
-
 	}
 	/**
 	 *  Handles object spawning and collision
@@ -89,14 +91,14 @@ public class GameLogic extends Table {
 		}
 		
 		if (playerIsAlive){
-			if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();		//For testing
+			if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();			//For testing
 			if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();	//For testing
-			if (GameScreen.getOptionAutoShoot() || shooting) spawnPlayerProjectile();		//For testing
+			if (gameScreen.getOptionAutoShoot() || shooting) spawnPlayerProjectile();			//For testing
 		}
 		else currentRespawnTime++;															//For testing
 		
 		///////////////////////////// For testing
-		if(GameScreen.getOptionControlLayout()) {				
+		if(gameScreen.getOptionControlLayout()) {				
 			moveRightButton.moveButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, moveRightButton.getY());
 		}
 		else{

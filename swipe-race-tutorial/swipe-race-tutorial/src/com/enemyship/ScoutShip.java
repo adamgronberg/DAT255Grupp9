@@ -16,7 +16,7 @@ public class ScoutShip extends EnemyShip{
 	public final static int HEIGHT = 40;
 	public final static int WIDTH = 40;
 	private final static float SHIPSPEED_X = 2.0f;
-	private final static float SHIPSPEED_Y = 3.0f;
+	private final static float SHIPSPEED_Y = 2.5f;
 	private boolean movingLeft = true;
 	private final float movmentLenght = 50;
 	private float currentMovmentLenght;
@@ -28,8 +28,8 @@ public class ScoutShip extends EnemyShip{
 	 */
 	public ScoutShip(float x, float y){
 		super(x, y, WIDTH, HEIGHT);
-		setRotation(-45);
 		currentMovmentLenght = 0;
+		setRotation(-45);
 	}
 	
 	
@@ -49,11 +49,10 @@ public class ScoutShip extends EnemyShip{
 	@Override
 	public void act(float delta){
 		setY(getY()-SHIPSPEED_Y);
-		
 		if(movingLeft){
 			if(getX() < 0 || currentMovmentLenght > movmentLenght){
-				currentMovmentLenght = 0;
 				setRotation(45);
+				currentMovmentLenght = 0;
 				movingLeft = false;
 			}
 			setX(getX()-SHIPSPEED_X);
@@ -61,8 +60,8 @@ public class ScoutShip extends EnemyShip{
 		}
 		else {
 			if(getX() > MyGame.WIDTH-WIDTH || currentMovmentLenght > movmentLenght){
-				currentMovmentLenght = 0;
 				setRotation(-45);
+				currentMovmentLenght = 0;
 				movingLeft = true;
 			}
 			setX(getX()+SHIPSPEED_X);

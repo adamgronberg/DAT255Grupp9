@@ -28,7 +28,7 @@ public class PlayerMissile extends Projectile {
 	}
 	
 	/**
-	 * Draws the laser
+	 * Draws the missile
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
