@@ -10,11 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.input.InputControl;
 
 /**
- * Draws everything on GameScreen and handles input
- * Tells all actors to draw and act
  * 
  * @author Grupp9
  *
+ * Draws everything on GameScreen and handles input
+ * Tells all actors to draw and act
  */
 public class GameScreen implements Screen{
 	private Stage stage;

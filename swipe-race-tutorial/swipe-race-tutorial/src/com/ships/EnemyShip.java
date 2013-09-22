@@ -1,4 +1,4 @@
-package com.enemyship;
+package com.ships;
 
 import com.spacegame.MovableEntity;
 
@@ -11,8 +11,10 @@ import com.spacegame.MovableEntity;
  *	
  *	
  */
-public class EnemyShip extends MovableEntity {
+public abstract class EnemyShip extends MovableEntity{
 	
+	protected int health;
+	protected boolean isDespawnReady = false;
 	
 	/**
 	 * 
@@ -21,17 +23,40 @@ public class EnemyShip extends MovableEntity {
 	 * @param width The width of the EnemyShip
 	 * @param height The height of the EnemyShip
 	 */
-	public EnemyShip(float x, float y, float width, float height) {
-		super(width, height);
+	public EnemyShip(float x, float y, float width, float height, int health) {
+		super(width, height, x, y);
+		this.health = health;
 		setPosition(x, y);
 	}
 	
 	/**
-	 * Plays On-Death-animation
+	 * Removes health from ship
+	 * Sets despawnReady = true when below 0 health
 	 */
-	public void crash() {
+	public void hit(int damage) {
+		health = health - damage;
+		if (health<=0) isDespawnReady = true;
+	}
+	
+	/**
+	 * @return Ship current health
+	 */
+	public int getHealth(){
+		return health;
+	}
+	
+	/**
+	 * Override this method to make something linger (look at ExplosionDummy for example)
+	 * @return 
+	 */
+	@Override
+	public boolean isDespawnReady() {	
+		return isDespawnReady;
 	}
 }
+
+
+
 //clearActions();						Example of how to use animations. Should be done in a separate class
 //addAction(fadeOut(1f));
 //if (front && above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(200, 200, 1.5f)), removeActor()));

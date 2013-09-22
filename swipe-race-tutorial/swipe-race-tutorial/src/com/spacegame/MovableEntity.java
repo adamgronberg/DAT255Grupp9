@@ -15,7 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class MovableEntity extends Actor {
 	protected Rectangle bounds = new Rectangle();
 	
-	public MovableEntity(float width, float height) {
+	/**
+	 * Constructor
+	 * @param width
+	 * @param height
+	 * @param x
+	 * @param y
+	 */
+	public MovableEntity(float width, float height, float x, float y) {
+		setPosition(x, y);
 		setWidth(width);
 		setHeight(height);
 	}
@@ -50,6 +58,14 @@ public class MovableEntity extends Actor {
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
+	}
+	
+	/**
+	 * Override this method to make something linger (look at ExplosionDummy for example)
+	 * @return 
+	 */
+	public boolean isDespawnReady() {	
+		return false;
 	}
 }
 

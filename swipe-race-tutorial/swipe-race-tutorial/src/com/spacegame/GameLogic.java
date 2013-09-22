@@ -2,8 +2,6 @@ package com.spacegame;
 
 import java.util.Iterator;
 
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,24 +9,30 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.enemyship.BasicShip;
-import com.enemyship.EnemyShip;
-import com.enemyship.ScoutShip;
-import com.playerweapons.Projectile;
+import com.collisiondetection.CollisionDetection;
+import com.effects.ExplosionEffect;
+import com.ships.BasicShip;
+import com.ships.EnemyShip;
+import com.ships.HeavyShip;
+import com.ships.PlayerShip;
+import com.ships.ScoutShip;
 import com.spawnlogic.SpawnPattern;
+import com.weapons.Projectile;
 
 /**
  * 
  * @author Grupp9
- * TODO: Move out stuff from this class, handles to much
+ * TODO: Add levels instead of random spawning
  *
  */
 public class GameLogic extends Table {
 	
 	private GameScreen gameScreen;
+	private CollisionDetection collision;
 	
 	private Array<EnemyShip> enemyShips;
 	private Array<Projectile> playerProjectiles;
+	private Array<ExplosionEffect> effects; 
 	private Array<SpawnPattern> patterns;
 	
 	
@@ -45,7 +49,7 @@ public class GameLogic extends Table {
 	
 	/**
 	 * Constructor
-	 * TODO: Should set up unique levels and not spawn set number of enemies randomly (Release 1 demo)
+	 * TODO: Should set up unique levels and not spawn enemies randomly (Release 1 demo)
 	 */
 	public GameLogic(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
@@ -56,6 +60,18 @@ public class GameLogic extends Table {
 		enemyShips = new Array<EnemyShip>();
 		playerProjectiles = new Array<Projectile>();
 		patterns = new Array<SpawnPattern>();
+		effects = new Array<ExplosionEffect>();
+		collision = new CollisionDetection(this);
+		
+	}
+	
+	
+	public Array<Projectile> getPlayerProjectiles(){
+		return playerProjectiles;
+	}
+	
+	public Array<EnemyShip> getEnemyShips(){
+		return enemyShips;
 	}
 	
 	/**
@@ -64,6 +80,16 @@ public class GameLogic extends Table {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		
+		Iterator<ExplosionEffect> iterE = effects.iterator();
+		while (iterE.hasNext()) {
+			ExplosionEffect effect = iterE.next();
+			if(effect.isDespawnReady()){					//Removes ship when despawn ready
+				removeActor(effect);
+				iterE.remove();
+			}
+		}
+		
 		
 		if (!playerIsAlive && currentRespawnTime > respawnTime) {	//For testing
 			addActor(playerShip);
@@ -74,79 +100,13 @@ public class GameLogic extends Table {
 		if (playerIsAlive){
 			if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();			//For testing
 			if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();		//For testing
-			if (gameScreen.getOptionAutoShoot() || shooting) playerShip.spawnPlayerProjectile();//For testing TODO:Should prob be in playerShip
+			if (gameScreen.getOptionAutoShoot() || shooting) playerShip.spawnPlayerProjectile();//For testing TODO:Should prob be in playerShip act
 		}
 		else currentRespawnTime++;									//For testing
 		
 		if(playerIsAlive) {
-			Iterator<Projectile> iterM;
-			Iterator<EnemyShip> iter = enemyShips.iterator();
-			while (iter.hasNext()) {
-				EnemyShip enemyShip = iter.next();
-				iterM = playerProjectiles.iterator();
-				if (isOutOfBoundsY(enemyShip)) {				
-					iter.remove();
-					removeActor(enemyShip);
-				}
-				else if(collisionControl(enemyShip, playerShip)) {
-					clearScreen();
-					playerIsAlive = false;
-					break;
-				}									
-				else {
-					while(iterM.hasNext()){
-						Projectile projectile = iterM.next();
-						if(projectile.isDespawnReady()){	//Removes projectiles with linger time
-							removeActor(projectile);
-							iterM.remove();
-						}
-						if (collisionControl(enemyShip, projectile)) {		//Removes projectiles and enemies that collided
-							Gdx.app.log( GameScreen.LOG, "Hit!"  );
-							if(projectile.despawnesOnCollision()){			
-								removeActor(projectile);
-								iterM.remove();
-							}
-							removeActor(enemyShip);
-							iter.remove();
-							projectile = projectile.explode(this);
-							if(projectile != null) playerProjectiles.add(projectile);
-							break;
-						}
-					}
-				}
-			}
-			iterM = playerProjectiles.iterator();	//If projectiles are out of y-led bounds
-			while(iterM.hasNext()){
-				Projectile missile = iterM.next();
-				if (isOutOfBoundsY(missile)){
-					iterM.remove();
-					removeActor(missile);
-				}
-			}
+			collision.checkCollisions();
 		}
-	}
-	
-	/**
-	 * Checks if a obj is out of bounds on y-led
-	 * @param movableObj
-	 * @return	returns true if out of bounds
-	 */
-	private boolean isOutOfBoundsY(MovableEntity movableObj){
-		if (movableObj.bounds.y < -movableObj.getBounds().getHeight() || movableObj.bounds.y >= 
-				MyGame.HEIGHT+movableObj.getBounds().getHeight()){
-			return true; 
-		}
-		return false;
-	}
-	
-	/**
-	 * Tests if obj1 and obj2 collided
-	 * @param movableObj1
-	 * @param movableObj2
-	 * @return true if the objects collided
-	 */
-	private boolean collisionControl(MovableEntity movableObj1, MovableEntity movableObj2){
-		return movableObj1.getBounds().overlaps(movableObj2.getBounds());
 	}
 	
 	
@@ -163,14 +123,18 @@ public class GameLogic extends Table {
 		enemyShips.add(enemyShip);
 		addActor(enemyShip);
 		
-		spawnLocation = MathUtils.random(0,MyGame.WIDTH-ScoutShip.WIDTH);
+		spawnLocation = MathUtils.random(0,MyGame.WIDTH-HeavyShip.WIDTH);
 		xPos = spawnLocation;
-		enemyShip = new ScoutShip(xPos, MyGame.HEIGHT+ScoutShip.HEIGHT);
+		enemyShip = new HeavyShip(xPos, MyGame.HEIGHT+HeavyShip.HEIGHT);
 		enemyShips.add(enemyShip);
 		addActor(enemyShip);
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
 		nrOfShip++;
+	}
+	
+	public void changePlayerAlive(){
+		playerIsAlive = !playerIsAlive;
 	}
 	
 	/**
@@ -194,6 +158,7 @@ public class GameLogic extends Table {
 		super.draw(batch, parentAlpha);
 		if(playerIsAlive) playerShip.drawAbove(batch, parentAlpha);
 	}
+	
 	/**
 	 * Adds a enemy to gameLogics collision detection
 	 * @param enemy
@@ -202,6 +167,15 @@ public class GameLogic extends Table {
 		enemyShips.add(enemy);
 		addActor(enemy);
 	}
+	/**
+	 * Adds a effect to gameLogics
+	 * @param enemy
+	 */
+	public void addEffect(ExplosionEffect effect){
+		effects.add(effect);
+		addActor(effect);
+	}
+	
 	
 	/**
 	 * Adds a projectile to gameLogics collision detection
@@ -222,12 +196,11 @@ public class GameLogic extends Table {
 	 * 	Removes all Enemies, projectile, patterns and the player from screen 
 	 *  and arrays (Player get removed as actor but won't get uninitialized )
 	 */
-	private void clearScreen(){
+	public void clearScreen(){
 		enemyShips.clear();
 		playerProjectiles.clear();
 		patterns.clear();
 		clear();
-			
 	}
 	
 	/**

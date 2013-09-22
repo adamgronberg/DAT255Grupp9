@@ -1,4 +1,4 @@
-package com.enemyship;
+package com.ships;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
@@ -17,6 +17,8 @@ public class ScoutShip extends EnemyShip{
 	public final static int WIDTH = 40;
 	private final static float SHIPSPEED_X = 2.0f;
 	private final static float SHIPSPEED_Y = 2.5f;
+	private final static int HEALTH=1;
+	
 	private boolean movingLeft = true;
 	private final float movmentLenght = 50;
 	private float currentMovmentLenght;
@@ -27,12 +29,11 @@ public class ScoutShip extends EnemyShip{
 	 * @param y
 	 */
 	public ScoutShip(float x, float y){
-		super(x, y, WIDTH, HEIGHT);
+		super(x, y, WIDTH, HEIGHT, HEALTH);
 		currentMovmentLenght = 0;
 		setRotation(-45);
 	}
-	
-	
+		
 	/**
 	 * Draws the ship
 	 */
@@ -69,5 +70,4 @@ public class ScoutShip extends EnemyShip{
 		}
 		super.act(delta);
 	}
-	
 }

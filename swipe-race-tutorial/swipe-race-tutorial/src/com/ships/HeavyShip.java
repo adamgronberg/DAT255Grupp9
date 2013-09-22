@@ -1,4 +1,4 @@
-package com.enemyship;
+package com.ships;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
@@ -8,22 +8,23 @@ import com.spacegame.Assets;
  * @author Grupp9
  *
  *	The Basic enemy
- *  Only has y led moment
+ *  Only has y led moment more HP
  *
  */
-public class BasicShip extends EnemyShip {
-	private final static float SHIPSPEED = 3.0f;
-	public final static int HEIGHT=50;
-	public final static int WIDTH=50;
+public class HeavyShip extends EnemyShip {
+	private final static float SHIPSPEED = 2.0f;
+	public final static int HEIGHT=60;
+	public final static int WIDTH=40;
 	
+	private final static int HEALTH=2;
 	
 	/**
 	 * Constructor
 	 * @param x	x-led Spawn location
 	 * @param y y-led Spawn location
 	 */
-	public BasicShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT);
+	public HeavyShip(float x, float y) {
+		super(x, y, WIDTH, HEIGHT, HEALTH);
 	}
 	
 	/**
@@ -44,13 +45,4 @@ public class BasicShip extends EnemyShip {
 		setY(getY()-SHIPSPEED);
 		super.act(delta);
 	}
-	
-	/**
-	 * Plays On-Death-animation
-	 * @param left	If the enemy was hit in the left
-	 * @param right If the enemy was hit in the right
-	 */
-	public void crash(boolean left, boolean right) {
-	}
-
 }

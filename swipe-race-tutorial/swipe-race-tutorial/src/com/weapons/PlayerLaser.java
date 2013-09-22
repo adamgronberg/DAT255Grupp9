@@ -1,4 +1,4 @@
-package com.playerweapons;
+package com.weapons;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +18,7 @@ public class PlayerLaser extends Projectile {
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 5;
+	private static final int DAMAGE = 1;
 	
 	/**
 	 * Constructor
@@ -25,7 +26,7 @@ public class PlayerLaser extends Projectile {
 	 * @param y y-led Spawn
 	 */
 	public PlayerLaser(float x, float y){
-		super(x, y, WIDTH, HEIGHT);
+		super(x, y, WIDTH, HEIGHT, DAMAGE);
 		setColor(Color.GREEN);
 	}
 	
@@ -46,11 +47,5 @@ public class PlayerLaser extends Projectile {
 	public void act(float delta){
 		setY(getY()+SPEED);
 		super.act(delta);
-	}
-	
-	/**
-	 * Plays On-Death-animation on hit
-	 */
-	public void hit(boolean left, boolean right) {
 	}
 }

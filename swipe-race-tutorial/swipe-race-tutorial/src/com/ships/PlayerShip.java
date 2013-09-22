@@ -1,10 +1,14 @@
-package com.spacegame;
+package com.ships;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.playerweapons.PlayerLaser;
-import com.playerweapons.PlayerMissile;
-import com.playerweapons.Projectile;
+import com.spacegame.Assets;
+import com.spacegame.GameLogic;
+import com.spacegame.MovableEntity;
+import com.spacegame.MyGame;
+import com.weapons.PlayerLaser;
+import com.weapons.PlayerMissile;
+import com.weapons.Projectile;
 
 /**
  * 
@@ -35,9 +39,8 @@ public class PlayerShip extends MovableEntity {
 	 * @param gameLogic
 	 */
 	public PlayerShip(GameLogic gameLogic) {
-		super(PLAYER_SIZE, PLAYER_SIZE);
+		super(PLAYER_SIZE, PLAYER_SIZE, MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION);
 		this.gameLogic = gameLogic;
-		setPosition(MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION);	
 	}
 
 	

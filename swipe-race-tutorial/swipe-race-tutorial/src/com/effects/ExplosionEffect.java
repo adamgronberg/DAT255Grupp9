@@ -1,21 +1,14 @@
-package com.playerweapons;
+package com.effects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
+import com.spacegame.MovableEntity;
 
+public class ExplosionEffect extends MovableEntity{
 
-/**
- * Dummy class for explosions that lingers 
- * (needs to be added to projectile array in gameLogic to get collision) 
- * 
- * @author Grupp9
- *
- */
-public class ExplosionDummy extends Projectile{
 
 	private float lingerTime;
 	private float lastLingerTime = 0;
-	
 	
 	/**
 	 * Constructor
@@ -25,9 +18,17 @@ public class ExplosionDummy extends Projectile{
 	 * @param height		Height of explosion
 	 * @param lingerTime	The time the explosion lingers (20 ~ 1 second)
 	 */
-	public ExplosionDummy(float x, float y, float width, float height, float lingerTime) {
-		super(x, y, width, height);
+	public ExplosionEffect(float x, float y, float width, float height, float lingerTime) {
+		super( width, height, x, y);
 		this.lingerTime = lingerTime;
+	}
+		
+	/**
+	 * Explosion should not despawn on collision
+	 * @return
+	 */
+	public boolean despawnesOnCollision(){
+		return false;
 	}
 	
 	/**
@@ -40,16 +41,8 @@ public class ExplosionDummy extends Projectile{
 	}
 	
 	/**
-	 * Explosion should not despawn on collision
-	 * @return
-	 */
-	public boolean despawnesOnCollision(){
-		return false;
-	}
-	
-	/**
 	 * Called when "act" is called in its stage
-	 * Updates its position.
+	 * Updates its linger time
 	 */
 	@Override
 	public void act(float delta){
@@ -60,9 +53,9 @@ public class ExplosionDummy extends Projectile{
 	/**
 	 * Returns true if lingerTime has ended
 	 */
+	@Override
 	public boolean isDespawnReady() {	
 		if (lastLingerTime >= lingerTime) return true;
 		else return false;
 	}
-
 }

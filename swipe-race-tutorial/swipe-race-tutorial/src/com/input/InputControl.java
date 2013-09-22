@@ -6,10 +6,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.ships.PlayerShip;
 import com.spacegame.GameLogic;
 import com.spacegame.GameScreen;
 import com.spacegame.MyGame;
-import com.spacegame.PlayerShip;
 
 public class InputControl implements GestureListener, InputProcessor {
 

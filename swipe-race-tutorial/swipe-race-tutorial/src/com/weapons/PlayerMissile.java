@@ -1,22 +1,29 @@
-package com.playerweapons;
+package com.weapons;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.effects.ExplosionEffect;
 import com.spacegame.Assets;
-import com.spacegame.GameLogic;
 
 /**
  * 
  * @author Grupp9
  *
- * Player missile. Have a small blast radius on impact
+ * Player missile. Have a small blast radius on impact and a sweet on hit effect
  *
  */
-public class PlayerMissile extends Projectile {
+public class PlayerMissile extends AreaOfEffectWeapon{
 	
 	public static final float RATEOFFIRE = 800000000f; //In nanoseconds
 	private static final float SPEED = 5f;
+	private static final int DAMAGE = 1;
+	private static final int EXPLODEDAMAGE = 1;
+	private static final int LINGERTIME = 15;
+	
 	public static final float HEIGHT = 30;
 	public static final float WIDTH = 20;
+	
+	public static final float EXPLOSION_H = 80;
+	public static final float EXPLOSION_W = 60;
 	
 	/**
 	 * Constructor
@@ -24,7 +31,7 @@ public class PlayerMissile extends Projectile {
 	 * @param y y-led Spawn
 	 */
 	public PlayerMissile(float x, float y){
-		super(x, y, WIDTH, HEIGHT);
+		super(x, y, WIDTH, HEIGHT, DAMAGE, EXPLODEDAMAGE);
 	}
 	
 	/**
@@ -47,12 +54,14 @@ public class PlayerMissile extends Projectile {
 	}
 	
 	/**
-	 * Returns a collision dummy for the explosion that lingers
+	 * Returns a effect 
 	 */
-	public ExplosionDummy explode(GameLogic stage) {
-		ExplosionDummy explosion = new ExplosionDummy(getX()-WIDTH/4f, 
-										getY()-HEIGHT/4f, 2*WIDTH, 2*HEIGHT, 20);
-		stage.addActor(explosion);
+	@Override
+	public ExplosionEffect addEffect() {
+		ExplosionEffect explosion = new ExplosionEffect(getX()-WIDTH/4f, 
+										getY()-HEIGHT/4f, EXPLOSION_W, EXPLOSION_H, LINGERTIME);
+		areaOfEffectDummy = new AreaOfEffectDummy(getX()-WIDTH/4f, 
+				getY()-HEIGHT/4f, EXPLOSION_W, EXPLOSION_H, areaDamage);
 		return explosion;
 	}
 }
