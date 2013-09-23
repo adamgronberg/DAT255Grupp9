@@ -1,6 +1,8 @@
 package com.ships;
 
-import com.spacegame.MovableEntity;
+
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.spacegame.Sprite;
 
 
 /**
@@ -11,10 +13,9 @@ import com.spacegame.MovableEntity;
  *	
  *	
  */
-public abstract class EnemyShip extends MovableEntity{
+public abstract class EnemyShip extends Sprite{
 	
 	protected int health;
-	protected boolean isDespawnReady = false;
 	
 	/**
 	 * 
@@ -23,10 +24,9 @@ public abstract class EnemyShip extends MovableEntity{
 	 * @param width The width of the EnemyShip
 	 * @param height The height of the EnemyShip
 	 */
-	public EnemyShip(float x, float y, float width, float height, int health) {
-		super(width, height, x, y);
+	public EnemyShip(float x, float y, float width, float height, int health, TextureRegion texture) {
+		super(width, height, x, y, texture);
 		this.health = health;
-		setPosition(x, y);
 	}
 	
 	/**
@@ -35,23 +35,7 @@ public abstract class EnemyShip extends MovableEntity{
 	 */
 	public void hit(int damage) {
 		health = health - damage;
-		if (health<=0) isDespawnReady = true;
-	}
-	
-	/**
-	 * @return Ship current health
-	 */
-	public int getHealth(){
-		return health;
-	}
-	
-	/**
-	 * Override this method to make something linger (look at ExplosionDummy for example)
-	 * @return 
-	 */
-	@Override
-	public boolean isDespawnReady() {	
-		return isDespawnReady;
+		if (health<=0) despawnReady = true;
 	}
 }
 

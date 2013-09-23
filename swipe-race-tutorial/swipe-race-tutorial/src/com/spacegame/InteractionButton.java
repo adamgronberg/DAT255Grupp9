@@ -1,7 +1,5 @@
 package com.spacegame;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
@@ -10,9 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author Grupp9
  * Draws a texture on screen
  */
-public class InteractionButton extends MovableEntity {
+public class InteractionButton extends Sprite {
 	
-	private TextureRegion texture;
 	
 	/**
 	 * Constructor
@@ -24,21 +21,10 @@ public class InteractionButton extends MovableEntity {
 	 * @param texture	What texture to draw
 	 */
 	public InteractionButton(float x, float y, float width, float height, TextureRegion texture) {
-		super( width, height, x, y);
+		super( width, height, x, y, texture);
 		this.texture = texture;
 
 	}
-	
-	/**
-	 * Draws the texture
-	 */
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
-		batch.setColor(Color.WHITE);
-		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
-	}
-	
 	
 	/**
 	 * Returns true if coordinates is within button

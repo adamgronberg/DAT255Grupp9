@@ -10,13 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.collisiondetection.CollisionDetection;
-import com.effects.ExplosionEffect;
+import com.collisiondetection.OutOfBoundsDetection;
+import com.effects.AreaEffect;
 import com.ships.BasicShip;
 import com.ships.EnemyShip;
 import com.ships.HeavyShip;
 import com.ships.PlayerShip;
 import com.ships.ScoutShip;
 import com.spawnlogic.SpawnPattern;
+import com.weapons.AreaOfEffectDummy;
 import com.weapons.Projectile;
 
 /**
@@ -32,8 +34,9 @@ public class GameLogic extends Table {
 	
 	private Array<EnemyShip> enemyShips;
 	private Array<Projectile> playerProjectiles;
-	private Array<ExplosionEffect> effects; 
+	private Array<AreaEffect> effects; 
 	private Array<SpawnPattern> patterns;
+	private Array<AreaOfEffectDummy> dummys;
 	
 	
 	private long lastEnemyShipTime = 0;			//For testing
@@ -60,16 +63,33 @@ public class GameLogic extends Table {
 		enemyShips = new Array<EnemyShip>();
 		playerProjectiles = new Array<Projectile>();
 		patterns = new Array<SpawnPattern>();
-		effects = new Array<ExplosionEffect>();
+		effects = new Array<AreaEffect>();
+		dummys = new Array<AreaOfEffectDummy>();
 		collision = new CollisionDetection(this);
 		
 	}
 	
+	public void addAreaOfEffectDummy(AreaOfEffectDummy dummy){
+		dummys.add(dummy);
+	}
 	
+	/**
+	 * @return dummies
+	 */
+	public Array<AreaOfEffectDummy> getDummys(){
+		return dummys;	
+	}
+	
+	/**
+	 * @return playerProjectiles
+	 */
 	public Array<Projectile> getPlayerProjectiles(){
 		return playerProjectiles;
 	}
 	
+	/**
+	 * @return enemyShips
+	 */
 	public Array<EnemyShip> getEnemyShips(){
 		return enemyShips;
 	}
@@ -81,16 +101,46 @@ public class GameLogic extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		
-		Iterator<ExplosionEffect> iterE = effects.iterator();
+		
+		Iterator<AreaEffect> iterE = effects.iterator();
 		while (iterE.hasNext()) {
-			ExplosionEffect effect = iterE.next();
-			if(effect.isDespawnReady()){					//Removes ship when despawn ready
+			AreaEffect effect = iterE.next();
+			if(effect.isDespawnReady()){					
 				removeActor(effect);
 				iterE.remove();
 			}
 		}
 		
+		Iterator<EnemyShip> iterES = enemyShips.iterator();
+		while (iterES.hasNext()) {
+			EnemyShip enemyShip = iterES.next();
+			//Removes ship when despawn ready
+			if(enemyShip.isDespawnReady()){					
+				removeActor(enemyShip);
+				iterES.remove();
+			}
+			//Removes ships out of y-led bounds
+			else if (OutOfBoundsDetection.isOutOfBoundsY(enemyShip)) {		
+				iterES.remove();
+				removeActor(enemyShip);
+			}
+		}
 		
+		Iterator<Projectile> iterPP = playerProjectiles.iterator();
+		while(iterPP.hasNext()){
+			Projectile projectile = iterPP.next();			
+			//Removes projectiles with linger time
+			if(projectile.isDespawnReady()){					
+				removeActor(projectile);
+				iterPP.remove();
+			}
+			//If projectiles are out of y-led bounds
+			else if (OutOfBoundsDetection.isOutOfBoundsY(projectile)){
+				iterPP.remove();
+				removeActor(projectile);
+			}
+		}
+
 		if (!playerIsAlive && currentRespawnTime > respawnTime) {	//For testing
 			addActor(playerShip);
 			currentRespawnTime = 0;
@@ -104,7 +154,7 @@ public class GameLogic extends Table {
 		}
 		else currentRespawnTime++;									//For testing
 		
-		if(playerIsAlive) {
+		if(playerIsAlive) {											//For testing
 			collision.checkCollisions();
 		}
 	}
@@ -171,7 +221,7 @@ public class GameLogic extends Table {
 	 * Adds a effect to gameLogics
 	 * @param enemy
 	 */
-	public void addEffect(ExplosionEffect effect){
+	public void addEffect(AreaEffect effect){
 		effects.add(effect);
 		addActor(effect);
 	}

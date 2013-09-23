@@ -1,7 +1,5 @@
 package com.weapons;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
 
 /**
@@ -26,17 +24,7 @@ public class PlayerLaser extends Projectile {
 	 * @param y y-led Spawn
 	 */
 	public PlayerLaser(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGE);
-		setColor(Color.GREEN);
-	}
-	
-	/**
-	 * Draws the laser
-	 */
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
-		batch.draw(Assets.playerLaser, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
+		super(x, y, WIDTH, HEIGHT, DAMAGE, Assets.playerLaser);
 	}
 	
 	/**

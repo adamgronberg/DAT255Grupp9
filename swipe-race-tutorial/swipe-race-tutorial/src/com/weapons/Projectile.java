@@ -1,7 +1,8 @@
 package com.weapons;
 
-import com.effects.ExplosionEffect;
-import com.spacegame.MovableEntity;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.effects.AreaEffect;
+import com.spacegame.Sprite;
 
 /**
  * 
@@ -9,7 +10,7 @@ import com.spacegame.MovableEntity;
  * 
  * Base class for weapons. Player and enemy weapons should extend this class
  */
-public abstract class Projectile extends MovableEntity{
+public abstract class Projectile extends Sprite{
 	
 	protected int damage;
 	
@@ -20,17 +21,9 @@ public abstract class Projectile extends MovableEntity{
 	 * @param width The width of the Projectile
 	 * @param height The height of the Projectile
 	 */
-	public Projectile(float x, float y, float width, float height, int damage) {
-		super(width, height, x, y);
+	public Projectile(float x, float y, float width, float height, int damage, TextureRegion texture) {
+		super(width, height, x, y, texture);
 		this.damage = damage;
-	}
-	
-	/**
-	 * Triggers on death (adds a effect for now)
-	 * @return 
-	 */
-	public ExplosionEffect addEffect() {
-		return null;
 	}
 	
 	/**
@@ -46,5 +39,9 @@ public abstract class Projectile extends MovableEntity{
 	 */
 	public int getDamage() {
 		return damage;
+	}
+
+	public AreaEffect addOnHitEffect() {
+		return null;
 	}
 }

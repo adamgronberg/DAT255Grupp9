@@ -1,8 +1,5 @@
 package com.spacegame;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
 /**
@@ -11,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * 
  * TODO: Could use this class to add the different map backgrounds
  */
-public class Background extends Actor {
+public class Background extends Sprite {
 	
 	/**
 	 * Constructor
@@ -19,20 +16,9 @@ public class Background extends Actor {
 	 * @param height	Height of the screen should be here
 	 */
 	public Background(float width, float height) {
-		setWidth(width);
-		setHeight(height);
-		setPosition(0, 0);
+		super(width, height, 0, 0, Assets.space);
 		//addAction(forever(sequence(moveTo(0, 0, 1f), moveTo(width, 0)))); 
-		//TODO: Could have a scrolling background in endless mode?
+		//TODO: Could have a scrolling background instead of static?
 	}
 	
-	/**
-	 * Draws the background
-	 */
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
-		batch.setColor(Color.WHITE);
-		batch.draw(Assets.space, getX(), getY(), getWidth(), getHeight());
-	}
 }

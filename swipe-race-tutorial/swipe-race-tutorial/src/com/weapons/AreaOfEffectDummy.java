@@ -12,10 +12,11 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class AreaOfEffectDummy extends Rectangle{
 
+
+	private static final long serialVersionUID = 1L;
 	private int areaDamage;
 	
 	
-	private static final long serialVersionUID = -7168532145693716922L;
 
 	/**
 	 * Constructor

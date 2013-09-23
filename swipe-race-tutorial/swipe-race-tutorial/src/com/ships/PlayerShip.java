@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.spacegame.Assets;
 import com.spacegame.GameLogic;
-import com.spacegame.MovableEntity;
 import com.spacegame.MyGame;
+import com.spacegame.Sprite;
 import com.weapons.PlayerLaser;
 import com.weapons.PlayerMissile;
 import com.weapons.Projectile;
@@ -16,7 +16,7 @@ import com.weapons.Projectile;
  *
  * The player ship. Methods for moving ,drawing and shooting
  */
-public class PlayerShip extends MovableEntity {
+public class PlayerShip extends Sprite {
 	
 	public static enum Direction {LEFT, RIGHT, NONE;}
 	private static enum AvailableWeapons {MISSILE, LASER;} 	//Implemented weapons
@@ -39,13 +39,14 @@ public class PlayerShip extends MovableEntity {
 	 * @param gameLogic
 	 */
 	public PlayerShip(GameLogic gameLogic) {
-		super(PLAYER_SIZE, PLAYER_SIZE, MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION);
+		super(PLAYER_SIZE, PLAYER_SIZE, MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION,Assets.playerShip);
 		this.gameLogic = gameLogic;
 	}
 
 	
 	/**
-	 * Called when "draw" is called in its stage
+	 * Makes sure Player is always above everything else on screen 
+	 * (Looks weird when weapons come from above it)
 	 */
 	public void drawAbove(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
@@ -93,10 +94,9 @@ public class PlayerShip extends MovableEntity {
 				break;
 			
 		}
-
-		if(getX()<0) setX(0);
-		else if(getX()>MyGame.WIDTH-PLAYER_SIZE) setX(MyGame.WIDTH-PLAYER_SIZE);
 		
+		if(getX()<0) setX(0);
+		else if(getX()>MyGame.WIDTH-PLAYER_SIZE) setX(MyGame.WIDTH-PLAYER_SIZE);	
 		super.act(delta);
 	}
 	

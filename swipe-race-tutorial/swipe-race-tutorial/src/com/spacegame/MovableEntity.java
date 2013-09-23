@@ -1,6 +1,6 @@
 package com.spacegame;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -13,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  *	Movable actor on stage.
  */
 public abstract class MovableEntity extends Actor {
+	
 	protected Rectangle bounds = new Rectangle();
+	protected boolean despawnReady = false;
 	
 	/**
 	 * Constructor
@@ -29,7 +31,6 @@ public abstract class MovableEntity extends Actor {
 	}
 	
 	/**
-	 * Use this in collision ect
 	 * @return The rectangle that contains the position of the player.
 	 */
 	public Rectangle getBounds() {
@@ -54,18 +55,20 @@ public abstract class MovableEntity extends Actor {
 	}
 	
 	/**
-	 * Called when "draw" is called in its stage
-	 */
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-	}
-	
-	/**
 	 * Override this method to make something linger (look at ExplosionDummy for example)
 	 * @return 
 	 */
 	public boolean isDespawnReady() {	
-		return false;
+		return despawnReady;
 	}
+	
+	/**
+	 * Sets the object to despawn
+	 */
+	public void setDespawnReady(){
+		despawnReady = true;
+	}
+	
+	
 }
 

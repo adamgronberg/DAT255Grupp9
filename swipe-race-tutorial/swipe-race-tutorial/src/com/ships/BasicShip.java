@@ -1,6 +1,5 @@
 package com.ships;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
 
 /**
@@ -26,17 +25,9 @@ public class BasicShip extends EnemyShip {
 	 * @param y y-led Spawn location
 	 */
 	public BasicShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, HEALTH);
+		super(x, y, WIDTH, HEIGHT, HEALTH, Assets.enemyBasicShip);
 	}
-	
-	/**
-	 * Called when draw is called on stage
-	 */
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
-		batch.draw(Assets.enemyBasicShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
-	}
+
 	
 	/**
 	 * Called when "act" is called in its stage

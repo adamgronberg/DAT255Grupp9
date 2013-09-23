@@ -1,5 +1,7 @@
 package com.weapons;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 
 
 /**
@@ -23,13 +25,13 @@ public abstract class AreaOfEffectWeapon extends Projectile{
 	 * @param onHitDamage
 	 * @param areaDamage	The damage inflicted by the area used by the weapon
 	 */
-	public AreaOfEffectWeapon(float x, float y, float width, float height, int onHitDamage, int areaDamage) {
-		super(x, y, width, height, onHitDamage);
+	public AreaOfEffectWeapon(float x, float y, float width, float height, int onHitDamage, int areaDamage, TextureRegion texture) {
+		super(x, y, width, height, onHitDamage, texture);
 		this.areaDamage = areaDamage;
 	}
 	
 	/**
-	 * @return Area of effect dummy (rectangle with a set damage
+	 * @return Area of effect dummy (rectangle with a set damage)
 	 */
 	public AreaOfEffectDummy getAreaOfEffectDummy(){
 		return areaOfEffectDummy;

@@ -1,6 +1,5 @@
 package com.ships;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spacegame.Assets;
 import com.spacegame.MyGame;
 
@@ -29,19 +28,11 @@ public class ScoutShip extends EnemyShip{
 	 * @param y
 	 */
 	public ScoutShip(float x, float y){
-		super(x, y, WIDTH, HEIGHT, HEALTH);
+		super(x, y, WIDTH, HEIGHT, HEALTH, Assets.enemyScoutShip);
 		currentMovmentLenght = 0;
 		setRotation(-45);
 	}
 		
-	/**
-	 * Draws the ship
-	 */
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
-		batch.draw(Assets.enemyScoutShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
-	}
 	
 	/**
 	 * Called when "act" is called in its stage
