@@ -1,13 +1,13 @@
 package com.collisiondetection;
 
 import java.util.Iterator;
-import com.badlogic.gdx.math.Rectangle;
-import com.effects.AreaEffect;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.ships.EnemyShip;
 import com.spacegame.GameLogic;
 import com.spacegame.MovableEntity;
 import com.weapons.AreaOfEffectDummy;
-import com.weapons.AreaOfEffectWeapon;
 import com.weapons.Projectile;
 
 
@@ -41,81 +41,77 @@ public class CollisionDetection {
 		return movableObj1.getBounds().overlaps(movableObj2.getBounds());
 	}
 	
-	/**
-	 * Tests if obj1 and obj2 collided
-	 * @param movableObj1
-	 * @param movableObj2
-	 * @return true if the objects collided
-	 */
-	private static boolean collisionControl(Rectangle obj1, Rectangle obj2){
-		return obj1.overlaps(obj2);
-	}
-	
 	
 	/**
 	 * Handles ALL collision
 	 * 
 	 */
 	public void checkCollisions() {
-		Iterator<AreaOfEffectDummy> iterAD = gameLogic.getDummys().iterator();
-		Iterator<Projectile> iterPP = gameLogic.getPlayerProjectiles().iterator();
-		Iterator<EnemyShip> iterES = gameLogic.getEnemyShips().iterator();
+		
+		Array<EnemyShip> enemyShips = new Array<EnemyShip>();
+		Array<Projectile> playerProjectiles = new Array<Projectile>();
+		Array<AreaOfEffectDummy> dummyies = new Array<AreaOfEffectDummy>();
+		
+		
+		SnapshotArray<Actor> actors = gameLogic.getChildren();
+		for(Actor actor: actors){
+			
+			if(actor instanceof EnemyShip){
+				EnemyShip enemyShip = (EnemyShip)actor;
+				enemyShips.add(enemyShip);
+			}
+			else if(actor instanceof Projectile){
+				Projectile projectile = (Projectile)actor;
+				playerProjectiles.add(projectile);
+			}
+			else if(actor instanceof AreaOfEffectDummy){
+				AreaOfEffectDummy dummy = (AreaOfEffectDummy)actor;
+				dummyies.add(dummy);
+			}
+		}
+		
+		
+		
+		Iterator<AreaOfEffectDummy> iterAD = dummyies.iterator();
+		Iterator<Projectile> iterPP = playerProjectiles.iterator();
+		Iterator<EnemyShip> iterES = enemyShips.iterator();
 		
 		while (iterES.hasNext()) {
 			EnemyShip enemyShip = iterES.next();
 			
 			//Check for collision with player
 			if(collisionControl(enemyShip, gameLogic.playerShip)) {	
-				gameLogic.clearScreen();
+				gameLogic.clear();
 				gameLogic.changePlayerAlive();
-				break;
+				return;
 			}									
 			else {
-				iterPP = gameLogic.getPlayerProjectiles().iterator();
+				iterPP = playerProjectiles.iterator();
 				while(iterPP.hasNext()){
 					Projectile projectile = iterPP.next();
 					
 					//Removes projectiles and enemies that collided
-					if (collisionControl(enemyShip, projectile)) {		
-						if(projectile.despawnesOnCollision()){			
-							projectile.setDespawnReady();
-						}
+					if (collisionControl(enemyShip, projectile)) {
 						enemyShip.hit(projectile.getDamage());
-						
-						//If a projectile has a area of effect component its handled here
-						if(projectile instanceof AreaOfEffectWeapon){	
-							AreaOfEffectWeapon areaOfEffectWeapon = (AreaOfEffectWeapon) projectile;
-							AreaEffect effect = projectile.addOnHitEffect();
-							
-							//Adds a on hit effect if the weapon has one
-							if(effect != null) {
-								gameLogic.addEffect(effect);
-							}
-							
-							//Adds the on hit area of effect dummy
-							gameLogic.addAreaOfEffectDummy(areaOfEffectWeapon.getAreaOfEffectDummy());
-						}
+						projectile.addOnHitEffect();
 						break;
-					}
+					}	
 				}
 			}
 		}
-		
 		//If any area of effect weapons where triggered
 		while(iterAD.hasNext()){
 			AreaOfEffectDummy areaOfEffectDummy = iterAD.next();
-			iterES = gameLogic.getEnemyShips().iterator();
+			iterES = enemyShips.iterator();
 			while(iterES.hasNext()){
 				EnemyShip enemyShip = iterES.next();
 				
 				//If any target in range for area of effect
-				if(collisionControl(enemyShip.getBounds(), areaOfEffectDummy)) {
+				if(collisionControl(enemyShip, areaOfEffectDummy)) {
 					enemyShip.hit(areaOfEffectDummy.getAreaDamage());
 				}
 			}
+			areaOfEffectDummy.remove();
 		}
-		
-		//Deletes all dummies so they don't do more damage
-		gameLogic.getDummys().clear();
 	}
 }

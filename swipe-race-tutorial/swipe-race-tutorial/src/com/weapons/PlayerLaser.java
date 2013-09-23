@@ -36,4 +36,9 @@ public class PlayerLaser extends Projectile {
 		setY(getY()+SPEED);
 		super.act(delta);
 	}
+
+	@Override
+	public void addOnHitEffect() {
+		remove();
+	}
 }

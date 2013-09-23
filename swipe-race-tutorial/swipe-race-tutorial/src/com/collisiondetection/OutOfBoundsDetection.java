@@ -10,12 +10,11 @@ public class OutOfBoundsDetection {
 	 * @param movableObj
 	 * @return	returns true if out of bounds
 	 */
-	public static boolean isOutOfBoundsY(MovableEntity movableObj){
+	public static void isOutOfBoundsY(MovableEntity movableObj){
 		if (movableObj.getBounds().y < -movableObj.getBounds().getHeight() || movableObj.getBounds().y >= 
 				MyGame.HEIGHT+movableObj.getBounds().getHeight()){
-			return true; 
+			movableObj.remove();
 		}
-		return false;
 	}
 	
 	

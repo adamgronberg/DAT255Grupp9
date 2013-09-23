@@ -3,12 +3,10 @@ package com.ships;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.spacegame.Assets;
-import com.spacegame.GameLogic;
 import com.spacegame.MyGame;
 import com.spacegame.Sprite;
 import com.weapons.PlayerLaser;
 import com.weapons.PlayerMissile;
-import com.weapons.Projectile;
 
 /**
  * 
@@ -26,8 +24,6 @@ public class PlayerShip extends Sprite {
 	
 	private float lastMissileTime = 0;      	//For testing
 	
-	private GameLogic gameLogic;
-	
 	private Direction movmentDirection = Direction.NONE;
 	private AvailableWeapons currentWeapon = AvailableWeapons.LASER;
 	
@@ -38,9 +34,8 @@ public class PlayerShip extends Sprite {
 	 * Sets player starting variables
 	 * @param gameLogic
 	 */
-	public PlayerShip(GameLogic gameLogic) {
+	public PlayerShip() {
 		super(PLAYER_SIZE, PLAYER_SIZE, MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION,Assets.playerShip);
-		this.gameLogic = gameLogic;
 	}
 
 	
@@ -114,18 +109,13 @@ public class PlayerShip extends Sprite {
 	 * -Missiles
 	 */
 	public void spawnPlayerProjectile() {
-		Projectile projectile;
 		if (currentWeapon == AvailableWeapons.MISSILE && TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) {
-			projectile = new PlayerMissile(getX()+PlayerShip.PLAYER_SIZE/2-PlayerMissile.WIDTH/2, getY());
-			gameLogic.addProjectileToCollision(projectile);
-			gameLogic.addActor(projectile);
+			getParent().addActor(new PlayerMissile(getX()+PlayerShip.PLAYER_SIZE/2-PlayerMissile.WIDTH/2, getY()));
 			lastMissileTime = TimeUtils.nanoTime();
 		}
 		else if(currentWeapon == AvailableWeapons.LASER && TimeUtils.nanoTime() - lastMissileTime > PlayerLaser.RATEOFFIRE) {
-			projectile = new PlayerLaser(getX()+PlayerShip.PLAYER_SIZE/2, 
-										 getY()+PlayerShip.PLAYER_SIZE);
-			gameLogic.addProjectileToCollision(projectile);
-			gameLogic.addActor(projectile);
+			getParent().addActor( new PlayerLaser(getX()+PlayerShip.PLAYER_SIZE/2, 
+										 getY()+PlayerShip.PLAYER_SIZE));
 			lastMissileTime = TimeUtils.nanoTime();
 		}
 	}

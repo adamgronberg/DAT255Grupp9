@@ -33,7 +33,7 @@ public class InteractionButton extends Sprite {
 	 * @return
 	 */
 	public boolean isPressed(float x, float y){
-		return bounds.contains(x, y) ? true : false;
+		return getBounds().contains(x, y) ? true : false;
 	}
 	
 	

@@ -1,25 +1,21 @@
 package com.spacegame;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.collisiondetection.CollisionDetection;
 import com.collisiondetection.OutOfBoundsDetection;
-import com.effects.AreaEffect;
 import com.ships.BasicShip;
-import com.ships.EnemyShip;
 import com.ships.HeavyShip;
 import com.ships.PlayerShip;
 import com.ships.ScoutShip;
 import com.spawnlogic.SpawnPattern;
-import com.weapons.AreaOfEffectDummy;
-import com.weapons.Projectile;
+
 
 /**
  * 
@@ -31,12 +27,6 @@ public class GameLogic extends Table {
 	
 	private GameScreen gameScreen;
 	private CollisionDetection collision;
-	
-	private Array<EnemyShip> enemyShips;
-	private Array<Projectile> playerProjectiles;
-	private Array<AreaEffect> effects; 
-	private Array<SpawnPattern> patterns;
-	private Array<AreaOfEffectDummy> dummys;
 	
 	
 	private long lastEnemyShipTime = 0;			//For testing
@@ -58,41 +48,13 @@ public class GameLogic extends Table {
 		this.gameScreen = gameScreen;
 		setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT);
 		setClip(true);
-		playerShip = new PlayerShip(this);
+		playerShip = new PlayerShip();
 		addActor(playerShip);
-		enemyShips = new Array<EnemyShip>();
-		playerProjectiles = new Array<Projectile>();
-		patterns = new Array<SpawnPattern>();
-		effects = new Array<AreaEffect>();
-		dummys = new Array<AreaOfEffectDummy>();
 		collision = new CollisionDetection(this);
 		
 	}
 	
-	public void addAreaOfEffectDummy(AreaOfEffectDummy dummy){
-		dummys.add(dummy);
-	}
-	
-	/**
-	 * @return dummies
-	 */
-	public Array<AreaOfEffectDummy> getDummys(){
-		return dummys;	
-	}
-	
-	/**
-	 * @return playerProjectiles
-	 */
-	public Array<Projectile> getPlayerProjectiles(){
-		return playerProjectiles;
-	}
-	
-	/**
-	 * @return enemyShips
-	 */
-	public Array<EnemyShip> getEnemyShips(){
-		return enemyShips;
-	}
+
 	
 	/**
 	 *  Handles object spawning and collision
@@ -101,45 +63,14 @@ public class GameLogic extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		
-		
-		Iterator<AreaEffect> iterE = effects.iterator();
-		while (iterE.hasNext()) {
-			AreaEffect effect = iterE.next();
-			if(effect.isDespawnReady()){					
-				removeActor(effect);
-				iterE.remove();
+		SnapshotArray<Actor> actors = getChildren();
+		for(Actor actor: actors){
+			if (actor instanceof MovableEntity){
+				MovableEntity entity = (MovableEntity)actor;
+				OutOfBoundsDetection.isOutOfBoundsY(entity);
 			}
 		}
 		
-		Iterator<EnemyShip> iterES = enemyShips.iterator();
-		while (iterES.hasNext()) {
-			EnemyShip enemyShip = iterES.next();
-			//Removes ship when despawn ready
-			if(enemyShip.isDespawnReady()){					
-				removeActor(enemyShip);
-				iterES.remove();
-			}
-			//Removes ships out of y-led bounds
-			else if (OutOfBoundsDetection.isOutOfBoundsY(enemyShip)) {		
-				iterES.remove();
-				removeActor(enemyShip);
-			}
-		}
-		
-		Iterator<Projectile> iterPP = playerProjectiles.iterator();
-		while(iterPP.hasNext()){
-			Projectile projectile = iterPP.next();			
-			//Removes projectiles with linger time
-			if(projectile.isDespawnReady()){					
-				removeActor(projectile);
-				iterPP.remove();
-			}
-			//If projectiles are out of y-led bounds
-			else if (OutOfBoundsDetection.isOutOfBoundsY(projectile)){
-				iterPP.remove();
-				removeActor(projectile);
-			}
-		}
 
 		if (!playerIsAlive && currentRespawnTime > respawnTime) {	//For testing
 			addActor(playerShip);
@@ -169,20 +100,19 @@ public class GameLogic extends Table {
 		
 		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-BasicShip.WIDTH);
 		float xPos = spawnLocation;
-		EnemyShip enemyShip = new BasicShip(xPos, MyGame.HEIGHT+BasicShip.HEIGHT);
-		enemyShips.add(enemyShip);
-		addActor(enemyShip);
+		addActor(new BasicShip(xPos, MyGame.HEIGHT+BasicShip.HEIGHT));
 		
 		spawnLocation = MathUtils.random(0,MyGame.WIDTH-HeavyShip.WIDTH);
 		xPos = spawnLocation;
-		enemyShip = new HeavyShip(xPos, MyGame.HEIGHT+HeavyShip.HEIGHT);
-		enemyShips.add(enemyShip);
-		addActor(enemyShip);
+		addActor(new HeavyShip(xPos, MyGame.HEIGHT+HeavyShip.HEIGHT));
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
 		nrOfShip++;
 	}
 	
+	/**
+	 * Changes the player state
+	 */
 	public void changePlayerAlive(){
 		playerIsAlive = !playerIsAlive;
 	}
@@ -194,9 +124,7 @@ public class GameLogic extends Table {
 	private void spawnPattern(){		
 		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-ScoutShip.WIDTH);
 		float xPos = spawnLocation;
-		SpawnPattern spawnPattern = new SpawnPattern(xPos, MyGame.HEIGHT, 5, 200000000f, "ScoutShip", this);
-		patterns.add(spawnPattern);
-		addActor(spawnPattern);
+		addActor(new SpawnPattern(xPos, MyGame.HEIGHT, 5, 200000000f, "ScoutShip", this));
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 	}
 	/**
@@ -210,48 +138,12 @@ public class GameLogic extends Table {
 	}
 	
 	/**
-	 * Adds a enemy to gameLogics collision detection
-	 * @param enemy
-	 */
-	public void addEnemyShips(EnemyShip enemy){
-		enemyShips.add(enemy);
-		addActor(enemy);
-	}
-	/**
-	 * Adds a effect to gameLogics
-	 * @param enemy
-	 */
-	public void addEffect(AreaEffect effect){
-		effects.add(effect);
-		addActor(effect);
-	}
-	
-	
-	/**
-	 * Adds a projectile to gameLogics collision detection
-	 * @param projectile
-	 */
-	public void addProjectileToCollision(Projectile projectile){
-		playerProjectiles.add(projectile);
-	}
-	
-	/**
 	 * Toggles shooting on or off
 	 */
 	public void toggleShooting(){
 		shooting = !shooting;
 	}
 	
-	/**
-	 * 	Removes all Enemies, projectile, patterns and the player from screen 
-	 *  and arrays (Player get removed as actor but won't get uninitialized )
-	 */
-	public void clearScreen(){
-		enemyShips.clear();
-		playerProjectiles.clear();
-		patterns.clear();
-		clear();
-	}
 	
 	/**
 	 * Switches player weapon

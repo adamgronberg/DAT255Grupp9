@@ -1,6 +1,6 @@
 package com.weapons;
 
-import com.badlogic.gdx.math.Rectangle;
+import com.spacegame.MovableEntity;
 
 
 /**
@@ -10,12 +10,9 @@ import com.badlogic.gdx.math.Rectangle;
  * Used on weapons to add a area of effect dummy
  * A rectangle with area damage
  */
-public class AreaOfEffectDummy extends Rectangle{
+public class AreaOfEffectDummy extends MovableEntity{
 
-
-	private static final long serialVersionUID = 1L;
 	private int areaDamage;
-	
 	
 
 	/**
@@ -27,7 +24,7 @@ public class AreaOfEffectDummy extends Rectangle{
 	 * @param areaDamage
 	 */
 	public AreaOfEffectDummy(float x, float y, float width, float height, int areaDamage) {
-		set(x, y, width, height);
+		super(width, height, x, y);
 		this.areaDamage = areaDamage;
 	}
 	
@@ -36,13 +33,6 @@ public class AreaOfEffectDummy extends Rectangle{
 	 */
 	public int getAreaDamage(){
 		return areaDamage;
-	}
-	
-	/**
-	 * @return bounds of the rectangle
-	 */
-	public Rectangle getBounds(){
-		return this;
 	}
 	
 	

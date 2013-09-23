@@ -1,13 +1,13 @@
 package com.spawnlogic;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.ships.BasicShip;
 import com.ships.EnemyShip;
 import com.ships.ScoutShip;
 import com.spacegame.GameLogic;
 import com.spacegame.GameScreen;
+import com.spacegame.MovableEntity;
 
 /**
  * 
@@ -16,15 +16,12 @@ import com.spacegame.GameScreen;
  * Contains different spawning patterns
  *
  */
-public class SpawnPattern extends Actor{
+public class SpawnPattern extends MovableEntity{
 
 	private int totalNumberOfEnemies;
 	private int currentNumberOfEnemies = 0;
 	private float timePassedSinceSpawn = 0;
-	private float spawnX;
-	private float spawnY;
 	private float timeBetweenEnemy;
-	private GameLogic gameLogic;
 	private String enemyType;
 	
 	
@@ -40,10 +37,8 @@ public class SpawnPattern extends Actor{
 	public SpawnPattern(float spawnX, float spawnY, 
 			int totalNumberOfEnemies, float timeBetweenEnemy, 
 			String enemyType, GameLogic gameLogic){
+		super(1, 1, spawnX, spawnY);
 		this.totalNumberOfEnemies = totalNumberOfEnemies;
-		this.spawnX = spawnX;
-		this.spawnY = spawnY;
-		this.gameLogic = gameLogic;
 		this.timeBetweenEnemy = timeBetweenEnemy;
 		this.enemyType = enemyType;
 		Gdx.app.log( GameScreen.LOG, "SpawnPattern created!");
@@ -61,12 +56,11 @@ public class SpawnPattern extends Actor{
 		
 		if(TimeUtils.nanoTime() - timePassedSinceSpawn > timeBetweenEnemy){
 			EnemyShip enemyShip;
-			if(enemyType.equals("ScoutShip")) enemyShip = new ScoutShip(spawnX, spawnY);
-			else enemyShip = new BasicShip(spawnX, spawnY);
-			
+			if(enemyType.equals("ScoutShip")) enemyShip = new ScoutShip(getX(), getY());
+			else enemyShip = new BasicShip(getX(), getY());
+			getParent().addActor(enemyShip);
 			Gdx.app.log( GameScreen.LOG, "Spawn: " + currentNumberOfEnemies);
 			
-			gameLogic.addEnemyShips(enemyShip);
 			currentNumberOfEnemies++;
 			timePassedSinceSpawn = TimeUtils.nanoTime();
 		}

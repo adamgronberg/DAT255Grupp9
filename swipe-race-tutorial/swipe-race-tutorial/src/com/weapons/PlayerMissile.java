@@ -48,11 +48,11 @@ public class PlayerMissile extends AreaOfEffectWeapon{
 	 * Returners a effect to play and adds a AreaOfEffectDummy at the tip of the missile 
 	 */
 	@Override
-	public AreaEffect addOnHitEffect() {
-		AreaEffect effect = new AreaEffect(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, 
-												EXPLOSION_H, LINGERTIME, Assets.explosionSplashMain);
-		areaOfEffectDummy = new AreaOfEffectDummy(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, 
-												EXPLOSION_W, EXPLOSION_H, areaDamage);
-		return effect;
+	public void addOnHitEffect() {
+		getParent().addActor( new AreaEffect(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, 
+												EXPLOSION_H, LINGERTIME, Assets.explosionSplashMain));
+		getParent().addActor( new AreaOfEffectDummy(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, 
+												EXPLOSION_W, EXPLOSION_H, areaDamage));
+		remove();
 	}
 }

@@ -35,7 +35,7 @@ public abstract class EnemyShip extends Sprite{
 	 */
 	public void hit(int damage) {
 		health = health - damage;
-		if (health<=0) despawnReady = true;
+		if (health<=0) remove();
 	}
 }
 

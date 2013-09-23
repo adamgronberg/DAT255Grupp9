@@ -1,7 +1,6 @@
 package com.weapons;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.effects.AreaEffect;
 import com.spacegame.Sprite;
 
 /**
@@ -41,7 +40,6 @@ public abstract class Projectile extends Sprite{
 		return damage;
 	}
 
-	public AreaEffect addOnHitEffect() {
-		return null;
-	}
+	public abstract void addOnHitEffect();
+	
 }
