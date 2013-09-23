@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  *
  *	Movable actor on stage.
  */
-public class MovableEntity extends Actor {
+public abstract class MovableEntity extends Actor {
 	protected Rectangle bounds = new Rectangle();
 	
 	/**

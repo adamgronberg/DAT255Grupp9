@@ -1,6 +1,5 @@
 package com.input;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -9,12 +8,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.ships.PlayerShip;
 import com.spacegame.GameLogic;
 import com.spacegame.GameScreen;
-import com.spacegame.MyGame;
 
 public class InputControl implements GestureListener, InputProcessor {
 
 	private GameLogic gameLogic;
 	private GameScreen gameScreen;
+	
+	private static final float FLING_SENSITIVITY = 1500f;
 	
 	public InputControl(GameLogic gameLogic, GameScreen gameScreen){
 		this.gameLogic = gameLogic;
@@ -23,16 +23,16 @@ public class InputControl implements GestureListener, InputProcessor {
 	
 	/**
 	 * Fling up or down to swap weapons
-	 * Fling left to activate/deactivate optionAutoShoot 
+	 * Fling left to activate/deactivate optionAutoShoot
+	 * Fling right to swap control layout
 	 * TODO: The fling don't register if you are moving at the same time, can't solve. Might have to scrap "fling" weapon switch
 	 */
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-		Gdx.app.log( GameScreen.LOG, "velocityX :" + velocityX + " velocityY : " + velocityY  );		//TODO: Debug
-		if (velocityY < -2000 && velocityX < 1000 && velocityX > -1000) gameLogic.switchPlayerWeapon();
-		if (velocityY > 2000 && velocityX < 1000 && velocityX > -1000) gameLogic.switchPlayerWeapon();
-		if (velocityX < -2000 && velocityY < 1000 && velocityY > -1000) gameScreen.changeOptionAutoShoot();
-		if (velocityX > 2000 && velocityY < 1000 && velocityY > -1000) gameScreen.changeOptionControlLayout();
+		if (velocityY < -FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.switchPlayerWeapon();
+		if (velocityY > FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.switchPlayerWeapon();
+		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.changeOptionAutoShoot();
+		if (velocityX > FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.changeOptionControlLayout();
 		return false;
 	}
 	
@@ -68,23 +68,10 @@ public class InputControl implements GestureListener, InputProcessor {
 	 * Handles movement on touch devices. 
 	 */
 	@Override public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		Vector3 touchPos = gameScreen.unProjectCoordinates(screenX, screenY);
-		if(gameScreen.getCurrentLayout() == GameScreen.ControlLayout.LAYOUT1){
-			if (touchPos.x <= GameScreen.MOVMENT_BUTTON_SIZE && touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {						//TODO: Should use buttons instead of areas
-				gameLogic.playerShip.stay();
-			}
-			else if (touchPos.x >= MyGame.WIDTH-GameScreen.MOVMENT_BUTTON_SIZE && touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {		//TODO: Should use buttons instead of areas
-				gameLogic.playerShip.stay();
-			}
-		}
-		else{
-			if (touchPos.x <= GameScreen.MOVMENT_BUTTON_SIZE && touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {						//TODO: Should use buttons instead of areas
-				gameLogic.playerShip.stay();
-			}
-			else if (touchPos.x > GameScreen.MOVMENT_BUTTON_SIZE && touchPos.x < 2*GameScreen.MOVMENT_BUTTON_SIZE &&
-					touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {														//TODO: Should use buttons instead of areas
-				gameLogic.playerShip.stay();
-			}
+		Vector3 touchPos = gameScreen.unProjectCoordinates(screenX, screenY); 
+		if (gameScreen.getMoveLeftButton().isPressed(touchPos.x, touchPos.y) || 
+				gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {						//TODO: Should use buttons instead of areas
+			gameLogic.playerShip.stay();
 		}
 		return false;
 	}
@@ -94,26 +81,13 @@ public class InputControl implements GestureListener, InputProcessor {
 	 */
 	@Override public boolean touchDragged(int screenX, int screenY, int pointer) {
 		Vector3 touchPos = gameScreen.unProjectCoordinates(screenX, screenY);
-		if(gameScreen.getCurrentLayout() == GameScreen.ControlLayout.LAYOUT1){
-			if (touchPos.x <= GameScreen.MOVMENT_BUTTON_SIZE && touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {						//TODO: Should use buttons instead of areas
-				gameLogic.playerShip.moveLeft();
-			}
-			else if (touchPos.x >= MyGame.WIDTH-GameScreen.MOVMENT_BUTTON_SIZE && touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {		//TODO: Should use buttons instead of areas
-				gameLogic.playerShip.moveRight();
-			}
-			else gameLogic.playerShip.stay();
+		if (gameScreen.getMoveLeftButton().isPressed(touchPos.x, touchPos.y)) {						//TODO: Should use buttons instead of areas
+			gameLogic.playerShip.moveLeft();
 		}
-		else{
-			if (touchPos.x <= GameScreen.MOVMENT_BUTTON_SIZE && touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {					//TODO: Should use buttons instead of areas
-				gameLogic.playerShip.moveLeft();
-			}
-			else if (touchPos.x > GameScreen.MOVMENT_BUTTON_SIZE && 
-					touchPos.x < 2*GameScreen.MOVMENT_BUTTON_SIZE &&
-					touchPos.y <= GameScreen.MOVMENT_BUTTON_SIZE) {													//TODO: Should use buttons instead of areas
-				gameLogic.playerShip.moveRight();
-			}
+		else if (gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {		//TODO: Should use buttons instead of areas
+			gameLogic.playerShip.moveRight();
 		}
-		
+		else gameLogic.playerShip.stay();	
 		return false;
 	}
 	

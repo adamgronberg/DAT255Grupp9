@@ -54,14 +54,12 @@ public class PlayerMissile extends AreaOfEffectWeapon{
 	}
 	
 	/**
-	 * Returns a effect 
+	 * Returners a effect to play and adds a AreaOfEffectDummy at the tip of the missile 
 	 */
 	@Override
 	public ExplosionEffect addEffect() {
-		ExplosionEffect explosion = new ExplosionEffect(getX()-WIDTH/4f, 
-										getY()-HEIGHT/4f, EXPLOSION_W, EXPLOSION_H, LINGERTIME);
-		areaOfEffectDummy = new AreaOfEffectDummy(getX()-WIDTH/4f, 
-				getY()-HEIGHT/4f, EXPLOSION_W, EXPLOSION_H, areaDamage);
+		ExplosionEffect explosion = new ExplosionEffect(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, EXPLOSION_H, LINGERTIME);
+		areaOfEffectDummy = new AreaOfEffectDummy(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, EXPLOSION_H, areaDamage);
 		return explosion;
 	}
 }

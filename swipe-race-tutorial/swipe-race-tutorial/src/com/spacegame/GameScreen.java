@@ -40,16 +40,17 @@ public class GameScreen implements Screen{
 	 */
 	public GameScreen(MyGame myGame) {
 		
-		gameLogic = new GameLogic(this);
-		inputController = new InputControl(gameLogic, this);
-		stage = new Stage();
-
-
-		
 		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveLeftButton);
 		moveRightButton = new InteractionButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveRightButton);
 		backgroundSpace = new Background(MyGame.WIDTH, MyGame.HEIGHT);
+		
+		
+		gameLogic = new GameLogic(this);
+		inputController = new InputControl(gameLogic, this);
+		stage = new Stage();
+		
+
 		
 		stage.addActor(backgroundSpace);	
 		stage.addActor(gameLogic);
@@ -107,11 +108,11 @@ public class GameScreen implements Screen{
 		switch(currentLayout){
 			case LAYOUT1:
 				currentLayout = ControlLayout.LAYOUT2;
-				moveRightButton.moveButton(GameScreen.MOVMENT_BUTTON_SIZE, moveRightButton.getY());
+				moveRightButton.setX(GameScreen.MOVMENT_BUTTON_SIZE);
 				break;
 			case LAYOUT2:
 				currentLayout = ControlLayout.LAYOUT1;
-				moveRightButton.moveButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, moveRightButton.getY());
+				moveRightButton.setX(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE);
 				break;
 		}
 	}
@@ -123,6 +124,20 @@ public class GameScreen implements Screen{
 		optionAutoShoot = !optionAutoShoot;
 	}
 	
+	
+	/**
+	 * @return Move left button
+	 */
+	public InteractionButton getMoveLeftButton(){
+		return moveLeftButton;
+	}
+	
+	/**
+	 * @return Move right button
+	 */
+	public InteractionButton getMoveRightButton(){
+		return moveRightButton;
+	}
 	
 	/**
 	 * Render loop. 

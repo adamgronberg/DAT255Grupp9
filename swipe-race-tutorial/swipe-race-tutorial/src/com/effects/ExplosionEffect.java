@@ -6,7 +6,6 @@ import com.spacegame.MovableEntity;
 
 public class ExplosionEffect extends MovableEntity{
 
-
 	private float lingerTime;
 	private float lastLingerTime = 0;
 	

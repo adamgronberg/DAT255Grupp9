@@ -3,7 +3,6 @@ package com.spacegame;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
 /**
@@ -11,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * @author Grupp9
  * Draws a texture on screen
  */
-public class InteractionButton extends Actor {
+public class InteractionButton extends MovableEntity {
 	
 	private TextureRegion texture;
 	
@@ -25,10 +24,9 @@ public class InteractionButton extends Actor {
 	 * @param texture	What texture to draw
 	 */
 	public InteractionButton(float x, float y, float width, float height, TextureRegion texture) {
+		super( width, height, x, y);
 		this.texture = texture;
-		setWidth(width);
-		setHeight(height);
-		setPosition(x, y);
+
 	}
 	
 	/**
@@ -41,14 +39,17 @@ public class InteractionButton extends Actor {
 		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
 	}
 	
+	
 	/**
-	 * Moves the button 
+	 * Returns true if coordinates is within button
 	 * @param x
 	 * @param y
+	 * @return
 	 */
-	public void moveButton(float x, float y){
-		setPosition(x, y);
+	public boolean isPressed(float x, float y){
+		return bounds.contains(x, y) ? true : false;
 	}
+	
 	
 	
 }
