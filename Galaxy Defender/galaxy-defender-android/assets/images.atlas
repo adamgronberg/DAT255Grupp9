@@ -1,0 +1,89 @@
+
+images.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+MissileRed
+  rotate: false
+  xy: 1, 458
+  size: 439, 565
+  orig: 439, 565
+  offset: 0, 0
+  index: -1
+playerShip
+  rotate: false
+  xy: 1, 30
+  size: 418, 426
+  orig: 418, 426
+  offset: 0, 0
+  index: -1
+TopInfoBar
+  rotate: false
+  xy: 442, 897
+  size: 510, 126
+  orig: 510, 126
+  offset: 0, 0
+  index: -1
+Arrow_Left
+  rotate: false
+  xy: 442, 832
+  size: 62, 63
+  orig: 62, 63
+  offset: 0, 0
+  index: -1
+Arrow_Right
+  rotate: false
+  xy: 954, 960
+  size: 62, 63
+  orig: 62, 63
+  offset: 0, 0
+  index: -1
+highScoreButton
+  rotate: false
+  xy: 506, 861
+  size: 84, 34
+  orig: 84, 34
+  offset: 0, 0
+  index: -1
+newGameButton
+  rotate: false
+  xy: 592, 861
+  size: 84, 34
+  orig: 84, 34
+  offset: 0, 0
+  index: -1
+scoutShip
+  rotate: false
+  xy: 442, 798
+  size: 57, 32
+  orig: 57, 32
+  offset: 0, 0
+  index: -1
+ExplosionSplashMain
+  rotate: false
+  xy: 1, 1
+  size: 25, 27
+  orig: 25, 27
+  offset: 0, 0
+  index: -1
+enemyShip
+  rotate: false
+  xy: 954, 925
+  size: 35, 33
+  orig: 35, 33
+  offset: 0, 0
+  index: -1
+ExplosionSplashUp
+  rotate: false
+  xy: 421, 433
+  size: 11, 23
+  orig: 11, 23
+  offset: 0, 0
+  index: -1
+laser
+  rotate: false
+  xy: 1018, 1018
+  size: 3, 5
+  orig: 3, 5
+  offset: 0, 0
+  index: -1
