@@ -41,7 +41,6 @@ public class PlayerMissile extends AreaOfEffectWeapon{
 	@Override
 	public void act(float delta){
 		setY(getY()+SPEED);
-		super.act(delta);
 	}
 	
 	/**

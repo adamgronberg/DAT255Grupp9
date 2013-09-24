@@ -92,8 +92,9 @@ public class CollisionDetection {
 					
 					//Removes projectiles and enemies that collided
 					if (collisionControl(enemyShip, projectile)) {
-						gameLogic.addScore(enemyShip.hit(projectile.getDamage()));
 						projectile.addOnHitEffect();
+						gameLogic.addScore(enemyShip.hit(projectile.getDamage()));
+						iterPP.remove();
 						break;
 					}	
 				}
