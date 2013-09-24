@@ -1,12 +1,16 @@
 package com.effects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.spacegame.Sprite;
+import com.spacegame.Assets;
+import com.spacegame.MovableEntity;
 
-public class AreaEffect extends Sprite{
-
-	private float lingerTime;
-	private float lastLingerTime = 0;
+public class AreaEffect extends MovableEntity{
+	
+	private Animation animation = new Animation(0.02f, Assets.explosionAnimation);
+	private float stateTime = 0f;
+	private TextureRegion currentFrame;
 	
 	/**
 	 * Constructor
@@ -17,19 +21,25 @@ public class AreaEffect extends Sprite{
 	 * @param lingerTime	The time the explosion lingers (20 ~ 1 second)
 	 */
 	public AreaEffect(float x, float y, float width, float height, float lingerTime, TextureRegion texture) {
-		super( width, height, x, y, texture);
-		this.lingerTime = lingerTime;
-		this.texture = texture;
+		super( width, height, x, y);
+		;
 	}
 	
 	/**
-	 * Called when "act" is called in its stage
+	 * Draws the explosion
+	 */
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		currentFrame = animation.getKeyFrame(stateTime, false);
+        batch.draw(currentFrame, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
+	}
+	
+	/**
 	 * Updates its linger time
 	 */
 	@Override
 	public void act(float delta){
-		if (lastLingerTime >= lingerTime) remove();
-		lastLingerTime++;
-		super.act(delta);
+		stateTime += delta;
+		if(animation.isAnimationFinished(stateTime)) remove();
 	}	
 }

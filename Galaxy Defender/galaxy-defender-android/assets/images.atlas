@@ -87,3 +87,127 @@ laser
   orig: 3, 5
   offset: 0, 0
   index: -1
+
+images2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+explosion1 Frames/ExplosionFrame10
+  rotate: false
+  xy: 1, 151
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame12
+  rotate: false
+  xy: 1, 76
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame13
+  rotate: false
+  xy: 77, 151
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame14
+  rotate: false
+  xy: 1, 1
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame15
+  rotate: false
+  xy: 77, 76
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame16
+  rotate: false
+  xy: 153, 151
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame2
+  rotate: false
+  xy: 77, 1
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame3
+  rotate: false
+  xy: 153, 76
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame4
+  rotate: false
+  xy: 229, 151
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame5
+  rotate: false
+  xy: 153, 1
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame6
+  rotate: false
+  xy: 229, 76
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame7
+  rotate: false
+  xy: 305, 151
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame8
+  rotate: false
+  xy: 229, 1
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame9
+  rotate: false
+  xy: 305, 76
+  size: 74, 73
+  orig: 74, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame11
+  rotate: false
+  xy: 381, 152
+  size: 74, 72
+  orig: 74, 72
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame17
+  rotate: false
+  xy: 305, 1
+  size: 73, 73
+  orig: 73, 73
+  offset: 0, 0
+  index: -1
+explosion1 Frames/ExplosionFrame1
+  rotate: false
+  xy: 381, 80
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1

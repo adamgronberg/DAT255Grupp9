@@ -12,6 +12,7 @@ import com.spacegame.SoundAssets;
  *
  */
 public class PlayerMissile extends AreaOfEffectWeapon{
+
 	
 	public static final float RATEOFFIRE = 800000000f; //In nanoseconds
 	private static final float SPEED = 5f;

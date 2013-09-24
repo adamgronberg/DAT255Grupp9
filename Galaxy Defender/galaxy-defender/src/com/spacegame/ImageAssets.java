@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 public class ImageAssets {
 	public static TextureAtlas atlas;
@@ -18,6 +19,7 @@ public class ImageAssets {
 	public static TextureRegion explosionSplashMain;
 	public static TextureRegion explosionSplashUp;
 	public static TextureRegion topInfoBar;
+	public static Array<TextureRegion> explosionAnimation;
 
 	/**
 	 * Loads all assets from imageAtlas
@@ -25,6 +27,7 @@ public class ImageAssets {
 	 */
 	public static void load() {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
+		explosionAnimation = new Array<TextureRegion>();
 		playerShip = atlas.findRegion("playerShip");
 		playerLaser = atlas.findRegion("laser");
 		enemyBasicShip = atlas.findRegion("enemyShip");
@@ -33,6 +36,11 @@ public class ImageAssets {
 		explosionSplashMain = atlas.findRegion("ExplosionSplashMain");
 		explosionSplashUp = atlas.findRegion("ExplosionSplashUp");
 		topInfoBar = atlas.findRegion("TopInfoBar");
+		
+		for(int i = 1; i <= 17 ; i++){
+			explosionAnimation.add(atlas.findRegion("explosion1 Frames/ExplosionFrame" + i));
+		}
+
 		
 		moveRightButton = new TextureRegion ( new Texture(Gdx.files.internal("Arrow_Right.png")));
 		moveLeftButton = new TextureRegion ( new Texture(Gdx.files.internal("Arrow_Left.png")));
