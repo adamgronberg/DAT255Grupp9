@@ -5,21 +5,21 @@ filter: Linear,Linear
 repeat: none
 Arrow_Left
   rotate: false
-  xy: 443, 957
+  xy: 443, 829
   size: 62, 63
   orig: 62, 63
   offset: 0, 0
   index: -1
 Arrow_Right
   rotate: false
-  xy: 443, 892
+  xy: 955, 957
   size: 62, 63
   orig: 62, 63
   offset: 0, 0
   index: -1
 ExplosionSplashMain
   rotate: false
-  xy: 443, 794
+  xy: 507, 829
   size: 25, 27
   orig: 25, 27
   offset: 0, 0
@@ -38,30 +38,37 @@ MissileRed
   orig: 439, 565
   offset: 0, 0
   index: -1
+TopInfoBar
+  rotate: false
+  xy: 443, 894
+  size: 510, 126
+  orig: 510, 126
+  offset: 0, 0
+  index: -1
 enemyShip
   rotate: false
-  xy: 443, 823
+  xy: 955, 922
   size: 35, 33
   orig: 35, 33
   offset: 0, 0
   index: -1
 highScoreButton
   rotate: false
-  xy: 422, 419
+  xy: 507, 858
   size: 84, 34
   orig: 84, 34
   offset: 0, 0
   index: -1
 laser
   rotate: false
-  xy: 507, 1015
+  xy: 1019, 1015
   size: 3, 5
   orig: 3, 5
   offset: 0, 0
   index: -1
 newGameButton
   rotate: false
-  xy: 422, 383
+  xy: 593, 858
   size: 84, 34
   orig: 84, 34
   offset: 0, 0
@@ -75,7 +82,7 @@ playerShip
   index: -1
 scoutShip
   rotate: false
-  xy: 443, 858
+  xy: 443, 795
   size: 57, 32
   orig: 57, 32
   offset: 0, 0

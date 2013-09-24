@@ -1,7 +1,7 @@
 package com.collisiondetection;
 
+import com.spacegame.GameScreen;
 import com.spacegame.MovableEntity;
-import com.spacegame.MyGame;
 
 public class OutOfBoundsDetection {
 
@@ -12,7 +12,7 @@ public class OutOfBoundsDetection {
 	 */
 	public static void isOutOfBoundsY(MovableEntity movableObj){
 		if (movableObj.getBounds().y < -movableObj.getBounds().getHeight() || movableObj.getBounds().y >= 
-				MyGame.HEIGHT+movableObj.getBounds().getHeight()){
+				GameScreen.GAME_HEIGHT+movableObj.getBounds().getHeight()){
 			movableObj.remove();
 		}
 	}

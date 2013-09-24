@@ -92,7 +92,7 @@ public class CollisionDetection {
 					
 					//Removes projectiles and enemies that collided
 					if (collisionControl(enemyShip, projectile)) {
-						enemyShip.hit(projectile.getDamage());
+						gameLogic.addScore(enemyShip.hit(projectile.getDamage()));
 						projectile.addOnHitEffect();
 						break;
 					}	
@@ -108,7 +108,7 @@ public class CollisionDetection {
 				
 				//If any target in range for area of effect
 				if(collisionControl(enemyShip, areaOfEffectDummy)) {
-					enemyShip.hit(areaOfEffectDummy.getAreaDamage());
+					gameLogic.addScore(enemyShip.hit(areaOfEffectDummy.getAreaDamage()));
 				}
 			}
 			areaOfEffectDummy.remove();

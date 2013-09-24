@@ -1,7 +1,7 @@
 package com.ships;
 
 import com.spacegame.Assets;
-import com.spacegame.MyGame;
+import com.spacegame.GameScreen;
 
 /**
  * 
@@ -17,6 +17,7 @@ public class ScoutShip extends EnemyShip{
 	private final static float SHIPSPEED_X = 2.0f;
 	private final static float SHIPSPEED_Y = 2.5f;
 	private final static int HEALTH=1;
+	private final static int SCOREVALUE=2;
 	
 	private boolean movingLeft = true;
 	private final float movmentLenght = 50;
@@ -28,7 +29,7 @@ public class ScoutShip extends EnemyShip{
 	 * @param y
 	 */
 	public ScoutShip(float x, float y){
-		super(x, y, WIDTH, HEIGHT, HEALTH, Assets.enemyScoutShip);
+		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, Assets.enemyScoutShip);
 		currentMovmentLenght = 0;
 		setRotation(-45);
 	}
@@ -51,7 +52,7 @@ public class ScoutShip extends EnemyShip{
 			currentMovmentLenght++;
 		}
 		else {
-			if(getX() > MyGame.WIDTH-WIDTH || currentMovmentLenght > movmentLenght){
+			if(getX() > GameScreen.GAME_WITDH-WIDTH || currentMovmentLenght > movmentLenght){
 				setRotation(-45);
 				currentMovmentLenght = 0;
 				movingLeft = true;
@@ -59,6 +60,5 @@ public class ScoutShip extends EnemyShip{
 			setX(getX()+SHIPSPEED_X);
 			currentMovmentLenght++;
 		}
-		super.act(delta);
 	}
 }

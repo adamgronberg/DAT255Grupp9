@@ -1,12 +1,11 @@
 package com.spawnlogic;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.utils.TimeUtils;
 import com.ships.BasicShip;
 import com.ships.EnemyShip;
 import com.ships.ScoutShip;
 import com.spacegame.GameLogic;
-import com.spacegame.GameScreen;
 import com.spacegame.MovableEntity;
 
 /**
@@ -40,8 +39,7 @@ public class SpawnPattern extends MovableEntity{
 		super(1, 1, spawnX, spawnY);
 		this.totalNumberOfEnemies = totalNumberOfEnemies;
 		this.timeBetweenEnemy = timeBetweenEnemy;
-		this.enemyType = enemyType;
-		Gdx.app.log( GameScreen.LOG, "SpawnPattern created!");
+		this.enemyType = enemyType;		
 	}
 	
 	
@@ -59,13 +57,11 @@ public class SpawnPattern extends MovableEntity{
 			if(enemyType.equals("ScoutShip")) enemyShip = new ScoutShip(getX(), getY());
 			else enemyShip = new BasicShip(getX(), getY());
 			getParent().addActor(enemyShip);
-			Gdx.app.log( GameScreen.LOG, "Spawn: " + currentNumberOfEnemies);
-			
+						
 			currentNumberOfEnemies++;
 			timePassedSinceSpawn = TimeUtils.nanoTime();
 		}
 		if(currentNumberOfEnemies >= totalNumberOfEnemies){
-			Gdx.app.log( GameScreen.LOG, "Spawn patter complete! Total number of ships: " + currentNumberOfEnemies);
 			remove();
 		}
 	}

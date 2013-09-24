@@ -15,6 +15,7 @@ public class HeavyShip extends EnemyShip {
 	public final static int HEIGHT=60;
 	public final static int WIDTH=40;
 	
+	private final static int SCOREVALUE=3;
 	private final static int HEALTH=2;
 	
 	/**
@@ -23,7 +24,8 @@ public class HeavyShip extends EnemyShip {
 	 * @param y y-led Spawn location
 	 */
 	public HeavyShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, HEALTH, Assets.enemyBasicShip);
+		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, Assets.enemyBasicShip);
+		
 	}
 	
 	/**
@@ -32,6 +34,6 @@ public class HeavyShip extends EnemyShip {
 	@Override
 	public void act(float delta){
 		setY(getY()-SHIPSPEED);
-		super.act(delta);
+
 	}
 }

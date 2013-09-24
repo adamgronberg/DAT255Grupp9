@@ -1,6 +1,6 @@
 package com.spacegame;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -28,16 +28,19 @@ public class GameLogic extends Table {
 	private GameScreen gameScreen;
 	private CollisionDetection collision;
 	
-	
+	private int currentScore=0;
 	private long lastEnemyShipTime = 0;			//For testing
 	private float lastSpawnPatternTime = 0;		//For testing
-	private int nrOfShip= 1;					//For testing
+				
 	private boolean playerIsAlive = true;  		//For testing
 	private int currentRespawnTime = 0;			//For testing
 	private static final int respawnTime = 50;	//For testing
 	private boolean shooting = false;
 	
+	private Background backgroundSpace;
+	
 	public PlayerShip playerShip;
+	
 
 	
 	/**
@@ -46,12 +49,13 @@ public class GameLogic extends Table {
 	 */
 	public GameLogic(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
-		setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT);
+		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
 		playerShip = new PlayerShip();
 		addActor(playerShip);
 		collision = new CollisionDetection(this);
-		
+		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), Assets.space);
+		addActor(backgroundSpace);
 	}
 	
 
@@ -73,6 +77,7 @@ public class GameLogic extends Table {
 		
 
 		if (!playerIsAlive && currentRespawnTime > respawnTime) {	//For testing
+			currentScore=0;
 			addActor(playerShip);
 			currentRespawnTime = 0;
 			playerIsAlive = true;
@@ -96,18 +101,18 @@ public class GameLogic extends Table {
 	 * For testing
 	 */
 	private void spawnShip() {
-		Gdx.app.log( GameScreen.LOG, "" + nrOfShip  );
+	
 		
-		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-BasicShip.WIDTH);
+		int spawnLocation = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
 		float xPos = spawnLocation;
-		addActor(new BasicShip(xPos, MyGame.HEIGHT+BasicShip.HEIGHT));
+		addActor(new BasicShip(xPos, GameScreen.GAME_WITDH+BasicShip.HEIGHT));
 		
-		spawnLocation = MathUtils.random(0,MyGame.WIDTH-HeavyShip.WIDTH);
+		spawnLocation = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
 		xPos = spawnLocation;
-		addActor(new HeavyShip(xPos, MyGame.HEIGHT+HeavyShip.HEIGHT));
+		addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
-		nrOfShip++;
+		
 	}
 	
 	/**
@@ -122,9 +127,9 @@ public class GameLogic extends Table {
 	 * For testing	TODO: Should prob be in some sort of "levelDesign" class
 	 */
 	private void spawnPattern(){		
-		int spawnLocation = MathUtils.random(0,MyGame.WIDTH-ScoutShip.WIDTH);
+		int spawnLocation = (int) MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
 		float xPos = spawnLocation;
-		addActor(new SpawnPattern(xPos, MyGame.HEIGHT, 5, 200000000f, "ScoutShip", this));
+		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 200000000f, "ScoutShip", this));
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 	}
 	/**
@@ -133,6 +138,7 @@ public class GameLogic extends Table {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(Color.WHITE);
+		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
 		if(playerIsAlive) playerShip.drawAbove(batch, parentAlpha);
 	}
@@ -151,4 +157,10 @@ public class GameLogic extends Table {
 	public void switchPlayerWeapon(){
 		playerShip.switchWeapon();
 	} 
+	
+	public void addScore(int score){
+		currentScore=currentScore+score;
+		System.out.println("CurrentScore: "+currentScore);
+
+	}
 }

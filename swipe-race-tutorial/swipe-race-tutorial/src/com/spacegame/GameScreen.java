@@ -20,17 +20,21 @@ public class GameScreen implements Screen{
 	private Stage stage;
 	private GameLogic gameLogic;
 	private InputControl inputController;
+	private TopInfoBar topInfoBar;
+	
 	private boolean optionAutoShoot = true;
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = ControlLayout.LAYOUT1;
 	
+	public static final float GAME_HEIGHT=((float) MyGame.HEIGHT)*0.95f;
+	public static final float GAME_WITDH=((float) MyGame.WIDTH);
+	public static final float INFO_SCREEN_HEIGHT=((float) MyGame.HEIGHT)*0.05f;
 	public static final int MOVMENT_BUTTON_SIZE = 70;
 	public static final String LOG = GameScreen.class.getSimpleName();
 	
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
-	private Background backgroundSpace;
 	
 
 	
@@ -41,19 +45,17 @@ public class GameScreen implements Screen{
 	public GameScreen(MyGame myGame) {
 		
 		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveLeftButton);
-		moveRightButton = new InteractionButton(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
+		moveRightButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveRightButton);
-		backgroundSpace = new Background(MyGame.WIDTH, MyGame.HEIGHT);
 		
 		
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this);
 		stage = new Stage();
 		
-
-		
-		stage.addActor(backgroundSpace);	
+		topInfoBar = new TopInfoBar();
 		stage.addActor(gameLogic);
+		stage.addActor(topInfoBar);
 		stage.addActor(moveLeftButton);
 		stage.addActor(moveRightButton);
 	}
@@ -112,7 +114,7 @@ public class GameScreen implements Screen{
 				break;
 			case LAYOUT2:
 				currentLayout = ControlLayout.LAYOUT1;
-				moveRightButton.setX(MyGame.WIDTH - GameScreen.MOVMENT_BUTTON_SIZE);
+				moveRightButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
 				break;
 		}
 	}

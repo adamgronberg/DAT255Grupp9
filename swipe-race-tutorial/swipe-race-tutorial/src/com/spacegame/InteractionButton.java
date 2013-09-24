@@ -23,7 +23,6 @@ public class InteractionButton extends Sprite {
 	public InteractionButton(float x, float y, float width, float height, TextureRegion texture) {
 		super( width, height, x, y, texture);
 		this.texture = texture;
-
 	}
 	
 	/**
@@ -33,7 +32,7 @@ public class InteractionButton extends Sprite {
 	 * @return
 	 */
 	public boolean isPressed(float x, float y){
-		return getBounds().contains(x, y) ? true : false;
+		return getBounds().contains(x, y);
 	}
 	
 	

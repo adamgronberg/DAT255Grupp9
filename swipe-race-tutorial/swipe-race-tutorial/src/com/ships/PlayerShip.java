@@ -3,7 +3,7 @@ package com.ships;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.spacegame.Assets;
-import com.spacegame.MyGame;
+import com.spacegame.GameScreen;
 import com.spacegame.Sprite;
 import com.weapons.PlayerLaser;
 import com.weapons.PlayerMissile;
@@ -35,7 +35,7 @@ public class PlayerShip extends Sprite {
 	 * @param gameLogic
 	 */
 	public PlayerShip() {
-		super(PLAYER_SIZE, PLAYER_SIZE, MyGame.WIDTH/2, MyGame.HEIGHT*PLAYER_SPAWNLOCATION,Assets.playerShip);
+		super(PLAYER_SIZE, PLAYER_SIZE, GameScreen.GAME_WITDH/2, GameScreen.GAME_HEIGHT*PLAYER_SPAWNLOCATION,Assets.playerShip);
 	}
 
 	
@@ -91,8 +91,7 @@ public class PlayerShip extends Sprite {
 		}
 		
 		if(getX()<0) setX(0);
-		else if(getX()>MyGame.WIDTH-PLAYER_SIZE) setX(MyGame.WIDTH-PLAYER_SIZE);	
-		super.act(delta);
+		else if(getX()>GameScreen.GAME_WITDH-PLAYER_SIZE) setX(GameScreen.GAME_WITDH-PLAYER_SIZE);	
 	}
 	
 	/**

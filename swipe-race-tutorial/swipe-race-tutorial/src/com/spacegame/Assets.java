@@ -24,6 +24,7 @@ public class Assets {
 	public static TextureRegion playerMissile;
 	public static TextureRegion explosionSplashMain;
 	public static TextureRegion explosionSplashUp;
+	public static TextureRegion topInfoBar;
 
 	/**
 	 * Loads all assets from imageAtlas
@@ -38,7 +39,8 @@ public class Assets {
 		playerMissile = atlas.findRegion("MissileRed");
 		explosionSplashMain = atlas.findRegion("ExplosionSplashMain");
 		explosionSplashUp = atlas.findRegion("ExplosionSplashUp");
-
+		topInfoBar = atlas.findRegion("TopInfoBar");
+		
 		moveRightButton = new TextureRegion ( new Texture(Gdx.files.internal("Arrow_Right.png")));
 		moveLeftButton = new TextureRegion ( new Texture(Gdx.files.internal("Arrow_Left.png")));
 		space = new TextureRegion ( new Texture(Gdx.files.internal("space-1.png")));
