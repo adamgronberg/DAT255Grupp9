@@ -44,9 +44,9 @@ public class GameScreen implements Screen{
 	 */
 	public GameScreen(MyGame myGame) {
 		
-		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveLeftButton);
+		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveLeftButton);
 		moveRightButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
-				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, Assets.moveRightButton);
+				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveRightButton);
 		
 		
 		gameLogic = new GameLogic(this);
@@ -58,6 +58,8 @@ public class GameScreen implements Screen{
 		stage.addActor(topInfoBar);
 		stage.addActor(moveLeftButton);
 		stage.addActor(moveRightButton);
+		
+		SoundAssets.spaceMusic.play();			//Start backgroundmusic
 	}
 	
 	/**
@@ -117,15 +119,7 @@ public class GameScreen implements Screen{
 				moveRightButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
 				break;
 		}
-	}
-	
-	/**
-	 * Disable/enable auto shoot
-	 */
-	public void changeOptionAutoShoot(){
-		optionAutoShoot = !optionAutoShoot;
-	}
-	
+	}	
 	
 	/**
 	 * @return Move left button

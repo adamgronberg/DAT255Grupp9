@@ -1,6 +1,6 @@
 package com.ships;
 
-import com.spacegame.Assets;
+import com.spacegame.ImageAssets;
 import com.spacegame.GameScreen;
 
 /**
@@ -29,7 +29,7 @@ public class ScoutShip extends EnemyShip{
 	 * @param y
 	 */
 	public ScoutShip(float x, float y){
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, Assets.enemyScoutShip);
+		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyScoutShip);
 		currentMovmentLenght = 0;
 		setRotation(-45);
 	}

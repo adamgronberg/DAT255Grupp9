@@ -2,7 +2,7 @@ package com.ships;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.spacegame.Assets;
+import com.spacegame.ImageAssets;
 import com.spacegame.GameScreen;
 import com.spacegame.Sprite;
 import com.weapons.PlayerLaser;
@@ -35,7 +35,7 @@ public class PlayerShip extends Sprite {
 	 * @param gameLogic
 	 */
 	public PlayerShip() {
-		super(PLAYER_SIZE, PLAYER_SIZE, GameScreen.GAME_WITDH/2, GameScreen.GAME_HEIGHT*PLAYER_SPAWNLOCATION,Assets.playerShip);
+		super(PLAYER_SIZE, PLAYER_SIZE, GameScreen.GAME_WITDH/2, GameScreen.GAME_HEIGHT*PLAYER_SPAWNLOCATION,ImageAssets.playerShip);
 	}
 
 	
@@ -45,7 +45,7 @@ public class PlayerShip extends Sprite {
 	 */
 	public void drawAbove(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
-		batch.draw(Assets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
+		batch.draw(ImageAssets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 		
 	/**

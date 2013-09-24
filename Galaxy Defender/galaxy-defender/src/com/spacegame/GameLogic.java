@@ -54,7 +54,7 @@ public class GameLogic extends Table {
 		playerShip = new PlayerShip();
 		addActor(playerShip);
 		collision = new CollisionDetection(this);
-		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), Assets.space);
+		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		addActor(backgroundSpace);
 	}
 	

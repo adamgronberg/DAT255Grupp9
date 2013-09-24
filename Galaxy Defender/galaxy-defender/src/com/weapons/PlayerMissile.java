@@ -1,7 +1,8 @@
 package com.weapons;
 
 import com.effects.AreaEffect;
-import com.spacegame.Assets;
+import com.spacegame.ImageAssets;
+import com.spacegame.SoundAssets;
 
 /**
  * 
@@ -30,7 +31,7 @@ public class PlayerMissile extends AreaOfEffectWeapon{
 	 * @param y y-led Spawn
 	 */
 	public PlayerMissile(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGE, EXPLODEDAMAGE, Assets.playerMissile);
+		super(x, y, WIDTH, HEIGHT, DAMAGE, EXPLODEDAMAGE, ImageAssets.playerMissile);
 	}
 	
 	
@@ -49,9 +50,11 @@ public class PlayerMissile extends AreaOfEffectWeapon{
 	@Override
 	public void addOnHitEffect() {
 		getParent().addActor( new AreaEffect(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, 
-												EXPLOSION_H, LINGERTIME, Assets.explosionSplashMain));
+												EXPLOSION_H, LINGERTIME, ImageAssets.explosionSplashMain));
 		getParent().addActor( new AreaOfEffectDummy(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, 
 												EXPLOSION_W, EXPLOSION_H, areaDamage));
+		SoundAssets.missileExplosion.play();
+		
 		remove();
 	}
 }

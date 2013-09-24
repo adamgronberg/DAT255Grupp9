@@ -1,6 +1,6 @@
 package com.ships;
 
-import com.spacegame.Assets;
+import com.spacegame.ImageAssets;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class BasicShip extends EnemyShip {
 	 * @param y y-led Spawn location
 	 */
 	public BasicShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, Assets.enemyBasicShip);
+		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip);
 	}
 
 	

@@ -6,6 +6,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.ships.PlayerShip;
+import com.spacegame.SoundAssets;
 import com.spacegame.GameLogic;
 import com.spacegame.GameScreen;
 
@@ -31,7 +32,7 @@ public class InputControl implements GestureListener, InputProcessor {
 	public boolean fling(float velocityX, float velocityY, int button) {
 		if (velocityY < -FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.switchPlayerWeapon();
 		if (velocityY > FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.switchPlayerWeapon();
-		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.changeOptionAutoShoot();
+		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.toggleOptionAutoShoot();
 		if (velocityX > FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.changeOptionControlLayout();
 		return false;
 	}
@@ -46,6 +47,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		if(keycode == Input.Keys.LEFT)  gameLogic.playerShip.moveLeft();
 		if(keycode == Input.Keys.RIGHT)  gameLogic.playerShip.moveRight();
 		if(keycode == Input.Keys.SPACE)  gameLogic.toggleShooting();
+		if(keycode == Input.Keys.M)  gameLogic.playerShip.moveLeft();
 		return false;
 	}
 	/**

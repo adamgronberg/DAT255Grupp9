@@ -10,7 +10,7 @@ public class TopInfoBar extends Table{
 	
 	public TopInfoBar(){
 		setBounds(0, GameScreen.GAME_HEIGHT, GameScreen.GAME_WITDH, GameScreen.INFO_SCREEN_HEIGHT);
-		background = new Background(getX(), getY(), getWidth(), getHeight(), Assets.topInfoBar);
+		background = new Background(getX(), getY(), getWidth(), getHeight(), ImageAssets.topInfoBar);
 		addActor(background);
 	}
 	

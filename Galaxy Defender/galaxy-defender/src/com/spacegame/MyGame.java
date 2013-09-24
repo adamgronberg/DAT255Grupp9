@@ -19,7 +19,8 @@ public class MyGame extends Game {
 	 */
 	@Override
 	public void create() {
-		Assets.load();
+		ImageAssets.load();
+		SoundAssets.load();
 		gameScreen = new GameScreen(this);	
 		setScreen(gameScreen);		//TODO: First screen should be a menu/splashscreen
 	}
@@ -29,7 +30,8 @@ public class MyGame extends Game {
 	 */
 	@Override
 	public void dispose() {
-		Assets.dispose();
+		ImageAssets.dispose();
+		SoundAssets.dispose();
 		gameScreen.dispose();
 	}
 	

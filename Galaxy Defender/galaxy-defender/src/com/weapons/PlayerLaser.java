@@ -1,6 +1,6 @@
 package com.weapons;
 
-import com.spacegame.Assets;
+import com.spacegame.ImageAssets;
 
 /**
  * 
@@ -24,7 +24,7 @@ public class PlayerLaser extends Projectile {
 	 * @param y y-led Spawn
 	 */
 	public PlayerLaser(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGE, Assets.playerLaser);
+		super(x, y, WIDTH, HEIGHT, DAMAGE, ImageAssets.playerLaser);
 	}
 	
 	/**
