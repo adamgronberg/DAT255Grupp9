@@ -105,7 +105,7 @@ public class GameLogic extends Table {
 		
 		int spawnLocation = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
 		float xPos = spawnLocation;
-		addActor(new BasicShip(xPos, GameScreen.GAME_WITDH+BasicShip.HEIGHT));
+		addActor(new BasicShip(xPos, GameScreen.GAME_HEIGHT+BasicShip.HEIGHT));
 		
 		spawnLocation = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
 		xPos = spawnLocation;
