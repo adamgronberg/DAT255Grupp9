@@ -6,7 +6,6 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.ships.PlayerShip;
-import com.spacegame.SoundAssets;
 import com.spacegame.GameLogic;
 import com.spacegame.GameScreen;
 

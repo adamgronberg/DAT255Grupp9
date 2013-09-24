@@ -41,6 +41,7 @@ public class GameLogic extends Table {
 	
 	public PlayerShip playerShip;
 	
+	
 
 	
 	/**
@@ -48,6 +49,7 @@ public class GameLogic extends Table {
 	 * TODO: Should set up unique levels and not spawn enemies randomly (Release 1 demo)
 	 */
 	public GameLogic(GameScreen gameScreen) {
+		
 		this.gameScreen = gameScreen;
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
@@ -138,9 +140,12 @@ public class GameLogic extends Table {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(Color.WHITE);
+		
 		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
 		if(playerIsAlive) playerShip.drawAbove(batch, parentAlpha);
+		
+		
 	}
 	
 	/**
@@ -162,5 +167,13 @@ public class GameLogic extends Table {
 		currentScore=currentScore+score;
 		System.out.println("CurrentScore: "+currentScore);
 
+	}
+	
+	/**
+	 * 
+	 * @return the current score
+	 */
+	public int getScore(){
+		return currentScore;
 	}
 }

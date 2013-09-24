@@ -4,10 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+
+
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import com.input.InputControl;
+
 
 /**
  * 
@@ -21,6 +25,10 @@ public class GameScreen implements Screen{
 	private GameLogic gameLogic;
 	private InputControl inputController;
 	private TopInfoBar topInfoBar;
+	
+
+
+
 	
 	private boolean optionAutoShoot = true;
 	
@@ -36,6 +44,9 @@ public class GameScreen implements Screen{
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
 	
+	private TextField textField;
+	
+	
 
 	
 	/**
@@ -43,12 +54,15 @@ public class GameScreen implements Screen{
 	 * Adds gameLogic as actor, starting the game
 	 */
 	public GameScreen(MyGame myGame) {
+				
+		textField= new TextField(); //For Text
 		
-		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveLeftButton);
+		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE,
+				GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveLeftButton);
+
 		moveRightButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveRightButton);
-		
-		
+			
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this);
 		stage = new Stage();
@@ -57,9 +71,8 @@ public class GameScreen implements Screen{
 		stage.addActor(gameLogic);
 		stage.addActor(topInfoBar);
 		stage.addActor(moveLeftButton);
-		stage.addActor(moveRightButton);
-		
-		SoundAssets.spaceMusic.play();			//Start backgroundmusic
+		stage.addActor(moveRightButton);		
+		SoundAssets.spaceMusic.play();
 	}
 	
 	/**
@@ -140,10 +153,17 @@ public class GameScreen implements Screen{
 	 */
 	@Override
 	public void render(float delta) {
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+	
 		stage.act(delta);				//Tells all actors to act
 		stage.draw();					//Tells all actors to draw
+	
+		textField.draw("Score " +gameLogic.getScore()); //For text
+		
+	
 	}
 	
 	/**
