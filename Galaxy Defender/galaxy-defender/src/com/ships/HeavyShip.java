@@ -1,6 +1,9 @@
 package com.ships;
 
+
 import com.spacegame.ImageAssets;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.weapons.EnemyLaser;
 
 /**
  * 
@@ -18,6 +21,8 @@ public class HeavyShip extends EnemyShip {
 	private final static int SCOREVALUE=3;
 	private final static int HEALTH=2;
 	
+	private float lastMissileTime = 0;
+	
 	/**
 	 * Constructor
 	 * @param x	x-led Spawn location
@@ -34,6 +39,17 @@ public class HeavyShip extends EnemyShip {
 	@Override
 	public void act(float delta){
 		setY(getY()-SHIPSPEED);
+		spawnEnemyProjectile();
 
+	}
+	/**
+	 * Spawns projectiles in front of the enemies
+	 */
+	public void spawnEnemyProjectile() {
+		if(TimeUtils.nanoTime() - lastMissileTime > EnemyLaser.RATEOFFIRE) {
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/2, 
+										 getY()));
+			lastMissileTime = TimeUtils.nanoTime();
+		}
 	}
 }

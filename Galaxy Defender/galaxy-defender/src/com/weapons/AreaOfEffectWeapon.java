@@ -26,7 +26,7 @@ public abstract class AreaOfEffectWeapon extends Projectile{
 	 * @param areaDamage	The damage inflicted by the area used by the weapon
 	 */
 	public AreaOfEffectWeapon(float x, float y, float width, float height, int onHitDamage, int areaDamage, TextureRegion texture) {
-		super(x, y, width, height, onHitDamage, texture);
+		super(x, y, width, height, onHitDamage, texture, false);
 		this.areaDamage = areaDamage;
 	}
 	

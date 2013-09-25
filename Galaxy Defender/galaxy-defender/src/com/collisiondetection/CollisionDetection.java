@@ -50,6 +50,7 @@ public class CollisionDetection {
 		
 		Array<EnemyShip> enemyShips = new Array<EnemyShip>();
 		Array<Projectile> playerProjectiles = new Array<Projectile>();
+		Array<Projectile> enemyProjectiles = new Array<Projectile>();
 		Array<AreaOfEffectDummy> dummyies = new Array<AreaOfEffectDummy>();
 		
 		
@@ -62,7 +63,12 @@ public class CollisionDetection {
 			}
 			else if(actor instanceof Projectile){
 				Projectile projectile = (Projectile)actor;
-				playerProjectiles.add(projectile);
+				if(!projectile.killsPlayer()){
+					playerProjectiles.add(projectile);
+				}
+				if(projectile.killsPlayer()){
+					enemyProjectiles.add(projectile);
+				}
 			}
 			else if(actor instanceof AreaOfEffectDummy){
 				AreaOfEffectDummy dummy = (AreaOfEffectDummy)actor;
@@ -71,10 +77,30 @@ public class CollisionDetection {
 		}
 		
 		
-		
 		Iterator<AreaOfEffectDummy> iterAD = dummyies.iterator();
-		Iterator<Projectile> iterPP = playerProjectiles.iterator();
 		Iterator<EnemyShip> iterES = enemyShips.iterator();
+		Iterator<Projectile> iterPP = playerProjectiles.iterator();
+		Iterator<Projectile> iterEP = enemyProjectiles.iterator();
+		
+		while(iterEP.hasNext()){
+			Projectile enemyP = iterEP.next();
+			//Check for collisions between player and enemyProjectiles
+			if (collisionControl(gameLogic.playerShip, enemyP)) {
+				gameLogic.clear();
+				gameLogic.changePlayerAlive();
+				return;	
+			}
+			Iterator<Projectile> iterPP1 = playerProjectiles.iterator();
+			while(iterPP1.hasNext()){
+				Projectile playerP = iterPP1.next();
+					//Removes projectiles if collided
+					if (collisionControl(playerP, enemyP)) {
+						playerP.addOnHitEffect();
+						enemyP.addOnHitEffect();
+						break;
+					}
+			}
+		}
 		
 		while (iterES.hasNext()) {
 			EnemyShip enemyShip = iterES.next();

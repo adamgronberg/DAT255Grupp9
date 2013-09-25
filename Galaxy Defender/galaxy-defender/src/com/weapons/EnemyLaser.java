@@ -6,13 +6,13 @@ import com.spacegame.ImageAssets;
  * 
  * @author Grupp9
  * 
- * Player standard green laser
+ * Enemy standard green laser
  *
  */
-public class PlayerLaser extends Projectile {
+
+public class EnemyLaser extends Projectile {
 	
-	
-	public static final float RATEOFFIRE = 300000000f; //In nanoseconds
+	public static final float RATEOFFIRE = 3000000000f; //In nanoseconds
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 5;
@@ -23,8 +23,8 @@ public class PlayerLaser extends Projectile {
 	 * @param x x-led Spawn
 	 * @param y y-led Spawn
 	 */
-	public PlayerLaser(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGE, ImageAssets.laser, false);
+	public EnemyLaser(float x, float y){
+		super(x, y, WIDTH, HEIGHT, DAMAGE, ImageAssets.laser, true);
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class PlayerLaser extends Projectile {
 	 */
 	@Override
 	public void act(float delta){
-		setY(getY()+SPEED);
+		setY(getY()-SPEED);
 		super.act(delta);
 	}
 
@@ -41,4 +41,5 @@ public class PlayerLaser extends Projectile {
 	public void addOnHitEffect() {
 		remove();
 	}
+
 }

@@ -12,6 +12,7 @@ import com.spacegame.Sprite;
 public abstract class Projectile extends Sprite{
 	
 	protected int damage;
+	public boolean killsPlayer;
 	
 	/**
 	 * Constructor
@@ -20,9 +21,10 @@ public abstract class Projectile extends Sprite{
 	 * @param width The width of the Projectile
 	 * @param height The height of the Projectile
 	 */
-	public Projectile(float x, float y, float width, float height, int damage, TextureRegion texture) {
+	public Projectile(float x, float y, float width, float height, int damage, TextureRegion texture, boolean killsPlayer) {
 		super(width, height, x, y, texture);
 		this.damage = damage;
+		this.killsPlayer = killsPlayer;
 	}
 	
 	/**
@@ -38,6 +40,13 @@ public abstract class Projectile extends Sprite{
 	 */
 	public int getDamage() {
 		return damage;
+	}
+	
+	/**
+	 * @return true if the projectile is harmful for the player
+	 */
+	public boolean killsPlayer(){
+		return killsPlayer;
 	}
 
 	public abstract void addOnHitEffect();

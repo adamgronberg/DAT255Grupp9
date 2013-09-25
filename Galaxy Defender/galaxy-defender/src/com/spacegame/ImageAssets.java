@@ -14,7 +14,7 @@ public class ImageAssets {
 	public static TextureRegion space;
 	public static TextureRegion moveLeftButton;
 	public static TextureRegion moveRightButton;
-	public static TextureRegion playerLaser;
+	public static TextureRegion laser;
 	public static TextureRegion playerMissile;
 	public static TextureRegion explosionSplashMain;
 	public static TextureRegion explosionSplashUp;
@@ -29,7 +29,7 @@ public class ImageAssets {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
 		explosionAnimation = new Array<TextureRegion>();
 		playerShip = atlas.findRegion("playerShip");
-		playerLaser = atlas.findRegion("laser");
+		laser = atlas.findRegion("laser");
 		enemyBasicShip = atlas.findRegion("enemyShip");
 		enemyScoutShip = atlas.findRegion("scoutShip");
 		playerMissile = atlas.findRegion("MissileRed");
