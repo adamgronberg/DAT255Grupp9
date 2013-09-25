@@ -3,14 +3,15 @@ package com.effects;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.spacegame.Assets;
+import com.badlogic.gdx.utils.Array;
+import com.spacegame.ImageAssets;
 import com.spacegame.MovableEntity;
 
-public class AreaEffect extends MovableEntity{
+public abstract class AnimatedAreaEffect extends MovableEntity{
 	
-	private Animation animation = new Animation(0.02f, Assets.explosionAnimation);
-	private float stateTime = 0f;
-	private TextureRegion currentFrame;
+	protected Animation animation; 
+	protected float stateTime;
+	protected TextureRegion currentFrame;
 	
 	/**
 	 * Constructor
@@ -20,9 +21,10 @@ public class AreaEffect extends MovableEntity{
 	 * @param height		Height of explosion
 	 * @param lingerTime	The time the explosion lingers (20 ~ 1 second)
 	 */
-	public AreaEffect(float x, float y, float width, float height, float lingerTime, TextureRegion texture) {
+	public AnimatedAreaEffect(float x, float y, float width, float height, float timePerFrame, Array<TextureRegion> animationFrames) {
 		super( width, height, x, y);
-		;
+		animation = new Animation(timePerFrame, ImageAssets.explosionAnimation);
+		stateTime = 0f;
 	}
 	
 	/**

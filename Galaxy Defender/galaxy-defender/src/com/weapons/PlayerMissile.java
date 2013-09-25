@@ -1,8 +1,8 @@
 package com.weapons;
 
-import com.effects.AreaEffect;
 import com.spacegame.ImageAssets;
 import com.spacegame.SoundAssets;
+import com.effects.ExplosionEffect;
 
 /**
  * 
@@ -18,7 +18,6 @@ public class PlayerMissile extends AreaOfEffectWeapon{
 	private static final float SPEED = 5f;
 	private static final int DAMAGE = 1;
 	private static final int EXPLODEDAMAGE = 1;
-	private static final int LINGERTIME = 15;
 	
 	public static final float HEIGHT = 30;
 	public static final float WIDTH = 20;
@@ -50,8 +49,8 @@ public class PlayerMissile extends AreaOfEffectWeapon{
 	 */
 	@Override
 	public void addOnHitEffect() {
-		getParent().addActor( new AreaEffect(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, 
-												EXPLOSION_H, LINGERTIME, ImageAssets.explosionSplashMain));
+		getParent().addActor( new ExplosionEffect(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, 
+												EXPLOSION_H));
 		getParent().addActor( new AreaOfEffectDummy(getX()-EXPLOSION_W/2+WIDTH/2, getY()-EXPLOSION_H/2 + HEIGHT, 
 												EXPLOSION_W, EXPLOSION_H, areaDamage));
 		SoundAssets.missileExplosion.play();
