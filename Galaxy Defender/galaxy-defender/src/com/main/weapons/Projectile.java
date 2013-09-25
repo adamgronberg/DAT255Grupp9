@@ -9,46 +9,39 @@ import spacegame.Sprite;
  * 
  * Base class for weapons. Player and enemy weapons should extend this class
  */
-public abstract class Projectile extends Sprite{
+public abstract class Projectile extends Sprite implements HasTargets{
 	
-	protected int damage;
-	public boolean killsPlayer;
+	protected int damageOnHit;
+	protected TargetTypes[] affectedTargets;
 	
 	/**
-	 * Constructor
-	 * @param x x-led Spawn location
-	 * @param y y-led Spawn location 
-	 * @param width The width of the Projectile
-	 * @param height The height of the Projectile
+	 * COnstructor
+	 * @param x	Spawn location x
+	 * @param y spawn location y
+	 * @param width	Width of projectile
+	 * @param height	Height of projectile
+	 * @param damageOnHit	Damage on hit
+	 * @param affectedTargets	Affected targets
+	 * @param despawnesOnCollision	If projectiles goes though its target
+	 * @param texture	The texture of the projectile
 	 */
-	public Projectile(float x, float y, float width, float height, int damage, TextureRegion texture, boolean killsPlayer) {
+	public Projectile(float x, float y, float width, float height, int damageOnHit,  
+						 TextureRegion texture) {
 		super(width, height, x, y, texture);
-		this.damage = damage;
-		this.killsPlayer = killsPlayer;
-	}
-	
-	/**
-	 * Override this method if projectiles should not despawn on collision
-	 * @return
-	 */
-	public boolean despawnesOnCollision(){
-		return true;
+		this.damageOnHit = damageOnHit;
 	}
 	
 	/**
 	 * @return The damage of the projectile
 	 */
-	public int getDamage() {
-		return damage;
+	public int getOnHitDamage() {
+		return damageOnHit;
 	}
 	
+	
 	/**
-	 * @return true if the projectile is harmful for the player
+	 * Adds a on hit effect
 	 */
-	public boolean killsPlayer(){
-		return killsPlayer;
-	}
-
 	public abstract void addOnHitEffect();
 	
 }

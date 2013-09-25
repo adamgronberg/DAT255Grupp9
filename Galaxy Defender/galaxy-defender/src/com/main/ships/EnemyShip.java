@@ -7,15 +7,15 @@ import spacegame.Sprite;
 
 /**
  * 
- * Base class for enemy ships. Enemy ships should extend this class
  * 
  * @author Grupp9
  *	
- *	
+ * Base class for enemy ships. Enemy ships should extend this class
  */
 public abstract class EnemyShip extends Sprite{
 	protected int scoreValue;
 	protected int health;
+	public static enum EnemyTypes {HEAVY, BASIC, SCOUT};
 	
 	/**
 	 * 
@@ -49,20 +49,3 @@ public abstract class EnemyShip extends Sprite{
 		return scoreValue;
 	}
 }
-
-	
-
-
-//clearActions();						Example of how to use animations. Should be done in a separate class
-//addAction(fadeOut(1f));
-//if (front && above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(200, 200, 1.5f)), removeActor()));
-//if (front && !above) addAction(sequence(parallel(rotateBy(360, 1.5f), moveBy(200, -200, 1.5f)), removeActor()));
-//if (!front && above) addAction(sequence(parallel(rotateBy(360, 1.5f), moveBy(-200, 200, 1.5f)), removeActor()));
-//if (!front && !above) addAction(sequence(parallel(rotateBy(-360, 1.5f), moveBy(-200, -200, 1.5f)), removeActor()));
-
-
-//int rnd = MathUtils.random(0, 3);
-//if (rnd == 0) setColor(Color.RED);
-//if (rnd == 1) setColor(Color.GREEN);
-//if (rnd == 2) setColor(Color.WHITE);
-//if (rnd == 3) setColor(Color.YELLOW);

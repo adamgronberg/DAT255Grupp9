@@ -12,11 +12,12 @@ import assets.ImageAssets;
 
 public class EnemyLaser extends Projectile {
 	
-	public static final float RATEOFFIRE = 3000000000f; //In nanoseconds
+	public static final float RATEOFFIRE = 2500000000f; //In nanoseconds
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 5;
-	private static final int DAMAGE = 1;
+	private static final int DAMAGE_ON_HIT = 1;
+	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.PLAYER, TargetTypes.PROJECTILE};
 	
 	/**
 	 * Constructor
@@ -24,7 +25,7 @@ public class EnemyLaser extends Projectile {
 	 * @param y y-led Spawn
 	 */
 	public EnemyLaser(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGE, ImageAssets.laser, true);
+		super(x, y, WIDTH, HEIGHT, DAMAGE_ON_HIT, ImageAssets.laser);
 	}
 	
 	/**
@@ -36,10 +37,20 @@ public class EnemyLaser extends Projectile {
 		setY(getY()-SPEED);
 		super.act(delta);
 	}
-
+	
+	/**
+	 * Removes the laser
+	 */
 	@Override
 	public void addOnHitEffect() {
 		remove();
 	}
 
+	/**
+	 * Different target the projectile affects
+	 */
+	@Override
+	public TargetTypes[] getTargetTypes() {
+		return AFFECTEDTARGETS;
+	}
 }

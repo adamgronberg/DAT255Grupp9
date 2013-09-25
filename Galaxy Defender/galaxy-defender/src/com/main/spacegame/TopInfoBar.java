@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import assets.ImageAssets;
 
+/**
+ * 
+ * @author Grupp9
+ * Bar above screen shoowing Map/Score/Health
+ */
 public class TopInfoBar extends Table{
 	
 	public static final float SCORE_PLACEMENT_X = GameScreen.GAME_WITDH*0.75f;

@@ -7,7 +7,6 @@ import spacegame.GameScreen;
  * 
  * @author Grupp9
  *
- *
  *	A ship that moves in y led as well as x led
  */
 public class ScoutShip extends EnemyShip{

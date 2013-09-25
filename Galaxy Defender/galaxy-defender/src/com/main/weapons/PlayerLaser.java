@@ -16,7 +16,8 @@ public class PlayerLaser extends Projectile {
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 5;
-	private static final int DAMAGE = 1;
+	private static final int DAMAGEONHIT = 1;
+	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.PROJECTILE};
 	
 	/**
 	 * Constructor
@@ -24,7 +25,7 @@ public class PlayerLaser extends Projectile {
 	 * @param y y-led Spawn
 	 */
 	public PlayerLaser(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGE, ImageAssets.laser, false);
+		super(x, y, WIDTH, HEIGHT, DAMAGEONHIT, ImageAssets.laser);
 	}
 	
 	/**
@@ -37,8 +38,19 @@ public class PlayerLaser extends Projectile {
 		super.act(delta);
 	}
 
+	/**
+	 * Removes as actor
+	 */
 	@Override
 	public void addOnHitEffect() {
 		remove();
+	}
+
+	/**
+	 * Affected targets
+	 */
+	@Override
+	public TargetTypes[] getTargetTypes() {
+		return AFFECTEDTARGETS;
 	}
 }

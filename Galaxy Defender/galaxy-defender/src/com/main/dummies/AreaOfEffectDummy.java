@@ -1,7 +1,7 @@
-package weapons;
+package dummies;
 
 import spacegame.MovableEntity;
-
+import weapons.HasTargets;
 
 /**
  * 
@@ -10,11 +10,10 @@ import spacegame.MovableEntity;
  * Used on weapons to add a area of effect dummy
  * A rectangle with area damage
  */
-public class AreaOfEffectDummy extends MovableEntity{
-
-	private int areaDamage;
+public abstract class AreaOfEffectDummy extends MovableEntity implements HasTargets{
 	
-
+	protected int areaDamage;
+	
 	/**
 	 * Constructor
 	 * @param x
@@ -34,6 +33,4 @@ public class AreaOfEffectDummy extends MovableEntity{
 	public int getAreaDamage(){
 		return areaDamage;
 	}
-	
-	
 }

@@ -3,10 +3,22 @@ package spacegame;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * @author Blasse
+ * Movable objects with a texture
+ */
 public class Sprite extends MovableEntity {
 
 	protected TextureRegion texture;
 	
+	/**
+	 * Draws the sprite
+	 * @param width
+	 * @param height
+	 * @param x
+	 * @param y
+	 * @param texture
+	 */
 	public Sprite(float width, float height, float x, float y, TextureRegion texture) {
 		super(width, height, x, y);
 		this.texture = texture;

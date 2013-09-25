@@ -1,5 +1,6 @@
 package spacegame;
 
+import assets.ImageAssets;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,14 +9,18 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
-import assets.ImageAssets;
-import collisiondetection.CollisionDetection;
-import collisiondetection.OutOfBoundsDetection;
+
 import ships.BasicShip;
+import ships.EnemyShip.EnemyTypes;
 import ships.HeavyShip;
 import ships.PlayerShip;
 import ships.ScoutShip;
 import spawnlogic.SpawnPattern;
+import collisiondetection.CollisionDetection;
+import collisiondetection.OutOfBoundsDetection;
+
+
+
 
 
 /**
@@ -104,18 +109,15 @@ public class GameLogic extends Table {
 	 * For testing
 	 */
 	private void spawnShip() {
-	
-		
-		int spawnLocation = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
+		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
 		float xPos = spawnLocation;
 		addActor(new BasicShip(xPos, GameScreen.GAME_HEIGHT+BasicShip.HEIGHT));
 		
-		spawnLocation = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
+		spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
 		xPos = spawnLocation;
 		addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
-		
 	}
 	
 	/**
@@ -130,9 +132,9 @@ public class GameLogic extends Table {
 	 * For testing	TODO: Should prob be in some sort of "levelDesign" class
 	 */
 	private void spawnPattern(){		
-		int spawnLocation = (int) MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
+		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
 		float xPos = spawnLocation;
-		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 200000000f, "ScoutShip", this));
+		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 200000000f, EnemyTypes.SCOUT));
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 	}
 	/**
@@ -145,8 +147,6 @@ public class GameLogic extends Table {
 		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
 		if(playerIsAlive) playerShip.drawAbove(batch, parentAlpha);
-		
-		
 	}
 	
 	/**

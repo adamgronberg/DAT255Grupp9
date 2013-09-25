@@ -2,6 +2,12 @@ package effects;
 
 import assets.ImageAssets;
 
+
+/**
+ * 
+ * @author Grupp9
+ * Plays a animation designed for missile
+ */
 public class ExplosionEffect extends AnimatedAreaEffect{
 
 	private static final float TIMEPERFRAME = 0.025f;

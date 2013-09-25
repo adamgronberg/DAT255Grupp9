@@ -9,6 +9,12 @@ import ships.PlayerShip;
 import spacegame.GameLogic;
 import spacegame.GameScreen;
 
+
+/**
+ * 
+ * @author Grupp9
+ * Handles all user input desktop/android
+ */
 public class InputControl implements GestureListener, InputProcessor {
 
 	private GameLogic gameLogic;
@@ -16,6 +22,12 @@ public class InputControl implements GestureListener, InputProcessor {
 	
 	private static final float FLING_SENSITIVITY = 1500f;
 	
+	
+	/**
+	 * Constructor
+	 * @param gameLogic
+	 * @param gameScreen
+	 */
 	public InputControl(GameLogic gameLogic, GameScreen gameScreen){
 		this.gameLogic = gameLogic;
 		this.gameScreen = gameScreen;
@@ -25,7 +37,7 @@ public class InputControl implements GestureListener, InputProcessor {
 	 * Fling up or down to swap weapons
 	 * Fling left to activate/deactivate optionAutoShoot
 	 * Fling right to swap control layout
-	 * TODO: The fling don't register if you are moving at the same time, can't solve. Might have to scrap "fling" weapon switch
+	 * TODO: The fling don't register if you are moving at the same time, I can't solve this. Might have to scrap "fling" weapon switch
 	 */
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
@@ -46,7 +58,6 @@ public class InputControl implements GestureListener, InputProcessor {
 		if(keycode == Input.Keys.LEFT)  gameLogic.playerShip.moveLeft();
 		if(keycode == Input.Keys.RIGHT)  gameLogic.playerShip.moveRight();
 		if(keycode == Input.Keys.SPACE)  gameLogic.toggleShooting();
-		if(keycode == Input.Keys.M)  gameLogic.playerShip.moveLeft();
 		return false;
 	}
 	/**
@@ -92,7 +103,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		return false;
 	}
 	
-	
+	////////////// Unused methods  /////////////////
 	@Override public boolean tap(float x, float y, int count, int button) {return false;}
 	@Override public boolean touchDown(float x, float y, int pointer, int button) {return false;}	
 	@Override public boolean longPress(float screenX, float screenY) {return false;}

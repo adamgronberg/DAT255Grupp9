@@ -1,36 +1,41 @@
 package ships;
 
-
-import assets.ImageAssets;
 import weapons.EnemyLaser;
+import assets.ImageAssets;
+
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+
+
 
 /**
  * 
  * @author Grupp9
  *
  *	The Basic enemy
- *  Only has y led moment more HP
+ *  Only has y led moment more HP and a laser cannon
  *
  */
 public class HeavyShip extends EnemyShip {
-	private final static float SHIPSPEED = 2.0f;
+	
 	public final static int HEIGHT=60;
 	public final static int WIDTH=40;
-	
+	private final static float SHIPSPEED = 2.0f;
 	private final static int SCOREVALUE=3;
 	private final static int HEALTH=2;
 	
-	private float lastMissileTime = 0;
+	private float lastMissileTime;
 	
 	/**
 	 * Constructor
 	 * @param x	x-led Spawn location
 	 * @param y y-led Spawn location
+	 * sets a random shoot time for first shoot
 	 */
 	public HeavyShip(float x, float y) {
 		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip);
-		
+		lastMissileTime = TimeUtils.nanoTime() - 2*MathUtils.random(0,EnemyLaser.RATEOFFIRE);
+		System.out.println("" + lastMissileTime);
 	}
 	
 	/**
@@ -47,9 +52,9 @@ public class HeavyShip extends EnemyShip {
 	 */
 	public void spawnEnemyProjectile() {
 		if(TimeUtils.nanoTime() - lastMissileTime > EnemyLaser.RATEOFFIRE) {
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/2, 
-										 getY()));
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/2, getY()));
 			lastMissileTime = TimeUtils.nanoTime();
+			System.out.println("" + getY());
 		}
 	}
 }

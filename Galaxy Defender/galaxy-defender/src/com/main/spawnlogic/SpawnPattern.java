@@ -1,9 +1,15 @@
 package spawnlogic;
 
-
 import com.badlogic.gdx.utils.TimeUtils;
-import ships.*;
-import spacegame.*;
+
+import ships.BasicShip;
+import ships.EnemyShip;
+import ships.EnemyShip.EnemyTypes;
+import ships.HeavyShip;
+import ships.ScoutShip;
+import spacegame.MovableEntity;
+
+
 
 /**
  * 
@@ -18,8 +24,7 @@ public class SpawnPattern extends MovableEntity{
 	private int currentNumberOfEnemies = 0;
 	private float timePassedSinceSpawn = 0;
 	private float timeBetweenEnemy;
-	private String enemyType;
-	
+	private EnemyTypes enemyType;
 	
 	/**
 	 * Constructor
@@ -32,11 +37,11 @@ public class SpawnPattern extends MovableEntity{
 	 */
 	public SpawnPattern(float spawnX, float spawnY, 
 			int totalNumberOfEnemies, float timeBetweenEnemy, 
-			String enemyType, GameLogic gameLogic){
+			EnemyTypes enemyType){
 		super(1, 1, spawnX, spawnY);
 		this.totalNumberOfEnemies = totalNumberOfEnemies;
 		this.timeBetweenEnemy = timeBetweenEnemy;
-		this.enemyType = enemyType;		
+		this.enemyType = enemyType;
 	}
 	
 	
@@ -51,8 +56,17 @@ public class SpawnPattern extends MovableEntity{
 		
 		if(TimeUtils.nanoTime() - timePassedSinceSpawn > timeBetweenEnemy){
 			EnemyShip enemyShip;
-			if(enemyType.equals("ScoutShip")) enemyShip = new ScoutShip(getX(), getY());
-			else enemyShip = new BasicShip(getX(), getY());
+			switch(enemyType){
+				case BASIC:
+					enemyShip = new BasicShip(getX(), getY());
+					break;
+				case HEAVY:
+					enemyShip = new HeavyShip(getX(), getY());
+					break;
+				default:
+					enemyShip = new ScoutShip(getX(), getY());
+					break;
+			}
 			getParent().addActor(enemyShip);
 						
 			currentNumberOfEnemies++;

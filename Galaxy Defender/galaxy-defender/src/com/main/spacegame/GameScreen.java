@@ -163,6 +163,9 @@ public class GameScreen implements Screen{
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 	
+	/**
+	 * @return Current GameLogic score
+	 */
 	public int getGameLogicScore(){
 		return gameLogic.getScore();
 	}

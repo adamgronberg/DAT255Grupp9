@@ -7,6 +7,12 @@ import com.badlogic.gdx.utils.Array;
 import assets.ImageAssets;
 import spacegame.MovableEntity;
 
+
+/**
+ * 
+ * @author Grupp9
+ * Adds a animated effect
+ */
 public abstract class AnimatedAreaEffect extends MovableEntity{
 	
 	protected Animation animation; 

@@ -4,12 +4,12 @@ import java.util.Iterator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
+import dummies.AreaOfEffectDummy;
 import ships.EnemyShip;
 import spacegame.GameLogic;
 import spacegame.MovableEntity;
-import weapons.AreaOfEffectDummy;
 import weapons.Projectile;
-
+import weapons.TargetTypes;
 
 /**
  * 
@@ -20,7 +20,6 @@ import weapons.Projectile;
 public class CollisionDetection {
 	
 	private GameLogic gameLogic;
-	
 	
 	/**
 	 * Constructor
@@ -44,15 +43,13 @@ public class CollisionDetection {
 	
 	/**
 	 * Handles ALL collision
-	 * 
 	 */
 	public void checkCollisions() {
 		
 		Array<EnemyShip> enemyShips = new Array<EnemyShip>();
-		Array<Projectile> playerProjectiles = new Array<Projectile>();
-		Array<Projectile> enemyProjectiles = new Array<Projectile>();
-		Array<AreaOfEffectDummy> dummyies = new Array<AreaOfEffectDummy>();
-		
+		Array<Projectile> projectiles = new Array<Projectile>();
+		Array<Projectile> affectsProjectiles = new Array<Projectile>();
+		Array<AreaOfEffectDummy> dummies = new Array<AreaOfEffectDummy>();
 		
 		SnapshotArray<Actor> actors = gameLogic.getChildren();
 		for(Actor actor: actors){
@@ -63,82 +60,110 @@ public class CollisionDetection {
 			}
 			else if(actor instanceof Projectile){
 				Projectile projectile = (Projectile)actor;
-				if(!projectile.killsPlayer()){
-					playerProjectiles.add(projectile);
+				TargetTypes[] affectedTargets = projectile.getTargetTypes();
+				for(TargetTypes affected : affectedTargets){
+					if(affected == TargetTypes.PROJECTILE){
+						affectsProjectiles.add(projectile);
+					}
 				}
-				if(projectile.killsPlayer()){
-					enemyProjectiles.add(projectile);
-				}
+				projectiles.add(projectile);
+				
 			}
 			else if(actor instanceof AreaOfEffectDummy){
 				AreaOfEffectDummy dummy = (AreaOfEffectDummy)actor;
-				dummyies.add(dummy);
+				dummies.add(dummy);
 			}
 		}
 		
 		
-		Iterator<AreaOfEffectDummy> iterAD = dummyies.iterator();
-		Iterator<EnemyShip> iterES = enemyShips.iterator();
-		Iterator<Projectile> iterPP = playerProjectiles.iterator();
-		Iterator<Projectile> iterEP = enemyProjectiles.iterator();
+		Iterator<AreaOfEffectDummy> iterAD;
+		Iterator<EnemyShip> iterES;
+		Iterator<Projectile> iterAP;
+		Iterator<Projectile> iterP;
 		
-		while(iterEP.hasNext()){
-			Projectile enemyP = iterEP.next();
-			//Check for collisions between player and enemyProjectiles
-			if (collisionControl(gameLogic.playerShip, enemyP)) {
-				gameLogic.clear();
-				gameLogic.changePlayerAlive();
-				return;	
-			}
-			Iterator<Projectile> iterPP1 = playerProjectiles.iterator();
-			while(iterPP1.hasNext()){
-				Projectile playerP = iterPP1.next();
-					//Removes projectiles if collided
-					if (collisionControl(playerP, enemyP)) {
-						playerP.addOnHitEffect();
-						enemyP.addOnHitEffect();
-						break;
+		iterAP = affectsProjectiles.iterator();
+		while(iterAP.hasNext()){
+			Projectile projectile = iterAP.next();
+			//Test if projectile that destroys other projectile has collided
+			iterP = projectiles.iterator();
+			while(iterP.hasNext()){
+				Projectile affectsProjectile = iterP.next();
+				//Wont remove itself
+				if(projectile != affectsProjectile && affectsProjectile.getParent() != null){
+					if(collisionControl(projectile, affectsProjectile)){
+						affectsProjectile.addOnHitEffect();
+						projectile.addOnHitEffect();
 					}
+				}
 			}
-		}
-		
-		while (iterES.hasNext()) {
-			EnemyShip enemyShip = iterES.next();
 			
+			//Look att all different targets
+			for(TargetTypes affected : projectile.getTargetTypes()){
+				switch(affected){
+					case PLAYER:
+						//Removes player on collision with projectile
+						if(collisionControl(projectile, gameLogic.playerShip)){
+							gameLogic.clear();
+							gameLogic.changePlayerAlive();
+							return;	
+						}
+						break;
+					case ENEMY:
+						iterES = enemyShips.iterator();
+						while(iterES.hasNext()){
+							EnemyShip enemyShip = iterES.next();
+							//Removes projectiles and enemies that collided
+							if (collisionControl(enemyShip, projectile) && projectile.getParent() != null) {
+								projectile.addOnHitEffect();
+								gameLogic.addScore(enemyShip.hit(projectile.getOnHitDamage()));
+								iterES.remove();
+								break;
+							}	
+						}
+						break;
+					case ALLY:
+						break;
+				}
+			}	
+		}
+		iterES = enemyShips.iterator();
+		while (iterES.hasNext()) {
+		EnemyShip enemyShip = iterES.next();
+		
 			//Check for collision with player
 			if(collisionControl(enemyShip, gameLogic.playerShip)) {	
 				gameLogic.clear();
 				gameLogic.changePlayerAlive();
 				return;
-			}									
-			else {
-				iterPP = playerProjectiles.iterator();
-				while(iterPP.hasNext()){
-					Projectile projectile = iterPP.next();
-					
-					//Removes projectiles and enemies that collided
-					if (collisionControl(enemyShip, projectile)) {
-						projectile.addOnHitEffect();
-						gameLogic.addScore(enemyShip.hit(projectile.getDamage()));
-						iterPP.remove();
-						break;
-					}	
-				}
 			}
 		}
+		
 		//If any area of effect weapons where triggered
+		iterAD = dummies.iterator();
 		while(iterAD.hasNext()){
 			AreaOfEffectDummy areaOfEffectDummy = iterAD.next();
-			iterES = enemyShips.iterator();
-			while(iterES.hasNext()){
-				EnemyShip enemyShip = iterES.next();
-				
-				//If any target in range for area of effect
-				if(collisionControl(enemyShip, areaOfEffectDummy)) {
-					gameLogic.addScore(enemyShip.hit(areaOfEffectDummy.getAreaDamage()));
+			//Checks what targets are valid for the area effect
+			for(TargetTypes target: areaOfEffectDummy.getTargetTypes()){
+				switch(target){
+					case PLAYER:
+						gameLogic.clear();
+						gameLogic.changePlayerAlive();
+						break;
+					case ENEMY:
+						iterES = enemyShips.iterator();
+						while(iterES.hasNext()){
+							EnemyShip enemy = iterES.next();
+							if(collisionControl(enemy, areaOfEffectDummy)){
+								gameLogic.addScore(enemy.hit(areaOfEffectDummy.getAreaDamage()));
+							}
+						}
+						break;
+					case ALLY:
+						break;
 				}
+			
+				areaOfEffectDummy.remove();
 			}
-			areaOfEffectDummy.remove();
 		}
 	}
 }

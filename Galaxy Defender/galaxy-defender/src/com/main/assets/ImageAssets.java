@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * 
+ * @author Grupp9
+ * Contains all image assets and animations
+ */
 public class ImageAssets {
 	public static TextureAtlas atlas;
 	public static TextureRegion playerShip;
