@@ -19,7 +19,7 @@ public class PlayerMissile extends Projectile{
 	private static final float EXPLOSION_H = 80;
 	private static final float EXPLOSION_W = 60;
 	private static final TargetTypes[] AFFECTEDTARGETS = 
-		{TargetTypes.ENEMY, TargetTypes.PROJECTILE};
+		{TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
 	
 	public static final float RATEOFFIRE = 800000000f; //In nanoseconds
 	public static final float HEIGHT = 30;

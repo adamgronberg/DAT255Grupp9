@@ -79,7 +79,8 @@ public class InputControl implements GestureListener, InputProcessor {
 	/**
 	 * Handles movement on touch devices. 
 	 */
-	@Override public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	@Override 
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		Vector3 touchPos = gameScreen.unProjectCoordinates(screenX, screenY); 
 		if (gameScreen.getMoveLeftButton().isPressed(touchPos.x, touchPos.y) || 
 				gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {						//TODO: Should use buttons instead of areas
@@ -87,11 +88,24 @@ public class InputControl implements GestureListener, InputProcessor {
 		}
 		return false;
 	}
+	@Override 
+	public boolean touchDown(float screenX, float screenY, int pointer, int button) {
+		Vector3 touchPos = gameScreen.unProjectCoordinates(screenX, screenY);
+		if (gameScreen.getMoveLeftButton().isPressed(touchPos.x, touchPos.y)) {						//TODO: Should use buttons instead of areas
+			gameLogic.playerShip.moveLeft();
+		}
+		else if (gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {		//TODO: Should use buttons instead of areas
+			gameLogic.playerShip.moveRight();
+		}
+		else gameLogic.playerShip.stay();	
+		return false;
+	}
 	
 	/**
 	 * Handles movement on touch devices
 	 */
-	@Override public boolean touchDragged(int screenX, int screenY, int pointer) {
+	@Override 
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		Vector3 touchPos = gameScreen.unProjectCoordinates(screenX, screenY);
 		if (gameScreen.getMoveLeftButton().isPressed(touchPos.x, touchPos.y)) {						//TODO: Should use buttons instead of areas
 			gameLogic.playerShip.moveLeft();
@@ -104,8 +118,7 @@ public class InputControl implements GestureListener, InputProcessor {
 	}
 	
 	////////////// Unused methods  /////////////////
-	@Override public boolean tap(float x, float y, int count, int button) {return false;}
-	@Override public boolean touchDown(float x, float y, int pointer, int button) {return false;}	
+	@Override public boolean tap(float x, float y, int count, int button) {return false;}	
 	@Override public boolean longPress(float screenX, float screenY) {return false;}
 	@Override public boolean pan(float x, float y, float deltaX, float deltaY) {return false;}
 	@Override public boolean zoom(float initialDistance, float distance) {return false;}

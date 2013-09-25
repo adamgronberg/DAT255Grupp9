@@ -17,7 +17,7 @@ public class EnemyLaser extends Projectile {
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 5;
 	private static final int DAMAGE_ON_HIT = 1;
-	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.PLAYER, TargetTypes.PROJECTILE};
+	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE};
 	
 	/**
 	 * Constructor

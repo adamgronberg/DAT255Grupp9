@@ -48,7 +48,7 @@ public class CollisionDetection {
 		
 		Array<EnemyShip> enemyShips = new Array<EnemyShip>();
 		Array<Projectile> projectiles = new Array<Projectile>();
-		Array<Projectile> affectsProjectiles = new Array<Projectile>();
+		Array<Projectile> affectsEnemyProjectiles = new Array<Projectile>();
 		Array<AreaOfEffectDummy> dummies = new Array<AreaOfEffectDummy>();
 		
 		SnapshotArray<Actor> actors = gameLogic.getChildren();
@@ -60,14 +60,19 @@ public class CollisionDetection {
 			}
 			else if(actor instanceof Projectile){
 				Projectile projectile = (Projectile)actor;
+				projectiles.add(projectile);
 				TargetTypes[] affectedTargets = projectile.getTargetTypes();
 				for(TargetTypes affected : affectedTargets){
-					if(affected == TargetTypes.PROJECTILE){
-						affectsProjectiles.add(projectile);
+					switch(affected){
+						case PLAYER_PROJECTILE:
+							break;
+						case ENEMY_PROJECTILE:
+							affectsEnemyProjectiles.add(projectile);
+							break;
+						case ALLY_PROJECTILE:
+							break;
 					}
 				}
-				projectiles.add(projectile);
-				
 			}
 			else if(actor instanceof AreaOfEffectDummy){
 				AreaOfEffectDummy dummy = (AreaOfEffectDummy)actor;
@@ -81,17 +86,17 @@ public class CollisionDetection {
 		Iterator<Projectile> iterAP;
 		Iterator<Projectile> iterP;
 		
-		iterAP = affectsProjectiles.iterator();
-		while(iterAP.hasNext()){
-			Projectile projectile = iterAP.next();
+		iterP = projectiles.iterator();
+		while(iterP.hasNext()){
+			Projectile projectile = iterP.next();
 			//Test if projectile that destroys other projectile has collided
-			iterP = projectiles.iterator();
-			while(iterP.hasNext()){
-				Projectile affectsProjectile = iterP.next();
+			iterAP = affectsEnemyProjectiles.iterator();
+			while(iterAP.hasNext()){
+				Projectile affectsEnemyProjectile = iterAP.next();
 				//Wont remove itself
-				if(projectile != affectsProjectile && affectsProjectile.getParent() != null){
-					if(collisionControl(projectile, affectsProjectile)){
-						affectsProjectile.addOnHitEffect();
+				if(projectile != affectsEnemyProjectile && affectsEnemyProjectile.getParent() != null){
+					if(collisionControl(projectile, affectsEnemyProjectile)){
+						affectsEnemyProjectile.addOnHitEffect();
 						projectile.addOnHitEffect();
 					}
 				}
