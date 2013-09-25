@@ -25,11 +25,7 @@ public class GameScreen implements Screen{
 	private GameLogic gameLogic;
 	private InputControl inputController;
 	private TopInfoBar topInfoBar;
-	
 
-
-
-	
 	private boolean optionAutoShoot = true;
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
@@ -43,20 +39,12 @@ public class GameScreen implements Screen{
 	
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
-	
-	private TextField textField;
-	
-	
 
-	
 	/**
 	 * Constructor
 	 * Adds gameLogic as actor, starting the game
 	 */
 	public GameScreen(MyGame myGame) {
-				
-		textField= new TextField(); //For Text
-		
 		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE,
 				GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveLeftButton);
 
@@ -65,9 +53,9 @@ public class GameScreen implements Screen{
 			
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this);
-		stage = new Stage();
+		topInfoBar = new TopInfoBar(this);
 		
-		topInfoBar = new TopInfoBar();
+		stage = new Stage();
 		stage.addActor(gameLogic);
 		stage.addActor(topInfoBar);
 		stage.addActor(moveLeftButton);
@@ -160,11 +148,7 @@ public class GameScreen implements Screen{
 	
 		stage.act(delta);				//Tells all actors to act
 		stage.draw();					//Tells all actors to draw
-	
-		textField.draw("Score " +gameLogic.getScore()); //For text
-		
-	
-	}
+		}
 	
 	/**
 	 * Shows screen and adds input control 
@@ -176,6 +160,10 @@ public class GameScreen implements Screen{
 		multiplexer.addProcessor(inputController);
 		multiplexer.addProcessor(new GestureDetector(inputController));
 		Gdx.input.setInputProcessor(multiplexer);
+	}
+	
+	public int getGameLogicScore(){
+		return gameLogic.getScore();
 	}
 	
 	/**
