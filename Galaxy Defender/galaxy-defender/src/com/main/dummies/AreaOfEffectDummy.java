@@ -33,4 +33,10 @@ public abstract class AreaOfEffectDummy extends MovableEntity implements HasTarg
 	public int getAreaDamage(){
 		return areaDamage;
 	}
+	/**
+	 *  removes the ship
+	 */
+	public void addOnHitEffect() {
+		remove();
+	}
 }

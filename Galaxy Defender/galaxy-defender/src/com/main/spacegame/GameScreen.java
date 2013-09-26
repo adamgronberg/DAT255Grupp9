@@ -171,6 +171,13 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
+	 * @return Current GameLogic health
+	 */
+	public int getGameLogicHealth(){
+		return gameLogic.getHealth();
+	}
+	
+	/**
 	 * Hides screen and removes input control
 	 * Called when game pauses(Home button on android)
 	 */	

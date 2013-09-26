@@ -21,6 +21,7 @@ public class ScoutShip extends EnemyShip{
 	private boolean movingLeft = true;
 	private final float movmentLenght = 50;
 	private float currentMovmentLenght;
+	private static final int DAMAGE_ON_HIT = 2;
 	
 	/**
 	 * 
@@ -28,7 +29,7 @@ public class ScoutShip extends EnemyShip{
 	 * @param y
 	 */
 	public ScoutShip(float x, float y){
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyScoutShip);
+		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyScoutShip, DAMAGE_ON_HIT);
 		currentMovmentLenght = 0;
 		setRotation(-45);
 	}
@@ -59,5 +60,11 @@ public class ScoutShip extends EnemyShip{
 			setX(getX()+SHIPSPEED_X);
 			currentMovmentLenght++;
 		}
+	}
+	/**
+	 *  removes the ship
+	 */
+	public void addOnHitEffect() {
+		remove();
 	}
 }

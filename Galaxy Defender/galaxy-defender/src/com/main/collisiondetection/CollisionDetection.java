@@ -103,9 +103,9 @@ public class CollisionDetection {
 					case PLAYER:
 						//Removes player on collision with projectile
 						if(collisionControl(projectile, gameLogic.playerShip)){
-							gameLogic.clear();
-							gameLogic.changePlayerAlive();
-							return;	
+							//gameLogic.clear();
+							projectile.addOnHitEffect();
+							gameLogic.playerCollision(projectile.getOnHitDamage());	
 						}
 						break;
 					case ENEMY:
@@ -117,7 +117,6 @@ public class CollisionDetection {
 								projectile.addOnHitEffect();
 								gameLogic.addScore(enemyShip.hit(projectile.getOnHitDamage()));
 								iterES.remove();
-								break;
 							}	
 						}
 						break;
@@ -132,9 +131,9 @@ public class CollisionDetection {
 		
 			//Check for collision with player
 			if(collisionControl(enemyShip, gameLogic.playerShip)) {	
-				gameLogic.clear();
-				gameLogic.changePlayerAlive();
-				return;
+				//gameLogic.clear();
+				enemyShip.addOnHitEffect();
+				gameLogic.playerCollision(enemyShip.getOnHitDamage());
 			}
 		}
 		
@@ -147,7 +146,8 @@ public class CollisionDetection {
 				switch(target){
 					case PLAYER:
 						gameLogic.clear();
-						gameLogic.changePlayerAlive();
+						areaOfEffectDummy.addOnHitEffect();
+						gameLogic.playerCollision(1);
 						break;
 					case ENEMY:
 						iterES = enemyShips.iterator();

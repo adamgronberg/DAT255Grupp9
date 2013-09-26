@@ -46,6 +46,8 @@ public class GameLogic extends Table {
 	private Background backgroundSpace;
 	
 	public PlayerShip playerShip;
+	public static final int startLife=100;
+	public int life;
 	
 	
 
@@ -64,6 +66,7 @@ public class GameLogic extends Table {
 		collision = new CollisionDetection(this);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		addActor(backgroundSpace);
+		life = startLife;
 	}
 	
 
@@ -73,6 +76,15 @@ public class GameLogic extends Table {
 	 */
 	@Override
 	public void act(float delta) {
+		if (!playerIsAlive) {	//For testing
+			currentScore=0;
+			clear();
+			addActor(playerShip);
+			currentRespawnTime=0;
+			playerIsAlive = true;
+			life=startLife;
+		}
+		
 		super.act(delta);
 		
 		SnapshotArray<Actor> actors = getChildren();
@@ -83,13 +95,6 @@ public class GameLogic extends Table {
 			}
 		}
 		
-
-		if (!playerIsAlive && currentRespawnTime > respawnTime) {	//For testing
-			currentScore=0;
-			addActor(playerShip);
-			currentRespawnTime = 0;
-			playerIsAlive = true;
-		}
 		
 		if (playerIsAlive){
 			if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();			//For testing
@@ -121,10 +126,14 @@ public class GameLogic extends Table {
 	}
 	
 	/**
-	 * Changes the player state
+	 * Calls when a player are in a collision
+	 * @param damage the damage of the collision
 	 */
-	public void changePlayerAlive(){
-		playerIsAlive = !playerIsAlive;
+	public void playerCollision(int damage){
+		decHealth(damage);
+		if(life<=0){
+			playerIsAlive = !playerIsAlive;
+		}
 	}
 	
 	/**
@@ -163,11 +172,12 @@ public class GameLogic extends Table {
 	public void switchPlayerWeapon(){
 		playerShip.switchWeapon();
 	} 
-	
+	/**
+	 * add the score to the total score
+	 */
 	public void addScore(int score){
 		currentScore=currentScore+score;
 		System.out.println("CurrentScore: "+currentScore);
-
 	}
 	
 	/**
@@ -176,5 +186,29 @@ public class GameLogic extends Table {
 	 */
 	public int getScore(){
 		return currentScore;
+	}
+	/**
+	 * 
+	 * @return the current health
+	 */
+	public int getHealth(){
+		return life;
+	}
+	/**
+	 * 
+	 * @param damage from projectile or enemyship
+	 */
+	private void decHealth(int damage){
+		life=life-damage;
+		if(life<0){
+			life=0;
+		}
+	}
+	/**
+	 * 
+	 * @param extraLife
+	 */
+	private void incHealth(int extraLife){
+		life=life+extraLife;
 	}
 }
