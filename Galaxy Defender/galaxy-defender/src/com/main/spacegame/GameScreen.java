@@ -32,8 +32,8 @@ public class GameScreen implements Screen{
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = ControlLayout.LAYOUT1;
 	
-	public static final float GAME_HEIGHT=((float) MyGame.HEIGHT)*0.95f;
-	public static final float GAME_WITDH=((float) MyGame.WIDTH);
+	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;
+	public static final float GAME_WITDH= ((float) MyGame.WIDTH);
 	public static final float INFO_SCREEN_HEIGHT=((float) MyGame.HEIGHT)*0.05f;
 	public static final int MOVMENT_BUTTON_SIZE = 70;
 	public static final String LOG = GameScreen.class.getSimpleName();
