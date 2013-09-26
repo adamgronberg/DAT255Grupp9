@@ -11,4 +11,5 @@ public interface HasTargets {
 	 * @return true if the projectile is harmful for the player
 	 */
 	public TargetTypes[] getTargetTypes();
+	public TargetTypes getFaction();
 }

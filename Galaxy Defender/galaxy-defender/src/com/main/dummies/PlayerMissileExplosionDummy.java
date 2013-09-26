@@ -10,8 +10,9 @@ import weapons.TargetTypes;
  */
 public class PlayerMissileExplosionDummy extends AreaOfEffectDummy{
 
+	private static final TargetTypes FACTION = TargetTypes.PLAYER;
 	private static final int AREA_OF_EFFECT_DAMAGE = 1;
-	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE, TargetTypes.PLAYER_PROJECTILE};
+	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};//, TargetTypes.PLAYER_PROJECTILE};
 	
 	/**
 	 * Constructor
@@ -30,6 +31,11 @@ public class PlayerMissileExplosionDummy extends AreaOfEffectDummy{
 	@Override
 	public TargetTypes[] getTargetTypes() {
 		return AFFECTEDTARGETS;
+	}
+
+	@Override
+	public TargetTypes getFaction() {
+		return FACTION;
 	}
 
 }

@@ -18,6 +18,7 @@ public class PlayerMissile extends Projectile{
 	private static final int DAMAGE = 1;
 	private static final float EXPLOSION_H = 80;
 	private static final float EXPLOSION_W = 60;
+	private static final TargetTypes FACTION = TargetTypes.PLAYER;
 	private static final TargetTypes[] AFFECTEDTARGETS = 
 		{TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
 	
@@ -65,5 +66,10 @@ public class PlayerMissile extends Projectile{
 	@Override
 	public TargetTypes[] getTargetTypes() {
 		return AFFECTEDTARGETS;
+	}
+
+	@Override
+	public TargetTypes getFaction() {
+		return FACTION;
 	}
 }

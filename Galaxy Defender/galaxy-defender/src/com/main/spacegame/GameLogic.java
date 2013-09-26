@@ -1,7 +1,6 @@
 package spacegame;
 
 import assets.ImageAssets;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
-
 import ships.BasicShip;
 import ships.EnemyShip.EnemyTypes;
 import ships.HeavyShip;
@@ -32,15 +30,12 @@ import collisiondetection.OutOfBoundsDetection;
 public class GameLogic extends Table {
 	
 	private GameScreen gameScreen;
-	private CollisionDetection collision;
 	
 	private int currentScore=0;
 	private long lastEnemyShipTime = 0;			//For testing
 	private float lastSpawnPatternTime = 0;		//For testing
 				
 	private boolean playerIsAlive = true;  		//For testing
-	private int currentRespawnTime = 0;			//For testing
-	private static final int respawnTime = 50;	//For testing
 	private boolean shooting = false;
 	
 	private Background backgroundSpace;
@@ -63,7 +58,6 @@ public class GameLogic extends Table {
 		setClip(true);
 		playerShip = new PlayerShip();
 		addActor(playerShip);
-		collision = new CollisionDetection(this);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		addActor(backgroundSpace);
 		life = startLife;
@@ -80,7 +74,6 @@ public class GameLogic extends Table {
 			currentScore=0;
 			clear();
 			addActor(playerShip);
-			currentRespawnTime=0;
 			playerIsAlive = true;
 			life=startLife;
 		}
@@ -101,10 +94,9 @@ public class GameLogic extends Table {
 			if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();		//For testing
 			if (gameScreen.getOptionAutoShoot() || shooting) playerShip.spawnPlayerProjectile();//For testing TODO:Should prob be in playerShip act
 		}
-		else currentRespawnTime++;									//For testing
 		
 		if(playerIsAlive) {											//For testing
-			collision.checkCollisions();
+			CollisionDetection.checkCollisions(this);
 		}
 	}
 	
@@ -114,12 +106,10 @@ public class GameLogic extends Table {
 	 * For testing
 	 */
 	private void spawnShip() {
-		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
-		float xPos = spawnLocation;
+		int xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
 		addActor(new BasicShip(xPos, GameScreen.GAME_HEIGHT+BasicShip.HEIGHT));
 		
-		spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
-		xPos = spawnLocation;
+		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
 		addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
@@ -208,7 +198,7 @@ public class GameLogic extends Table {
 	 * 
 	 * @param extraLife
 	 */
-	private void incHealth(int extraLife){
-		life=life+extraLife;
-	}
+//	private void incHealth(int extraLife){
+//		life=life+extraLife;
+//	}
 }

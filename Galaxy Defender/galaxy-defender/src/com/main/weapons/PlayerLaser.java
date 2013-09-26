@@ -11,12 +11,12 @@ import assets.*;
  */
 public class PlayerLaser extends Projectile {
 	
-	
 	public static final float RATEOFFIRE = 300000000f; //In nanoseconds
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 5;
 	private static final int DAMAGEONHIT = 1;
+	private static final TargetTypes FACTION = TargetTypes.PLAYER;
 	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
 	
 	/**
@@ -52,5 +52,10 @@ public class PlayerLaser extends Projectile {
 	@Override
 	public TargetTypes[] getTargetTypes() {
 		return AFFECTEDTARGETS;
+	}
+
+	@Override
+	public TargetTypes getFaction() {
+		return FACTION;
 	}
 }

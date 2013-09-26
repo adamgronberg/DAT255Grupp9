@@ -11,8 +11,7 @@ import spacegame.Sprite;
  */
 public abstract class Projectile extends Sprite implements HasTargets{
 	
-	protected int damageOnHit;
-	protected TargetTypes[] affectedTargets;
+	protected int damageOnHit; 
 	
 	/**
 	 * COnstructor
