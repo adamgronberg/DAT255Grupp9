@@ -36,7 +36,6 @@ public class HeavyShip extends EnemyShip {
 	public HeavyShip(float x, float y) {
 		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip, DAMAGE_ON_HIT);
 		lastMissileTime = TimeUtils.nanoTime() - 2*MathUtils.random(0,EnemyLaser.RATEOFFIRE);
-		System.out.println("" + lastMissileTime);
 	}
 	
 	/**
@@ -55,7 +54,6 @@ public class HeavyShip extends EnemyShip {
 		if(TimeUtils.nanoTime() - lastMissileTime > EnemyLaser.RATEOFFIRE) {
 			getParent().addActor( new EnemyLaser(getX()+WIDTH/2, getY()));
 			lastMissileTime = TimeUtils.nanoTime();
-			System.out.println("" + getY());
 		}
 	}
 	/**
