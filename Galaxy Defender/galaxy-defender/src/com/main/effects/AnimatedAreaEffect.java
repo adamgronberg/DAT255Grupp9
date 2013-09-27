@@ -38,7 +38,6 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		currentFrame = animation.getKeyFrame(stateTime, false);
-		batch.setColor(getColor());
         batch.draw(currentFrame, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 	

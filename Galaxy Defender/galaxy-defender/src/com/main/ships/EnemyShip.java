@@ -1,9 +1,11 @@
 package ships;
 
+import assets.ImageAssets;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import spacegame.Sprite;
-
 
 /**
  * 
@@ -15,8 +17,14 @@ import spacegame.Sprite;
 public abstract class EnemyShip extends Sprite{
 	protected int scoreValue;
 	protected int health;
+	private int startingHealth;
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT};
 	public int damageWhenRammed;
+	
+	private static final float TIMEPERFRAME = 0.045f;
+	protected Animation animation; 
+	protected float stateTime;
+	private TextureRegion currentFrame;
 	
 	/**
 	 * 
@@ -34,6 +42,37 @@ public abstract class EnemyShip extends Sprite{
 		this.health = health;
 		this.scoreValue = scoreValue;
 		this.damageWhenRammed = damageWhenRammed;
+		
+		startingHealth = health;
+		animation = new Animation(TIMEPERFRAME, ImageAssets.fireAnimation);
+		stateTime = 0f;
+	}
+	
+	/**
+	 * Draws the explosion
+	 */
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		currentFrame = animation.getKeyFrame(stateTime, true);
+        if(health<startingHealth){
+        	drawDamagedAnimation(batch, parentAlpha, currentFrame);
+        }
+	}
+	
+	protected void drawDamagedAnimation(SpriteBatch batch, float parentAlpha, TextureRegion currentFrame){
+    	batch.draw(currentFrame, getX()+getWidth()*0.5f, getY()+getHeight()*0.5f, 
+    			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
+    	batch.draw(currentFrame, getX()+getWidth()*0.2f, getY()+getHeight()*0.2f, 
+    			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
+	}
+	
+	/**
+	 * Updates the animation when damaged
+	 */
+	@Override
+	public void act(float delta){
+		stateTime += delta;
 	}
 	
 	/**

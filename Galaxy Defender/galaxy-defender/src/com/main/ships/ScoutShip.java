@@ -1,5 +1,7 @@
 package ships;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import assets.ImageAssets;
 import spacegame.GameScreen;
 
@@ -12,16 +14,17 @@ import spacegame.GameScreen;
 public class ScoutShip extends EnemyShip{
 	
 	public final static int HEIGHT = 40;
-	public final static int WIDTH = 35;
+	public final static int WIDTH = 30;
 	private final static float SHIPSPEED_X = 2.0f;
-	private final static float SHIPSPEED_Y = 2.5f;
-	private final static int HEALTH=1;
+	private final static float SHIPSPEED_Y = 2.0f;
+	private final static int HEALTH=2;
 	private final static int SCOREVALUE=2;
+	private final static int DAMAGE_WHEN_RAMMED = 10;
 	
 	private boolean movingLeft;
 	private final float movmentLenght = 50;
 	private float currentMovmentLenght;
-	private static final int DAMAGE_WHEN_RAMMED = 10;
+
 	
 	/**
 	 * 
@@ -41,7 +44,8 @@ public class ScoutShip extends EnemyShip{
 	 * Updates its position.
 	 */
 	@Override
-	public void act(float delta){
+	public void act(float delta){		
+		super.act(delta);
 		setY(getY()-SHIPSPEED_Y);
 		if(movingLeft){
 			if(getX() < 0 || currentMovmentLenght > movmentLenght){
@@ -66,5 +70,16 @@ public class ScoutShip extends EnemyShip{
 	 */
 	public void addOnHitEffect() {
 		remove();
+	}
+	
+	protected void drawDamagedAnimation(SpriteBatch batch, float parentAlpha, TextureRegion currentFrame){
+		if(movingLeft){
+			batch.draw(currentFrame, getX()+20, getY()-0, 
+    			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
+		}
+		else{
+	    	batch.draw(currentFrame, getX()-0, getY()+20, 
+	    			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
+		}
 	}
 }

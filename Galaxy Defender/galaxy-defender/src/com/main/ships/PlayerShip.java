@@ -18,7 +18,8 @@ public class PlayerShip extends Sprite {
 	
 	public static enum Direction {LEFT, RIGHT, NONE;}
 	private static enum AvailableWeapons {MISSILE, LASER;} 	//Implemented weapons
-	public static final int PLAYER_SIZE = 50;				// The size of the player
+	public static final int WITDH = 35;				// The size of the player
+	public static final int HEIGHT = 40;				// The size of the player
 	private static final float SPEED = 5;					// number of pixels the player moves every act
 	private static final float PLAYER_SPAWNLOCATION = 0.1f; //Height where the player moves
 	
@@ -35,7 +36,7 @@ public class PlayerShip extends Sprite {
 	 * @param gameLogic
 	 */
 	public PlayerShip() {
-		super(PLAYER_SIZE, PLAYER_SIZE, GameScreen.GAME_WITDH/2, GameScreen.GAME_HEIGHT*PLAYER_SPAWNLOCATION,ImageAssets.playerShip);
+		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2, GameScreen.GAME_HEIGHT*PLAYER_SPAWNLOCATION,ImageAssets.playerShip);
 	}
 
 	
@@ -91,7 +92,7 @@ public class PlayerShip extends Sprite {
 		}
 		
 		if(getX()<0) setX(0);
-		else if(getX()>GameScreen.GAME_WITDH-PLAYER_SIZE) setX(GameScreen.GAME_WITDH-PLAYER_SIZE);	
+		else if(getX()>GameScreen.GAME_WITDH-WITDH) setX(GameScreen.GAME_WITDH-WITDH);	
 	}
 	
 	/**
@@ -109,12 +110,12 @@ public class PlayerShip extends Sprite {
 	 */
 	public void spawnPlayerProjectile() {
 		if (currentWeapon == AvailableWeapons.MISSILE && TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) {
-			getParent().addActor(new PlayerMissile(getX()+PlayerShip.PLAYER_SIZE/2-PlayerMissile.WIDTH/2, getY()));
+			getParent().addActor(new PlayerMissile(getX()+PlayerShip.WITDH/2-PlayerMissile.WIDTH/2, getY()));
 			lastMissileTime = TimeUtils.nanoTime();
 		}
 		else if(currentWeapon == AvailableWeapons.LASER && TimeUtils.nanoTime() - lastMissileTime > PlayerLaser.RATEOFFIRE) {
-			getParent().addActor( new PlayerLaser(getX()+PlayerShip.PLAYER_SIZE/2, 
-										 getY()+PlayerShip.PLAYER_SIZE));
+			getParent().addActor( new PlayerLaser(getX()+PlayerShip.WITDH/2, 
+										 getY()+PlayerShip.HEIGHT));
 			lastMissileTime = TimeUtils.nanoTime();
 		}
 	}

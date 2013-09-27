@@ -110,7 +110,7 @@ public class GameLogic extends Table {
 	private void spawnPattern(){		
 		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
 		float xPos = spawnLocation;
-		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 225000000f, EnemyTypes.SCOUT));
+		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 275000000f, EnemyTypes.SCOUT));
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 	}
 	/**
