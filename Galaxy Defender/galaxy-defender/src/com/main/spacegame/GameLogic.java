@@ -4,9 +4,7 @@ import assets.ImageAssets;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
 import ships.BasicShip;
 import ships.EnemyShip.EnemyTypes;
@@ -35,7 +33,6 @@ public class GameLogic extends Table {
 	private long lastEnemyShipTime = 0;			//For testing
 	private float lastSpawnPatternTime = 0;		//For testing
 				
-	private boolean playerIsAlive = true;  		//For testing
 	private boolean shooting = false;
 	
 	private Background backgroundSpace;
@@ -70,34 +67,20 @@ public class GameLogic extends Table {
 	 */
 	@Override
 	public void act(float delta) {
-		if (!playerIsAlive) {	//For testing
+		if (life<1) {	//For testing
 			currentScore=0;
 			clear();
 			addActor(playerShip);
-			playerIsAlive = true;
 			life=startLife;
 		}
 		
+		if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();			//For testing
+		if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();		//For testing
+		if (gameScreen.getOptionAutoShoot() || shooting) playerShip.spawnPlayerProjectile();//For testing TODO:Should prob be in playerShip act
+		OutOfBoundsDetection.checkOutOfBounds(getChildren());
+		CollisionDetection.checkCollisions(this);
+		
 		super.act(delta);
-		
-		SnapshotArray<Actor> actors = getChildren();
-		for(Actor actor: actors){
-			if (actor instanceof MovableEntity){
-				MovableEntity entity = (MovableEntity)actor;
-				OutOfBoundsDetection.isOutOfBoundsY(entity);
-			}
-		}
-		
-		
-		if (playerIsAlive){
-			if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();			//For testing
-			if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();		//For testing
-			if (gameScreen.getOptionAutoShoot() || shooting) playerShip.spawnPlayerProjectile();//For testing TODO:Should prob be in playerShip act
-		}
-		
-		if(playerIsAlive) {											//For testing
-			CollisionDetection.checkCollisions(this);
-		}
 	}
 	
 	
@@ -120,10 +103,7 @@ public class GameLogic extends Table {
 	 * @param damage the damage of the collision
 	 */
 	public void playerCollision(int damage){
-		decHealth(damage);
-		if(life<=0){
-			playerIsAlive = !playerIsAlive;
-		}
+		life=life-damage;
 	}
 	
 	/**
@@ -145,7 +125,7 @@ public class GameLogic extends Table {
 		
 		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
-		if(playerIsAlive) playerShip.drawAbove(batch, parentAlpha);
+		playerShip.drawAbove(batch, parentAlpha);
 	}
 	
 	/**
@@ -167,7 +147,6 @@ public class GameLogic extends Table {
 	 */
 	public void addScore(int score){
 		currentScore=currentScore+score;
-		System.out.println("CurrentScore: "+currentScore);
 	}
 	
 	/**
@@ -181,24 +160,7 @@ public class GameLogic extends Table {
 	 * 
 	 * @return the current health
 	 */
-	public int getHealth(){
+	public int getPlayerHealth(){
 		return life;
 	}
-	/**
-	 * 
-	 * @param damage from projectile or enemyship
-	 */
-	private void decHealth(int damage){
-		life=life-damage;
-		if(life<0){
-			life=0;
-		}
-	}
-	/**
-	 * 
-	 * @param extraLife
-	 */
-//	private void incHealth(int extraLife){
-//		life=life+extraLife;
-//	}
 }

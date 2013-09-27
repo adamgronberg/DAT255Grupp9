@@ -26,6 +26,8 @@ public class GameScreen implements Screen{
 	private GameLogic gameLogic;
 	private InputControl inputController;
 	private TopInfoBar topInfoBar;
+	
+	public static boolean sound = false; //TODO: Temp. disables/enables sound
 
 	private boolean optionAutoShoot = true;
 	
@@ -61,7 +63,7 @@ public class GameScreen implements Screen{
 		stage.addActor(topInfoBar);
 		stage.addActor(moveLeftButton);
 		stage.addActor(moveRightButton);		
-		SoundAssets.spaceMusic.play();
+		if(sound) SoundAssets.spaceMusic.play();
 	}
 	
 	/**
@@ -174,7 +176,7 @@ public class GameScreen implements Screen{
 	 * @return Current GameLogic health
 	 */
 	public int getGameLogicHealth(){
-		return gameLogic.getHealth();
+		return gameLogic.getPlayerHealth();
 	}
 	
 	/**

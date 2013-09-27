@@ -34,7 +34,7 @@ public class HeavyShip extends EnemyShip {
 	 * sets a random shoot time for first shoot
 	 */
 	public HeavyShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip, DAMAGE_ON_HIT);
+		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyHeavyShip, DAMAGE_ON_HIT);
 		lastMissileTime = TimeUtils.nanoTime() - 2*MathUtils.random(0,EnemyLaser.RATEOFFIRE);
 	}
 	

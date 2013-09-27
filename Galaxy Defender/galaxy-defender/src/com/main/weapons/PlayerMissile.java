@@ -1,5 +1,6 @@
 package weapons;
 
+import spacegame.GameScreen;
 import dummies.PlayerMissileExplosionDummy;
 import assets.ImageAssets;
 import assets.SoundAssets;
@@ -56,7 +57,7 @@ public class PlayerMissile extends Projectile{
 							getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, EXPLOSION_H));
 		getParent().addActor( new PlayerMissileExplosionDummy(getX()-EXPLOSION_W/2+WIDTH/2, 
 							getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, EXPLOSION_H));
-		SoundAssets.missileExplosion.play();
+		if(GameScreen.sound) SoundAssets.missileExplosion.play();
 		remove();
 	}
 	

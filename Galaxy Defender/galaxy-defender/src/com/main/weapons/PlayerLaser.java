@@ -14,7 +14,7 @@ public class PlayerLaser extends Projectile {
 	public static final float RATEOFFIRE = 300000000f; //In nanoseconds
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
-	public static final float WIDTH = 5;
+	public static final float WIDTH = 3;
 	private static final int DAMAGEONHIT = 1;
 	private static final TargetTypes FACTION = TargetTypes.PLAYER;
 	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
@@ -25,7 +25,7 @@ public class PlayerLaser extends Projectile {
 	 * @param y y-led Spawn
 	 */
 	public PlayerLaser(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGEONHIT, ImageAssets.laser);
+		super(x, y, WIDTH, HEIGHT, DAMAGEONHIT, ImageAssets.playerLaser);
 	}
 	
 	/**

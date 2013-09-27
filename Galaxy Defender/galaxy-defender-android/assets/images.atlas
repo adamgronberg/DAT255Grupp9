@@ -3,92 +3,62 @@ images.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-MissileRed
+MainMenu
   rotate: false
-  xy: 1, 458
-  size: 439, 565
-  orig: 439, 565
-  offset: 0, 0
-  index: -1
-playerShip
-  rotate: false
-  xy: 1, 30
-  size: 418, 426
-  orig: 418, 426
-  offset: 0, 0
-  index: -1
-TopInfoBar
-  rotate: false
-  xy: 442, 897
-  size: 510, 126
-  orig: 510, 126
+  xy: 1, 1
+  size: 688, 992
+  orig: 688, 992
   offset: 0, 0
   index: -1
 Arrow_Left
   rotate: false
-  xy: 442, 832
+  xy: 691, 930
   size: 62, 63
   orig: 62, 63
   offset: 0, 0
   index: -1
 Arrow_Right
   rotate: false
-  xy: 954, 960
+  xy: 691, 865
   size: 62, 63
   orig: 62, 63
   offset: 0, 0
   index: -1
 highScoreButton
   rotate: false
-  xy: 506, 861
+  xy: 755, 959
   size: 84, 34
   orig: 84, 34
   offset: 0, 0
   index: -1
 newGameButton
   rotate: false
-  xy: 592, 861
+  xy: 755, 923
   size: 84, 34
   orig: 84, 34
   offset: 0, 0
   index: -1
-scoutShip
+
+images2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+space1
   rotate: false
-  xy: 442, 798
-  size: 57, 32
-  orig: 57, 32
+  xy: 1, 129
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
-ExplosionSplashMain
+TopInfoBar
   rotate: false
   xy: 1, 1
-  size: 25, 27
-  orig: 25, 27
-  offset: 0, 0
-  index: -1
-enemyShip
-  rotate: false
-  xy: 954, 925
-  size: 35, 33
-  orig: 35, 33
-  offset: 0, 0
-  index: -1
-ExplosionSplashUp
-  rotate: false
-  xy: 421, 433
-  size: 11, 23
-  orig: 11, 23
-  offset: 0, 0
-  index: -1
-laser
-  rotate: false
-  xy: 1018, 1018
-  size: 3, 5
-  orig: 3, 5
+  size: 510, 126
+  orig: 510, 126
   offset: 0, 0
   index: -1
 
-images2.png
+images3.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -209,5 +179,225 @@ explosion1 Frames/ExplosionFrame1
   xy: 381, 80
   size: 70, 70
   orig: 70, 70
+  offset: 0, 0
+  index: -1
+
+images4.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ships/Ship25
+  rotate: false
+  xy: 1, 190
+  size: 141, 318
+  orig: 141, 318
+  offset: 0, 0
+  index: -1
+Ships/Ship23
+  rotate: false
+  xy: 144, 220
+  size: 136, 288
+  orig: 136, 288
+  offset: 0, 0
+  index: -1
+Ships/Ship24
+  rotate: false
+  xy: 282, 220
+  size: 135, 288
+  orig: 135, 288
+  offset: 0, 0
+  index: -1
+Ships/PlayerShip
+  rotate: false
+  xy: 419, 295
+  size: 209, 213
+  orig: 209, 213
+  offset: 0, 0
+  index: -1
+Ships/Ship22
+  rotate: false
+  xy: 630, 218
+  size: 124, 290
+  orig: 124, 290
+  offset: 0, 0
+  index: -1
+Ships/Ship21
+  rotate: false
+  xy: 756, 285
+  size: 113, 223
+  orig: 113, 223
+  offset: 0, 0
+  index: -1
+Ships/Ship20
+  rotate: false
+  xy: 871, 275
+  size: 100, 233
+  orig: 100, 233
+  offset: 0, 0
+  index: -1
+Ships/Ship15
+  rotate: false
+  xy: 1, 83
+  size: 69, 105
+  orig: 69, 105
+  offset: 0, 0
+  index: -1
+Ships/Ship16
+  rotate: false
+  xy: 973, 381
+  size: 47, 127
+  orig: 47, 127
+  offset: 0, 0
+  index: -1
+Ships/Ship19
+  rotate: false
+  xy: 419, 66
+  size: 95, 227
+  orig: 95, 227
+  offset: 0, 0
+  index: -1
+Ships/Ship17
+  rotate: false
+  xy: 516, 166
+  size: 45, 127
+  orig: 45, 127
+  offset: 0, 0
+  index: -1
+Ships/Ship18
+  rotate: false
+  xy: 563, 166
+  size: 45, 127
+  orig: 45, 127
+  offset: 0, 0
+  index: -1
+Ships/Ship10
+  rotate: false
+  xy: 973, 321
+  size: 50, 58
+  orig: 50, 58
+  offset: 0, 0
+  index: -1
+Ships/Ship14
+  rotate: false
+  xy: 72, 104
+  size: 58, 84
+  orig: 58, 84
+  offset: 0, 0
+  index: -1
+Ships/Ship11
+  rotate: false
+  xy: 756, 225
+  size: 57, 58
+  orig: 57, 58
+  offset: 0, 0
+  index: -1
+Ships/Ship12
+  rotate: false
+  xy: 1, 25
+  size: 55, 56
+  orig: 55, 56
+  offset: 0, 0
+  index: -1
+Ships/Ship13
+  rotate: false
+  xy: 516, 109
+  size: 56, 55
+  orig: 56, 55
+  offset: 0, 0
+  index: -1
+Ships/Ship9
+  rotate: false
+  xy: 815, 228
+  size: 53, 55
+  orig: 53, 55
+  offset: 0, 0
+  index: -1
+Ships/Ship8
+  rotate: false
+  xy: 574, 107
+  size: 39, 57
+  orig: 39, 57
+  offset: 0, 0
+  index: -1
+Ships/Ship7
+  rotate: false
+  xy: 132, 127
+  size: 22, 61
+  orig: 22, 61
+  offset: 0, 0
+  index: -1
+Ships/Ship4
+  rotate: false
+  xy: 973, 289
+  size: 38, 30
+  orig: 38, 30
+  offset: 0, 0
+  index: -1
+Ships/Ship5
+  rotate: false
+  xy: 516, 78
+  size: 37, 29
+  orig: 37, 29
+  offset: 0, 0
+  index: -1
+Ships/Ship2
+  rotate: false
+  xy: 144, 190
+  size: 25, 28
+  orig: 25, 28
+  offset: 0, 0
+  index: -1
+Ships/Ship3
+  rotate: false
+  xy: 870, 242
+  size: 33, 31
+  orig: 33, 31
+  offset: 0, 0
+  index: -1
+Ships/Ship6
+  rotate: false
+  xy: 156, 143
+  size: 19, 45
+  orig: 19, 45
+  offset: 0, 0
+  index: -1
+Ships/Ship1
+  rotate: false
+  xy: 1, 1
+  size: 25, 22
+  orig: 25, 22
+  offset: 0, 0
+  index: -1
+
+images5.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+weapons/blueMegaLaser
+  rotate: false
+  xy: 1, 1
+  size: 39, 86
+  orig: 39, 86
+  offset: 0, 0
+  index: -1
+weapons/Missile1
+  rotate: false
+  xy: 42, 31
+  size: 42, 56
+  orig: 42, 56
+  offset: 0, 0
+  index: -1
+weapons/redLaser
+  rotate: false
+  xy: 86, 25
+  size: 12, 62
+  orig: 12, 62
+  offset: 0, 0
+  index: -1
+weapons/greenLaser
+  rotate: false
+  xy: 100, 39
+  size: 8, 48
+  orig: 8, 48
   offset: 0, 0
   index: -1
