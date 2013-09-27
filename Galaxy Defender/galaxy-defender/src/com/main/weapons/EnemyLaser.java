@@ -16,7 +16,7 @@ public class EnemyLaser extends Projectile {
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 3;
-	private static final int DAMAGE_ON_HIT = 1;
+	private static final int DAMAGE_ON_HIT = 15;
 	private static final TargetTypes FACTION = TargetTypes.ENEMY;
 	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE};
 	

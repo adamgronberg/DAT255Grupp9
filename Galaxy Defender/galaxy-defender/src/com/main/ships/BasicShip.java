@@ -17,7 +17,7 @@ public class BasicShip extends EnemyShip {
 	
 	public final static int HEIGHT=40;
 	public final static int WIDTH=40;
-	private static final int DAMAGE_ON_HIT = 5;
+	private static final int DAMAGE_WHEN_RAMMED = 15;
 
 	
 	
@@ -27,7 +27,7 @@ public class BasicShip extends EnemyShip {
 	 * @param y y-led Spawn location
 	 */
 	public BasicShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip, DAMAGE_ON_HIT);
+		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip, DAMAGE_WHEN_RAMMED);
 	}
 
 	

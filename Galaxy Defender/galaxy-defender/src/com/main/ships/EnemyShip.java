@@ -16,7 +16,7 @@ public abstract class EnemyShip extends Sprite{
 	protected int scoreValue;
 	protected int health;
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT};
-	public int damageOnHit;
+	public int damageWhenRammed;
 	
 	/**
 	 * 
@@ -29,11 +29,11 @@ public abstract class EnemyShip extends Sprite{
 	 * @param texture The image of the enemy
 	 * @param damageOnHit The damage per hit
 	 */
-	public EnemyShip(float x, float y, float width, float height, int health, int scoreValue, TextureRegion texture, int damageOnHit) {
+	public EnemyShip(float x, float y, float width, float height, int health, int scoreValue, TextureRegion texture, int damageWhenRammed) {
 		super(width, height, x, y, texture);
 		this.health = health;
-		this.scoreValue=scoreValue;
-		this.damageOnHit = damageOnHit;
+		this.scoreValue = scoreValue;
+		this.damageWhenRammed = damageWhenRammed;
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public abstract class EnemyShip extends Sprite{
 	public int hit(int damage) {
 		health = health - damage;
 		if (health<=0){
-			remove();
+			destroyShip();
 			return scoreValue;
 		}
 		return 0;
@@ -56,16 +56,16 @@ public abstract class EnemyShip extends Sprite{
 	}
 	
 	/**
-	 * @return The damage of the enemy
+	 * @return The damage of the enemy when rammed
 	 */
-	public int getOnHitDamage() {
-		return damageOnHit;
+	public int getDamageWhenRammed() {
+		return damageWhenRammed;
 	}
 	
 	/**
 	 *  removes the ship
 	 */
-	public void addOnHitEffect() {
+	public void destroyShip() {
 		remove();
 	}
 }

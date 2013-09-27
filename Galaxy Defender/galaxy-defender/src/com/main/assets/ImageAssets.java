@@ -24,6 +24,7 @@ public class ImageAssets {
 	public static TextureRegion playerMissile;
 	public static TextureRegion topInfoBar;
 	public static Array<TextureRegion> explosionAnimation;
+	public static Array<TextureRegion> enemyLaserAnimation;
 
 	/**
 	 * Loads all assets from imageAtlas
@@ -33,11 +34,12 @@ public class ImageAssets {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
 		
 		explosionAnimation = new Array<TextureRegion>();
+		enemyLaserAnimation = new Array<TextureRegion>();
 		playerShip = atlas.findRegion("Ships/PlayerShip");
 		playerLaser = atlas.findRegion("weapons/greenLaser");
 		enemyLaser = atlas.findRegion("weapons/redLaser");
 		enemyBasicShip = atlas.findRegion("Ships/Ship1");
-		enemyScoutShip = atlas.findRegion("Ships/Ship2");
+		enemyScoutShip = atlas.findRegion("Ships/Ship3");
 		enemyHeavyShip = atlas.findRegion("Ships/Ship25");
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("TopInfoBar");
@@ -45,14 +47,13 @@ public class ImageAssets {
 		moveRightButton = atlas.findRegion("Arrow_Right");
 		moveLeftButton = atlas.findRegion("Arrow_Left");
 		
+		for(int i = 1; i <= 2 ; i++){
+			enemyLaserAnimation.add(atlas.findRegion("weapons/redLaserHit" + i));
+		}
+		
 		for(int i = 1; i <= 17 ; i++){
 			explosionAnimation.add(atlas.findRegion("explosion1 Frames/ExplosionFrame" + i));
 		}
-
-		
-//		moveRightButton = new TextureRegion ( new Texture(Gdx.files.internal("Arrow_Right.png")));
-//		moveLeftButton = new TextureRegion ( new Texture(Gdx.files.internal("Arrow_Left.png")));
-//		space = new TextureRegion ( new Texture(Gdx.files.internal("space-1.png")));
 	}
 	/**
 	 * Disposes all atlases from memory

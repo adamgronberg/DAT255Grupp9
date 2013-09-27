@@ -25,7 +25,7 @@ public class HeavyShip extends EnemyShip {
 	private final static int HEALTH=2;
 	
 	private float lastMissileTime;
-	private static final int DAMAGE_ON_HIT = 10;
+	private static final int DAMAGE_WHEN_RAMMED = 30;
 	
 	/**
 	 * Constructor
@@ -34,7 +34,7 @@ public class HeavyShip extends EnemyShip {
 	 * sets a random shoot time for first shoot
 	 */
 	public HeavyShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyHeavyShip, DAMAGE_ON_HIT);
+		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyHeavyShip, DAMAGE_WHEN_RAMMED);
 		lastMissileTime = TimeUtils.nanoTime() - 2*MathUtils.random(0,EnemyLaser.RATEOFFIRE);
 	}
 	

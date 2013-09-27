@@ -32,8 +32,6 @@ public class CollisionDetection {
 	
 	private static Projectile projectile;
 	
-	
-	
 	/**
 	 * Tests if obj1 and obj2 collided
 	 * @param movableObj1
@@ -50,8 +48,8 @@ public class CollisionDetection {
 	public static void checkCollisions(GameLogic gameLogic) {	
 		splitActors(gameLogic.getChildren());
 		checkcollisionProjectiles(gameLogic);
-		checkColisionShips(gameLogic);
-		checkCollisionDummies(gameLogic);
+		checkCollisionPlayerEnemy(gameLogic);
+		checkCollisionDummiesAll(gameLogic);
 	}
 	
 	/**
@@ -114,38 +112,11 @@ public class CollisionDetection {
 					}
 				}
 			}
-			
-			//Look att all different targets
-			for(TargetTypes affected : projectile.getTargetTypes()){
-				switch(affected){
-					case PLAYER:
-						//Removes player on collision with projectile
-						if(collisionControl(projectile, gameLogic.playerShip)){
-							projectile.addOnHitEffect();
-							gameLogic.playerCollision(projectile.getOnHitDamage());	
-						}
-						break;
-					case ENEMY:
-						iterES = enemyShips.iterator();
-						while(iterES.hasNext()){
-							EnemyShip enemyShip = iterES.next();
-							//Removes projectiles and enemies that collided
-							if (collisionControl(enemyShip, projectile) && projectile.getParent() != null) {
-								projectile.addOnHitEffect();
-								gameLogic.addScore(enemyShip.hit(projectile.getOnHitDamage()));
-								iterES.remove();
-							}	
-						}
-						break;
-					case ALLY:
-						break;
-				}
-			}	
 		}
 	}
 	
 	/**
-	 * Checks collision between all projectiles
+	 * Checks collision between all projectiles and ships
 	 * @param gameLogic
 	 */
 	private static void checkcollisionProjectiles(GameLogic gameLogic) {
@@ -155,15 +126,15 @@ public class CollisionDetection {
 			checkCollisionBetweenProjectiles(affectsEnemyProjectiles.iterator(), TargetTypes.ENEMY, gameLogic);
 			checkCollisionBetweenProjectiles(affectsPlayerProjectiles.iterator(), TargetTypes.PLAYER, gameLogic);
 			checkCollisionBetweenProjectiles(affectsAllyProjectiles.iterator(),TargetTypes.ALLY, gameLogic);
-			checkCollisionShips(gameLogic);
+			checkCollisionShipsProjectile(gameLogic);
 		}
 	}
 
 	/**
-	 * CHecks collision between ships
+	 * Looks if anything is inside of the area of effect of the dummy
 	 * @param gameLogic
 	 */
-	private static void checkCollisionDummies(GameLogic gameLogic) {
+	private static void checkCollisionDummiesAll(GameLogic gameLogic) {
 		//If any area of effect weapons where triggered
 		iterAD = dummies.iterator();
 		while(iterAD.hasNext()){
@@ -191,18 +162,18 @@ public class CollisionDetection {
 	}
 
 	/**
-	 * Check if player collides with enemy
+	 * Loops through all enemies and sees if the have collided with player
 	 * @param gameLogic
 	 */
-	private static void checkColisionShips(GameLogic gameLogic) {
+	private static void checkCollisionPlayerEnemy(GameLogic gameLogic) {
 		iterES = enemyShips.iterator();
 		while (iterES.hasNext()) {
 		EnemyShip enemyShip = iterES.next();
 		
 			//Check for collision with player
 			if(collisionControl(enemyShip, gameLogic.playerShip)) {	
-				enemyShip.addOnHitEffect();
-				gameLogic.playerCollision(enemyShip.getOnHitDamage());
+				gameLogic.playerCollision(enemyShip.getDamageWhenRammed());
+				enemyShip.destroyShip();
 			}
 		}
 	}
@@ -211,25 +182,26 @@ public class CollisionDetection {
 	 * Check collision between ships and projectiles
 	 * @param gameLogic
 	 */
-	private static void checkCollisionShips(GameLogic gameLogic) {
+	private static void checkCollisionShipsProjectile(GameLogic gameLogic) {
 		//Look att all different targets
 		for(TargetTypes affected : projectile.getTargetTypes()){
 			switch(affected){
 				case PLAYER:
-					//Removes player on collision with projectile
-					if(collisionControl(projectile, gameLogic.playerShip)){
-						
+					//Collision between player and projectile
+					if(collisionControl(projectile, gameLogic.playerShip ) && projectile.getParent() != null){
+						gameLogic.playerCollision(projectile.getOnHitDamage());
+						projectile.addOnHitEffect();
+						break;
 					}
 					break;
 				case ENEMY:
 					iterES = enemyShips.iterator();
 					while(iterES.hasNext()){
 						EnemyShip enemyShip = iterES.next();
-						//Removes projectiles and enemies that collided
+						//Collision between enemy and projectile
 						if (collisionControl(enemyShip, projectile) && projectile.getParent() != null) {
-							projectile.addOnHitEffect();
 							gameLogic.addScore(enemyShip.hit(projectile.getOnHitDamage()));
-							iterES.remove();
+							projectile.addOnHitEffect();
 							break;
 						}	
 					}

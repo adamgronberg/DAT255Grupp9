@@ -67,6 +67,7 @@ public class GameLogic extends Table {
 	 */
 	@Override
 	public void act(float delta) {
+		super.act(delta);
 		if (life<1) {	//For testing
 			currentScore=0;
 			clear();
@@ -79,8 +80,6 @@ public class GameLogic extends Table {
 		if (gameScreen.getOptionAutoShoot() || shooting) playerShip.spawnPlayerProjectile();//For testing TODO:Should prob be in playerShip act
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
-		
-		super.act(delta);
 	}
 	
 	
@@ -113,7 +112,7 @@ public class GameLogic extends Table {
 	private void spawnPattern(){		
 		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
 		float xPos = spawnLocation;
-		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 200000000f, EnemyTypes.SCOUT));
+		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 225000000f, EnemyTypes.SCOUT));
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 	}
 	/**
