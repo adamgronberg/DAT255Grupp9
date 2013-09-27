@@ -29,7 +29,7 @@ public class PlayerMissileExplosionDummy extends AreaOfEffectDummy{
 	 * Gets the affected targets
 	 */
 	@Override
-	public TargetTypes[] getTargetTypes() {
+	public TargetTypes[] getFactionTypes() {
 		return AFFECTEDTARGETS;
 	}
 

@@ -1,7 +1,7 @@
 package dummies;
 
 import spacegame.MovableEntity;
-import weapons.HasTargets;
+import weapons.HasFaction;
 
 /**
  * 
@@ -10,7 +10,7 @@ import weapons.HasTargets;
  * Used on weapons to add a area of effect dummy
  * A rectangle with area damage
  */
-public abstract class AreaOfEffectDummy extends MovableEntity implements HasTargets{
+public abstract class AreaOfEffectDummy extends MovableEntity implements HasFaction{
 	
 	protected int areaDamage;
 	

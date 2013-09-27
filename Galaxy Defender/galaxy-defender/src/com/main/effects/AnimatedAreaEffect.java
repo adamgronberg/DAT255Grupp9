@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import assets.ImageAssets;
 import spacegame.MovableEntity;
 
 
@@ -29,7 +28,7 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	 */
 	public AnimatedAreaEffect(float x, float y, float width, float height, float timePerFrame, Array<TextureRegion> animationFrames) {
 		super( width, height, x, y);
-		animation = new Animation(timePerFrame, ImageAssets.explosionAnimation);
+		animation = new Animation(timePerFrame, animationFrames);
 		stateTime = 0f;
 	}
 	
@@ -39,6 +38,7 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		currentFrame = animation.getKeyFrame(stateTime, false);
+		batch.setColor(getColor());
         batch.draw(currentFrame, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 	

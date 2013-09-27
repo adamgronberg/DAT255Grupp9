@@ -375,43 +375,57 @@ filter: Linear,Linear
 repeat: none
 weapons/blueMegaLaser
   rotate: false
-  xy: 1, 22
+  xy: 1, 37
   size: 39, 86
   orig: 39, 86
   offset: 0, 0
   index: -1
 weapons/Missile1
   rotate: false
-  xy: 42, 52
+  xy: 42, 67
   size: 42, 56
   orig: 42, 56
   offset: 0, 0
   index: -1
 weapons/redLaser
   rotate: false
-  xy: 86, 46
+  xy: 86, 61
   size: 12, 62
   orig: 12, 62
   offset: 0, 0
   index: -1
 weapons/greenLaser
   rotate: false
-  xy: 100, 60
+  xy: 100, 75
   size: 8, 48
   orig: 8, 48
   offset: 0, 0
   index: -1
-weapons/redLaserHit
+weapons/redLaserHit1
   rotate: false
-  xy: 1, 1
+  xy: 1, 16
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 weapons/redLaserHit2
   rotate: false
-  xy: 42, 31
+  xy: 42, 46
   size: 19, 19
   orig: 19, 19
+  offset: 0, 0
+  index: -1
+weapons/greenLaserHit1
+  rotate: false
+  xy: 110, 110
+  size: 13, 13
+  orig: 13, 13
+  offset: 0, 0
+  index: -1
+weapons/greenLaserHit2
+  rotate: false
+  xy: 1, 1
+  size: 13, 13
+  orig: 13, 13
   offset: 0, 0
   index: -1

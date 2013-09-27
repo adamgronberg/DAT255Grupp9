@@ -17,8 +17,8 @@ public class PlayerMissile extends Projectile{
 
 	private static final float SPEED = 5f;
 	private static final int DAMAGE = 1;
-	private static final float EXPLOSION_H = 80;
-	private static final float EXPLOSION_W = 60;
+	private static final float AREAEFFECT_H = 80;
+	private static final float AREAEFFECT_W = 60;
 	private static final TargetTypes FACTION = TargetTypes.PLAYER;
 	private static final TargetTypes[] AFFECTEDTARGETS = 
 		{TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
@@ -53,10 +53,10 @@ public class PlayerMissile extends Projectile{
 	 */
 	@Override
 	public void addOnHitEffect() {
-		getParent().addActor( new ExplosionEffect(getX()-EXPLOSION_W/2+WIDTH/2, 
-							getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, EXPLOSION_H));
-		getParent().addActor( new PlayerMissileExplosionDummy(getX()-EXPLOSION_W/2+WIDTH/2, 
-							getY()-EXPLOSION_H/2 + HEIGHT, EXPLOSION_W, EXPLOSION_H));
+		getParent().addActor( new ExplosionEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
+							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
+		getParent().addActor( new PlayerMissileExplosionDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
+							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
 		if(GameScreen.sound) SoundAssets.missileExplosion.play();
 		remove();
 	}
@@ -65,7 +65,7 @@ public class PlayerMissile extends Projectile{
 	 * Returnes the affected targets
 	 */
 	@Override
-	public TargetTypes[] getTargetTypes() {
+	public TargetTypes[] getFactionTypes() {
 		return AFFECTEDTARGETS;
 	}
 

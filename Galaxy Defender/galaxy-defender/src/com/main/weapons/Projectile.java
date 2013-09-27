@@ -9,7 +9,7 @@ import spacegame.Sprite;
  * 
  * Base class for weapons. Player and enemy weapons should extend this class
  */
-public abstract class Projectile extends Sprite implements HasTargets{
+public abstract class Projectile extends Sprite implements HasFaction{
 	
 	protected int damageOnHit; 
 	

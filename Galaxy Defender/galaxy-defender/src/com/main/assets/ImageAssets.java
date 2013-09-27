@@ -25,6 +25,7 @@ public class ImageAssets {
 	public static TextureRegion topInfoBar;
 	public static Array<TextureRegion> explosionAnimation;
 	public static Array<TextureRegion> enemyLaserAnimation;
+	public static Array<TextureRegion> playerLaserAnimation;
 
 	/**
 	 * Loads all assets from imageAtlas
@@ -35,6 +36,7 @@ public class ImageAssets {
 		
 		explosionAnimation = new Array<TextureRegion>();
 		enemyLaserAnimation = new Array<TextureRegion>();
+		playerLaserAnimation = new Array<TextureRegion>();
 		playerShip = atlas.findRegion("Ships/PlayerShip");
 		playerLaser = atlas.findRegion("weapons/greenLaser");
 		enemyLaser = atlas.findRegion("weapons/redLaser");
@@ -50,6 +52,11 @@ public class ImageAssets {
 		for(int i = 1; i <= 2 ; i++){
 			enemyLaserAnimation.add(atlas.findRegion("weapons/redLaserHit" + i));
 		}
+		
+		for(int i = 1; i <= 2 ; i++){
+			playerLaserAnimation.add(atlas.findRegion("weapons/greenLaserHit" + i));
+		}
+
 		
 		for(int i = 1; i <= 17 ; i++){
 			explosionAnimation.add(atlas.findRegion("explosion1 Frames/ExplosionFrame" + i));

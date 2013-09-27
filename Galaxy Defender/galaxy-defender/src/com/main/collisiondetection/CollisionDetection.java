@@ -77,7 +77,7 @@ public class CollisionDetection {
 			else if(actor instanceof Projectile){
 				Projectile projectile = (Projectile)actor;
 				projectiles.add(projectile);
-				TargetTypes[] affectedTargets = projectile.getTargetTypes();
+				TargetTypes[] affectedTargets = projectile.getFactionTypes();
 				for(TargetTypes affected : affectedTargets){
 					switch(affected){
 						case PLAYER_PROJECTILE:
@@ -140,7 +140,7 @@ public class CollisionDetection {
 		while(iterAD.hasNext()){
 			AreaOfEffectDummy areaOfEffectDummy = iterAD.next();
 			//Checks what targets are valid for the area effect
-			for(TargetTypes target: areaOfEffectDummy.getTargetTypes()){
+			for(TargetTypes target: areaOfEffectDummy.getFactionTypes()){
 				switch(target){
 					case PLAYER:
 						break;
@@ -184,7 +184,7 @@ public class CollisionDetection {
 	 */
 	private static void checkCollisionShipsProjectile(GameLogic gameLogic) {
 		//Look att all different targets
-		for(TargetTypes affected : projectile.getTargetTypes()){
+		for(TargetTypes affected : projectile.getFactionTypes()){
 			switch(affected){
 				case PLAYER:
 					//Collision between player and projectile

@@ -1,5 +1,6 @@
 package weapons;
 
+import effects.PlayerLaserEffect;
 import assets.*;
 
 /**
@@ -18,6 +19,8 @@ public class PlayerLaser extends Projectile {
 	private static final int DAMAGEONHIT = 1;
 	private static final TargetTypes FACTION = TargetTypes.PLAYER;
 	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
+	private static final float AREAEFFECT_H = 10;
+	private static final float AREAEFFECT_W = 10;
 	
 	/**
 	 * Constructor
@@ -43,6 +46,8 @@ public class PlayerLaser extends Projectile {
 	 */
 	@Override
 	public void addOnHitEffect() {
+		getParent().addActor( new PlayerLaserEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
+				getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
 		remove();
 	}
 
@@ -50,7 +55,7 @@ public class PlayerLaser extends Projectile {
 	 * Affected targets
 	 */
 	@Override
-	public TargetTypes[] getTargetTypes() {
+	public TargetTypes[] getFactionTypes() {
 		return AFFECTEDTARGETS;
 	}
 
