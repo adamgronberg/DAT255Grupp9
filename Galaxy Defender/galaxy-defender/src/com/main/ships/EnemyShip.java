@@ -15,15 +15,16 @@ import spacegame.Sprite;
  * Base class for enemy ships. Enemy ships should extend this class
  */
 public abstract class EnemyShip extends Sprite{
-	protected int scoreValue;
-	protected int health;
+	private int scoreValue;
+	private int health;
+	private int damageWhenRammed;
 	private int startingHealth;
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT};
-	public int damageWhenRammed;
+
 	
 	private static final float TIMEPERFRAME = 0.045f;
-	protected Animation animation; 
-	protected float stateTime;
+	private Animation animation; 
+	private float stateTime;
 	private TextureRegion currentFrame;
 	
 	/**
@@ -49,7 +50,7 @@ public abstract class EnemyShip extends Sprite{
 	}
 	
 	/**
-	 * Draws the explosion
+	 * Adds a fire depending on how damaged the target is
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -63,8 +64,10 @@ public abstract class EnemyShip extends Sprite{
 	protected void drawDamagedAnimation(SpriteBatch batch, float parentAlpha, TextureRegion currentFrame){
     	batch.draw(currentFrame, getX()+getWidth()*0.5f, getY()+getHeight()*0.5f, 
     			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
-    	batch.draw(currentFrame, getX()+getWidth()*0.2f, getY()+getHeight()*0.2f, 
-    			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
+    	if(((float)health/(float)startingHealth) < 0.4f){
+    		batch.draw(currentFrame, getX()+getWidth()*0.2f, getY()+getHeight()*0.2f, 
+    				getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
+    	}
 	}
 	
 	/**

@@ -15,7 +15,7 @@ public class EnemyLaser extends Projectile {
 	
 	public static final float RATEOFFIRE = 2500000000f; //In nanoseconds
 	private static final float SPEED = 6f;
-	public static final float HEIGHT = 10;
+	public static final float HEIGHT = 25;
 	public static final float WIDTH = 3;
 	private static final int DAMAGE_ON_HIT = 15;
 	private static final TargetTypes FACTION = TargetTypes.ENEMY;
@@ -48,7 +48,7 @@ public class EnemyLaser extends Projectile {
 	@Override
 	public void addOnHitEffect() {
 		getParent().addActor( new EnemyLaserEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
-				getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
+				getY()-AREAEFFECT_H/2, AREAEFFECT_W, AREAEFFECT_H));
 		remove();
 	}
 

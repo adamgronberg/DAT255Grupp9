@@ -21,7 +21,7 @@ public class HeavyShip extends EnemyShip {
 	public final static int WIDTH=40;
 	private final static float SHIPSPEED = 1.5f;
 	private final static int SCOREVALUE=3;
-	private final static int HEALTH=2;
+	private final static int HEALTH=3;
 	
 	private float lastMissileTime;
 	private static final int DAMAGE_WHEN_RAMMED = 30;
