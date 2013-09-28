@@ -18,7 +18,7 @@ public abstract class EnemyShip extends Sprite{
 	private int scoreValue;
 	private int health;
 	private int damageWhenRammed;
-	private int startingHealth;
+	private int maximumHealth;
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT};
 
 	
@@ -38,13 +38,13 @@ public abstract class EnemyShip extends Sprite{
 	 * @param texture The image of the enemy
 	 * @param damageOnHit The damage per hit
 	 */
-	public EnemyShip(float x, float y, float width, float height, int health, int scoreValue, TextureRegion texture, int damageWhenRammed) {
+	public EnemyShip(float width, float height,float x, float y, int health, int scoreValue, TextureRegion texture, int damageWhenRammed) {
 		super(width, height, x, y, texture);
 		this.health = health;
 		this.scoreValue = scoreValue;
 		this.damageWhenRammed = damageWhenRammed;
 		
-		startingHealth = health;
+		maximumHealth = health;
 		animation = new Animation(TIMEPERFRAME, ImageAssets.fireAnimation);
 		stateTime = 0f;
 	}
@@ -56,15 +56,21 @@ public abstract class EnemyShip extends Sprite{
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 		currentFrame = animation.getKeyFrame(stateTime, true);
-        if(health<startingHealth){
+        if(health<maximumHealth){
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
         }
 	}
 	
+	/**
+	 * Draws damaged animation
+	 * @param batch
+	 * @param parentAlpha
+	 * @param currentFrame
+	 */
 	protected void drawDamagedAnimation(SpriteBatch batch, float parentAlpha, TextureRegion currentFrame){
     	batch.draw(currentFrame, getX()+getWidth()*0.5f, getY()+getHeight()*0.5f, 
     			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
-    	if(((float)health/(float)startingHealth) < 0.4f){
+    	if(((float)health/(float)maximumHealth) < 0.4f){
     		batch.draw(currentFrame, getX()+getWidth()*0.2f, getY()+getHeight()*0.2f, 
     				getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
     	}

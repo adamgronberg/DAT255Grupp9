@@ -30,7 +30,7 @@ public class ScoutShip extends EnemyShip{
 	 * @param y
 	 */
 	public ScoutShip(float x, float y){
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyScoutShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyScoutShip, DAMAGE_WHEN_RAMMED);
 		currentMovmentLenght = 0;
 		movingLeft = true;
 	}
@@ -59,11 +59,5 @@ public class ScoutShip extends EnemyShip{
 			setX(getX()+SHIPSPEED_X);
 		}
 		currentMovmentLenght++;
-	}
-	/**
-	 *  removes the ship
-	 */
-	public void addOnHitEffect() {
-		remove();
 	}
 }

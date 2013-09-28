@@ -27,7 +27,7 @@ public class BasicShip extends EnemyShip {
 	 * @param y y-led Spawn location
 	 */
 	public BasicShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip, DAMAGE_WHEN_RAMMED);
 	}
 
 	

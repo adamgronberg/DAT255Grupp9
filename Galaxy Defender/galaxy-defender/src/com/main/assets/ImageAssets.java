@@ -45,7 +45,7 @@ public class ImageAssets {
 		enemyLaser = atlas.findRegion("weapons/redLaser");
 		enemyBasicShip = atlas.findRegion("Ships/Ship3");
 		enemyScoutShip = atlas.findRegion("Ships/Ship9");
-		enemyHeavyShip = atlas.findRegion("Ships/Ship25");
+		enemyHeavyShip = atlas.findRegion("Ships/Ship14");
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("TopInfoBar");
 		space = atlas.findRegion("space1");

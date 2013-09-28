@@ -18,10 +18,13 @@ public class PlayerShip extends Sprite {
 	
 	public static enum Direction {LEFT, RIGHT, NONE;}
 	private static enum AvailableWeapons {MISSILE, LASER;} 	//Implemented weapons
-	public static final int WITDH = 35;				// The size of the player
-	public static final int HEIGHT = 40;				// The size of the player
+	public static final int WITDH = 35;						// The size of the player
+	public static final int HEIGHT = 40;					// The size of the player
 	private static final float SPEED = 5;					// number of pixels the player moves every act
 	private static final float PLAYER_SPAWNLOCATION = 0.1f; //Height where the player moves
+	
+	private int maximumHealth=100;
+	private int currentHealth;
 	
 	private float lastMissileTime = 0;      	//For testing
 	
@@ -37,6 +40,35 @@ public class PlayerShip extends Sprite {
 	 */
 	public PlayerShip() {
 		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2, GameScreen.GAME_HEIGHT*PLAYER_SPAWNLOCATION,ImageAssets.playerShip);
+	}
+	
+	/**
+	 * @return player current health
+	 */
+	public int getCurrnetHealth(){
+		return currentHealth;
+	}
+	
+	/**
+	 * Resets player health to its maximum health
+	 */
+	public void resetHealth(){
+		currentHealth = maximumHealth;
+	}
+	
+	/**
+	 * Decreases player current health with damage
+	 * @param damage the damage to decrease player current health with
+	 */
+	public void decreaseCurrentHealth(int damage){
+		currentHealth = currentHealth - damage;
+	}
+	
+	/**
+	 * @return player maximum health
+	 */
+	public int getMaximumHealth(){
+		return maximumHealth;
 	}
 
 	

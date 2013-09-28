@@ -32,16 +32,11 @@ public class GameLogic extends Table {
 	private long lastEnemyShipTime = 0;			//For testing
 	private float lastSpawnPatternTime = 0;		//For testing
 				
-	private boolean shooting = false;
+	private boolean shooting = false;			//For testing
 	
 	private Background backgroundSpace;
-	
-	public PlayerShip playerShip;
-	public static final int startLife=100;
-	public int life;
-	
-	
 
+	public PlayerShip playerShip;
 	
 	/**
 	 * Constructor
@@ -55,10 +50,8 @@ public class GameLogic extends Table {
 		addActor(playerShip);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		addActor(backgroundSpace);
-		life = startLife;
+		playerShip.resetHealth();
 	}
-	
-
 	
 	/**
 	 *  Handles object spawning and collision
@@ -66,11 +59,11 @@ public class GameLogic extends Table {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if (life<1) {	//For testing
+		if (playerShip.getCurrnetHealth()<1) {	//For testing
 			currentScore=0;
 			clear();
 			addActor(playerShip);
-			life=startLife;
+			playerShip.resetHealth();
 		}
 		
 		if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();			//For testing
@@ -93,14 +86,6 @@ public class GameLogic extends Table {
 		addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
-	}
-	
-	/**
-	 * Calls when a player are in a collision
-	 * @param damage the damage of the collision
-	 */
-	public void playerCollision(int damage){
-		life=life-damage;
 	}
 	
 	/**
@@ -130,7 +115,6 @@ public class GameLogic extends Table {
 		shooting = !shooting;
 	}
 	
-	
 	/**
 	 * Switches player weapon
 	 */
@@ -145,17 +129,17 @@ public class GameLogic extends Table {
 	}
 	
 	/**
-	 * 
 	 * @return the current score
 	 */
 	public int getScore(){
 		return currentScore;
 	}
+	
 	/**
 	 * 
 	 * @return the current health
 	 */
 	public int getPlayerHealth(){
-		return life;
+		return playerShip.getCurrnetHealth();
 	}
 }

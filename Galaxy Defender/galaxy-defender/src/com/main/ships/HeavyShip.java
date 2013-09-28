@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class HeavyShip extends EnemyShip {
 	
 	public final static int HEIGHT=60;
-	public final static int WIDTH=40;
+	public final static int WIDTH=30;
 	private final static float SHIPSPEED = 1.5f;
 	private final static int SCOREVALUE=3;
 	private final static int HEALTH=3;
@@ -33,7 +33,7 @@ public class HeavyShip extends EnemyShip {
 	 * sets a random shoot time for first shoot
 	 */
 	public HeavyShip(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, HEALTH, SCOREVALUE, ImageAssets.enemyHeavyShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyHeavyShip, DAMAGE_WHEN_RAMMED);
 		lastMissileTime = TimeUtils.nanoTime() - 2*MathUtils.random(0,EnemyLaser.RATEOFFIRE);
 	}
 	

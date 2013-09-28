@@ -172,7 +172,7 @@ public class CollisionDetection {
 		
 			//Check for collision with player
 			if(collisionControl(enemyShip, gameLogic.playerShip)) {	
-				gameLogic.playerCollision(enemyShip.getDamageWhenRammed());
+				gameLogic.playerShip.decreaseCurrentHealth(enemyShip.getDamageWhenRammed());
 				enemyShip.destroyShip();
 			}
 		}
@@ -189,7 +189,7 @@ public class CollisionDetection {
 				case PLAYER:
 					//Collision between player and projectile
 					if(collisionControl(projectile, gameLogic.playerShip ) && projectile.getParent() != null){
-						gameLogic.playerCollision(projectile.getOnHitDamage());
+						gameLogic.playerShip.decreaseCurrentHealth(projectile.getOnHitDamage());
 						projectile.addOnHitEffect();
 						break;
 					}
