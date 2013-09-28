@@ -3,39 +3,11 @@ images.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-MainMenu
+backgrounds/MainMenu
   rotate: false
   xy: 1, 1
   size: 688, 992
   orig: 688, 992
-  offset: 0, 0
-  index: -1
-Arrow_Left
-  rotate: false
-  xy: 691, 930
-  size: 62, 63
-  orig: 62, 63
-  offset: 0, 0
-  index: -1
-Arrow_Right
-  rotate: false
-  xy: 691, 865
-  size: 62, 63
-  orig: 62, 63
-  offset: 0, 0
-  index: -1
-highScoreButton
-  rotate: false
-  xy: 755, 959
-  size: 84, 34
-  orig: 84, 34
-  offset: 0, 0
-  index: -1
-newGameButton
-  rotate: false
-  xy: 755, 923
-  size: 84, 34
-  orig: 84, 34
   offset: 0, 0
   index: -1
 
@@ -43,18 +15,11 @@ images2.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-space1
-  rotate: false
-  xy: 1, 129
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-TopInfoBar
+backgrounds/space1
   rotate: false
   xy: 1, 1
-  size: 510, 126
-  orig: 510, 126
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 
@@ -186,91 +151,91 @@ images4.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-fire animation/fire1_1
+fire animation/fire1
   rotate: false
   xy: 1, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_2
+fire animation/fire10
   rotate: false
   xy: 67, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_3
+fire animation/fire11
   rotate: false
   xy: 133, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_4
+fire animation/fire12
   rotate: false
   xy: 199, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_5
+fire animation/fire13
   rotate: false
   xy: 265, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_6
+fire animation/fire2
   rotate: false
   xy: 331, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_7
+fire animation/fire3
   rotate: false
   xy: 397, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_8
+fire animation/fire4
   rotate: false
   xy: 463, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_9
+fire animation/fire5
   rotate: false
   xy: 529, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_10
+fire animation/fire6
   rotate: false
   xy: 595, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_11
+fire animation/fire7
   rotate: false
   xy: 661, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_12
+fire animation/fire8
   rotate: false
   xy: 727, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-fire animation/fire1_13
+fire animation/fire9
   rotate: false
   xy: 793, 1
   size: 64, 64
@@ -279,6 +244,60 @@ fire animation/fire1_13
   index: -1
 
 images5.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gui/TopInfoBar
+  rotate: false
+  xy: 1, 1
+  size: 510, 126
+  orig: 510, 126
+  offset: 0, 0
+  index: -1
+gui/emptyButton
+  rotate: false
+  xy: 513, 27
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+gui/missileButton
+  rotate: false
+  xy: 615, 27
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+gui/move_left
+  rotate: false
+  xy: 717, 27
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+gui/move_right
+  rotate: false
+  xy: 819, 27
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+gui/highScoreButton
+  rotate: false
+  xy: 921, 93
+  size: 84, 34
+  orig: 84, 34
+  offset: 0, 0
+  index: -1
+gui/newGameButton
+  rotate: false
+  xy: 921, 57
+  size: 84, 34
+  orig: 84, 34
+  offset: 0, 0
+  index: -1
+
+images6.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -465,7 +484,7 @@ Ships/Ship1
   offset: 0, 0
   index: -1
 
-images6.png
+images7.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none

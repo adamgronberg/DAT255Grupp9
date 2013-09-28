@@ -12,7 +12,7 @@ import assets.*;
  */
 public class PlayerLaser extends Projectile {
 	
-	public static final float RATEOFFIRE = 300000000f; //In nanoseconds
+	public static final float RATEOFFIRE = 375000000f; //In nanoseconds
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 3;

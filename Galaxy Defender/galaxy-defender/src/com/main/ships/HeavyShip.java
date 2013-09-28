@@ -5,8 +5,6 @@ import assets.ImageAssets;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
-
-
 /**
  * 
  * @author Grupp9
@@ -51,7 +49,7 @@ public class HeavyShip extends EnemyShip {
 	 */
 	public void spawnEnemyProjectile() {
 		if(TimeUtils.nanoTime() - lastMissileTime > EnemyLaser.RATEOFFIRE) {
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/2, getY()));
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY()));
 			lastMissileTime = TimeUtils.nanoTime();
 		}
 	}
