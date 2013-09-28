@@ -43,7 +43,7 @@ public class InputControl implements GestureListener, InputProcessor {
 	public boolean fling(float velocityX, float velocityY, int button) {
 		if (velocityY < -FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.switchPlayerWeapon();
 		if (velocityY > FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.switchPlayerWeapon();
-		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.toggleOptionAutoShoot();
+		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) GameScreen.toggleOptionAutoShoot();	//For testing
 		if (velocityX > FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.changeOptionControlLayout();
 		return false;
 	}
@@ -57,7 +57,6 @@ public class InputControl implements GestureListener, InputProcessor {
 	public boolean keyDown(int keycode) {
 		if(keycode == Input.Keys.LEFT)  gameLogic.playerShip.moveLeft();
 		if(keycode == Input.Keys.RIGHT)  gameLogic.playerShip.moveRight();
-		if(keycode == Input.Keys.SPACE)  gameLogic.toggleShooting();
 		return false;
 	}
 	/**
@@ -70,8 +69,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		if(keycode == Input.Keys.RIGHT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.RIGHT)  gameLogic.playerShip.stay();
 		if(keycode == Input.Keys.DOWN)  gameLogic.switchPlayerWeapon();
 		if(keycode == Input.Keys.UP)  gameLogic.switchPlayerWeapon();
-		if(keycode == Input.Keys.SPACE)  gameLogic.toggleShooting();						//For testing, should be in a option menu
-		if(keycode == Input.Keys.CONTROL_LEFT) gameScreen.toggleOptionAutoShoot();			//For testing, should be in a option menu
+		if(keycode == Input.Keys.CONTROL_LEFT) GameScreen.toggleOptionAutoShoot();			//For testing
 		if(keycode == Input.Keys.SHIFT_LEFT) gameScreen.changeOptionControlLayout();		//For testing, only android
 		return false;
 	}
@@ -94,7 +92,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		if (gameScreen.getMoveLeftButton().isPressed(touchPos.x, touchPos.y)) {						//TODO: Should use buttons instead of areas
 			gameLogic.playerShip.moveLeft();
 		}
-		else if (gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {		//TODO: Should use buttons instead of areas
+		else if (gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {				//TODO: Should use buttons instead of areas
 			gameLogic.playerShip.moveRight();
 		}
 		else gameLogic.playerShip.stay();	
@@ -110,7 +108,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		if (gameScreen.getMoveLeftButton().isPressed(touchPos.x, touchPos.y)) {						//TODO: Should use buttons instead of areas
 			gameLogic.playerShip.moveLeft();
 		}
-		else if (gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {		//TODO: Should use buttons instead of areas
+		else if (gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {				//TODO: Should use buttons instead of areas
 			gameLogic.playerShip.moveRight();
 		}
 		else gameLogic.playerShip.stay();	

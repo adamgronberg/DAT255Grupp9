@@ -26,13 +26,9 @@ import collisiondetection.OutOfBoundsDetection;
  */
 public class GameLogic extends Table {
 	
-	private GameScreen gameScreen;
-	
 	private int currentScore=0;
 	private long lastEnemyShipTime = 0;			//For testing
 	private float lastSpawnPatternTime = 0;		//For testing
-				
-	private boolean shooting = false;			//For testing
 	
 	private Background backgroundSpace;
 
@@ -42,8 +38,7 @@ public class GameLogic extends Table {
 	 * Constructor
 	 * TODO: Should set up unique levels and not spawn enemies randomly (Release 1 demo)
 	 */
-	public GameLogic(GameScreen gameScreen) {
-		this.gameScreen = gameScreen;
+	public GameLogic() {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
 		playerShip = new PlayerShip();
@@ -66,9 +61,8 @@ public class GameLogic extends Table {
 			playerShip.resetHealth();
 		}
 		
-		if (TimeUtils.nanoTime() - lastEnemyShipTime > 2000000000f) spawnShip();			//For testing
-		if (TimeUtils.nanoTime() - lastSpawnPatternTime > 5000000000f) spawnPattern();		//For testing
-		if (gameScreen.getOptionAutoShoot() || shooting) playerShip.spawnPlayerProjectile();//For testing TODO:Should prob be in playerShip act
+		if (TimeUtils.nanoTime() - lastEnemyShipTime > 3000000000f) spawnShip();			//For testing
+		if (TimeUtils.nanoTime() - lastSpawnPatternTime > 7000000000f) spawnPattern();		//For testing
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
 	}
@@ -109,18 +103,12 @@ public class GameLogic extends Table {
 	}
 	
 	/**
-	 * Toggles shooting on or off
-	 */
-	public void toggleShooting(){
-		shooting = !shooting;
-	}
-	
-	/**
 	 * Switches player weapon
 	 */
 	public void switchPlayerWeapon(){
 		playerShip.switchWeapon();
-	} 
+	}
+	
 	/**
 	 * add the score to the total score
 	 */

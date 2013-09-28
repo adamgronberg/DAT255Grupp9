@@ -15,16 +15,14 @@ import spacegame.Sprite;
  * Base class for enemy ships. Enemy ships should extend this class
  */
 public abstract class EnemyShip extends Sprite{
+	public static enum EnemyTypes {HEAVY, BASIC, SCOUT};
 	private int scoreValue;
 	private int health;
 	private int damageWhenRammed;
 	private int maximumHealth;
-	public static enum EnemyTypes {HEAVY, BASIC, SCOUT};
-
-	
 	private static final float TIMEPERFRAME = 0.045f;
-	private Animation animation; 
 	private float stateTime;
+	private Animation onFireAnimation; 
 	private TextureRegion currentFrame;
 	
 	/**
@@ -45,7 +43,7 @@ public abstract class EnemyShip extends Sprite{
 		this.damageWhenRammed = damageWhenRammed;
 		
 		maximumHealth = health;
-		animation = new Animation(TIMEPERFRAME, ImageAssets.fireAnimation);
+		onFireAnimation = new Animation(TIMEPERFRAME, ImageAssets.fireAnimation);
 		stateTime = 0f;
 	}
 	
@@ -55,7 +53,7 @@ public abstract class EnemyShip extends Sprite{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		currentFrame = animation.getKeyFrame(stateTime, true);
+		currentFrame = onFireAnimation.getKeyFrame(stateTime, true);
         if(health<maximumHealth){
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
         }
@@ -111,7 +109,7 @@ public abstract class EnemyShip extends Sprite{
 	}
 	
 	/**
-	 *  removes the ship
+	 *  Removes the ship
 	 */
 	public void destroyShip() {
 		remove();

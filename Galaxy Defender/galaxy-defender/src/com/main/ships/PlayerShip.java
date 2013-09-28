@@ -110,7 +110,7 @@ public class PlayerShip extends Sprite {
 	 */
 	@Override
 	public void act(float delta){
-		
+		if (GameScreen.optionAutoShoot) spawnPlayerProjectile();
 		switch(movmentDirection){
 			case LEFT:
 				setX(getX()-SPEED);

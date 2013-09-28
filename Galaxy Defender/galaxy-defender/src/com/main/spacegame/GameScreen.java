@@ -28,8 +28,7 @@ public class GameScreen implements Screen{
 	private TopInfoBar topInfoBar;
 	
 	public static boolean sound = false; //TODO: Temp. disables/enables sound
-
-	private boolean optionAutoShoot = true;
+	public static boolean optionAutoShoot = true; //TODO: Temp. disables/enables shoot
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = ControlLayout.LAYOUT1;
@@ -54,7 +53,7 @@ public class GameScreen implements Screen{
 		moveRightButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveRightButton);
 			
-		gameLogic = new GameLogic(this);
+		gameLogic = new GameLogic();
 		inputController = new InputControl(gameLogic, this);
 		topInfoBar = new TopInfoBar(this);
 		
@@ -84,21 +83,6 @@ public class GameScreen implements Screen{
 		vector.set(x, y, 0);
 		stage.getCamera().unproject(vector);
 		return vector;
-	}
-	
-	/**
-	 * 
-	 * @return If optionAutoShoot is on or off
-	 */
-	public boolean getOptionAutoShoot(){
-		return optionAutoShoot;
-	}
-	
-	/**
-	 * Toggles optionAutoShoot on/off
-	 */
-	public void toggleOptionAutoShoot(){
-		optionAutoShoot = !optionAutoShoot;
 	}
 	
 	/**
@@ -187,5 +171,10 @@ public class GameScreen implements Screen{
 
 	@Override public void resume() {}
 	@Override public void pause() {}
-	@Override public void dispose() {}	
+	@Override public void dispose() {}
+
+	public static void toggleOptionAutoShoot() {
+		optionAutoShoot = !optionAutoShoot;
+		
+	}	
 }
