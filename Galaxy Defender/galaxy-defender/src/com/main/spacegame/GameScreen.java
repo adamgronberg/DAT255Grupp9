@@ -27,20 +27,21 @@ public class GameScreen implements Screen{
 	private InputControl inputController;
 	private TopInfoBar topInfoBar;
 	
-	public static boolean sound = false; //TODO: Temp. disables/enables sound
+	public static boolean sound = true; //TODO: Temp. disables/enables sound
 	public static boolean optionAutoShoot = true; //TODO: Temp. disables/enables shoot
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
-	public ControlLayout currentLayout = ControlLayout.LAYOUT1;
+	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
 	
 	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;
 	public static final float GAME_WITDH= ((float) MyGame.WIDTH);
 	public static final float INFO_SCREEN_HEIGHT=((float) MyGame.HEIGHT)*0.05f;
-	public static final int MOVMENT_BUTTON_SIZE = 70;
+	public static final int MOVMENT_BUTTON_SIZE = 60;
 	public static final String LOG = GameScreen.class.getSimpleName();
 	
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
+	private InteractionButton shootMissileButton;
 
 	/**
 	 * Constructor
@@ -50,9 +51,12 @@ public class GameScreen implements Screen{
 		moveLeftButton = new InteractionButton(0, 0, GameScreen.MOVMENT_BUTTON_SIZE,
 				GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveLeftButton);
 
-		moveRightButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
+		moveRightButton = new InteractionButton(GameScreen.MOVMENT_BUTTON_SIZE, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.moveRightButton);
 			
+		shootMissileButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
+				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.missileButton);
+		
 		gameLogic = new GameLogic();
 		inputController = new InputControl(gameLogic, this);
 		topInfoBar = new TopInfoBar(this);
@@ -60,6 +64,7 @@ public class GameScreen implements Screen{
 		stage = new Stage();
 		stage.addActor(gameLogic);
 		stage.addActor(topInfoBar);
+		stage.addActor(shootMissileButton);
 		stage.addActor(moveLeftButton);
 		stage.addActor(moveRightButton);		
 		if(sound) SoundAssets.spaceMusic.play();
@@ -101,10 +106,12 @@ public class GameScreen implements Screen{
 			case LAYOUT1:
 				currentLayout = ControlLayout.LAYOUT2;
 				moveRightButton.setX(GameScreen.MOVMENT_BUTTON_SIZE);
+				shootMissileButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
 				break;
 			case LAYOUT2:
 				currentLayout = ControlLayout.LAYOUT1;
 				moveRightButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
+				shootMissileButton.setX(GAME_WITDH/2 - GameScreen.MOVMENT_BUTTON_SIZE/2);
 				break;
 		}
 	}	
@@ -124,12 +131,23 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
+	 * @return Shoot missile button
+	 */
+	public InteractionButton getShootMissileButton(){
+		return shootMissileButton;
+	}
+	
+	/**
 	 * Render loop. 
 	 */
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		if(gameLogic.playerShip.getMissileReady() == true){
+			shootMissileButton.setVisible(true);
+		} 
+		else shootMissileButton.setVisible(false);
 		stage.act(delta);				//Tells all actors to act
 		stage.draw();					//Tells all actors to draw
 		}

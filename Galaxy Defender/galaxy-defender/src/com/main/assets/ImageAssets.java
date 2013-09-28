@@ -23,6 +23,7 @@ public class ImageAssets {
 	public static TextureRegion enemyLaser;
 	public static TextureRegion playerMissile;
 	public static TextureRegion topInfoBar;
+	public static TextureRegion missileButton;
 	public static Array<TextureRegion> explosionAnimation;
 	public static Array<TextureRegion> enemyLaserAnimation;
 	public static Array<TextureRegion> playerLaserAnimation;
@@ -45,12 +46,13 @@ public class ImageAssets {
 		enemyLaser = atlas.findRegion("weapons/redLaser");
 		enemyBasicShip = atlas.findRegion("Ships/Ship3");
 		enemyScoutShip = atlas.findRegion("Ships/Ship9");
-		enemyHeavyShip = atlas.findRegion("Ships/Ship14");
+		enemyHeavyShip = atlas.findRegion("Ships/Ship17");
 		playerMissile = atlas.findRegion("weapons/Missile1");
-		topInfoBar = atlas.findRegion("TopInfoBar");
-		space = atlas.findRegion("space1");
-		moveRightButton = atlas.findRegion("Arrow_Right");
-		moveLeftButton = atlas.findRegion("Arrow_Left");
+		topInfoBar = atlas.findRegion("gui/TopInfoBar");
+		space = atlas.findRegion("backgrounds/space1");
+		moveRightButton = atlas.findRegion("gui/move_right");
+		moveLeftButton = atlas.findRegion("gui/move_left");
+		missileButton = atlas.findRegion("gui/missileButton");
 		
 		for(int i = 1; i <= 2 ; i++){
 			enemyLaserAnimation.add(atlas.findRegion("weapons/redLaserHit" + i));
@@ -61,7 +63,7 @@ public class ImageAssets {
 		}
 
 		for(int i = 1; i <= 13 ; i++){
-			fireAnimation.add(atlas.findRegion("fire animation/fire1_" + i));
+			fireAnimation.add(atlas.findRegion("fire animation/fire" + i));
 		}
 		
 		for(int i = 1; i <= 17 ; i++){

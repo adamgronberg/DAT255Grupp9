@@ -14,10 +14,6 @@ import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
 import collisiondetection.OutOfBoundsDetection;
 
-
-
-
-
 /**
  * 
  * @author Grupp9
