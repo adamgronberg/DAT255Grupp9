@@ -11,8 +11,8 @@ import spacegame.GameScreen;
  */
 public class ScoutShip extends EnemyShip{
 	
-	public final static int HEIGHT = 30;
-	public final static int WIDTH = 30;
+	public final static int HEIGHT = 35;
+	public final static int WIDTH = 35;
 	private final static float SHIPSPEED_X = 1.5f;
 	private final static float SHIPSPEED_Y = 2f;
 	private final static int HEALTH=1;

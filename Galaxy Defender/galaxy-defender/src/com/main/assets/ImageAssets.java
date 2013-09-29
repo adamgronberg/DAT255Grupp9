@@ -54,19 +54,19 @@ public class ImageAssets {
 		moveLeftButton = atlas.findRegion("gui/move_left");
 		missileButton = atlas.findRegion("gui/missileButton");
 		
-		for(int i = 1; i <= 2 ; i++){
+		for(int i = 1; i <= 2; i++){
 			enemyLaserAnimation.add(atlas.findRegion("weapons/redLaserHit" + i));
 		}
 		
-		for(int i = 1; i <= 2 ; i++){
+		for(int i = 1; i <= 2; i++){
 			playerLaserAnimation.add(atlas.findRegion("weapons/greenLaserHit" + i));
 		}
 
-		for(int i = 1; i <= 13 ; i++){
+		for(int i = 1; i <= 13; i++){
 			fireAnimation.add(atlas.findRegion("fire animation/fire" + i));
 		}
 		
-		for(int i = 1; i <= 17 ; i++){
+		for(int i = 1; i <= 17; i++){
 			explosionAnimation.add(atlas.findRegion("explosion1 Frames/ExplosionFrame" + i));
 		}
 	}

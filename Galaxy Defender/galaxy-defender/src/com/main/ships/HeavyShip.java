@@ -15,8 +15,8 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class HeavyShip extends EnemyShip {
 	
-	public final static int HEIGHT=60;
-	public final static int WIDTH=30;
+	public final static int HEIGHT=65;
+	public final static int WIDTH=40;
 	private final static float SHIPSPEED = 1.5f;
 	private final static int SCOREVALUE=3;
 	private final static int HEALTH=3;
@@ -42,22 +42,15 @@ public class HeavyShip extends EnemyShip {
 	public void act(float delta){
 		super.act(delta);
 		setY(getY()-SHIPSPEED);
-		spawnEnemyProjectile();
+		spawnProjectile();
 	}
 	/**
 	 * Spawns projectiles in front of the enemies
 	 */
-	public void spawnEnemyProjectile() {
+	public void spawnProjectile() {
 		if(TimeUtils.nanoTime() - lastMissileTime > EnemyLaser.RATEOFFIRE) {
 			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY()));
 			lastMissileTime = TimeUtils.nanoTime();
 		}
-	}
-	
-	/**
-	 *  removes the ship
-	 */
-	public void addOnHitEffect() {
-		remove();
 	}
 }
