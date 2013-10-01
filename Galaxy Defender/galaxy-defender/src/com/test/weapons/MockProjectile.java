@@ -1,4 +1,4 @@
-package weapons;
+/**package weapons;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -23,3 +23,4 @@ public class MockProjectile extends Projectile {
 	
 
 }
+*/

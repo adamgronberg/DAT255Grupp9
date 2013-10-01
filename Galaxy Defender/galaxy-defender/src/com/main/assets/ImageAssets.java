@@ -24,6 +24,7 @@ public class ImageAssets {
 	public static TextureRegion playerMissile;
 	public static TextureRegion topInfoBar;
 	public static TextureRegion missileButton;
+	public static Array<TextureRegion> asteroids;
 	public static Array<TextureRegion> explosionAnimation;
 	public static Array<TextureRegion> enemyLaserAnimation;
 	public static Array<TextureRegion> playerLaserAnimation;
@@ -53,6 +54,12 @@ public class ImageAssets {
 		moveRightButton = atlas.findRegion("gui/move_right");
 		moveLeftButton = atlas.findRegion("gui/move_left");
 		missileButton = atlas.findRegion("gui/missileButton");
+		
+
+		asteroids = new Array<TextureRegion>(); 
+		for(int i = 1; i <= 12; i++){
+			asteroids.add(atlas.findRegion("Ships/Asteroid" + i));
+		}
 		
 		for(int i = 1; i <= 2; i++){
 			enemyLaserAnimation.add(atlas.findRegion("weapons/redLaserHit" + i));

@@ -303,182 +303,266 @@ filter: Linear,Linear
 repeat: none
 Ships/Ship25
   rotate: false
-  xy: 1, 190
+  xy: 1, 705
   size: 141, 318
   orig: 141, 318
   offset: 0, 0
   index: -1
 Ships/Ship23
   rotate: false
-  xy: 144, 220
+  xy: 1, 415
   size: 136, 288
   orig: 136, 288
   offset: 0, 0
   index: -1
 Ships/Ship24
   rotate: false
-  xy: 282, 220
+  xy: 144, 735
   size: 135, 288
   orig: 135, 288
   offset: 0, 0
   index: -1
 Ships/PlayerShip
   rotate: false
-  xy: 419, 295
+  xy: 281, 810
   size: 209, 213
   orig: 209, 213
   offset: 0, 0
   index: -1
 Ships/Ship22
   rotate: false
-  xy: 630, 218
+  xy: 1, 123
   size: 124, 290
   orig: 124, 290
   offset: 0, 0
   index: -1
+Ships/Asteroid8
+  rotate: false
+  xy: 1, 1
+  size: 125, 120
+  orig: 125, 120
+  offset: 0, 0
+  index: -1
 Ships/Ship21
   rotate: false
-  xy: 756, 285
+  xy: 492, 800
   size: 113, 223
   orig: 113, 223
   offset: 0, 0
   index: -1
 Ships/Ship20
   rotate: false
-  xy: 871, 275
+  xy: 607, 790
   size: 100, 233
   orig: 100, 233
   offset: 0, 0
   index: -1
+Ships/Ship19
+  rotate: false
+  xy: 709, 796
+  size: 95, 227
+  orig: 95, 227
+  offset: 0, 0
+  index: -1
+Ships/Asteroid11
+  rotate: false
+  xy: 806, 899
+  size: 125, 124
+  orig: 125, 124
+  offset: 0, 0
+  index: -1
+Ships/Asteroid10
+  rotate: false
+  xy: 806, 776
+  size: 125, 121
+  orig: 125, 121
+  offset: 0, 0
+  index: -1
+Ships/Asteroid12
+  rotate: false
+  xy: 281, 684
+  size: 125, 124
+  orig: 125, 124
+  offset: 0, 0
+  index: -1
 Ships/Ship15
   rotate: false
-  xy: 1, 83
+  xy: 933, 918
   size: 69, 105
   orig: 69, 105
   offset: 0, 0
   index: -1
 Ships/Ship16
   rotate: false
-  xy: 973, 381
+  xy: 933, 789
   size: 47, 127
   orig: 47, 127
   offset: 0, 0
   index: -1
-Ships/Ship19
-  rotate: false
-  xy: 419, 66
-  size: 95, 227
-  orig: 95, 227
-  offset: 0, 0
-  index: -1
 Ships/Ship17
   rotate: false
-  xy: 516, 166
+  xy: 408, 681
   size: 45, 127
   orig: 45, 127
+  offset: 0, 0
+  index: -1
+Ships/Asteroid2
+  rotate: false
+  xy: 455, 674
+  size: 125, 124
+  orig: 125, 124
+  offset: 0, 0
+  index: -1
+Ships/Asteroid3
+  rotate: false
+  xy: 582, 664
+  size: 125, 124
+  orig: 125, 124
   offset: 0, 0
   index: -1
 Ships/Ship18
   rotate: false
-  xy: 563, 166
+  xy: 709, 667
   size: 45, 127
   orig: 45, 127
   offset: 0, 0
   index: -1
-Ships/Ship10
+Ships/Asteroid4
   rotate: false
-  xy: 973, 321
-  size: 50, 58
-  orig: 50, 58
+  xy: 756, 650
+  size: 125, 124
+  orig: 125, 124
+  offset: 0, 0
+  index: -1
+Ships/Asteroid1
+  rotate: false
+  xy: 883, 650
+  size: 123, 124
+  orig: 123, 124
+  offset: 0, 0
+  index: -1
+Ships/Asteroid5
+  rotate: false
+  xy: 144, 609
+  size: 125, 124
+  orig: 125, 124
+  offset: 0, 0
+  index: -1
+Ships/Asteroid7
+  rotate: false
+  xy: 139, 483
+  size: 125, 124
+  orig: 125, 124
+  offset: 0, 0
+  index: -1
+Ships/Asteroid6
+  rotate: false
+  xy: 139, 363
+  size: 125, 118
+  orig: 125, 118
+  offset: 0, 0
+  index: -1
+Ships/Asteroid9
+  rotate: false
+  xy: 127, 239
+  size: 125, 122
+  orig: 125, 122
   offset: 0, 0
   index: -1
 Ships/Ship14
   rotate: false
-  xy: 72, 104
+  xy: 127, 153
   size: 58, 84
   orig: 58, 84
   offset: 0, 0
   index: -1
 Ships/Ship11
   rotate: false
-  xy: 756, 225
+  xy: 187, 179
   size: 57, 58
   orig: 57, 58
   offset: 0, 0
   index: -1
+Ships/Ship6
+  rotate: false
+  xy: 1004, 978
+  size: 19, 45
+  orig: 19, 45
+  offset: 0, 0
+  index: -1
 Ships/Ship12
   rotate: false
-  xy: 1, 25
+  xy: 271, 626
   size: 55, 56
   orig: 55, 56
   offset: 0, 0
   index: -1
 Ships/Ship13
   rotate: false
-  xy: 516, 109
+  xy: 328, 627
   size: 56, 55
   orig: 56, 55
   offset: 0, 0
   index: -1
 Ships/Ship9
   rotate: false
-  xy: 815, 228
+  xy: 386, 624
   size: 53, 55
   orig: 53, 55
   offset: 0, 0
   index: -1
+Ships/Ship10
+  rotate: false
+  xy: 441, 614
+  size: 50, 58
+  orig: 50, 58
+  offset: 0, 0
+  index: -1
 Ships/Ship8
   rotate: false
-  xy: 574, 107
+  xy: 493, 615
   size: 39, 57
   orig: 39, 57
   offset: 0, 0
   index: -1
 Ships/Ship7
   rotate: false
-  xy: 132, 127
+  xy: 982, 855
   size: 22, 61
   orig: 22, 61
   offset: 0, 0
   index: -1
 Ships/Ship4
   rotate: false
-  xy: 973, 289
+  xy: 534, 642
   size: 38, 30
   orig: 38, 30
   offset: 0, 0
   index: -1
 Ships/Ship5
   rotate: false
-  xy: 516, 78
+  xy: 534, 611
   size: 37, 29
   orig: 37, 29
   offset: 0, 0
   index: -1
-Ships/Ship2
-  rotate: false
-  xy: 144, 190
-  size: 25, 28
-  orig: 25, 28
-  offset: 0, 0
-  index: -1
 Ships/Ship3
   rotate: false
-  xy: 870, 242
+  xy: 187, 146
   size: 33, 31
   orig: 33, 31
   offset: 0, 0
   index: -1
-Ships/Ship6
+Ships/Ship2
   rotate: false
-  xy: 156, 143
-  size: 19, 45
-  orig: 19, 45
+  xy: 127, 123
+  size: 25, 28
+  orig: 25, 28
   offset: 0, 0
   index: -1
 Ships/Ship1
   rotate: false
-  xy: 1, 1
+  xy: 154, 129
   size: 25, 22
   orig: 25, 22
   offset: 0, 0

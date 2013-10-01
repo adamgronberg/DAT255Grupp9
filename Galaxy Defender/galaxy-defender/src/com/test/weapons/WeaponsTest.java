@@ -1,4 +1,4 @@
-package weapons;
+/**package weapons;
 
 
 import static org.junit.Assert.assertFalse;
@@ -62,3 +62,4 @@ public class WeaponsTest extends Projectile{
 
 
 }
+*/

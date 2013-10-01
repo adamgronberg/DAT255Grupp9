@@ -1,4 +1,4 @@
-package collisiondetection;
+/**package collisiondetection;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -29,3 +29,4 @@ public class CollisionDetectionTest {
 	}
 
 }
+*/
