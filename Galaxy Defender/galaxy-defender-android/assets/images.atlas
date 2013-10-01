@@ -249,49 +249,56 @@ filter: Linear,Linear
 repeat: none
 gui/TopInfoBar
   rotate: false
-  xy: 1, 1
+  xy: 1, 103
   size: 510, 126
   orig: 510, 126
   offset: 0, 0
   index: -1
+gui/EMPButton
+  rotate: false
+  xy: 1, 1
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
 gui/emptyButton
   rotate: false
-  xy: 513, 27
+  xy: 513, 129
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 gui/missileButton
   rotate: false
-  xy: 615, 27
+  xy: 103, 1
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 gui/move_left
   rotate: false
-  xy: 717, 27
+  xy: 615, 129
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 gui/move_right
   rotate: false
-  xy: 819, 27
+  xy: 205, 1
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 gui/highScoreButton
   rotate: false
-  xy: 921, 93
+  xy: 717, 195
   size: 84, 34
   orig: 84, 34
   offset: 0, 0
   index: -1
 gui/newGameButton
   rotate: false
-  xy: 921, 57
+  xy: 307, 67
   size: 84, 34
   orig: 84, 34
   offset: 0, 0

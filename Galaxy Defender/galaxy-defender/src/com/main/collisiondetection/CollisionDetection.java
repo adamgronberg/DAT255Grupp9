@@ -108,7 +108,7 @@ public class CollisionDetection {
 			if(projectile != affectsEnemyProjectile && projectile.getParent() != null){
 				if(projectile.getFaction() == type){
 					if(collisionControl(projectile, affectsEnemyProjectile)){
-						projectile.addOnHitEffect();
+						projectile.addOnHitEffect(projectile);
 					}
 				}
 			}
@@ -190,7 +190,7 @@ public class CollisionDetection {
 					//Collision between player and projectile
 					if(collisionControl(projectile, gameLogic.playerShip ) && projectile.getParent() != null){
 						gameLogic.playerShip.decreaseCurrentHealth(projectile.getOnHitDamage());
-						projectile.addOnHitEffect();
+						projectile.addOnHitEffect(projectile);
 						break;
 					}
 					break;
@@ -201,7 +201,7 @@ public class CollisionDetection {
 						//Collision between enemy and projectile
 						if (collisionControl(enemyShip, projectile) && projectile.getParent() != null) {
 							gameLogic.addScore(enemyShip.hit(projectile.getOnHitDamage()));
-							projectile.addOnHitEffect();
+							projectile.addOnHitEffect(enemyShip);
 							break;
 						}	
 					}

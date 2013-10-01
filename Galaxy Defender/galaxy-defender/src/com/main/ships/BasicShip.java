@@ -18,8 +18,6 @@ public class BasicShip extends EnemyShip {
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
 	private static final int DAMAGE_WHEN_RAMMED = 15;
-
-	
 	
 	/**
 	 * Constructor
@@ -30,20 +28,15 @@ public class BasicShip extends EnemyShip {
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyBasicShip, DAMAGE_WHEN_RAMMED);
 	}
 
-	
 	/**
-	 * Called when "act" is called in its stage
-	 * Updates its position.
+	 * Ship move function
 	 */
 	@Override
-	public void act(float delta){
-		super.act(delta);
+	protected void move(float delta) {
 		setY(getY()-SHIPSPEED);
+		
 	}
-	/**
-	 *  removes the ship
-	 */
-	public void addOnHitEffect() {
-		remove();
-	}
+
+	@Override
+	protected void shoot(float delta) {}
 }

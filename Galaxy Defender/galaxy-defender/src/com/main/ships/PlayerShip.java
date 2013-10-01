@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import assets.ImageAssets;
 import spacegame.GameScreen;
 import spacegame.Sprite;
+import weapons.PlayerEMP;
 import weapons.PlayerLaser;
 import weapons.PlayerMissile;
 
@@ -30,6 +31,8 @@ public class PlayerShip extends Sprite {
 	private float lastLaserTime = 0;      		//For testing
 	private float lastMissileTime = 0;      	//For testing
 	private boolean missileReady = true;		//For testing
+	private float lastEMPTime = 0;      	//For testing
+	private boolean EMPReady = true;		//For testing
 	
 	private Direction movmentDirection = Direction.NONE;
 	private AvailableWeapons currentWeapon = AvailableWeapons.LASER;
@@ -123,6 +126,7 @@ public class PlayerShip extends Sprite {
 			
 		}
 		if(TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) missileReady = true;
+		if(TimeUtils.nanoTime() - lastEMPTime > PlayerEMP.RATEOFFIRE) EMPReady = true;
 		if(getX()<0) setX(0);
 		else if(getX()>GameScreen.GAME_WITDH-WITDH) setX(GameScreen.GAME_WITDH-WITDH);	
 	}
@@ -152,19 +156,25 @@ public class PlayerShip extends Sprite {
 		}
 	}
 	
+	public void shootEMP(){
+		if (EMPReady) {
+			getParent().addActor(new PlayerEMP(getX()+PlayerShip.WITDH/2-PlayerEMP.WIDTH/2, getY()));
+			lastEMPTime = TimeUtils.nanoTime();
+			EMPReady = false;
+		}
+	}
+	
 	public boolean getMissileReady(){
 		return missileReady;
+	}
+	
+	public boolean getEMPReady(){
+		return EMPReady;
 	}
 	
 	/**
 	 * Swaps players weapon
 	 */
 	public void switchWeapon(){
-		if(currentWeapon == AvailableWeapons.LASER) { 
-			currentWeapon = AvailableWeapons.MISSILE;
-		}
-		else if(currentWeapon == AvailableWeapons.MISSILE) { 
-			currentWeapon = AvailableWeapons.LASER;
-		}
 	}
 }

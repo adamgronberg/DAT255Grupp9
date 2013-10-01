@@ -36,15 +36,6 @@ public class HeavyShip extends EnemyShip {
 	}
 	
 	/**
-	 * Updates its position.
-	 */
-	@Override
-	public void act(float delta){
-		super.act(delta);
-		setY(getY()-SHIPSPEED);
-		spawnProjectile();
-	}
-	/**
 	 * Spawns projectiles in front of the enemies
 	 */
 	public void spawnProjectile() {
@@ -52,5 +43,23 @@ public class HeavyShip extends EnemyShip {
 			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY()));
 			lastMissileTime = TimeUtils.nanoTime();
 		}
+	}
+
+	/**
+	 * Ship move function
+	 */
+	@Override
+	protected void move(float delta) {
+		setY(getY()-SHIPSPEED);
+		
+	}
+
+	/**
+	 * Ship shoot function
+	 */
+	@Override
+	protected void shoot(float delta) {
+		spawnProjectile();
+		
 	}
 }

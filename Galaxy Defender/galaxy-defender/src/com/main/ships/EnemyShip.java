@@ -24,9 +24,11 @@ public abstract class EnemyShip extends Sprite{
 	private float stateTime;
 	private Animation onFireAnimation; 
 	private TextureRegion currentFrame;
+	private float disabledCurrentTime;
+	private float disabledDuration;
 	
 	/**
-	 * 
+	 * Constructor
 	 * @param x x-led Spawn location
 	 * @param y y-led Spawn location
 	 * @param width The width of the EnemyShip
@@ -41,11 +43,23 @@ public abstract class EnemyShip extends Sprite{
 		this.health = health;
 		this.scoreValue = scoreValue;
 		this.damageWhenRammed = damageWhenRammed;
-		
+
 		maximumHealth = health;
 		onFireAnimation = new Animation(TIMEPERFRAME, ImageAssets.fireAnimation);
 		stateTime = 0f;
 	}
+	
+	/**
+	 * Ship move function
+	 * @param delta
+	 */
+	protected abstract void move(float delta);
+	
+	/**
+	 * Ship shoot function
+	 * @param delta
+	 */
+	protected abstract void shoot(float delta);
 	
 	/**
 	 * Adds a fire depending on how damaged the target is
@@ -57,6 +71,33 @@ public abstract class EnemyShip extends Sprite{
         if(health<maximumHealth){
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
         }
+	}
+	
+	/**
+	 * Disables a ship for a duration
+	 * @param disabledDuration
+	 */
+	public void disableShip(float disabledDuration){
+		disabledCurrentTime = 0;
+		this.disabledDuration = disabledDuration;
+	}
+	
+	/**
+	 * Call this function if the target should be able to be disabled
+	 * @return
+	 */
+	protected boolean disabable(){
+		disabledCurrentTime++;
+		return disabled();
+	}
+	
+	/**
+	 * returns if the ship is disabled or not
+	 * @return
+	 */
+	protected boolean disabled(){
+		if (disabledCurrentTime >= disabledDuration) return false;
+		else return true;
 	}
 	
 	/**
@@ -75,13 +116,17 @@ public abstract class EnemyShip extends Sprite{
 	}
 	
 	/**
-	 * Updates the animation when damaged
+	 * Updates ship actions
 	 */
 	@Override
 	public void act(float delta){
+		if (!disabable()){
+			move(delta);
+			shoot(delta);
+		}
 		stateTime += delta;
 	}
-	
+
 	/**
 	 * Removes health from ship and removes as actor when dead.
 	 */

@@ -19,9 +19,11 @@ public class ImageAssets {
 	public static TextureRegion space;
 	public static TextureRegion moveLeftButton;
 	public static TextureRegion moveRightButton;
+	public static TextureRegion emptyButton;
 	public static TextureRegion playerLaser;
 	public static TextureRegion enemyLaser;
 	public static TextureRegion playerMissile;
+	public static TextureRegion playerIonCannon;
 	public static TextureRegion topInfoBar;
 	public static TextureRegion missileButton;
 	public static Array<TextureRegion> explosionAnimation;
@@ -41,8 +43,10 @@ public class ImageAssets {
 		playerLaserAnimation = new Array<TextureRegion>();
 		fireAnimation = new Array<TextureRegion>();
 		
+		
 		playerShip = atlas.findRegion("Ships/PlayerShip");
 		playerLaser = atlas.findRegion("weapons/greenLaser");
+		playerIonCannon = atlas.findRegion("weapons/blueMegaLaser");
 		enemyLaser = atlas.findRegion("weapons/redLaser");
 		enemyBasicShip = atlas.findRegion("Ships/Ship3");
 		enemyScoutShip = atlas.findRegion("Ships/Ship9");
@@ -53,6 +57,7 @@ public class ImageAssets {
 		moveRightButton = atlas.findRegion("gui/move_right");
 		moveLeftButton = atlas.findRegion("gui/move_left");
 		missileButton = atlas.findRegion("gui/missileButton");
+		emptyButton = atlas.findRegion("gui/EMPButton");
 		
 		for(int i = 1; i <= 2; i++){
 			enemyLaserAnimation.add(atlas.findRegion("weapons/redLaserHit" + i));

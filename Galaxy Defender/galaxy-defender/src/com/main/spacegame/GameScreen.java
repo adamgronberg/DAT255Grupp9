@@ -27,8 +27,8 @@ public class GameScreen implements Screen{
 	private InputControl inputController;
 	private TopInfoBar topInfoBar;
 	
-	public static boolean sound = true; //TODO: Temp. disables/enables sound
-	public static boolean optionAutoShoot = true; //TODO: Temp. disables/enables shoot
+	public static boolean sound = false; 			//TODO: Temp. disables/enables sound
+	public static boolean optionAutoShoot = true; 	//TODO: Temp. disables/enables shoot
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
@@ -42,6 +42,7 @@ public class GameScreen implements Screen{
 	private InteractionButton moveLeftButton;
 	private InteractionButton moveRightButton;
 	private InteractionButton shootMissileButton;
+	private InteractionButton shootEMPButton;
 
 	/**
 	 * Constructor
@@ -57,6 +58,9 @@ public class GameScreen implements Screen{
 		shootMissileButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.missileButton);
 		
+		shootEMPButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE*2, 0, 
+				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.emptyButton);
+		
 		gameLogic = new GameLogic();
 		inputController = new InputControl(gameLogic, this);
 		topInfoBar = new TopInfoBar(this);
@@ -65,6 +69,7 @@ public class GameScreen implements Screen{
 		stage.addActor(gameLogic);
 		stage.addActor(topInfoBar);
 		stage.addActor(shootMissileButton);
+		stage.addActor(shootEMPButton);
 		stage.addActor(moveLeftButton);
 		stage.addActor(moveRightButton);		
 		if(sound) SoundAssets.spaceMusic.play();
@@ -138,6 +143,13 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
+	 * @return Shoot missile button
+	 */
+	public InteractionButton getShootEMPButton(){
+		return shootEMPButton;
+	}
+	
+	/**
 	 * Render loop. 
 	 */
 	@Override
@@ -148,6 +160,12 @@ public class GameScreen implements Screen{
 			shootMissileButton.setVisible(true);
 		} 
 		else shootMissileButton.setVisible(false);
+		
+		if(gameLogic.playerShip.getEMPReady() == true){
+			shootEMPButton.setVisible(true);
+		} 
+		else shootEMPButton.setVisible(false);
+		
 		stage.act(delta);				//Tells all actors to act
 		stage.draw();					//Tells all actors to draw
 		}

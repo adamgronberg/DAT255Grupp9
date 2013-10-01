@@ -22,7 +22,6 @@ public class InputControl implements GestureListener, InputProcessor {
 	
 	private static final float FLING_SENSITIVITY = 1500f;
 	
-	
 	/**
 	 * Constructor
 	 * @param gameLogic
@@ -69,7 +68,8 @@ public class InputControl implements GestureListener, InputProcessor {
 		if(keycode == Input.Keys.RIGHT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.RIGHT)  gameLogic.playerShip.stay();
 		if(keycode == Input.Keys.DOWN)  gameLogic.switchPlayerWeapon();
 		if(keycode == Input.Keys.UP)  gameLogic.switchPlayerWeapon();
-		if(keycode == Input.Keys.SPACE)  gameLogic.playerShip.shootMissle();
+		if(keycode == Input.Keys.W)  gameLogic.playerShip.shootMissle();
+		if(keycode == Input.Keys.Q)  gameLogic.playerShip.shootEMP();
 		if(keycode == Input.Keys.CONTROL_LEFT) GameScreen.toggleOptionAutoShoot();			//For testing
 		if(keycode == Input.Keys.SHIFT_LEFT) gameScreen.changeOptionControlLayout();		//For testing, only android
 		return false;
@@ -88,6 +88,9 @@ public class InputControl implements GestureListener, InputProcessor {
 		else if(gameScreen.getShootMissileButton().isPressed(touchPos.x, touchPos.y)){
 			gameLogic.playerShip.shootMissle();
 		}
+		else if(gameScreen.getShootEMPButton().isPressed(touchPos.x, touchPos.y)){
+			gameLogic.playerShip.shootEMP();
+		}
 		return false;
 	}
 	@Override 
@@ -99,8 +102,6 @@ public class InputControl implements GestureListener, InputProcessor {
 		else if (gameScreen.getMoveRightButton().isPressed(touchPos.x, touchPos.y)) {				//TODO: Should use buttons instead of areas
 			gameLogic.playerShip.moveRight();
 		}
-		
-		//else gameLogic.playerShip.stay();
 		return false;
 	}
 	

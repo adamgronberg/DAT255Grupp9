@@ -34,16 +34,12 @@ public class ScoutShip extends EnemyShip{
 		currentMovmentLenght = 0;
 		movingLeft = true;
 	}
-		
-	
+
 	/**
-	 * Called when "act" is called in its stage
-	 * Updates its position.
+	 * Ship move function
 	 */
 	@Override
-	public void act(float delta){		
-		super.act(delta);
-		setY(getY()-SHIPSPEED_Y);
+	protected void move(float delta) {
 		if(movingLeft){
 			if(getX() < 0 || currentMovmentLenght > movmentLenght){
 				movingLeft = false;
@@ -59,5 +55,8 @@ public class ScoutShip extends EnemyShip{
 			setX(getX()+SHIPSPEED_X);
 		}
 		currentMovmentLenght++;
+		setY(getY()-SHIPSPEED_Y);
 	}
+
+	@Override protected void shoot(float delta) {}
 }

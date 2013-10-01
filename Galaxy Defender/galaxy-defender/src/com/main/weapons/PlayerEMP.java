@@ -1,35 +1,33 @@
 package weapons;
 
+import ships.EnemyShip;
 import spacegame.MovableEntity;
-import effects.PlayerLaserEffect;
 import assets.*;
 
 /**
  * 
  * @author Grupp9
  * 
- * Player standard green laser
+ * EMP shoots a wave that disables all enemies on contact of a set amount of time
  *
  */
-public class PlayerLaser extends Projectile {
+public class PlayerEMP extends Projectile {
 	
-	public static final float RATEOFFIRE = 375000000f; //In nanoseconds
+	public static final float RATEOFFIRE = 2000000000f; //In nanoseconds
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
-	public static final float WIDTH = 3;
-	private static final int DAMAGEONHIT = 1;
+	public static final float WIDTH = 50;
+	private static final int DAMAGEONHIT = 0;
 	private static final TargetTypes FACTION = TargetTypes.PLAYER;
-	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
-	private static final float AREAEFFECT_H = 8;
-	private static final float AREAEFFECT_W = 8;
+	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY};
 	
 	/**
 	 * Constructor
 	 * @param x x-led Spawn
 	 * @param y y-led Spawn
 	 */
-	public PlayerLaser(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGEONHIT, ImageAssets.playerLaser);
+	public PlayerEMP(float x, float y){
+		super(x, y, WIDTH, HEIGHT, DAMAGEONHIT, ImageAssets.playerIonCannon);
 	}
 	
 	/**
@@ -47,9 +45,10 @@ public class PlayerLaser extends Projectile {
 	 */
 	@Override
 	public void addOnHitEffect(MovableEntity entity) {
-		getParent().addActor( new PlayerLaserEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
-				getY()-AREAEFFECT_H/2, AREAEFFECT_W, AREAEFFECT_H));
-		remove();
+		if(entity instanceof EnemyShip){
+			EnemyShip enemy = (EnemyShip) entity;
+			enemy.disableShip(75);
+		}
 	}
 
 	/**

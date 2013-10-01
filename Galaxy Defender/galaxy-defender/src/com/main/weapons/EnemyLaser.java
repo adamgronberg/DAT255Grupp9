@@ -1,5 +1,6 @@
 package weapons;
 
+import spacegame.MovableEntity;
 import effects.EnemyLaserEffect;
 import assets.ImageAssets;
 
@@ -46,7 +47,7 @@ public class EnemyLaser extends Projectile {
 	 * Removes the laser
 	 */
 	@Override
-	public void addOnHitEffect() {
+	public void addOnHitEffect(MovableEntity entity) {
 		getParent().addActor( new EnemyLaserEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
 				getY()-AREAEFFECT_H/2, AREAEFFECT_W, AREAEFFECT_H));
 		remove();

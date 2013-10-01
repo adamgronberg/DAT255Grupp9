@@ -1,6 +1,7 @@
 package weapons;
 
 import spacegame.GameScreen;
+import spacegame.MovableEntity;
 import dummies.PlayerMissileExplosionDummy;
 import assets.ImageAssets;
 import assets.SoundAssets;
@@ -52,7 +53,7 @@ public class PlayerMissile extends Projectile{
 	 * -Sound Effect
 	 */
 	@Override
-	public void addOnHitEffect() {
+	public void addOnHitEffect(MovableEntity entity) {
 		getParent().addActor( new ExplosionEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
 							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
 		getParent().addActor( new PlayerMissileExplosionDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 

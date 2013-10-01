@@ -1,6 +1,7 @@
 package weapons;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import spacegame.MovableEntity;
 import spacegame.Sprite;
 
 /**
@@ -41,6 +42,6 @@ public abstract class Projectile extends Sprite implements HasFaction{
 	/**
 	 * Adds a on hit effect
 	 */
-	public abstract void addOnHitEffect();
+	public abstract void addOnHitEffect(MovableEntity entity);
 	
 }
