@@ -32,7 +32,7 @@ public class StealthShip extends EnemyShip {
 	* @param y y-led Spawn location
 	*/
 	public StealthShip(float x, float y){
-		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.playerShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyStealthShip, DAMAGE_WHEN_RAMMED);
 		currentTime = TimeUtils.nanoTime();
 	}
 	
