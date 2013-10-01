@@ -10,6 +10,7 @@ import ships.EnemyShip.EnemyTypes;
 import ships.HeavyShip;
 import ships.PlayerShip;
 import ships.ScoutShip;
+import ships.KamikazeShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
 import collisiondetection.OutOfBoundsDetection;
@@ -69,8 +70,8 @@ public class GameLogic extends Table {
 	 * For testing
 	 */
 	private void spawnShip() {
-		int xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
-		addActor(new BasicShip(xPos, GameScreen.GAME_HEIGHT+BasicShip.HEIGHT));
+		int xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-KamikazeShip.WIDTH);
+		addActor(new KamikazeShip(xPos,GameScreen.GAME_HEIGHT+KamikazeShip.HEIGHT,playerShip));
 		
 		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
 		addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
