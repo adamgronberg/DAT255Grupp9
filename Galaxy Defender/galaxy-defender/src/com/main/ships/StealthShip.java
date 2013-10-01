@@ -34,8 +34,6 @@ public class StealthShip extends EnemyShip {
 	public StealthShip(float x, float y){
 		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.playerShip, DAMAGE_WHEN_RAMMED);
 		currentTime = TimeUtils.nanoTime();
-
-		System.out.println("START");
 	}
 	
 	/**
@@ -50,7 +48,6 @@ public class StealthShip extends EnemyShip {
 			if(TimeUtils.nanoTime()-currentTime > 3000000000f){
 				setVisible(false);
 				setY(getY()-SHIPSPEED);
-				System.out.println("INTE SYNLIG");
 				visible = false;
 				currentTime = TimeUtils.nanoTime();
 			}
@@ -68,7 +65,6 @@ public class StealthShip extends EnemyShip {
 				setX(MathUtils.random(0,GameScreen.GAME_WITDH-WIDTH));
 				setVisible(true);
 				visible=true;
-				System.out.println("SYNLIG");
 				currentTime=TimeUtils.nanoTime();
 			}
 

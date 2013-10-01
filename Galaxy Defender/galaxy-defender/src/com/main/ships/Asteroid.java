@@ -39,11 +39,5 @@ public class Asteroid extends EnemyShip {
 		super.act(delta);
 		setY(getY()-SHIPSPEED);
 	}
-	/**
-	 *  removes the ship
-	 */
-	public void addOnHitEffect() {
-		remove();
-	}
 
 }
