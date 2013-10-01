@@ -89,6 +89,9 @@ public class CollisionDetection {
 						case ALLY_PROJECTILE:
 							affectsAllyProjectiles.add(projectile);
 							break;
+						default:
+							System.out.println("illegal case");
+							break;
 					}
 				}
 			}
@@ -143,6 +146,10 @@ public class CollisionDetection {
 			for(TargetTypes target: areaOfEffectDummy.getFactionTypes()){
 				switch(target){
 					case PLAYER:
+						if(collisionControl(gameLogic.playerShip, areaOfEffectDummy)){
+							gameLogic.playerShip.decreaseCurrentHealth(areaOfEffectDummy.getAreaDamage());
+						}
+
 						break;
 					case ENEMY:
 						iterES = enemyShips.iterator();
@@ -154,6 +161,9 @@ public class CollisionDetection {
 						}
 						break;
 					case ALLY:
+						break;
+					default:
+						System.out.println("illegal case");
 						break;
 				}
 				areaOfEffectDummy.remove();
@@ -207,6 +217,9 @@ public class CollisionDetection {
 					}
 					break;
 				case ALLY:
+					break;					
+				default:
+					System.out.println("illegal case");
 					break;
 			}
 		}

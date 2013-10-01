@@ -3,6 +3,7 @@ package weapons;
 import spacegame.MovableEntity;
 import effects.EnemyLaserEffect;
 import assets.ImageAssets;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  * 
@@ -14,8 +15,7 @@ import assets.ImageAssets;
 
 public class EnemyLaser extends Projectile {
 	
-	public static final float RATEOFFIRE = 2500000000f; //In nanoseconds
-	private static final float SPEED = 6f;
+	 //In nanoseconds
 	public static final float HEIGHT = 25;
 	public static final float WIDTH = 3;
 	private static final int DAMAGE_ON_HIT = 15;
@@ -24,13 +24,24 @@ public class EnemyLaser extends Projectile {
 	private static final float AREAEFFECT_H = 20;
 	private static final float AREAEFFECT_W = 20;
 	
+	private float speedX, speedY;
+	
 	/**
 	 * Constructor
 	 * @param x x-led Spawn
 	 * @param y y-led Spawn
-	 */
+	 */	
 	public EnemyLaser(float x, float y){
 		super(x, y, WIDTH, HEIGHT, DAMAGE_ON_HIT, ImageAssets.enemyLaser);
+		speedX = 0;
+		speedY = 6;
+	}
+	
+	public EnemyLaser(float x, float y,float width, float height, int damageOnHit, float degree){
+		super(x, y, width, height, damageOnHit, ImageAssets.enemyLaser);
+		setRotation(degree);
+		speedX = 6*MathUtils.sinDeg(degree);
+		speedY = 6*MathUtils.cosDeg(degree);
 	}
 	
 	/**
@@ -39,7 +50,8 @@ public class EnemyLaser extends Projectile {
 	 */
 	@Override
 	public void act(float delta){
-		setY(getY()-SPEED);
+		setY(getY()-speedY);
+		setX(getX()+speedX);
 		super.act(delta);
 	}
 	
@@ -49,7 +61,7 @@ public class EnemyLaser extends Projectile {
 	@Override
 	public void addOnHitEffect(MovableEntity entity) {
 		getParent().addActor( new EnemyLaserEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
-				getY()-AREAEFFECT_H/2, AREAEFFECT_W, AREAEFFECT_H));
+				getY()-AREAEFFECT_H/2, AREAEFFECT_W, AREAEFFECT_H, false));
 		remove();
 	}
 

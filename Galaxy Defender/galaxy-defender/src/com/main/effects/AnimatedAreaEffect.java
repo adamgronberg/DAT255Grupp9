@@ -17,6 +17,7 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	protected Animation animation; 
 	protected float stateTime;
 	protected TextureRegion currentFrame;
+	protected boolean loopFrames;
 	
 	/**
 	 * Constructor
@@ -37,7 +38,7 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		currentFrame = animation.getKeyFrame(stateTime, false);
+		currentFrame = animation.getKeyFrame(stateTime, loopFrames);
         batch.draw(currentFrame, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 	
@@ -47,6 +48,6 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	@Override
 	public void act(float delta){
 		stateTime += delta;
-		if(animation.isAnimationFinished(stateTime)) remove();
+		if(animation.isAnimationFinished(stateTime)&& !loopFrames) remove();
 	}	
 }

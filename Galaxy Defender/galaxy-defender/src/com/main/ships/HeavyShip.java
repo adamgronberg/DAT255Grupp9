@@ -15,13 +15,14 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class HeavyShip extends EnemyShip {
 	
+	public static final float RATEOFFIRE = 2500000000f; 	 //In nanoseconds
 	public final static int HEIGHT=65;
 	public final static int WIDTH=40;
 	private final static float SHIPSPEED = 1.5f;
 	private final static int SCOREVALUE=3;
 	private final static int HEALTH=3;
 	
-	private float lastMissileTime;
+	private float lastProjectileTime;
 	private static final int DAMAGE_WHEN_RAMMED = 30;
 	
 	/**
@@ -32,16 +33,16 @@ public class HeavyShip extends EnemyShip {
 	 */
 	public HeavyShip(float x, float y) {
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyHeavyShip, DAMAGE_WHEN_RAMMED);
-		lastMissileTime = TimeUtils.nanoTime() - 2*MathUtils.random(0,EnemyLaser.RATEOFFIRE);
+		lastProjectileTime = TimeUtils.nanoTime() - 2*MathUtils.random(0,RATEOFFIRE);
 	}
 	
 	/**
 	 * Spawns projectiles in front of the enemies
 	 */
 	public void spawnProjectile() {
-		if(TimeUtils.nanoTime() - lastMissileTime > EnemyLaser.RATEOFFIRE) {
+		if(TimeUtils.nanoTime() - lastProjectileTime > RATEOFFIRE) {
 			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY()));
-			lastMissileTime = TimeUtils.nanoTime();
+			lastProjectileTime = TimeUtils.nanoTime();
 		}
 	}
 
@@ -50,8 +51,7 @@ public class HeavyShip extends EnemyShip {
 	 */
 	@Override
 	protected void move(float delta) {
-		setY(getY()-SHIPSPEED);
-		
+		setY(getY()-SHIPSPEED);	
 	}
 
 	/**
@@ -59,7 +59,6 @@ public class HeavyShip extends EnemyShip {
 	 */
 	@Override
 	protected void shoot(float delta) {
-		spawnProjectile();
-		
+		spawnProjectile();	
 	}
 }

@@ -18,7 +18,8 @@ public class EnemyLaserEffect extends AnimatedAreaEffect{
 	 * @param width
 	 * @param height
 	 */
-	public EnemyLaserEffect(float x, float y, float width, float height) {
+	public EnemyLaserEffect(float x, float y, float width, float height, boolean loop) {
 		super(x, y, width, height, TIMEPERFRAME, ImageAssets.enemyLaserAnimation);
+		loopFrames = loop;
 	}
 }
