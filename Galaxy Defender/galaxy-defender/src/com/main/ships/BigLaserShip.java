@@ -9,11 +9,14 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class BigLaserShip extends EnemyShip {
 	
 
-	public static final float RATEOFFIRE = 5000000000f; 	 //In nanoseconds
+	public static final float RATEOFFIRE = 9000000000f; 	 //In nanoseconds
 	public static final float DAMAGE_TICK_RATE = 300000000f;
-	public static final float FIRE_TIME = 2000000000;
+	public static final float FIRE_TIME = 3000000000f;
 	public final static int HEIGHT=65;
 	public final static int WIDTH=40;
+	private final static float LASER_LENGTH = 900;
+	private final static float LASER_WIDTH = 3;
+	private final static int DAMAGE_PER_TICK = 1;
 	private final static float SHIPSPEED = 1f;
 	private final static int SCOREVALUE=30;
 	private final static int HEALTH=5;	
@@ -49,7 +52,7 @@ public class BigLaserShip extends EnemyShip {
 			spawnProjectile();
 		}else if(shooting){
 			if(TimeUtils.nanoTime()-damageTickTime>DAMAGE_TICK_RATE){
-				bigLaserDummy = new BigLaserDummy(getX()+WIDTH/2,getY()-700,3f,700f,1);
+				bigLaserDummy = new BigLaserDummy(getX()+WIDTH/2,getY()-LASER_LENGTH,LASER_WIDTH,LASER_LENGTH,DAMAGE_PER_TICK);
 				getParent().addActor(bigLaserDummy);
 				damageTickTime = TimeUtils.nanoTime();
 				
@@ -59,7 +62,6 @@ public class BigLaserShip extends EnemyShip {
 				}
 			}
 		}
-		
 	}
 
 	@Override protected void shoot(float delta) {}
