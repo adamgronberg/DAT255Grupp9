@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 /**
  * 
  * @author Grupp9
- * 
+ *  
  * Enemy standard green laser
  *
  */

@@ -13,6 +13,7 @@ import ships.ScoutShip;
 import ships.KamikazeShip;
 import ships.MultiShooterShip;
 import ships.BigLaserShip;
+import ships.StealthShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
 import collisiondetection.OutOfBoundsDetection;
@@ -87,6 +88,10 @@ public class GameLogic extends Table {
 		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BigLaserShip.WIDTH);
 		addActor(new BigLaserShip(xPos, GameScreen.GAME_HEIGHT+BigLaserShip.HEIGHT));
 		
+		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-StealthShip.WIDTH);
+		int yPos = (int) MathUtils.random(GameScreen.GAME_HEIGHT*0.8f,GameScreen.GAME_HEIGHT-StealthShip.HEIGHT);
+		addActor(new StealthShip(xPos, yPos));
+		
 		lastEnemyShipTime = TimeUtils.nanoTime();
 	}
 	
@@ -98,6 +103,7 @@ public class GameLogic extends Table {
 		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
 		float xPos = spawnLocation;
 		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 275000000f, EnemyTypes.SCOUT));
+		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 100, 2750000f, EnemyTypes.ASTEROID));
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 	}
 	/**

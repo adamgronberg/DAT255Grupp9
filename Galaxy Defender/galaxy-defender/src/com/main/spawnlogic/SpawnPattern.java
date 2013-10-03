@@ -1,5 +1,6 @@
 package spawnlogic;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import ships.BasicShip;
@@ -7,6 +8,8 @@ import ships.EnemyShip;
 import ships.EnemyShip.EnemyTypes;
 import ships.HeavyShip;
 import ships.ScoutShip;
+import ships.Asteroid;
+import spacegame.GameScreen;
 import spacegame.MovableEntity;
 
 
@@ -36,12 +39,13 @@ public class SpawnPattern extends MovableEntity{
 	 * @param gameLogic The stage that uses the spawn pattern
 	 */
 	public SpawnPattern(float spawnX, float spawnY, 
-			int totalNumberOfEnemies, float timeBetweenEnemy, 
-			EnemyTypes enemyType){
+		int totalNumberOfEnemies, float timeBetweenEnemy, 
+		EnemyTypes enemyType){
 		super(1, 1, spawnX, spawnY);
 		this.totalNumberOfEnemies = totalNumberOfEnemies;
 		this.timeBetweenEnemy = timeBetweenEnemy;
 		this.enemyType = enemyType;
+		
 	}
 	
 	
@@ -62,6 +66,9 @@ public class SpawnPattern extends MovableEntity{
 					break;
 				case HEAVY:
 					enemyShip = new HeavyShip(getX(), getY());
+					break;
+				case ASTEROID:
+					enemyShip = new Asteroid(MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH), getY());
 					break;
 				default:
 					enemyShip = new ScoutShip(getX(), getY());

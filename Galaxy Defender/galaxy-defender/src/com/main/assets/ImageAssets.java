@@ -19,6 +19,7 @@ public class ImageAssets {
 	public static TextureRegion enemyKamikazeShip;
 	public static TextureRegion enemyMultiShooterShip;
 	public static TextureRegion enemyBigLaserShip;
+	public static TextureRegion enemyStealthShip;
 	public static TextureRegion space;
 	public static TextureRegion moveLeftButton;
 	public static TextureRegion moveRightButton;
@@ -29,6 +30,7 @@ public class ImageAssets {
 	public static TextureRegion playerIonCannon;
 	public static TextureRegion topInfoBar;
 	public static TextureRegion missileButton;
+	public static Array<TextureRegion> asteroids;
 	public static Array<TextureRegion> explosionAnimation;
 	public static Array<TextureRegion> enemyLaserAnimation;
 	public static Array<TextureRegion> playerLaserAnimation;
@@ -36,7 +38,6 @@ public class ImageAssets {
 
 	/**
 	 * Loads all assets from imageAtlas
-	 * TODO: Should not have loose images in assets. All should be a Atlas
 	 */
 	public static void load() {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
@@ -57,6 +58,7 @@ public class ImageAssets {
 		enemyKamikazeShip = atlas.findRegion("Ships/Ship15");
 		enemyMultiShooterShip = atlas.findRegion("Ships/Ship12");
 		enemyBigLaserShip = atlas.findRegion("Ships/Ship14");
+		enemyStealthShip = atlas.findRegion("Ships/Ship10");
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("gui/TopInfoBar");
 		space = atlas.findRegion("backgrounds/space1");
@@ -64,6 +66,12 @@ public class ImageAssets {
 		moveLeftButton = atlas.findRegion("gui/move_left");
 		missileButton = atlas.findRegion("gui/missileButton");
 		emptyButton = atlas.findRegion("gui/EMPButton");
+		
+
+		asteroids = new Array<TextureRegion>(); 
+		for(int i = 1; i <= 12; i++){
+			asteroids.add(atlas.findRegion("Ships/Asteroid" + i));
+		}
 		
 		for(int i = 1; i <= 2; i++){
 			enemyLaserAnimation.add(atlas.findRegion("weapons/redLaserHit" + i));
