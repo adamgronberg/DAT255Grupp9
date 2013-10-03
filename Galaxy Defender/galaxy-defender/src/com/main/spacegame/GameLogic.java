@@ -14,7 +14,6 @@ import ships.KamikazeShip;
 import ships.MultiShooterShip;
 import ships.BigLaserShip;
 import ships.StealthShip;
-import ships.TurretShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
 import collisiondetection.OutOfBoundsDetection;
@@ -96,7 +95,6 @@ public class GameLogic extends Table {
 		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-TurretShip.WIDTH);
 		//int yPos =(int) GameScreen.GAME_HEIGHT-TurretShip.HEIGHT;
 		//addActor(new TurretShip(xPos, yPos));
-		
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
 	}
