@@ -5,6 +5,9 @@ import assets.ImageAssets;
 
 import com.badlogic.gdx.utils.TimeUtils;
 
+/*
+ * Enemy ship with six laser guns
+ */
 public class MultiShooterShip extends EnemyShip {
 	
 	public static final float RATEOFFIRE = 2500000000f; 	 //In nanoseconds
@@ -17,6 +20,11 @@ public class MultiShooterShip extends EnemyShip {
 	private float lastProjectileTime;
 	private static final int DAMAGE_WHEN_RAMMED = 40;
 
+	/**
+	 * Constructor
+	 * @param x x-led spawn location
+	 * @param y y-led spawn location
+	 */
 	public MultiShooterShip(float x, float y) {
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyMultiShooterShip, DAMAGE_WHEN_RAMMED);
 	}
@@ -35,12 +43,18 @@ public class MultiShooterShip extends EnemyShip {
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 	}
-
+	
+	/**
+	 * Moves ship 
+	 */
 	@Override
 	protected void move(float delta) {
 		setY(getY()-SHIPSPEED);		
 	}
 
+	/**
+	 * Creates a laser shot
+	 */
 	@Override
 	protected void shoot(float delta) {
 		spawnProjectile();	

@@ -2,6 +2,10 @@ package ships;
 
 import assets.ImageAssets;
 
+/**
+ * Enemy ship that attempts to ram player ship
+ * @author Group 9
+ */
 public class KamikazeShip extends EnemyShip {
 	
 	public final static int HEIGHT = 45;
@@ -13,12 +17,21 @@ public class KamikazeShip extends EnemyShip {
 	private final static int DAMAGE_WHEN_RAMMED = 40;
 	
 	private PlayerShip playerShip;
-
+	
+	/**
+	 * Constructor
+	 * @param x x-led spawn location
+	 * @param y y-led spawn location
+	 * @param playerShip reference to player ship needed for targeting
+	 */
 	public KamikazeShip(float x, float y, PlayerShip playerShip){
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyKamikazeShip, DAMAGE_WHEN_RAMMED);		
 		this.playerShip = playerShip;
 	}
 	
+	/**
+	 * Moves ship towards playerShip position 
+	 */
 	@Override
 	protected void move(float delta) {
 		if(playerShip.getX()>getX()){
