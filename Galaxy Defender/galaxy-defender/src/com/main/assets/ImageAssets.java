@@ -21,6 +21,7 @@ public class ImageAssets {
 	public static TextureRegion enemyBigLaserShip;
 	public static TextureRegion enemyStealthShip;
 	public static TextureRegion space;
+	public static TextureRegion mainMenu;
 	public static TextureRegion moveLeftButton;
 	public static TextureRegion moveRightButton;
 	public static TextureRegion emptyButton;
@@ -62,6 +63,7 @@ public class ImageAssets {
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("gui/TopInfoBar");
 		space = atlas.findRegion("backgrounds/space1");
+		mainMenu = atlas.findRegion("backgrounds/MainMenu");
 		moveRightButton = atlas.findRegion("gui/move_right");
 		moveLeftButton = atlas.findRegion("gui/move_left");
 		missileButton = atlas.findRegion("gui/missileButton");
