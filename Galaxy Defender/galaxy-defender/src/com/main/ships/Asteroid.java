@@ -2,7 +2,6 @@ package ships;
 
 import com.badlogic.gdx.math.MathUtils;
 
-import spacegame.GameScreen;
 import assets.ImageAssets;
 
 /**
