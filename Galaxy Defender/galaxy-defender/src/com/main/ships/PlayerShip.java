@@ -1,5 +1,6 @@
 package ships;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import assets.ImageAssets;
@@ -24,6 +25,7 @@ public class PlayerShip extends Sprite {
 	private static final float SPEED = 4;					// number of pixels the player moves every act
 	private static final float SPAWN_LOCATION_Y = 0.1f; //Height where the player moves
 	private static final int STARTING_HEALTH  = 100;
+	
 	
 	private int maximumHealth;
 	private int currentHealth;
@@ -61,11 +63,12 @@ public class PlayerShip extends Sprite {
 	}
 	
 	/**
-	 * Decreases player current health with damage
+	 * Decreases player current health with damage and vibrates
 	 * @param damage the damage to decrease player current health with
 	 */
 	public void decreaseCurrentHealth(int damage){
 		currentHealth = currentHealth - damage;
+		vibrate(400);
 	}
 	
 	/**
@@ -177,4 +180,16 @@ public class PlayerShip extends Sprite {
 	 */
 	public void switchWeapon(){
 	}
+
+	/**
+	 * Vibrates the android device for the specified number of milliSeconds
+	 * @param milliSeconds
+	 */
+	public void vibrate(int milliSeconds){
+		if (GameScreen.vibrateOn){
+		Gdx.input.vibrate(milliSeconds);
+		}
+	}
+	
+
 }

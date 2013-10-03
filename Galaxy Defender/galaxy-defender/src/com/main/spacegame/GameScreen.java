@@ -29,6 +29,7 @@ public class GameScreen implements Screen{
 	
 	public static boolean sound = false; 			//TODO: Temp. disables/enables sound
 	public static boolean optionAutoShoot = true; 	//TODO: Temp. disables/enables shoot
+	public static boolean vibrateOn=true;			//TODO: Temp. disables/enables vibrate
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
