@@ -2,11 +2,12 @@ package ships;
 
 
 import assets.ImageAssets;
-import dummies.BigLaserDummy;
 import effects.BigLaserEffect;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import dummies.AreaOfEffectDummy;
+import weapons.TargetTypes;
+
 
 /**
  * Enemy ship with massive laser beam
@@ -14,7 +15,9 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class BigLaserShip extends EnemyShip {
 	
-
+	private static final TargetTypes FACTION = TargetTypes.ENEMY;
+	private static final TargetTypes[] AFFECTED_TARGETS = {TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE};
+	private final static int DAMAGE_PER_TICK = 1;
 	public static final float RATEOFFIRE = 9000000000f; 	 //In nanoseconds
 	public static final float DAMAGE_TICK_RATE = 300000000f;
 	public static final float FIRE_TIME = 3000000000f;
@@ -22,17 +25,15 @@ public class BigLaserShip extends EnemyShip {
 	public final static int WIDTH=40;
 	private final static float LASER_LENGTH = 900;
 	private final static float LASER_WIDTH = 5;
-	private final static int DAMAGE_PER_TICK = 1;
 	private final static float SHIPSPEED = 1f;
 	private final static int SCOREVALUE=30;
 	private final static int HEALTH=5;	
 	private static final int DAMAGE_WHEN_RAMMED = 40;
-	
 	private float lastProjectileTime;
 	private float damageTickTime;
 	private float fireTime;
 	private boolean shooting;
-	private BigLaserDummy bigLaserDummy;
+	private AreaOfEffectDummy areaDummy;
 	private BigLaserEffect bigLaserEffect;
 
 	
@@ -73,8 +74,9 @@ public class BigLaserShip extends EnemyShip {
 			spawnProjectile();
 		}else if(shooting){
 			if(TimeUtils.nanoTime()-damageTickTime>DAMAGE_TICK_RATE){
-				bigLaserDummy = new BigLaserDummy(getX()+WIDTH/2,getY()-LASER_LENGTH,LASER_WIDTH,LASER_LENGTH,DAMAGE_PER_TICK);
-				getParent().addActor(bigLaserDummy);
+				areaDummy = new AreaOfEffectDummy(getX() + WIDTH/2,getY()-LASER_LENGTH, 
+						LASER_WIDTH, LASER_LENGTH,DAMAGE_PER_TICK, FACTION, AFFECTED_TARGETS);
+				getParent().addActor(areaDummy);
 				damageTickTime = TimeUtils.nanoTime();
 				
 				if(TimeUtils.nanoTime()-fireTime > FIRE_TIME){

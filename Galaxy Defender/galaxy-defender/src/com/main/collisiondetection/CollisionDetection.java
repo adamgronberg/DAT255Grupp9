@@ -156,6 +156,7 @@ public class CollisionDetection {
 							EnemyShip enemy = iterES.next();
 							if(collisionControl(enemy, areaOfEffectDummy)){
 								gameLogic.addScore(enemy.hit(areaOfEffectDummy.getAreaDamage()));
+								areaOfEffectDummy.targetEffect(enemy);
 							}
 						}
 						break;

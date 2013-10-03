@@ -39,7 +39,6 @@ public class PlayerLaser extends Projectile {
 	@Override
 	public void act(float delta){
 		setY(getY()+SPEED);
-		super.act(delta);
 	}
 
 	/**

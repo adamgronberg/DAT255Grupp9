@@ -1,6 +1,6 @@
 package weapons;
 
-import ships.EnemyShip;
+import dummies.EMPDummy;
 import spacegame.MovableEntity;
 import assets.*;
 
@@ -14,12 +14,15 @@ import assets.*;
 public class PlayerEMP extends Projectile {
 	
 	public static final float RATEOFFIRE = 2000000000f; //In nanoseconds
+	private static final float DISABLE_TIME = 75;
 	private static final float SPEED = 6f;
-	public static final float HEIGHT = 10;
+	public static final float HEIGHT = 40;
 	public static final float WIDTH = 50;
 	private static final int DAMAGEONHIT = 0;
 	private static final TargetTypes FACTION = TargetTypes.PLAYER;
-	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY};
+	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
+	
+	private int distanceTraveled;
 	
 	/**
 	 * Constructor
@@ -28,6 +31,7 @@ public class PlayerEMP extends Projectile {
 	 */
 	public PlayerEMP(float x, float y){
 		super(x, y, WIDTH, HEIGHT, DAMAGEONHIT, ImageAssets.playerIonCannon);
+		distanceTraveled = 0;
 	}
 	
 	/**
@@ -37,19 +41,18 @@ public class PlayerEMP extends Projectile {
 	@Override
 	public void act(float delta){
 		setY(getY()+SPEED);
-		super.act(delta);
+		distanceTraveled = distanceTraveled + (int)SPEED;
+		if(distanceTraveled>HEIGHT){
+			getParent().addActor(new EMPDummy(getX(), getY(), WIDTH, HEIGHT, DAMAGEONHIT, FACTION, AFFECTEDTARGETS, DISABLE_TIME));
+			distanceTraveled = 0;
+		}
 	}
 
 	/**
 	 * Removes as actor
 	 */
 	@Override
-	public void addOnHitEffect(MovableEntity entity) {
-		if(entity instanceof EnemyShip){
-			EnemyShip enemy = (EnemyShip) entity;
-			enemy.disableShip(75);
-		}
-	}
+	public void addOnHitEffect(MovableEntity entity) {}
 
 	/**
 	 * Affected targets
@@ -58,7 +61,10 @@ public class PlayerEMP extends Projectile {
 	public TargetTypes[] getFactionTypes() {
 		return AFFECTEDTARGETS;
 	}
-
+	
+	/**
+	 * The faction the EMP came from
+	 */
 	@Override
 	public TargetTypes getFaction() {
 		return FACTION;

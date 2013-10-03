@@ -2,7 +2,7 @@ package weapons;
 
 import spacegame.GameScreen;
 import spacegame.MovableEntity;
-import dummies.PlayerMissileExplosionDummy;
+import dummies.AreaOfEffectDummy;
 import assets.ImageAssets;
 import assets.SoundAssets;
 import effects.ExplosionEffect;
@@ -18,10 +18,11 @@ public class PlayerMissile extends Projectile{
 
 	private static final float SPEED = 5f;
 	private static final int DAMAGE = 1;
+	private static final int AREA_OF_EFFECT_DAMAGE = 2;
 	private static final float AREAEFFECT_H = 85;
 	private static final float AREAEFFECT_W = 75;
 	private static final TargetTypes FACTION = TargetTypes.PLAYER;
-	private static final TargetTypes[] AFFECTEDTARGETS = 
+	private static final TargetTypes[] AFFECTED_TARGETS = 
 		{TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
 	
 	public static final float RATEOFFIRE = 2000000000f; //In nanoseconds
@@ -56,8 +57,9 @@ public class PlayerMissile extends Projectile{
 	public void addOnHitEffect(MovableEntity entity) {
 		getParent().addActor( new ExplosionEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
 							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
-		getParent().addActor( new PlayerMissileExplosionDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
-							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
+		getParent().addActor( new AreaOfEffectDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
+							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H, AREA_OF_EFFECT_DAMAGE, 
+							FACTION, AFFECTED_TARGETS));
 		if(GameScreen.sound) SoundAssets.missileExplosion.play();
 		remove();
 	}
@@ -67,7 +69,7 @@ public class PlayerMissile extends Projectile{
 	 */
 	@Override
 	public TargetTypes[] getFactionTypes() {
-		return AFFECTEDTARGETS;
+		return AFFECTED_TARGETS;
 	}
 
 	@Override

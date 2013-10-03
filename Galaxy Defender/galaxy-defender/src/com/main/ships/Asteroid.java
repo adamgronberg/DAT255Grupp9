@@ -16,7 +16,7 @@ import assets.ImageAssets;
 public class Asteroid extends EnemyShip {
 	private final static float SHIPSPEED=2f;
 	private final static int HEALTH=1;
-	private final static int SCOREVALUE=1;
+	private final static int SCOREVALUE=0;
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
 	private static final int DAMAGE_WHEN_RAMMED = 15;

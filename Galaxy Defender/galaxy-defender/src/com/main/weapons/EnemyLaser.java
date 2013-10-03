@@ -52,7 +52,6 @@ public class EnemyLaser extends Projectile {
 	public void act(float delta){
 		setY(getY()-speedY);
 		setX(getX()+speedX);
-		super.act(delta);
 	}
 	
 	/**

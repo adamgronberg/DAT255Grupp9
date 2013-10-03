@@ -33,8 +33,8 @@ public class PlayerShip extends Sprite {
 	private float lastLaserTime = 0;      		//For testing
 	private float lastMissileTime = 0;      	//For testing
 	private boolean missileReady = true;		//For testing
-	private float lastEMPTime = 0;      	//For testing
-	private boolean EMPReady = true;		//For testing
+	private float lastEMPTime = 0;      		//For testing
+	private boolean EMPReady = true;			//For testing
 	
 	private Direction movmentDirection = Direction.NONE;
 	private AvailableWeapons currentWeapon = AvailableWeapons.LASER;
@@ -51,7 +51,7 @@ public class PlayerShip extends Sprite {
 	/**
 	 * @return player current health
 	 */
-	public int getCurrnetHealth(){
+	public int getCurrentHealth(){
 		return currentHealth;
 	}
 	
@@ -151,6 +151,9 @@ public class PlayerShip extends Sprite {
 		}
 	}
 	
+	/**
+	 * Shoots a missile if the cooldown is ready
+	 */
 	public void shootMissle(){
 		if (missileReady) {
 			getParent().addActor(new PlayerMissile(getX()+PlayerShip.WITDH/2-PlayerMissile.WIDTH/2, getY()));
@@ -159,6 +162,9 @@ public class PlayerShip extends Sprite {
 		}
 	}
 	
+	/**
+	 * Shoots a EMP if the cooldown is ready
+	 */
 	public void shootEMP(){
 		if (EMPReady) {
 			getParent().addActor(new PlayerEMP(getX()+PlayerShip.WITDH/2-PlayerEMP.WIDTH/2, getY()));
@@ -167,10 +173,16 @@ public class PlayerShip extends Sprite {
 		}
 	}
 	
+	/**
+	 * @return True if missile is ready
+	 */
 	public boolean getMissileReady(){
 		return missileReady;
 	}
 	
+	/**
+	 * @return True if EMP is ready
+	 */
 	public boolean getEMPReady(){
 		return EMPReady;
 	}

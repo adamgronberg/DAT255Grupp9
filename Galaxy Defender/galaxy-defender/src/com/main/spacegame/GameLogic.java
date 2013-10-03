@@ -54,7 +54,7 @@ public class GameLogic extends Table {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if (playerShip.getCurrnetHealth()<1) {	//For testing
+		if (playerShip.getCurrentHealth()<1) {	//For testing
 			currentScore=0;
 			clear();
 			addActor(playerShip);
@@ -142,6 +142,6 @@ public class GameLogic extends Table {
 	 * @return the current health
 	 */
 	public int getPlayerHealth(){
-		return playerShip.getCurrnetHealth();
+		return playerShip.getCurrentHealth();
 	}
 }
