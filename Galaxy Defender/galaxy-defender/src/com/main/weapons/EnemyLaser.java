@@ -6,7 +6,7 @@ import assets.ImageAssets;
 /**
  * 
  * @author Grupp9
- * 
+ *  
  * Enemy standard green laser
  *
  */

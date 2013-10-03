@@ -38,7 +38,7 @@ public class StealthShip extends EnemyShip {
 	
 	/**
 	 * Called when "act" is called in its stage
-	 * Updates its position.
+	 * Updates its position. Makes it invisible and visible
 	 */
 	@Override
 	public void act(float delta){
