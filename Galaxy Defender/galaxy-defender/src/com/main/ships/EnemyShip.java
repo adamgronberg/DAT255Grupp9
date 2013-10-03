@@ -17,7 +17,7 @@ import spacegame.Sprite;
 public abstract class EnemyShip extends Sprite{
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID};
 	private int scoreValue;
-	private int health;
+	private int currentHealth;
 	private int damageWhenRammed;
 	private int maximumHealth;
 	private static final float TIMEPERFRAME = 0.045f;
@@ -40,7 +40,7 @@ public abstract class EnemyShip extends Sprite{
 	 */
 	public EnemyShip(float width, float height,float x, float y, int health, int scoreValue, TextureRegion texture, int damageWhenRammed) {
 		super(width, height, x, y, texture);
-		this.health = health;
+		this.currentHealth = health;
 		this.scoreValue = scoreValue;
 		this.damageWhenRammed = damageWhenRammed;
 
@@ -68,7 +68,7 @@ public abstract class EnemyShip extends Sprite{
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 		currentFrame = onFireAnimation.getKeyFrame(stateTime, true);
-        if(health<maximumHealth){
+        if(currentHealth<maximumHealth){
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
         }
 	}
@@ -95,7 +95,7 @@ public abstract class EnemyShip extends Sprite{
 	 * returns if the ship is disabled or not
 	 * @return
 	 */
-	protected boolean disabled(){
+	public boolean disabled(){
 		if (disabledCurrentTime >= disabledDuration) return false;
 		else return true;
 	}
@@ -109,7 +109,7 @@ public abstract class EnemyShip extends Sprite{
 	protected void drawDamagedAnimation(SpriteBatch batch, float parentAlpha, TextureRegion currentFrame){
     	batch.draw(currentFrame, getX()+getWidth()*0.5f, getY()+getHeight()*0.5f, 
     			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
-    	if(((float)health/(float)maximumHealth) < 0.4f){
+    	if(((float)currentHealth/(float)maximumHealth) < 0.4f){
     		batch.draw(currentFrame, getX()+getWidth()*0.2f, getY()+getHeight()*0.2f, 
     				getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
     	}
@@ -131,8 +131,8 @@ public abstract class EnemyShip extends Sprite{
 	 * Removes health from ship and removes as actor when dead.
 	 */
 	public int hit(int damage) {
-		health = health - damage;
-		if (health<=0){
+		currentHealth = currentHealth - damage;
+		if (currentHealth<=0){
 			destroyShip();
 			return scoreValue;
 		}
@@ -158,5 +158,12 @@ public abstract class EnemyShip extends Sprite{
 	 */
 	public void destroyShip() {
 		remove();
+	}
+	
+	/**
+	 * Returns ships current hit points
+	 */
+	public int getHealth(){
+		return currentHealth;
 	}
 }
