@@ -90,7 +90,6 @@ public class CollisionDetection {
 							affectsAllyProjectiles.add(projectile);
 							break;
 						default:
-							System.out.println("illegal case");
 							break;
 					}
 				}
@@ -163,7 +162,6 @@ public class CollisionDetection {
 					case ALLY:
 						break;
 					default:
-						System.out.println("illegal case");
 						break;
 				}
 				areaOfEffectDummy.remove();
@@ -219,7 +217,6 @@ public class CollisionDetection {
 				case ALLY:
 					break;					
 				default:
-					System.out.println("illegal case");
 					break;
 			}
 		}

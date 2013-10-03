@@ -3,9 +3,10 @@ package ships;
 
 import assets.ImageAssets;
 import dummies.BigLaserDummy;
-import effects.EnemyLaserEffect;
+import effects.BigLaserEffect;
+
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import spacegame.MyGame;
 
 /**
  * Enemy ship with massive laser beam
@@ -32,7 +33,7 @@ public class BigLaserShip extends EnemyShip {
 	private float fireTime;
 	private boolean shooting;
 	private BigLaserDummy bigLaserDummy;
-	private EnemyLaserEffect enemyLaserEffect;
+	private BigLaserEffect bigLaserEffect;
 
 	
 	/**
@@ -42,6 +43,7 @@ public class BigLaserShip extends EnemyShip {
 	 */
 	public BigLaserShip(float x, float y){
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyBigLaserShip, DAMAGE_WHEN_RAMMED);
+		lastProjectileTime = TimeUtils.nanoTime()-MathUtils.random(3000000000f,RATEOFFIRE/2);
 	}
 	
 	/**
@@ -55,8 +57,8 @@ public class BigLaserShip extends EnemyShip {
 			damageTickTime = TimeUtils.nanoTime();
 			lastProjectileTime = TimeUtils.nanoTime();
 			fireTime = TimeUtils.nanoTime();
-			enemyLaserEffect = new EnemyLaserEffect(getX()+WIDTH/2,getY()-LASER_LENGTH,LASER_WIDTH,LASER_LENGTH, true);
-			getParent().addActor(enemyLaserEffect);
+			bigLaserEffect = new BigLaserEffect(getX()+WIDTH/2,getY()-LASER_LENGTH,LASER_WIDTH,LASER_LENGTH, true, this);
+			getParent().addActor(bigLaserEffect);
 		}
 	}
 	
@@ -67,7 +69,7 @@ public class BigLaserShip extends EnemyShip {
 	@Override
 	protected void move(float delta) {
 		if(!shooting)setY(getY()-SHIPSPEED);
-		if(TimeUtils.nanoTime()-lastProjectileTime>RATEOFFIRE && getY()<MyGame.HEIGHT-HEIGHT*2){
+		if(TimeUtils.nanoTime()-lastProjectileTime>RATEOFFIRE){
 			spawnProjectile();
 		}else if(shooting){
 			if(TimeUtils.nanoTime()-damageTickTime>DAMAGE_TICK_RATE){
@@ -76,7 +78,7 @@ public class BigLaserShip extends EnemyShip {
 				damageTickTime = TimeUtils.nanoTime();
 				
 				if(TimeUtils.nanoTime()-fireTime > FIRE_TIME){
-					getParent().removeActor(enemyLaserEffect);
+					getParent().removeActor(bigLaserEffect);
 					shooting = false;
 				}
 			}
