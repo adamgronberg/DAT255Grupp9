@@ -47,7 +47,6 @@ public class GameLogic extends Table {
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		addActor(backgroundSpace);
 		playerShip.resetHealth();
-		spawnShip();
 	}
 	
 	/**
@@ -63,7 +62,7 @@ public class GameLogic extends Table {
 			playerShip.resetHealth();
 		}
 		
-	//	if (TimeUtils.nanoTime() - lastEnemyShipTime > 6000000000f) spawnShip();			//For testing
+		if (TimeUtils.nanoTime() - lastEnemyShipTime > 6000000000f) spawnShip();			//For testing
 		if (TimeUtils.nanoTime() - lastSpawnPatternTime > 7000000000f) spawnPattern();		//For testing
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
@@ -76,27 +75,27 @@ public class GameLogic extends Table {
 	 */
 	private void spawnShip() {
 		int  xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
-		//addActor(new BasicShip(xPos,GameScreen.GAME_HEIGHT+BasicShip.HEIGHT));
+		addActor(new BasicShip(xPos,GameScreen.GAME_HEIGHT+BasicShip.HEIGHT));
 		
-		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
-		//addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
+		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
+		addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
 		
-		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-MultiShooterShip.WIDTH);
-		//addActor(new MultiShooterShip(xPos, GameScreen.GAME_HEIGHT+MultiShooterShip.HEIGHT));
+		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-MultiShooterShip.WIDTH);
+		addActor(new MultiShooterShip(xPos, GameScreen.GAME_HEIGHT+MultiShooterShip.HEIGHT));
 		
-		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-KamikazeShip.WIDTH);
-		//addActor(new KamikazeShip(xPos, GameScreen.GAME_HEIGHT+KamikazeShip.HEIGHT, playerShip));
+		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-KamikazeShip.WIDTH);
+		addActor(new KamikazeShip(xPos, GameScreen.GAME_HEIGHT+KamikazeShip.HEIGHT, playerShip));
 		
-		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BigLaserShip.WIDTH);
-		//addActor(new BigLaserShip(xPos, GameScreen.GAME_HEIGHT+BigLaserShip.HEIGHT));
+		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BigLaserShip.WIDTH);
+		addActor(new BigLaserShip(xPos, GameScreen.GAME_HEIGHT+BigLaserShip.HEIGHT));
 		
-		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-StealthShip.WIDTH);
-		//int yPos = (int) MathUtils.random(GameScreen.GAME_HEIGHT*0.8f,GameScreen.GAME_HEIGHT-StealthShip.HEIGHT);
-		//addActor(new StealthShip(xPos, yPos, playerShip));
+		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-StealthShip.WIDTH);
+		int yPos = (int) MathUtils.random(GameScreen.GAME_HEIGHT*0.8f,GameScreen.GAME_HEIGHT-StealthShip.HEIGHT);
+		addActor(new StealthShip(xPos, yPos, playerShip));
 		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-TurretShip.WIDTH);
-		int yPos =(int) GameScreen.GAME_HEIGHT-TurretShip.HEIGHT;
-		addActor(new TurretShip(xPos, yPos));
+		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-TurretShip.WIDTH);
+		//int yPos =(int) GameScreen.GAME_HEIGHT-TurretShip.HEIGHT;
+		//addActor(new TurretShip(xPos, yPos));
 		
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();

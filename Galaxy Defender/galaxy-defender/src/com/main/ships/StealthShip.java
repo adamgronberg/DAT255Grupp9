@@ -71,7 +71,6 @@ public class StealthShip extends EnemyShip {
 				currentTime = TimeUtils.nanoTime();
 				shot=0;
 			}
-			
 			else if(!visible){
 				if(getY()-SHIPSPEED<GameScreen.GAME_HEIGHT*0.2){
 					destroyShip();
@@ -85,11 +84,7 @@ public class StealthShip extends EnemyShip {
 					visible=true;
 					currentTime=TimeUtils.nanoTime();
 				}
-
 			}
-			
-		
-		
 	}
 
 	@Override protected void shoot(float delta) {}

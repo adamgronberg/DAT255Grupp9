@@ -39,15 +39,11 @@ public class TurretShip extends EnemyShip {
 			getParent().addActor( new EnemyLaser(getX()+3*WIDTH/4, getY(), 2f, 15f,5,0));
 			getParent().addActor( new EnemyLaser(getX()+7*WIDTH/8, getY()+5, 2f, 15f,5,20));
 			getParent().addActor( new EnemyLaser(getX()+WIDTH, getY()+10, 2f, 15f,5,20));
-			
-			
-
-			
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 		
 		if(TimeUtils.nanoTime() - lastBombTime > RATEOFBOMB){
-			getParent().addActor( new TurretShipBomb(getX(),getY()));
+			getParent().addActor( new TurretShipBomb(getX()+WIDTH/2-TurretShipBomb.WIDTH/2,getY()));
 			
 			lastBombTime = TimeUtils.nanoTime();
 		}
@@ -70,16 +66,11 @@ public class TurretShip extends EnemyShip {
 		if(getX()>GameScreen.GAME_WITDH-WIDTH){
 			setX(getX()-SHIPSPEED);	
 			left=true;
-
 		}
-			
-		
 	}
 
 	@Override
 	protected void shoot(float delta) {
 		spawnProjectile();
-		
-		
 	}
 }
