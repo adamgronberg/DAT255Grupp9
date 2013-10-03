@@ -16,6 +16,7 @@ public class MyGame extends Game {
 	private GameScreen gameScreen;
 	private MenuScreen menuScreen;
 	private OptionsScreen optionsScreen;
+	private HighScoreScreen highScoreScreen;
 	public enum ScreenType{GAME,MENU,OPTIONS,HIGHSCORE}
 	
 	/**
@@ -46,7 +47,8 @@ public class MyGame extends Game {
 			setScreen(optionsScreen);
 			break;
 		case HIGHSCORE:
-		//	setScreen(highScoreScreen);
+			highScoreScreen = new HighScoreScreen(this);
+			setScreen(highScoreScreen);
 			break;
 		default:
 			break;
