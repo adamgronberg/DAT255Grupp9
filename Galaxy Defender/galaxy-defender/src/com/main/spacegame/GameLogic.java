@@ -14,6 +14,7 @@ import ships.KamikazeShip;
 import ships.MultiShooterShip;
 import ships.BigLaserShip;
 import ships.StealthShip;
+import ships.TurretShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
 import collisiondetection.OutOfBoundsDetection;
@@ -46,6 +47,7 @@ public class GameLogic extends Table {
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		addActor(backgroundSpace);
 		playerShip.resetHealth();
+		spawnShip();
 	}
 	
 	/**
@@ -61,7 +63,7 @@ public class GameLogic extends Table {
 			playerShip.resetHealth();
 		}
 		
-		if (TimeUtils.nanoTime() - lastEnemyShipTime > 6000000000f) spawnShip();			//For testing
+	//	if (TimeUtils.nanoTime() - lastEnemyShipTime > 6000000000f) spawnShip();			//For testing
 		if (TimeUtils.nanoTime() - lastSpawnPatternTime > 7000000000f) spawnPattern();		//For testing
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
@@ -88,9 +90,14 @@ public class GameLogic extends Table {
 		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BigLaserShip.WIDTH);
 		//addActor(new BigLaserShip(xPos, GameScreen.GAME_HEIGHT+BigLaserShip.HEIGHT));
 		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-StealthShip.WIDTH);
-		int yPos = (int) MathUtils.random(GameScreen.GAME_HEIGHT*0.8f,GameScreen.GAME_HEIGHT-StealthShip.HEIGHT);
-		addActor(new StealthShip(xPos, yPos, playerShip));
+		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-StealthShip.WIDTH);
+		//int yPos = (int) MathUtils.random(GameScreen.GAME_HEIGHT*0.8f,GameScreen.GAME_HEIGHT-StealthShip.HEIGHT);
+		//addActor(new StealthShip(xPos, yPos, playerShip));
+		
+		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-TurretShip.WIDTH);
+		int yPos =(int) GameScreen.GAME_HEIGHT-TurretShip.HEIGHT;
+		addActor(new TurretShip(xPos, yPos));
+		
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
 	}
