@@ -28,7 +28,8 @@ public class GameLogic extends Table {
 	
 	private int currentScore=0;
 	private long lastEnemyShipTime = 0;			//For testing
-	private float lastSpawnPatternTime = 0;		//For testing
+	private long lastSpawnPatternTime = 0;		//For testing
+	private long lastAstroidSpawn = 0;			//For testing
 	
 	private Background backgroundSpace;
 
@@ -61,13 +62,24 @@ public class GameLogic extends Table {
 			playerShip.resetHealth();
 		}
 		
-		if (TimeUtils.nanoTime() - lastEnemyShipTime > 6000000000f) spawnShip();			//For testing
+
+		if (TimeUtils.nanoTime() - lastEnemyShipTime > 9000000000f) spawnShip();			//For testing
+		if (TimeUtils.nanoTime() - lastAstroidSpawn > 10000000000f) spawnAstroids();			//For testing
 		if (TimeUtils.nanoTime() - lastSpawnPatternTime > 7000000000f) spawnPattern();		//For testing
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
 	}
 	
-	
+	/**
+	 * Temp spawn for asteroids
+	 */
+	private void spawnAstroids() {
+		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
+		float xPos = spawnLocation;
+		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 10, 2750000f, EnemyTypes.ASTEROID));
+		lastAstroidSpawn = TimeUtils.nanoTime();
+	}
+
 	/**
 	 * Spawns a BasicShip and a ScoutShip on a random x coordinate above the screen
 	 * For testing
@@ -107,7 +119,6 @@ public class GameLogic extends Table {
 		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
 		float xPos = spawnLocation;
 		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 275000000f, EnemyTypes.SCOUT));
-		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 100, 2750000f, EnemyTypes.ASTEROID));
 		lastSpawnPatternTime = TimeUtils.nanoTime();
 
 	}

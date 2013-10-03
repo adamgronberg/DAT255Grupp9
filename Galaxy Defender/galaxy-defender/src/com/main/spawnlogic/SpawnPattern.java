@@ -12,8 +12,6 @@ import ships.Asteroid;
 import spacegame.GameScreen;
 import spacegame.MovableEntity;
 
-
-
 /**
  * 
  * @author Grupp9
