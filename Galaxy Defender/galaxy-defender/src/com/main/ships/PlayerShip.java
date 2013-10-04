@@ -68,7 +68,7 @@ public class PlayerShip extends Sprite {
 	 */
 	public void decreaseCurrentHealth(int damage){
 		currentHealth = currentHealth - damage;
-		vibrate(400);
+		vibrate(100);
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class PlayerShip extends Sprite {
 	 */
 	public void vibrate(int milliSeconds){
 		if (GameScreen.vibrateOn){
-		Gdx.input.vibrate(milliSeconds);
+			Gdx.input.vibrate(milliSeconds);
 		}
 	}
 	
