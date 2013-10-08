@@ -267,5 +267,12 @@ public class GameScreen implements Screen{
 
 	public static void toggleOptionAutoShoot() {
 		optionAutoShoot = !optionAutoShoot;	
+	}
+/**
+ * 
+ * @return the name of the level
+ */
+	public String getLevelName() {
+		return gameLogic.getLevelName();
 	}	
 }

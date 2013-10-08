@@ -1,5 +1,8 @@
 package spacegame;
 
+import java.util.LinkedList;
+
+import levels.*;
 import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -34,7 +37,9 @@ public class GameLogic extends Table {
 	private Background backgroundSpace;
 	private GameScreen gameScreen;
 	public PlayerShip playerShip;
-	
+	private Level level;
+	protected LinkedList<Level> levelList;
+	private int nextLevel=0;
 	/**
 	 * Constructor
 	 * TODO: Should set up unique levels and not spawn enemies randomly (Release 1 demo)
@@ -43,6 +48,13 @@ public class GameLogic extends Table {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
 		this.gameScreen = gameScreen;
+		levelList=new LinkedList<Level>();
+		//level=new Neptune(this);
+		levelList.add(new Neptune(this));
+		//levelList.add(new Uranus(this));
+		//levelList.add(new Saturn(this));
+		level=levelList.getFirst();
+		addActor(level);
 		playerShip = new PlayerShip();
 		addActor(playerShip);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
@@ -60,17 +72,41 @@ public class GameLogic extends Table {
 			clear();
 			addActor(playerShip);
 			playerShip.resetHealth();
-			gameScreen.victory();
+			//gameScreen.victory(); lägg i mission completed
 		}
 		
 
-		if (TimeUtils.nanoTime() - lastEnemyShipTime > 9000000000f) spawnShip();			//For testing
-		if (TimeUtils.nanoTime() - lastAstroidSpawn > 10000000000f) spawnAstroids();			//For testing
-		if (TimeUtils.nanoTime() - lastSpawnPatternTime > 7000000000f) spawnPattern();		//For testing
+		//if (TimeUtils.nanoTime() - lastEnemyShipTime > 9000000000f) spawnShip();			//For testing
+		//if (TimeUtils.nanoTime() - lastAstroidSpawn > 10000000000f) spawnAstroids();			//For testing
+		//if (TimeUtils.nanoTime() - lastSpawnPatternTime > 7000000000f) spawnPattern();		//For testing
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
+		if(level.missionCompleted()){
+			gameScreen.victory();
+			level.remove();
+			level=nextLevel(nextLevel);
+			nextLevel++;
+			addActor(level);
+		}
+		
 	}
+	/**Switches level
+	 * 
+	 * @param nextlevel
+	 * @return
+	 */
 	
+	private Level nextLevel(int nextlevel) {
+		switch(nextlevel){
+		case 0:
+			return new Uranus(this);
+		case 1:
+			return new Saturn(this);
+		default:
+			return new Neptune(this);
+	}
+	}
+
 	/**
 	 * Temp spawn for asteroids
 	 */
@@ -160,5 +196,12 @@ public class GameLogic extends Table {
 	 */
 	public int getPlayerHealth(){
 		return playerShip.getCurrentHealth();
+	}
+/**
+ * 
+ * @return the name of the Level
+ */
+	public String getLevelName(){
+		return level.getName();
 	}
 }

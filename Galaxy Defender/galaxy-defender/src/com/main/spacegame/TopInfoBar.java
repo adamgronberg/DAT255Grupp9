@@ -45,7 +45,7 @@ public class TopInfoBar extends Table{
 		background.drawBelow(batch, parentAlpha);
 		scoreField.draw(batch, "Score " +gameScreen.getGameLogicScore());
 		healthBar.draw(batch, "Health " +gameScreen.getGameLogicHealth()+"%");
-		levelName.draw(batch, "Neptunus");
+		levelName.draw(batch, "" +gameScreen.getLevelName());
 		super.draw(batch, parentAlpha);
 	}
 	
