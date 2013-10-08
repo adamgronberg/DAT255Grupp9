@@ -8,6 +8,7 @@ import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class TurretShip extends EnemyShip {
@@ -18,8 +19,14 @@ public class TurretShip extends EnemyShip {
 	public final static int WIDTH=110;
 	private final static float SHIPSPEED = 1f;
 	private final static int SCOREVALUE=30;
-	private final static int HEALTH=100;
+	private final static int HEALTH=3;
 	private MiniTurretShip miniTurretShip;
+	
+	private int numberOfMiniTurrets =1;
+	private int currentnumberOfMiniTurrets=0;
+	private PlayerShip playerShip;
+	public static final float RANDOMTIME = 900000000f;
+	
 	
 	private boolean left = false;
 	private boolean up = true;
@@ -28,6 +35,7 @@ public class TurretShip extends EnemyShip {
 	
 	private float lastProjectileTime;
 	private float lastBombTime;
+	private float lastRandomTime;
 	private static final int DAMAGE_WHEN_RAMMED = 40;
 	
 
@@ -39,11 +47,8 @@ public class TurretShip extends EnemyShip {
 
 	public TurretShip(float x, float y,PlayerShip playerShip) {
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyTurretShip, DAMAGE_WHEN_RAMMED);
+		this.playerShip= playerShip;
 		setRotation(-180);
-	//	miniTurretShip = new MiniTurretShip(x,y,playerShip);
-	//	getParent().addActor(miniTurretShip);
-
-
 		onFireAnimation = new Animation(TIMEPERFRAME, ImageAssets.fireAnimation);
 		stateTime = 0f;
 	}
@@ -60,6 +65,7 @@ public class TurretShip extends EnemyShip {
 			getParent().addActor( new EnemyLaser(getX()+7*WIDTH/8, getY()+5, 2f, 15f,5,20));
 			getParent().addActor( new EnemyLaser(getX()+WIDTH, getY()+10, 2f, 15f,5,20));
 			
+			
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 		if(TimeUtils.nanoTime() - lastBombTime > RATEOFBOMB){
@@ -67,10 +73,47 @@ public class TurretShip extends EnemyShip {
 			lastBombTime = TimeUtils.nanoTime();
 		}
 	}
+	
+	public void spawnMiniturret()
+	{
+		getParent().addActor(miniTurretShip);
+	}
 
 	@Override
 	protected void move(float delta) {
-		//miniTurretShip.setXY(getX(), getY());
+		
+		
+		if(currentnumberOfMiniTurrets<numberOfMiniTurrets){
+			miniTurretShip = new MiniTurretShip(getX(),getY(),playerShip);
+			getParent().addActor(miniTurretShip);
+			currentnumberOfMiniTurrets++;
+		}
+		if(miniTurretShip.isAlive()){
+			miniTurretShip.setXY(getX(), getY());
+		}
+		
+		if(TimeUtils.nanoTime()-lastRandomTime>RANDOMTIME){
+			int i = MathUtils.random(0,3);
+			if(i==0){
+				left=true;
+				right=false;
+			}
+			if(i==1){
+				right=true;
+				left=false;
+			}
+			if(i==2){
+				up=true;
+				down=false;
+			}
+			if(i==3){
+				down=true;
+				up=false;
+			}
+			lastRandomTime =TimeUtils.nanoTime();
+			
+		}
+		
 		
 		if(left && down){
 			setX(getX()-SHIPSPEED);
@@ -110,7 +153,22 @@ public class TurretShip extends EnemyShip {
 	protected void shoot(float delta) {
 		spawnProjectile();
 	}
+
 	
+@Override
+	public void destroyShip(){
+		if(!miniTurretShip.isAlive()&&miniTurretShip.firstTimeDead()){
+			setHealth(100);
+			miniTurretShip.setFirstTimeDead(false);
+		}
+		if(!miniTurretShip.isAlive()&&!miniTurretShip.firstTimeDead()){
+			remove();
+		}
+			else{
+				setHealth(100);
+	}
+}
+		
 	
 	/**
 	 * Adds a fire in the back of the ship

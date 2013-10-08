@@ -160,4 +160,13 @@ public abstract class EnemyShip extends Sprite{
 	public void destroyShip() {
 		remove();
 	}
+	/**
+	 *  Set new health the ship
+	 */
+	public void setHealth(int h) {
+			health=h;
+			System.out.println("HARGÅTTINI SetHealth()  "+ health);
+	}
+	
+	
 }

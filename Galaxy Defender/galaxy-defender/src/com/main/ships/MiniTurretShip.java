@@ -35,7 +35,8 @@ public class MiniTurretShip extends EnemyShip {
 	private int shot =0;
 	private float turretX =10;
 	private float turretY=10;
-	
+	private boolean isAlive=true;
+	private boolean isAliveFirst = true;
 	/**
 	 * Constructor
 	* @param x	x-led Spawn location
@@ -75,20 +76,34 @@ public class MiniTurretShip extends EnemyShip {
 			currentTime=TimeUtils.nanoTime();
 
 		shot=0;
-		
-		
+
 		}
 		spawnProjectile();
 		
 		setX(turretX+TurretShip.WIDTH/2-WIDTH/2);
 		setY(turretY-5);
-		
-		
-	  
+
 	}
+	
+	public boolean isAlive(){
+		return isAlive;
+	}
+	public boolean firstTimeDead(){
+		return isAliveFirst;
+	}
+	public void setFirstTimeDead(boolean b){
+		isAliveFirst = b;
+	}
+	
 	public void setXY(float x, float y){
 		turretX=x;
 		turretY=y;
+	}
+	
+	@Override
+	public void destroyShip(){
+		isAlive = false;
+		remove();
 	}
 
 	@Override protected void shoot(float delta) {

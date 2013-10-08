@@ -22,7 +22,7 @@ import assets.SoundAssets;
  */
 
 public class TurretShipBomb extends Projectile{
-	private final static float BOMBSPEED=2f;
+	private final static float BOMBSPEED=5f;
 	private final static int HEALTH=1;
 	private final static int SCOREVALUE=1;
 	public final static int HEIGHT=45;
