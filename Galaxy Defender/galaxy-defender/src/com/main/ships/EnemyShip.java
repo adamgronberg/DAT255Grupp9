@@ -15,7 +15,7 @@ import spacegame.Sprite;
  * Base class for enemy ships. Enemy ships should extend this class
  */
 public abstract class EnemyShip extends Sprite{
-	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID};
+	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID, TURRET};
 	private int scoreValue;
 	private int health;
 	private int damageWhenRammed;
@@ -71,6 +71,7 @@ public abstract class EnemyShip extends Sprite{
         if(health<maximumHealth){
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
         }
+        
 	}
 	
 	/**

@@ -6,6 +6,7 @@ import spacegame.MovableEntity;
 import com.badlogic.gdx.math.MathUtils;
 
 import dummies.PlayerMissileExplosionDummy;
+import dummies.TurretMissileDummy;
 import effects.ExplosionEffect;
 
 import assets.ImageAssets;
@@ -27,11 +28,11 @@ public class TurretShipBomb extends Projectile{
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
 	private static final int DAMAGE_WHEN_RAMMED = 15;
-	private static final float AREAEFFECT_H = 85;
-	private static final float AREAEFFECT_W = 75;
+	private static final float AREAEFFECT_H = 400;
+	private static final float AREAEFFECT_W = 400;
 	private static final TargetTypes FACTION = TargetTypes.ENEMY;
 	private static final TargetTypes[] AFFECTEDTARGETS = 
-		{TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE};
+		{TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE, TargetTypes.ALLY, TargetTypes.ENEMY_PROJECTILE, TargetTypes.ALLY_PROJECTILE};
 	
 	/**
 	 * Constructor
@@ -46,6 +47,7 @@ public class TurretShipBomb extends Projectile{
 	
 	public void act(float delta) {
 		setY(getY()-BOMBSPEED);
+		checkIfDown();
 	}
 	
 	/**
@@ -58,10 +60,26 @@ public class TurretShipBomb extends Projectile{
 	public void addOnHitEffect(MovableEntity entity) {
 		getParent().addActor( new ExplosionEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
 							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
-		getParent().addActor( new PlayerMissileExplosionDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
+		getParent().addActor( new TurretMissileDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
 							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
 		if(GameScreen.sound) SoundAssets.missileExplosion.play();
 		remove();
+	}
+	
+	
+	public void addOnHitEffect() {
+		getParent().addActor( new ExplosionEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
+							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
+		getParent().addActor( new TurretMissileDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
+							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
+		if(GameScreen.sound) SoundAssets.missileExplosion.play();
+		remove();
+	}
+	
+	public void checkIfDown(){
+		if(getY()<= 50){
+			addOnHitEffect();
+		}
 	}
 
 

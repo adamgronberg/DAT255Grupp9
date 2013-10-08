@@ -113,6 +113,7 @@ public class CollisionDetection {
 						projectile.addOnHitEffect(projectile);
 					}
 				}
+				
 			}
 		}
 	}
