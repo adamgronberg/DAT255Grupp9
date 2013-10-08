@@ -24,7 +24,7 @@ public class OptionsScreen implements Screen{
 	private boolean music;
 	private Stage stage;
 	private Skin skin;
-	private TextButton mainMenuButton, soundButton, musicButton,vibrateButton, layoutButton;
+	private TextButton mainMenuButton, soundButton, musicButton,vibrateButton;//, layoutButton;
 	private MyGame myGame;
 	private Table table;
 	private TextureAtlas atlas;

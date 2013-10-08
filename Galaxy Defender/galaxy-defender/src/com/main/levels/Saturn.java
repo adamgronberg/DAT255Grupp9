@@ -1,6 +1,5 @@
 package levels;
 
-
 import ships.Asteroid;
 import spacegame.GameLogic;
 

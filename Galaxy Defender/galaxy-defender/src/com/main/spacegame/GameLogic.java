@@ -1,26 +1,13 @@
 package spacegame;
 
-import java.util.LinkedList;
-
 import levels.*;
 import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.badlogic.gdx.utils.TimeUtils;
-import ships.BasicShip;
-import ships.EnemyShip.EnemyTypes;
-import ships.HeavyShip;
 import ships.PlayerShip;
-import ships.ScoutShip;
-import ships.KamikazeShip;
-import ships.MultiShooterShip;
-import ships.BigLaserShip;
-import ships.StealthShip;
-import spawnlogic.SpawnPattern;
 import weapons.*;
 import collisiondetection.CollisionDetection;
 import collisiondetection.OutOfBoundsDetection;
@@ -34,15 +21,10 @@ import collisiondetection.OutOfBoundsDetection;
 public class GameLogic extends Table {
 	
 	private int currentScore=0;
-	private long lastEnemyShipTime = 0;			//For testing
-	private long lastSpawnPatternTime = 0;		//For testing
-	private long lastAstroidSpawn = 0;			//For testing
-	
 	private Background backgroundSpace;
 	private GameScreen gameScreen;
 	public PlayerShip playerShip;
 	private Level level;
-	protected LinkedList<Level> levelList;
 	private int nextLevel=0;
 	/**
 	 * Constructor
@@ -52,12 +34,7 @@ public class GameLogic extends Table {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
 		this.gameScreen = gameScreen;
-		levelList=new LinkedList<Level>();
-		//level=new Neptune(this);
-		levelList.add(new Neptune(this));
-		//levelList.add(new Uranus(this));
-		//levelList.add(new Saturn(this));
-		level=levelList.getFirst();
+		level = new Neptune(this);
 		addActor(level);
 		playerShip = new PlayerShip();
 		addActor(playerShip);
@@ -108,61 +85,9 @@ public class GameLogic extends Table {
 			return new Saturn(this);
 		default:
 			return new Neptune(this);
-	}
-	}
-
-	/**
-	 * Temp spawn for asteroids
-	 */
-	private void spawnAstroids() {
-		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
-		float xPos = spawnLocation;
-		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 10, 2750000f, EnemyTypes.ASTEROID));
-		lastAstroidSpawn = TimeUtils.nanoTime();
-	}
-
-	/**
-	 * Spawns a BasicShip and a ScoutShip on a random x coordinate above the screen
-	 * For testing
-	 */
-	private void spawnShip() {
-		int  xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
-		addActor(new BasicShip(xPos,GameScreen.GAME_HEIGHT+BasicShip.HEIGHT));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
-		addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-MultiShooterShip.WIDTH);
-		addActor(new MultiShooterShip(xPos, GameScreen.GAME_HEIGHT+MultiShooterShip.HEIGHT));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-KamikazeShip.WIDTH);
-		addActor(new KamikazeShip(xPos, GameScreen.GAME_HEIGHT+KamikazeShip.HEIGHT, playerShip));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BigLaserShip.WIDTH);
-		addActor(new BigLaserShip(xPos, GameScreen.GAME_HEIGHT+BigLaserShip.HEIGHT));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-StealthShip.WIDTH);
-		int yPos = (int) MathUtils.random(GameScreen.GAME_HEIGHT*0.8f,GameScreen.GAME_HEIGHT-StealthShip.HEIGHT);
-		addActor(new StealthShip(xPos, yPos, playerShip));
-		
-		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-TurretShip.WIDTH);
-		//int yPos =(int) GameScreen.GAME_HEIGHT-TurretShip.HEIGHT;
-		//addActor(new TurretShip(xPos, yPos));
-		
-		lastEnemyShipTime = TimeUtils.nanoTime();
+		}
 	}
 	
-	/**
-	 * Sets up a SpawnPattern for scoutShips
-	 * For testing	TODO: Should prob be in some sort of "levelDesign" class
-	 */
-	private void spawnPattern(){		
-		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
-		float xPos = spawnLocation;
-		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 275000000f, EnemyTypes.SCOUT));
-		lastSpawnPatternTime = TimeUtils.nanoTime();
-
-	}
 	/**
 	 * Draws all actors on stage
 	 */

@@ -1,8 +1,8 @@
 package levels;
 
 import com.badlogic.gdx.math.MathUtils;
-
 import ships.*;
+import ships.KamikazeShip;
 import spacegame.GameLogic;
 import collisiondetection.CollisionDetection;
 
