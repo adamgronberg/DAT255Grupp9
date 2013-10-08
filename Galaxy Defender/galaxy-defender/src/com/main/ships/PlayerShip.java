@@ -46,6 +46,7 @@ public class PlayerShip extends Sprite {
 	public PlayerShip() {
 		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2-WITDH/2, GameScreen.GAME_HEIGHT*SPAWN_LOCATION_Y,ImageAssets.playerShip);
 		maximumHealth = STARTING_HEALTH;
+		currentHealth=STARTING_HEALTH;
 	}
 	
 	/**

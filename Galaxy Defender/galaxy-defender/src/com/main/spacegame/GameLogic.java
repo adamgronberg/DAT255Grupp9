@@ -46,7 +46,6 @@ public class GameLogic extends Table {
 		addActor(playerShip);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		addActor(backgroundSpace);
-		playerShip.resetHealth();
 	}
 	
 	/**

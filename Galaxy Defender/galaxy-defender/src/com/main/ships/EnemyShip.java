@@ -17,7 +17,7 @@ import spacegame.Sprite;
 public abstract class EnemyShip extends Sprite{
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID};
 	private int scoreValue;
-	private int currentHealth;
+	protected int currentHealth;
 	private int damageWhenRammed;
 	private int maximumHealth;
 	private static final float TIMEPERFRAME = 0.045f;
