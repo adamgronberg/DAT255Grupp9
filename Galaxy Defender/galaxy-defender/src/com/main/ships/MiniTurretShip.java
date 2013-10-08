@@ -1,12 +1,8 @@
 package ships;
 
-import com.badlogic.gdx.math.MathUtils;
-
-import spacegame.GameScreen;
 import weapons.EnemyLaser;
 import assets.ImageAssets;
 import com.badlogic.gdx.utils.TimeUtils;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
  * 
@@ -35,8 +31,9 @@ public class MiniTurretShip extends EnemyShip {
 	private int shot =0;
 	private float turretX =10;
 	private float turretY=10;
-	private boolean isAlive=true;
+	private boolean isAlive = true;
 	private boolean isAliveFirst = true;
+	
 	/**
 	 * Constructor
 	* @param x	x-led Spawn location
@@ -72,19 +69,17 @@ public class MiniTurretShip extends EnemyShip {
 	protected void move(float delta) {
 		if(TimeUtils.nanoTime()-currentTime>FIRETIME)
 		{
-		
 			currentTime=TimeUtils.nanoTime();
-
 		shot=0;
-
+		
 		}
 		spawnProjectile();
-		
 		setX(turretX+TurretShip.WIDTH/2-WIDTH/2);
 		setY(turretY-5);
-
+		
+		
+	  
 	}
-	
 	public boolean isAlive(){
 		return isAlive;
 	}
@@ -94,12 +89,10 @@ public class MiniTurretShip extends EnemyShip {
 	public void setFirstTimeDead(boolean b){
 		isAliveFirst = b;
 	}
-	
 	public void setXY(float x, float y){
 		turretX=x;
 		turretY=y;
 	}
-	
 	@Override
 	public void destroyShip(){
 		isAlive = false;

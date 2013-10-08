@@ -99,11 +99,6 @@ public class GameLogic extends Table {
 		int yPos =(int) GameScreen.GAME_HEIGHT-TurretShip.HEIGHT;
 		TurretShip turretShip = new TurretShip(xPos, yPos, playerShip);
 		addActor(turretShip);
-		
-	
-		
-		
-		
 		lastEnemyShipTime = TimeUtils.nanoTime();
 	}
 	
