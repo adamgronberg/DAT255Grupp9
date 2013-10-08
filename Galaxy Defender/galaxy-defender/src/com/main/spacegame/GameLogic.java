@@ -32,16 +32,17 @@ public class GameLogic extends Table {
 	private long lastAstroidSpawn = 0;			//For testing
 	
 	private Background backgroundSpace;
-
+	private GameScreen gameScreen;
 	public PlayerShip playerShip;
 	
 	/**
 	 * Constructor
 	 * TODO: Should set up unique levels and not spawn enemies randomly (Release 1 demo)
 	 */
-	public GameLogic() {
+	public GameLogic(GameScreen gameScreen) {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
+		this.gameScreen = gameScreen;
 		playerShip = new PlayerShip();
 		addActor(playerShip);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
@@ -59,6 +60,7 @@ public class GameLogic extends Table {
 			clear();
 			addActor(playerShip);
 			playerShip.resetHealth();
+			gameScreen.victory();
 		}
 		
 

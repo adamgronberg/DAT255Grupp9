@@ -17,7 +17,8 @@ public class MyGame extends Game {
 	private MenuScreen menuScreen;
 	private OptionsScreen optionsScreen;
 	private HighScoreScreen highScoreScreen;
-	public enum ScreenType{GAME,MENU,OPTIONS,HIGHSCORE}
+	private WinScreen winScreen;
+	public enum ScreenType{GAME,MENU,OPTIONS,HIGHSCORE,WINSCREEN}
 	
 	/**
 	 * Load assets and creates and adds the MenuScreen
@@ -28,6 +29,7 @@ public class MyGame extends Game {
 		SoundAssets.load();
 		menuScreen = new MenuScreen(this);
 		optionsScreen = new OptionsScreen(this);
+		gameScreen = new GameScreen(this);
 		setScreen(menuScreen);
 	}
 	
@@ -40,7 +42,6 @@ public class MyGame extends Game {
 			setScreen(menuScreen);
 			break;
 		case GAME:
-			gameScreen = new GameScreen(this);
 			setScreen(gameScreen);			
 			break;
 		case OPTIONS:
@@ -50,6 +51,9 @@ public class MyGame extends Game {
 			highScoreScreen = new HighScoreScreen(this);
 			setScreen(highScoreScreen);
 			break;
+		case WINSCREEN:
+			winScreen = new WinScreen(this, gameScreen.getLevelResult());
+			setScreen(winScreen);
 		default:
 			break;
 		}

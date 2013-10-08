@@ -4,12 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-
-
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
 import assets.*;
 import input.InputControl;
 
@@ -26,6 +23,10 @@ public class GameScreen implements Screen{
 	private GameLogic gameLogic;
 	private InputControl inputController;
 	private TopInfoBar topInfoBar;
+	private MyGame myGame;
+	
+	private int currentLevel;
+	private int levelResult;
 	
 	public static boolean sound = true; 			//TODO: Temp. disables/enables sound
 	public static boolean optionAutoShoot = true; 	//TODO: Temp. disables/enables shoot
@@ -34,6 +35,7 @@ public class GameScreen implements Screen{
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
 	
+	public static final int MAX_LEVEL = 6;
 	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;
 	public static final float GAME_WITDH= ((float) MyGame.WIDTH);
 	public static final float INFO_SCREEN_HEIGHT=((float) MyGame.HEIGHT)*0.05f;
@@ -62,7 +64,10 @@ public class GameScreen implements Screen{
 		shootEMPButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE*2, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.emptyButton);
 		
-		gameLogic = new GameLogic();
+		currentLevel = 1;
+		levelResult = 0;
+		this.myGame = myGame;
+		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this);
 		topInfoBar = new TopInfoBar(this);
 		
@@ -205,13 +210,27 @@ public class GameScreen implements Screen{
     public void hide() {
     	Gdx.input.setInputProcessor(null);
     }
+	
+	public int getLevelResult(){
+		return levelResult;
+	}
+	
+	public void victory(){
+		levelResult = currentLevel;
+		if(currentLevel < MAX_LEVEL) currentLevel++;
+		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
+	}
+	
+	public void defeat(){
+		levelResult = 0;
+		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
+	}
 
 	@Override public void resume() {}
 	@Override public void pause() {}
 	@Override public void dispose() {}
 
 	public static void toggleOptionAutoShoot() {
-		optionAutoShoot = !optionAutoShoot;
-		
+		optionAutoShoot = !optionAutoShoot;	
 	}	
 }
