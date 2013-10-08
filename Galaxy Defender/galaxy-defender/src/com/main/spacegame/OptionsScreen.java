@@ -1,5 +1,7 @@
 package spacegame;
 
+import assets.SoundAssets;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
@@ -19,9 +21,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 public class OptionsScreen implements Screen{
 	
+	private boolean music;
 	private Stage stage;
 	private Skin skin;
-	private TextButton mainMenuButton;
+	private TextButton mainMenuButton, soundButton, musicButton,vibrateButton, layoutButton;
 	private MyGame myGame;
 	private Table table;
 	private TextureAtlas atlas;
@@ -29,6 +32,8 @@ public class OptionsScreen implements Screen{
 
 	public OptionsScreen(MyGame myGame){
 		this.myGame = myGame;
+		music = true;
+		if(music)SoundAssets.spaceMusic.play();
 	}
 	
 	/**
@@ -67,6 +72,24 @@ public class OptionsScreen implements Screen{
 		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);
 		table.setBackground(menuBackground);
 		
+		soundButton = new TextButton(getSoundText(),skin);
+		soundButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	GameScreen.toggleSound();
+	        	soundButton.setText(getSoundText());
+	        }
+	    } );
+		
+		musicButton = new TextButton(getMusicText(),skin);
+		musicButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	toggleMusic();
+	        	musicButton.setText(getMusicText());
+	        }
+	    } );
+		
 		mainMenuButton = new TextButton("Main Menu", skin);
 		mainMenuButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
@@ -75,13 +98,66 @@ public class OptionsScreen implements Screen{
 	        }
 	    } );
 		
-		mainMenuButton.pad(15, 10, 15, 10);	
+		vibrateButton= new TextButton(getVibrateText(),skin);
+		vibrateButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	GameScreen.toggleVibrateOn();
+	        	vibrateButton.setText(getVibrateText());
+	        }
+	    } );
+		
+		
+		mainMenuButton.pad(15,10,15,10);
+		soundButton.pad(15,12,15,12);
+		musicButton.pad(15,13,15,13);
+		vibrateButton.pad(15, 10, 15, 10);
 	
 		table.add(mainMenuButton).spaceBottom(50).row();
+		table.add(soundButton).spaceBottom(50).row();
+		table.add(musicButton).spaceBottom(50).row();
+		table.add(vibrateButton).spaceBottom(50).row();
 		
 		stage.addActor(table);	
 	}
-
+	
+	/*
+	 * Returns text for soundButton
+	 */
+	private String getSoundText(){
+		if(GameScreen.getSound()) return "Sound Off";
+		else return "Sound On";
+	}
+	
+	/*
+	 * Returns text for vibrateButton
+	 */
+	private String getVibrateText(){
+		if(GameScreen.getVibration()) return "Vibration Off";
+		else return "Vibration On";
+	}
+	
+	/*
+	 * Returns text for musicButton
+	 */
+	private String getMusicText(){
+		if(music) return "Music Off";
+		else return "Music On";
+	}
+	
+	/*
+	 * Toggles music
+	 */
+	private void toggleMusic(){
+		if(music){
+			music = false;
+			SoundAssets.spaceMusic.stop();
+		}
+		else{
+			music = true;
+			SoundAssets.spaceMusic.play();			
+		}
+	}
 	/**
 	 * Disables input from this screen
 	 * Called when screen is not visible

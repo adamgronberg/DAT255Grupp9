@@ -54,7 +54,7 @@ public class TurretShipBomb extends Projectile{
 							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
 		getParent().addActor( new AreaOfEffectDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
 							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H, AREA_DAMAGE, FACTION, AFFECTEDTARGETS));
-		if(GameScreen.sound) SoundAssets.missileExplosion.play();
+		if(GameScreen.getSound()) SoundAssets.missileExplosion.play();
 		remove();
 	}
 

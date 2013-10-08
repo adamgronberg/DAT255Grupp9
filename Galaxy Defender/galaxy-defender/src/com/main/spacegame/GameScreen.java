@@ -28,12 +28,12 @@ public class GameScreen implements Screen{
 	private int currentLevel;
 	private int levelResult;
 	
-	public static boolean sound = true; 			//TODO: Temp. disables/enables sound
+	private static boolean sound = true; 			//TODO: Temp. disables/enables sound
 	public static boolean optionAutoShoot = true; 	//TODO: Temp. disables/enables shoot
-	public static boolean vibrateOn = false;			//TODO: Temp. disables/enables vibrate
+	private static boolean vibrate = false;			//TODO: Temp. disables/enables vibrate
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
-	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
+	public ControlLayout currentLayout = ControlLayout.LAYOUT1;
 	
 	public static final int MAX_LEVEL = 6;
 	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;
@@ -77,8 +77,7 @@ public class GameScreen implements Screen{
 		stage.addActor(shootMissileButton);
 		stage.addActor(shootEMPButton);
 		stage.addActor(moveLeftButton);
-		stage.addActor(moveRightButton);		
-		if(sound) SoundAssets.spaceMusic.play();
+		stage.addActor(moveRightButton);				
 	}
 	
 	/**
@@ -215,17 +214,53 @@ public class GameScreen implements Screen{
 		return levelResult;
 	}
 	
+	/*
+	 * Calls victory screen and changes to next level
+	 */
 	public void victory(){
 		levelResult = currentLevel;
 		if(currentLevel < MAX_LEVEL) currentLevel++;
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
 	
+	/*
+	 * Calls defeat screen
+	 */
 	public void defeat(){
 		levelResult = 0;
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
-
+	
+	/*
+	 * Activates/disables sound effects
+	 */
+	public static void toggleSound(){
+		if(sound) sound = false;
+		else sound = true;
+	}
+	
+	/*
+	 * returns true if sound is on
+	 */
+	public static boolean getSound(){
+		return sound;
+	}
+	
+	/*
+	 * Activates/disables impact vibration
+	 */
+	public static void toggleVibrateOn(){
+		if(vibrate) vibrate = false;
+		else vibrate = true;
+	}
+	
+	/*
+	 * returns true if vibration is on
+	 */
+	public static boolean getVibration(){
+		return vibrate;
+	}
+		
 	@Override public void resume() {}
 	@Override public void pause() {}
 	@Override public void dispose() {}

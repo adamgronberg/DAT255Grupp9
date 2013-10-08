@@ -60,7 +60,7 @@ public class PlayerMissile extends Projectile{
 		getParent().addActor( new AreaOfEffectDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
 							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H, AREA_OF_EFFECT_DAMAGE, 
 							FACTION, AFFECTED_TARGETS));
-		if(GameScreen.sound) SoundAssets.missileExplosion.play();
+		if(GameScreen.getSound()) SoundAssets.missileExplosion.play();
 		remove();
 	}
 	

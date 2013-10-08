@@ -199,7 +199,7 @@ public class PlayerShip extends Sprite {
 	 * @param milliSeconds
 	 */
 	public void vibrate(int milliSeconds){
-		if (GameScreen.vibrateOn){
+		if (GameScreen.getVibration()){
 			Gdx.input.vibrate(milliSeconds);
 		}
 	}
