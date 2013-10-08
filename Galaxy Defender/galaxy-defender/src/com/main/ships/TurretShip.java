@@ -19,6 +19,7 @@ public class TurretShip extends EnemyShip {
 	private final static float SHIPSPEED = 1f;
 	private final static int SCOREVALUE=30;
 	private final static int HEALTH=100;
+	private MiniTurretShip miniTurretShip;
 	
 	private boolean left = false;
 	private boolean up = true;
@@ -36,9 +37,12 @@ public class TurretShip extends EnemyShip {
 	private TextureRegion currentFrame;
 	private float stateTime;
 
-	public TurretShip(float x, float y) {
+	public TurretShip(float x, float y,PlayerShip playerShip) {
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyTurretShip, DAMAGE_WHEN_RAMMED);
 		setRotation(-180);
+	//	miniTurretShip = new MiniTurretShip(x,y,playerShip);
+	//	getParent().addActor(miniTurretShip);
+
 
 		onFireAnimation = new Animation(TIMEPERFRAME, ImageAssets.fireAnimation);
 		stateTime = 0f;
@@ -55,6 +59,7 @@ public class TurretShip extends EnemyShip {
 			getParent().addActor( new EnemyLaser(getX()+3*WIDTH/4, getY(), 2f, 15f,5,0));
 			getParent().addActor( new EnemyLaser(getX()+7*WIDTH/8, getY()+5, 2f, 15f,5,20));
 			getParent().addActor( new EnemyLaser(getX()+WIDTH, getY()+10, 2f, 15f,5,20));
+			
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 		if(TimeUtils.nanoTime() - lastBombTime > RATEOFBOMB){
@@ -65,6 +70,8 @@ public class TurretShip extends EnemyShip {
 
 	@Override
 	protected void move(float delta) {
+		//miniTurretShip.setXY(getX(), getY());
+		
 		if(left && down){
 			setX(getX()-SHIPSPEED);
 			setY(getY()-SHIPSPEED);

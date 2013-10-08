@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import ships.BasicShip;
 import ships.EnemyShip.EnemyTypes;
 import ships.HeavyShip;
+import ships.MiniTurretShip;
 import ships.PlayerShip;
 import ships.ScoutShip;
 import ships.KamikazeShip;
@@ -96,7 +97,11 @@ public class GameLogic extends Table {
 		
 		int xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-TurretShip.WIDTH);
 		int yPos =(int) GameScreen.GAME_HEIGHT-TurretShip.HEIGHT;
-		addActor(new TurretShip(xPos, yPos));
+		TurretShip turretShip = new TurretShip(xPos, yPos, playerShip);
+		addActor(turretShip);
+		
+	
+		
 		
 		
 		lastEnemyShipTime = TimeUtils.nanoTime();
