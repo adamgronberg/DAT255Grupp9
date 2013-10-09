@@ -204,5 +204,13 @@ public class PlayerShip extends Sprite {
 		}
 	}
 	
+	/**
+	 * boast the ships combat ability 
+	 * 
+	 * @param bost determine the strength of the boast  
+	 */
+	public void uppgrade(int boast){
+		currentHealth +=boast;
+	}
 
 }

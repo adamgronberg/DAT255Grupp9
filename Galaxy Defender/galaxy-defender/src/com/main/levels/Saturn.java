@@ -1,8 +1,7 @@
 package levels;
 
-import collisiondetection.CollisionDetection;
+
 import ships.Asteroid;
-import ships.KamikazeShip;
 import spacegame.GameLogic;
 
 public class Saturn extends Level{

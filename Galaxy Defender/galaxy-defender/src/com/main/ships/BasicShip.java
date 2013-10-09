@@ -39,4 +39,10 @@ public class BasicShip extends EnemyShip {
 
 	@Override
 	protected void shoot(float delta) {}
+
+	@Override
+	public void uppgrade(int boast) {
+		
+		
+	}
 }

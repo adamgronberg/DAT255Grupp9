@@ -23,7 +23,13 @@ public class EscapingEnemyShip extends EnemyShip {
 	protected int bouncingCounter;
 	protected float timeBeforeTurn;
 	private GameLogic gl;
-
+	
+	/**
+	 * Constructor
+	 * @param x	x-led Spawn location
+	 * @param y y-led Spawn location
+	 * @param gl gamelogic needed for its ability to dodge hostile projectile
+	 */
 	public EscapingEnemyShip( float x, float y, GameLogic gl) {
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.escapingEnemyShip, DAMAGE_WHEN_RAMMED);
 		movingLeft=true;
@@ -92,6 +98,12 @@ public class EscapingEnemyShip extends EnemyShip {
 		else{
 			movingLeft=true;
 		}
+	}
+
+	@Override
+	public void uppgrade(int boast) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

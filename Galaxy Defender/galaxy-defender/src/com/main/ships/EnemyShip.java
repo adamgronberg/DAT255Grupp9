@@ -166,4 +166,14 @@ public abstract class EnemyShip extends Sprite{
 	public int getHealth(){
 		return currentHealth;
 	}
+	
+	/**
+	 * boast the ships combat ability 
+	 * 
+	 * @param boast determine the strength of the boast  
+	 */
+	public void uppgrade(int boast){
+		maximumHealth += boast;
+		currentHealth += boast;
+	}
 }

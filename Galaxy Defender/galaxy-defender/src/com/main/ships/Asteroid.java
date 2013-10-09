@@ -37,4 +37,10 @@ public class Asteroid extends EnemyShip {
 
 	@Override protected void shoot(float delta) {}
 
+	@Override
+	public void uppgrade(int boast) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
