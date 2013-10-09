@@ -9,14 +9,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import ships.PlayerShip;
 import weapons.*;
+import ships.EnemyShip;
+import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
 import collisiondetection.OutOfBoundsDetection;
 
 /**
  * 
  * @author Grupp9
- * TODO: Add levels instead of random spawning
- *
+ * Handles the game logic.
  */
 public class GameLogic extends Table {
 	
@@ -25,25 +26,27 @@ public class GameLogic extends Table {
 	private GameScreen gameScreen;
 	public PlayerShip playerShip;
 	private Level level;
-	private int nextLevel=0;
+
 	/**
 	 * Constructor
-	 * TODO: Should set up unique levels and not spawn enemies randomly (Release 1 demo)
+	 * @param gameScreen
 	 */
 	public GameLogic(GameScreen gameScreen) {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
 		this.gameScreen = gameScreen;
+		
 		level = new Neptune(this);
-		addActor(level);
 		playerShip = new PlayerShip();
-		addActor(playerShip);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
+		
+		addActor(level);
+		addActor(playerShip);
 		addActor(backgroundSpace);
 	}
 	
 	/**
-	 *  Handles object spawning and collision
+	 * checks collision detection and controls if the player is dead
 	 */
 	@Override
 	public void act(float delta) {
@@ -53,56 +56,43 @@ public class GameLogic extends Table {
 			clear();
 			addActor(playerShip);
 			playerShip.resetHealth();
-			//gameScreen.victory(); lägg i mission completed
 		}
 		
-
-		//if (TimeUtils.nanoTime() - lastEnemyShipTime > 9000000000f) spawnShip();			//For testing
-		//if (TimeUtils.nanoTime() - lastAstroidSpawn > 10000000000f) spawnAstroids();			//For testing
-		//if (TimeUtils.nanoTime() - lastSpawnPatternTime > 7000000000f) spawnPattern();		//For testing
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
+		
 		if(level.missionCompleted()){
-			gameScreen.victory();
+			clear();
 			level.remove();
-			level=nextLevel(nextLevel);
-			nextLevel++;
+			level=nextLevel(level);
 			addActor(level);
+			addActor(playerShip);
+			gameScreen.victory();
 		}
 		
 	}
-	/**Switches level
-	 * 
-	 * @param nextlevel
-	 * @return
-	 */
 	
-	private Level nextLevel(int nextlevel) {
-		switch(nextlevel){
-		case 0:
-			return new Uranus(this);
-		case 1:
-			return new Saturn(this);
-		default:
-			return new Neptune(this);
-		}
+	/**
+	 * Switches level
+	 * @param level the current level
+	 * @return the next level
+	 * TODO: Now loops, should have a end
+	 */
+	private Level nextLevel(Level level) {
+		if(level.getName().equals("Neptune")) return new Uranus(this);
+		else if(level.getName().equals("Uranus")) return new Saturn(this);
+		else return new Neptune(this);
 	}
 	
 	/**
 	 * Draws all actors on stage
+	 * makes sure background is below everything and that playerShip is above
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
 		playerShip.drawAbove(batch, parentAlpha);
-	}
-	
-	/**
-	 * Switches player weapon
-	 */
-	public void switchPlayerWeapon(){
-		playerShip.switchWeapon();
 	}
 	
 	/**
@@ -120,16 +110,15 @@ public class GameLogic extends Table {
 	}
 	
 	/**
-	 * 
 	 * @return the current health
 	 */
 	public int getPlayerHealth(){
 		return playerShip.getCurrentHealth();
 	}
-/**
- * 
- * @return the name of the Level
- */
+	
+	/**
+	 * @return the name of the Level
+	 */
 	public String getLevelName(){
 		return level.getName();
 	}
@@ -151,4 +140,19 @@ public class GameLogic extends Table {
 		}
 		return  playerProjectile;
 	}
+
+	/** 
+	 * @return True if no enemies on the map 
+	 */ 
+	public boolean activeSpawns(){ 
+		Array<MovableEntity> spawns  = new Array<MovableEntity>(); 
+		SnapshotArray<Actor> toSearch = getChildren(); 
+		for(Actor actor: toSearch){ 
+			if(actor instanceof EnemyShip || actor instanceof SpawnPattern){ 
+				MovableEntity entity = (MovableEntity)actor; 
+				spawns.add(entity); 
+			} 
+		} 
+		return spawns.size == 0;
+	}	
 }

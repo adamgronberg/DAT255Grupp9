@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import spacegame.Sprite;
 
 /**
- * 
- * 
  * @author Grupp9
  *	
  * Base class for enemy ships. Enemy ships should extend this class
@@ -26,22 +24,25 @@ public abstract class EnemyShip extends Sprite{
 	private TextureRegion currentFrame;
 	private float disabledCurrentTime;
 	private float disabledDuration;
+	private boolean disabable;
 	
 	/**
-	 * Constructor
-	 * @param x x-led Spawn location
-	 * @param y y-led Spawn location
-	 * @param width The width of the EnemyShip
-	 * @param height The height of the EnemyShip
-	 * @param health The total health of the enemy
-	 * @param scorevalue The value of killing the enemy
-	 * @param texture The image of the enemy
-	 * @param damageOnHit The damage per hit
+	 * 
+	 * @param width	enemy width
+	 * @param height	enemy height
+	 * @param x	Spawn location
+	 * @param y	Spawn location
+	 * @param health	The total health of the enemy
+	 * @param scoreValue	The value of killing the enemy
+	 * @param texture	The image of the enemy
+	 * @param damageWhenRammed	Damage on ram
 	 */
-	public EnemyShip(float width, float height,float x, float y, int health, int scoreValue, TextureRegion texture, int damageWhenRammed) {
+	public EnemyShip(float width, float height,float x, float y, int health, 
+			int scoreValue, TextureRegion texture, int damageWhenRammed, boolean disabable) {
 		super(width, height, x, y, texture);
 		this.currentHealth = health;
 		this.scoreValue = scoreValue;
+		this.disabable = disabable;
 		this.damageWhenRammed = damageWhenRammed;
 
 		maximumHealth = health;
@@ -83,19 +84,11 @@ public abstract class EnemyShip extends Sprite{
 	}
 	
 	/**
-	 * Call this function if the target should be able to be disabled
-	 * @return
-	 */
-	protected boolean disabable(){
-		disabledCurrentTime++;
-		return disabled();
-	}
-	
-	/**
-	 * returns if the ship is disabled or not
 	 * @return
 	 */
 	public boolean disabled(){
+		if(!disabable) return false;
+		disabledCurrentTime++;
 		if (disabledCurrentTime >= disabledDuration) return false;
 		else return true;
 	}
@@ -120,7 +113,7 @@ public abstract class EnemyShip extends Sprite{
 	 */
 	@Override
 	public void act(float delta){
-		if (!disabable()){
+		if (!disabled()){
 			move(delta);
 			shoot(delta);
 		}
@@ -172,8 +165,6 @@ public abstract class EnemyShip extends Sprite{
 	 * 
 	 * @param boast determine the strength of the boast  
 	 */
-	public void uppgrade(int boast){
-		maximumHealth += boast;
-		currentHealth += boast;
+	public void upgrade(int boast){
 	}
 }

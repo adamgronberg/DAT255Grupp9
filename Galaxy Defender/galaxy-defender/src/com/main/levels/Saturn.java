@@ -1,36 +1,36 @@
 package levels;
 
-import ships.Asteroid;
 import spacegame.GameLogic;
 
+/**
+ * 
+ * @author Grupp9
+ *
+ * Contains Saturn spawns as well as win condition
+ * 
+ */
 public class Saturn extends Level{
 
-	public Saturn(GameLogic gl){
-	super(gl);
-	levelname="Saturn";
-	spawn();
+	private static final float spawnTimes[] = {6000000000f,6000000000f,6000000000f};
+	private static final String[][] toSpawn = {{"ASTBELT#5#10#205000000f"},
+												{"ASTBELT#5#10#205000000f"},
+												{"ASTBELT#5#10#205000000f"}};
 	
-}
-
-@Override
-public void spawn() {
-	Asteroid ast=new Asteroid(300,700);
+	/**
+	 * Constructor
+	 * @param gl The game logic
+	 */
+	public Saturn(GameLogic gameLogic){
+		super(gameLogic, toSpawn, spawnTimes);
+		levelname = "Saturn";
+	}
 	
-	gameLogic.addActor(ast);
-	
-}
-
-@Override
-public void act(float delta) {
-	
-	
-}
-
-@Override
-public boolean missionCompleted() {
-	return false;
-	
-	
-}
+	/**
+	 * Survive all asteroid belts
+	 */
+	@Override
+	public boolean missionCompleted() {
+		return levelSpawnDone && gameLogic.activeSpawns();
+	}
 
 }

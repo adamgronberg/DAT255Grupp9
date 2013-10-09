@@ -31,13 +31,16 @@ public class StealthShip extends EnemyShip {
 	private long lastMissileTime=0;
 	private PlayerShip player;
 	private int shot =0;
+	
+	private static final boolean DISABABLE = true;
+	
 	/**
 	 * Constructor
 	* @param x	x-led Spawn location
 	* @param y y-led Spawn location
 	*/
 	public StealthShip(float x, float y, PlayerShip player){
-		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyStealthShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyStealthShip, DAMAGE_WHEN_RAMMED, DISABABLE);
 		currentTime = TimeUtils.nanoTime();
 		this.player = player;
 	}
@@ -89,7 +92,7 @@ public class StealthShip extends EnemyShip {
 	@Override protected void shoot(float delta) {}
 
 	@Override
-	public void uppgrade(int boast) {
+	public void upgrade(int boast) {
 		// TODO Auto-generated method stub
 		
 	}

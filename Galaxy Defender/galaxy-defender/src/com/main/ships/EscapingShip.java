@@ -7,7 +7,7 @@ import weapons.Projectile;
 import assets.ImageAssets;
 import com.badlogic.gdx.utils.Array;
 
-public class EscapingEnemyShip extends EnemyShip {
+public class EscapingShip extends EnemyShip {
 	private final static float SHIPSPEED=2.1f;
 	private final static int HEALTH=7;
 	private final static int SCOREVALUE=40;
@@ -17,6 +17,8 @@ public class EscapingEnemyShip extends EnemyShip {
 	private static final int DAMAGE_WHEN_RAMMED = 0;
 
 	private static final int BOUNCING_CONST = 30;
+	
+	private static final boolean DISABABLE = true;
 	
 	protected boolean movingLeft;
 	protected boolean bouncing;
@@ -30,8 +32,8 @@ public class EscapingEnemyShip extends EnemyShip {
 	 * @param y y-led Spawn location
 	 * @param gl gamelogic needed for its ability to dodge hostile projectile
 	 */
-	public EscapingEnemyShip( float x, float y, GameLogic gl) {
-		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.escapingEnemyShip, DAMAGE_WHEN_RAMMED);
+	public EscapingShip( float x, float y, GameLogic gl) {
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.escapingShip, DAMAGE_WHEN_RAMMED, DISABABLE);
 		movingLeft=true;
 		bouncing=false;
 		this.gl=gl;
@@ -48,8 +50,6 @@ public class EscapingEnemyShip extends EnemyShip {
 		else{
 			setX(getX()+SHIPSPEED*currentHealth/HEALTH);
 		}
-		
-		
 	}
 	
 	protected void changeDirectionCheck(){
@@ -101,9 +101,7 @@ public class EscapingEnemyShip extends EnemyShip {
 	}
 
 	@Override
-	public void uppgrade(int boast) {
+	public void upgrade(int boast) {
 		// TODO Auto-generated method stub
-		
 	}
-
 }

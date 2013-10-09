@@ -1,50 +1,33 @@
 package levels;
 
-import com.badlogic.gdx.math.MathUtils;
-import ships.*;
-import ships.KamikazeShip;
 import spacegame.GameLogic;
-import collisiondetection.CollisionDetection;
 
+/**
+ * 
+ * @author Grupp9
+ *
+ * Contains Uranus spawns as well as win condition
+ * 
+ */
 public class Uranus extends Level{
 	
-public Uranus(GameLogic gl){
-		
-		super(gl);
-		levelname="Uranus";
-		spawn();
-		
+	private static final float spawnTimes[] = {6000000000f};
+	private static final String[][] toSpawn = {{"ESCAPING:200:700"}};
+	
+	/**
+	 * Constructor
+	 * @param gameLogic The game logic
+	 */
+	public Uranus(GameLogic gameLogic){
+		super(gameLogic, toSpawn, spawnTimes);
+		levelname="Uranus";		
 	}
 
-	@Override
-	public void spawn() {
-		KamikazeShip ks=new KamikazeShip(200,700, gameLogic.playerShip);
-		EscapingEnemyShip ees = new EscapingEnemyShip(200,700, gameLogic);
-		for(int i=0; i<5; i++){
-			StealthShip ss = new StealthShip(MathUtils.random(0,400),700,gameLogic.playerShip);
-			gameLogic.addActor(ss);
-		}
-		for(int i=0; i<10; i++){
-			ks = new KamikazeShip(MathUtils.random(0,400),700,gameLogic.playerShip);
-			gameLogic.addActor(ks);
-		}
-		gameLogic.addActor(ks);
-		gameLogic.addActor(ees);
-		
-	}
-
-	@Override
-	public void act(float delta) {
-		
-		
-	}
-
+	/**
+	 * TODO: Should have a mission complete condition
+	 */
 	@Override
 	public boolean missionCompleted() {
-		return (CollisionDetection.getEnemyShipAmount()==0);
-		
-		
+		return levelSpawnDone && gameLogic.activeSpawns();
 	}
-
-
 }

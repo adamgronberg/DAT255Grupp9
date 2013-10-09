@@ -35,6 +35,7 @@ public class BigLaserShip extends EnemyShip {
 	private boolean shooting;
 	private AreaOfEffectDummy areaDummy;
 	private BigLaserEffect bigLaserEffect;
+	private static final boolean DISABABLE = true;
 
 	
 	/**
@@ -43,7 +44,8 @@ public class BigLaserShip extends EnemyShip {
 	 * @param y y-led spawn location
 	 */
 	public BigLaserShip(float x, float y){
-		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyBigLaserShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyBigLaserShip,
+				DAMAGE_WHEN_RAMMED, DISABABLE);
 		lastProjectileTime = TimeUtils.nanoTime()-MathUtils.random(3000000000f,RATEOFFIRE/2);
 	}
 	
@@ -90,8 +92,7 @@ public class BigLaserShip extends EnemyShip {
 	@Override protected void shoot(float delta) {}
 
 	@Override
-	public void uppgrade(int boast) {
+	public void upgrade(int boast) {
 		// TODO Auto-generated method stub
-		
 	}
 }

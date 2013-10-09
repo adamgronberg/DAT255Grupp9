@@ -17,6 +17,7 @@ public class TurretShip extends EnemyShip {
 	private final static int SCOREVALUE=30;
 	private final static int HEALTH=100;
 	
+	private static final boolean DISABABLE = true;
 	private boolean left;
 	
 	private float lastProjectileTime;
@@ -24,7 +25,8 @@ public class TurretShip extends EnemyShip {
 	private static final int DAMAGE_WHEN_RAMMED = 40;
 
 	public TurretShip(float x, float y) {
-		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyTurretShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyTurretShip, 
+				DAMAGE_WHEN_RAMMED, DISABABLE);
 		setRotation(-180);
 	}
 	
@@ -75,7 +77,7 @@ public class TurretShip extends EnemyShip {
 	}
 
 	@Override
-	public void uppgrade(int boast) {
+	public void upgrade(int boast) {
 		// TODO Auto-generated method stub
 		
 	}
