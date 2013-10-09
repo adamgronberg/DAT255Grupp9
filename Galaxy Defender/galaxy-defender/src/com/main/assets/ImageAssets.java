@@ -16,6 +16,7 @@ public class ImageAssets {
 	public static TextureRegion enemyBasicShip;
 	public static TextureRegion enemyScoutShip;
 	public static TextureRegion enemyHeavyShip;
+	public static TextureRegion escapingEnemyShip;
 	public static TextureRegion enemyKamikazeShip;
 	public static TextureRegion enemyMultiShooterShip;
 	public static TextureRegion enemyBigLaserShip;
@@ -54,6 +55,7 @@ public class ImageAssets {
 		playerLaser = atlas.findRegion("weapons/greenLaser");
 		playerIonCannon = atlas.findRegion("weapons/blueMegaLaser");
 		enemyLaser = atlas.findRegion("weapons/redLaser");
+		escapingEnemyShip = atlas.findRegion("Ships/Ship8");
 		enemyBasicShip = atlas.findRegion("Ships/Ship3");
 		enemyScoutShip = atlas.findRegion("Ships/Ship9");
 		enemyHeavyShip = atlas.findRegion("Ships/Ship17");

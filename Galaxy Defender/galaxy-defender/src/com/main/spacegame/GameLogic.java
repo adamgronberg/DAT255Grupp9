@@ -6,7 +6,10 @@ import levels.*;
 import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.TimeUtils;
 import ships.BasicShip;
 import ships.EnemyShip.EnemyTypes;
@@ -18,6 +21,7 @@ import ships.MultiShooterShip;
 import ships.BigLaserShip;
 import ships.StealthShip;
 import spawnlogic.SpawnPattern;
+import weapons.*;
 import collisiondetection.CollisionDetection;
 import collisiondetection.OutOfBoundsDetection;
 
@@ -203,5 +207,23 @@ public class GameLogic extends Table {
  */
 	public String getLevelName(){
 		return level.getName();
+	}
+	
+	/**
+	 * @return allPlayerShotts
+	 */
+	public Array<Projectile> getPlayerShotts(){
+		Array<Projectile> playerProjectile = new Array<Projectile>();
+		SnapshotArray<Actor> toSearch = getChildren();
+		for(Actor actor: toSearch){
+			if(actor instanceof Projectile){
+				
+				Projectile projectile = (Projectile)actor;
+				if(projectile.getFaction()==TargetTypes.PLAYER){
+					playerProjectile.add(projectile);
+				}
+			}
+		}
+		return  playerProjectile;
 	}
 }
