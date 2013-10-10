@@ -48,16 +48,15 @@ public class HighscoreHandler {
     /**
      * adding the current user to highscore list if the point is good enough
      */
-    protected void addPlayerToHighscore(){
+    public void addPlayerToHighscore(){
     	if(highscore.size<NUMBEROFHEROES){
     		highscore.add(currentUser); 
-    		return;
     	}
-    	
-    	if(currentUser.getScore()>highscore.get(NUMBEROFHEROES-1).getScore()){
+    	else if(currentUser.getScore()>highscore.get(NUMBEROFHEROES-1).getScore()){
     		highscore.removeIndex(highscore.size-1);
     		highscore.add(currentUser);   
     	}
+    	sortHighscore();
     }
     
     /**

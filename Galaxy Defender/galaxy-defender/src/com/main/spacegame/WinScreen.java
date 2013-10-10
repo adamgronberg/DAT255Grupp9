@@ -1,5 +1,7 @@
 package spacegame;
 
+import highscore.HighscoreHandler;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -18,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class WinScreen implements Screen,InputProcessor{
 	
 	private String text="Enter Your Name: ";
+	private String name="";
 	private Stage stage;
 	private Skin skin;
 	private TextButton continueButton,laserButton,missileButton,empButton;
@@ -142,19 +145,22 @@ public class WinScreen implements Screen,InputProcessor{
 	@Override public void resume() {}
 	@Override public void dispose() {}
 
-	
+	/**
+	 * Player writes name and is eventually saved in the highscore-list
+	 */
 	@Override
 	public boolean keyTyped (char character) {
+		HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
 		if (character == '\n') {
-			text=text+" "+ score;
 			highScore.setText(text);
+			highscoreHandler.createPlayer(name, score);
+			highscoreHandler.addPlayerToHighscore();
 			
-						
 			Gdx.input.setOnscreenKeyboardVisible(false);
 		} else {
+			name += character;
 			text += character;
 			highScore.setText(text);
-		
 		}
 		return false;
 	}
