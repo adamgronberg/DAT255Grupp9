@@ -82,6 +82,14 @@ public class HighscoreHandler {
     }
     
     /**
+     * 
+     * @return the highscorelist
+     */
+    public Array<User> getHighscore(){
+    	return highscore;
+    }
+    
+    /**
      * save the current highscore to file
      */
     public void writeToFile(){
