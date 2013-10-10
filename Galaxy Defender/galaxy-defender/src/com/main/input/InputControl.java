@@ -40,8 +40,8 @@ public class InputControl implements GestureListener, InputProcessor {
 	 */
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-//		if (velocityY < -FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) 
-//		if (velocityY > FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) 
+		if (velocityY < -FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.startNextLevel();
+		//if (velocityY > FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.startNextLevel();
 		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) GameScreen.toggleOptionAutoShoot();	//For testing
 		if (velocityX > FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.changeOptionControlLayout();
 		return false;
@@ -68,6 +68,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		if(keycode == Input.Keys.RIGHT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.RIGHT)  gameLogic.playerShip.stay();
 		if(keycode == Input.Keys.W)  gameLogic.playerShip.shootMissle();
 		if(keycode == Input.Keys.Q)  gameLogic.playerShip.shootEMP();
+		if(keycode == Input.Keys.UP)  gameLogic.startNextLevel();
 		if(keycode == Input.Keys.CONTROL_LEFT) GameScreen.toggleOptionAutoShoot();			//For testing
 		if(keycode == Input.Keys.SHIFT_LEFT) gameScreen.changeOptionControlLayout();		//For testing, only android
 		return false;

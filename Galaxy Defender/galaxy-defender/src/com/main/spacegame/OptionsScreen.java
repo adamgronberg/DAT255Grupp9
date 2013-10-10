@@ -34,7 +34,7 @@ public class OptionsScreen implements Screen{
 	public OptionsScreen(MyGame myGame, GameScreen gameScreen){
 		this.myGame = myGame;
 		this.gameScreen = gameScreen;
-		music = true;
+		music = false;
 		if(music)SoundAssets.spaceMusic.play();
 	}
 	
@@ -132,7 +132,7 @@ public class OptionsScreen implements Screen{
 		stage.addActor(table);	
 	}
 	
-	/*
+	/**
 	 * Returns text for soundButton
 	 */
 	private String getSoundText(){
@@ -140,7 +140,7 @@ public class OptionsScreen implements Screen{
 		else return "Sound On";
 	}
 	
-	/*
+	/**
 	 * Returns text for vibrateButton
 	 */
 	private String getVibrateText(){
@@ -148,7 +148,7 @@ public class OptionsScreen implements Screen{
 		else return "Vibration On";
 	}
 	
-	/*
+	/**
 	 * Returns text for musicButton
 	 */
 	private String getMusicText(){
@@ -156,7 +156,7 @@ public class OptionsScreen implements Screen{
 		else return "Music On";
 	}
 	
-	/*
+	/**
 	 * Toggles music
 	 */
 	private void toggleMusic(){

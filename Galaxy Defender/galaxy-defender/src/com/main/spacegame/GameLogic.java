@@ -53,32 +53,23 @@ public class GameLogic extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		if (playerShip.getCurrentHealth()<1) {	//For testing
-			currentScore=0;
-			clear();
-			addActor(playerShip);
-			playerShip.resetHealth();
+			resetGame();
+			gameScreen.defeat();
 		}
 		
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
 		
 		if(level.missionCompleted()){
-			clear();
-			level.remove();
-			level=nextLevel(level);
-			addActor(level);
-			addActor(playerShip);
+			startNextLevel();
 			gameScreen.victory();
 		}
 	}
-	
-	
 	
 	/**
 	 * Switches level
 	 * @param level the current level
 	 * @return the next level
-	 * TODO: Now loops, should have a end
 	 */
 	private Level nextLevel(Level level) {
 		if(level.getName().equals("Neptune")) return new Uranus(this);
@@ -156,5 +147,29 @@ public class GameLogic extends Table {
 			} 
 		} 
 		return spawns.size == 0;
-	}	
+	}
+	
+	/**
+	 * Resets everything and recreates first level
+	 */
+	public void resetGame(){
+		currentScore=0;
+		clear();
+		level = new Neptune(this);
+		addActor(level);
+		addActor(playerShip);
+		playerShip.resetHealth();
+	}
+	
+	/**
+	 * Starts the next level
+	 */
+	public void startNextLevel(){
+		playerShip.stay();
+		clear();
+		level.remove();
+		level=nextLevel(level);
+		addActor(level);
+		addActor(playerShip);
+	}
 }

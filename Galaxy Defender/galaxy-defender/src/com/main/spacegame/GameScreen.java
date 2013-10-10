@@ -28,7 +28,7 @@ public class GameScreen implements Screen{
 	private int currentLevel;
 	private int levelResult;
 	
-	private static boolean sound = true; 			//TODO: Temp. disables/enables sound
+	private static boolean sound = false; 			//TODO: Temp. disables/enables sound
 	public static boolean optionAutoShoot = true; 	//TODO: Temp. disables/enables shoot
 	private static boolean vibrate = false;			//TODO: Temp. disables/enables vibrate
 	
