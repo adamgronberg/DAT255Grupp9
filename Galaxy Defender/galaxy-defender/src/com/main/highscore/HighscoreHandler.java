@@ -3,6 +3,8 @@ package highscore;
 import com.badlogic.gdx.utils.Array;
 
 public class HighscoreHandler {
+	
+	private static final int NUMBEROFHEROES = 13;
 	private static HighscoreHandler instance = null;
 	private Array<User> highscore;
 	private User currentUser;
@@ -22,7 +24,15 @@ public class HighscoreHandler {
     }
     
     public void createPlayer(String name){
-    	
+    	currentUser = new User(0,name);
+    }
+    
+    protected void addPlayerToHighscore(){
+    	for(int i = 0; i<NUMBEROFHEROES; i++){
+    		if(highscore.get(i).getScore()<currentUser.getScore()){
+    			
+    		}
+    	}
     }
 
 }
