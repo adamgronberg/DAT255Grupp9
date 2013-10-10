@@ -12,7 +12,10 @@ import ships.StealthShip;
 import ships.TurretShip;
 import spacegame.GameLogic;
 import spawnlogic.AsteroidBelt;
+import spawnlogic.VPattern;
 import spawnlogic.VerticalPattern;
+import collisiondetection.OutOfBoundsDetection;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -74,7 +77,8 @@ public abstract class Level extends Actor {
 	public void act(float delta) {
 		if(!levelSpawnDone){
 			spawn();
-		}	
+		}
+		OutOfBoundsDetection.checkOutOfBounds(gameLogic.getChildren());
 	}
 	
 	/**
@@ -134,10 +138,20 @@ public abstract class Level extends Actor {
 			gameLogic.addActor(new VerticalPattern(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), 
 					Integer.parseInt(detailedSpawn[2]), Float.parseFloat(detailedSpawn[3]), detailedSpawn[1], gameLogic));
 		}
+		else if(spawnInfo[0].startsWith("VPATTERN")){
+			String[] detailedSpawn = spawnInfo[0].split("#");
+			gameLogic.addActor(new VPattern(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), 
+					Integer.parseInt(detailedSpawn[2]), Float.parseFloat(detailedSpawn[3]), detailedSpawn[1], gameLogic, Integer.parseInt(detailedSpawn[4])));
+		}
 	}
 	
 	/**
 	 * @return If the mission is done or not
 	 */
 	abstract public boolean missionCompleted();
+	
+	/**
+	 * @return If the mission failed
+	 */
+	abstract public boolean missionFailed();
 }

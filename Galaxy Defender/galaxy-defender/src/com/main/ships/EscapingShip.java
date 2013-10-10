@@ -25,6 +25,7 @@ public class EscapingShip extends EnemyShip {
 	protected int bouncingCounter;
 	protected float timeBeforeTurn;
 	private GameLogic gl;
+	private boolean isAlive = true;
 	
 	/**
 	 * Constructor
@@ -98,6 +99,22 @@ public class EscapingShip extends EnemyShip {
 		else{
 			movingLeft=true;
 		}
+	}
+	/**
+	 * 
+	 * @return true if ship is alive else false
+	 */
+	public boolean isAlive(){
+		return isAlive;
+	}
+	
+	/**
+	 *  Removes the ship
+	 */
+	@Override
+	public void destroyShip() {
+		isAlive = false;
+		remove();
 	}
 
 	@Override

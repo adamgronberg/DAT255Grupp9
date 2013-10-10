@@ -24,7 +24,7 @@ public class PlayerShip extends Sprite {
 	private static final int HEIGHT = 40;					// The size of the player
 	private static final float SPEED = 4;					// number of pixels the player moves every act
 	private static final float SPAWN_LOCATION_Y = 0.1f; //Height where the player moves
-	private static final int STARTING_HEALTH  = 100;
+	private static final int STARTING_HEALTH  = 1000;
 	
 	
 	private int maximumHealth;

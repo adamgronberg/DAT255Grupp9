@@ -12,7 +12,6 @@ import weapons.*;
 import ships.EnemyShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
-import collisiondetection.OutOfBoundsDetection;
 
 /**
  * 
@@ -57,12 +56,20 @@ public class GameLogic extends Table {
 			resetGame();
 		}
 		
-		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
 		
 		if(level.missionCompleted()){
 			startNextLevel();
 			gameScreen.victory();
+		}
+		
+		else if(level.missionFailed()){
+			clear();
+			level.remove();
+			level=nextLevel(level);
+			addActor(level);
+			addActor(playerShip);
+			gameScreen.defeat();
 		}
 	}
 	
@@ -74,6 +81,9 @@ public class GameLogic extends Table {
 	private Level nextLevel(Level level) {
 		if(level.getName().equals("Neptune")) return new Uranus(this);
 		else if(level.getName().equals("Uranus")) return new Saturn(this);
+		else if(level.getName().equals("Saturn")) return new Jupiter(this);
+		else if(level.getName().equals("Jupiter")) return new Mars(this);
+		else if(level.getName().equals("Mars")) return new Earth(this);
 		else return new Neptune(this);
 	}
 	
