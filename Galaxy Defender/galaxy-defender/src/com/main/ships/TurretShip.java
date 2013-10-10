@@ -30,7 +30,7 @@ public class TurretShip extends EnemyShip {
 	
 	private float lastProjectileTime;
 	private float lastRandomTime;
-	private float lastBombTime;
+	private float lastBombTime = TimeUtils.nanoTime();
 	private static final int DAMAGE_WHEN_RAMMED = 40;
 	
 

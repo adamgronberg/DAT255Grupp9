@@ -6,7 +6,6 @@ import spacegame.GameScreen;
 import weapons.EnemyLaser;
 import assets.ImageAssets;
 import com.badlogic.gdx.utils.TimeUtils;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
  * 

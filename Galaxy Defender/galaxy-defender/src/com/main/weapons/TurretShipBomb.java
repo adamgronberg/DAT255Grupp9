@@ -17,12 +17,9 @@ import assets.SoundAssets;
  */
 
 public class TurretShipBomb extends Projectile{
-	private final static float BOMBSPEED=5f;
-	private final static int HEALTH=1;
-	private final static int SCOREVALUE=1;
+	private final static float BOMBSPEED=6f;
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
-	private static final int DAMAGE_WHEN_RAMMED = 15;
 	private static final float AREAEFFECT_H = 100;
 	private static final float AREAEFFECT_W = 100;
 	private static final TargetTypes FACTION = TargetTypes.ENEMY;
@@ -61,7 +58,12 @@ public class TurretShipBomb extends Projectile{
 		remove();
 	}
 	
-	
+	/**
+	 * Adds 
+	 * -Explosion Effect
+	 * -Explosion Dummy
+	 * -Sound Effect
+	 */
 	public void addOnHitEffect() {
 		getParent().addActor( new ExplosionEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
 							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
@@ -70,7 +72,9 @@ public class TurretShipBomb extends Projectile{
 		if(GameScreen.sound) SoundAssets.missileExplosion.play();
 		remove();
 	}
-	
+	/*
+	 * Checks if the bomb hit the "ground"
+	 */
 	public void checkIfDown(){
 		if(getY()<= 50){
 			addOnHitEffect();
