@@ -141,7 +141,6 @@ public class WinScreen implements Screen,InputProcessor{
 	 */
 	
 	public void setScore(int score){
-		System.out.println(score);
 		this.score=score;
 	}
 	
