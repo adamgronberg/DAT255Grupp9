@@ -33,7 +33,7 @@ public class GameScreen implements Screen{
 	private static boolean vibrate = false;			//TODO: Temp. disables/enables vibrate
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
-	public ControlLayout currentLayout = ControlLayout.LAYOUT1;
+	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
 	
 	public static final int MAX_LEVEL = 6;
 	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;

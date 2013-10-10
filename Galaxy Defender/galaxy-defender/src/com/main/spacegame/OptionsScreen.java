@@ -24,14 +24,16 @@ public class OptionsScreen implements Screen{
 	private boolean music;
 	private Stage stage;
 	private Skin skin;
-	private TextButton mainMenuButton, soundButton, musicButton,vibrateButton;//, layoutButton;
+	private TextButton mainMenuButton, soundButton, musicButton,vibrateButton, layoutButton;
 	private MyGame myGame;
+	private GameScreen gameScreen;
 	private Table table;
 	private TextureAtlas atlas;
 	private TextureRegionDrawable menuBackground;
 
-	public OptionsScreen(MyGame myGame){
+	public OptionsScreen(MyGame myGame, GameScreen gameScreen){
 		this.myGame = myGame;
+		this.gameScreen = gameScreen;
 		music = true;
 		if(music)SoundAssets.spaceMusic.play();
 	}
@@ -107,16 +109,25 @@ public class OptionsScreen implements Screen{
 	        }
 	    } );
 		
+		layoutButton = new TextButton("Change Control Layout",skin);
+		layoutButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	gameScreen.changeOptionControlLayout();
+	        }
+	    } );
 		
 		mainMenuButton.pad(15,10,15,10);
 		soundButton.pad(15,12,15,12);
 		musicButton.pad(15,13,15,13);
-		vibrateButton.pad(15, 10, 15, 10);
+		vibrateButton.pad(15,10,15,10);
+		layoutButton.pad(15,10,15,10);
 	
 		table.add(mainMenuButton).spaceBottom(50).row();
 		table.add(soundButton).spaceBottom(50).row();
 		table.add(musicButton).spaceBottom(50).row();
 		table.add(vibrateButton).spaceBottom(50).row();
+		table.add(layoutButton);
 		
 		stage.addActor(table);	
 	}

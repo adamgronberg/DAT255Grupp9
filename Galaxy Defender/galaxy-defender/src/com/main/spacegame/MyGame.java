@@ -27,9 +27,9 @@ public class MyGame extends Game {
 	public void create() {
 		ImageAssets.load();
 		SoundAssets.load();
-		menuScreen = new MenuScreen(this);
-		optionsScreen = new OptionsScreen(this);
 		gameScreen = new GameScreen(this);
+		menuScreen = new MenuScreen(this);
+		optionsScreen = new OptionsScreen(this, gameScreen);		
 		setScreen(menuScreen);
 	}
 	
