@@ -82,7 +82,7 @@ public class WinScreen implements Screen,InputProcessor{
 		youWinLabel = new Label(labelTexts[level],skin);
 		table.add(youWinLabel).spaceBottom(50).row();
 		
-		if(level==0){
+		if(level==0 || level==6){
 			Gdx.input.setOnscreenKeyboardVisible(true);	
 			table.add(highScore).spaceBottom(100).row();
 			highScore.setText(text);
