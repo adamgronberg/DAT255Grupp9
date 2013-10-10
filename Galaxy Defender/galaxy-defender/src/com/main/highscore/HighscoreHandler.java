@@ -1,10 +1,17 @@
 package highscore;
 
+
+import java.io.*;
+
 import com.badlogic.gdx.utils.Array;
+
+
+
 
 public class HighscoreHandler {
 	
 	private static final int NUMBEROFHEROES = 13;
+	private static final String FILENAME = "highscore";
 	private static HighscoreHandler instance = null;
 	private Array<User> highscore;
 	private User currentUser;
@@ -47,8 +54,8 @@ public class HighscoreHandler {
     		return;
     	}
     	
-    	if(currentUser.getScore()>highscore.get(highscore.size).getScore()){
-    		highscore.removeIndex(highscore.size);
+    	if(currentUser.getScore()>highscore.get(NUMBEROFHEROES-1).getScore()){
+    		highscore.removeIndex(highscore.size-1);
     		highscore.add(currentUser);   
     	}
     }
@@ -64,6 +71,33 @@ public class HighscoreHandler {
         		}
         	}
     	}
+    }
+    
+    /**
+     * remove all highscoreholders
+     */
+    public void resetHighscore(){
+    	highscore = new Array<User>();
+    }
+    
+    /**
+     * save the current highscore to file
+     */
+    public void writeToFile(){
+    	
+    	try{
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILENAME));
+            for (int i = 0; i < highscore.size; i++) {
+                out.writeObject(highscore.get(i));   
+            }
+            out.close();
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("Cannot Create: " +FILENAME);
+        }
+        catch(IOException e){
+            e.printStackTrace();}
     }
     
     
