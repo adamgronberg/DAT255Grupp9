@@ -36,4 +36,7 @@ public class Saturn extends Level{
 		return levelSpawnDone && gameLogic.activeSpawns();
 	}
 
+	//Unused method
+	@Override
+	public boolean missionFailed() {return false;}
 }

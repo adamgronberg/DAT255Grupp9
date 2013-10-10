@@ -12,7 +12,6 @@ import weapons.*;
 import ships.EnemyShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
-import collisiondetection.OutOfBoundsDetection;
 
 /**
  * 
@@ -59,7 +58,6 @@ public class GameLogic extends Table {
 			playerShip.resetHealth();
 		}
 		
-		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
 		
 		if(level.missionCompleted()){
@@ -69,6 +67,15 @@ public class GameLogic extends Table {
 			addActor(level);
 			addActor(playerShip);
 			gameScreen.victory();
+		}
+		
+		else if(level.missionFailed()){
+			clear();
+			level.remove();
+			level=nextLevel(level);
+			addActor(level);
+			addActor(playerShip);
+			gameScreen.defeat();
 		}
 	}
 	

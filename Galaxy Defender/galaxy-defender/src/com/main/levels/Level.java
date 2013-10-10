@@ -14,6 +14,8 @@ import spacegame.GameLogic;
 import spawnlogic.AsteroidBelt;
 import spawnlogic.VPattern;
 import spawnlogic.VerticalPattern;
+import collisiondetection.OutOfBoundsDetection;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -75,7 +77,8 @@ public abstract class Level extends Actor {
 	public void act(float delta) {
 		if(!levelSpawnDone){
 			spawn();
-		}	
+		}
+		OutOfBoundsDetection.checkOutOfBounds(gameLogic.getChildren());
 	}
 	
 	/**
@@ -146,4 +149,9 @@ public abstract class Level extends Actor {
 	 * @return If the mission is done or not
 	 */
 	abstract public boolean missionCompleted();
+	
+	/**
+	 * @return If the mission failed
+	 */
+	abstract public boolean missionFailed();
 }
