@@ -53,7 +53,9 @@ public class MyGame extends Game {
 			break;
 		case WINSCREEN:
 			winScreen = new WinScreen(this, gameScreen.getLevelResult());
+			winScreen.setScore(gameScreen.getGameLogicScore());
 			setScreen(winScreen);
+			
 		default:
 			break;
 		}

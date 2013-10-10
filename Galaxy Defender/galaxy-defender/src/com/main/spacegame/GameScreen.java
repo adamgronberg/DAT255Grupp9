@@ -25,6 +25,7 @@ public class GameScreen implements Screen{
 	private TopInfoBar topInfoBar;
 	private MyGame myGame;
 	
+	
 	private int currentLevel;
 	private int levelResult;
 	
@@ -275,4 +276,6 @@ public class GameScreen implements Screen{
 	public String getLevelName() {
 		return gameLogic.getLevelName();
 	}	
+	
+	
 }

@@ -28,6 +28,7 @@ public class WinScreen implements Screen,InputProcessor{
 	private TextureAtlas atlas;
 	private TextureRegionDrawable menuBackground;
 	private int level;
+	private int score=0;
 	private String[] labelTexts = {"You are the most useless pilot in earths history. \n We will all die because of your incompetence!"
 			,"You win level 1","You win level 2","You win level 3","You win level 4","You win level 5","You saved earth, big deal..."};
 	
@@ -84,6 +85,7 @@ public class WinScreen implements Screen,InputProcessor{
 			Gdx.input.setOnscreenKeyboardVisible(true);
 			
 			table.add(highScore).spaceBottom(100).row();
+			highScore.setText(text);
 		}
 		
 		continueButton = new TextButton("Continue", skin);
@@ -120,7 +122,9 @@ public class WinScreen implements Screen,InputProcessor{
 	@Override
 	public boolean keyTyped (char character) {
 		if (character == '\n') {
+			text=text+" "+ score;
 			highScore.setText(text);
+			
 						
 			Gdx.input.setOnscreenKeyboardVisible(false);
 		} else {
@@ -129,6 +133,20 @@ public class WinScreen implements Screen,InputProcessor{
 		
 		}
 		return false;
+	}
+	
+	/**
+	 * Saves the current score from the game
+	 * @param score
+	 */
+	
+	public void setScore(int score){
+		System.out.println(score);
+		this.score=score;
+	}
+	
+	public int getCurrentScore(){
+		return score;
 	}
 	
 	
