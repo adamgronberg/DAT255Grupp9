@@ -43,6 +43,7 @@ public class GameLogic extends Table {
 		addActor(level);
 		addActor(playerShip);
 		addActor(backgroundSpace);
+
 	}
 	
 	/**
@@ -69,8 +70,9 @@ public class GameLogic extends Table {
 			addActor(playerShip);
 			gameScreen.victory();
 		}
-		
 	}
+	
+	
 	
 	/**
 	 * Switches level

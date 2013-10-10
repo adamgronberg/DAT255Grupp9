@@ -28,7 +28,7 @@ public abstract class Level extends Actor {
 	protected String levelname;
 	protected float timer;
 	protected GameLogic gameLogic;
-	protected int spawnTimers = 0;
+	protected int spawnSynch = 0;
 	protected float lastWaveTime = 0;
 	protected boolean levelSpawnDone = false;
 
@@ -56,13 +56,13 @@ public abstract class Level extends Actor {
 	 * Spawns the enemies on the level
 	 */
 	public void spawn(){
-		if (TimeUtils.nanoTime() - lastWaveTime > spawnTimes[0]){
-			for(String s: toSpawn[0]){
+		if (TimeUtils.nanoTime() - lastWaveTime > spawnTimes[spawnSynch]){
+			for(String s: toSpawn[spawnSynch]){
 				decideSpawn(s);
 			}
 			lastWaveTime = TimeUtils.nanoTime();
-			spawnTimers++;
-			if (spawnTimers == spawnTimes.length) levelSpawnDone = true;
+			spawnSynch++;
+			if (spawnSynch == spawnTimes.length) levelSpawnDone = true;
 		}
 	}
 	
@@ -109,7 +109,7 @@ public abstract class Level extends Actor {
 		}
 		
 		else if(spawnInfo[0].equals("TURRET")){
-			gameLogic.addActor(new TurretShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2])));
+			gameLogic.addActor(new TurretShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), gameLogic.playerShip));
 		}
 		
 		else if(spawnInfo[0].equals("ESCAPING")){

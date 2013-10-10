@@ -10,7 +10,6 @@ import ships.MultiShooterShip;
 import ships.ScoutShip;
 import ships.Asteroid;
 import ships.StealthShip;
-import ships.TurretShip;
 import spacegame.GameLogic;
 
 /**
@@ -63,7 +62,6 @@ public class VerticalPattern extends SpawnPattern{
 			else if (enemyType.equals("KAMIKAZE")) enemyShip = new KamikazeShip(getX(), getY(), gameLogic.playerShip);
 			else if (enemyType.equals("MULTISHOOTER")) enemyShip = new MultiShooterShip(getX(), getY());
 			else if (enemyType.equals("STEALTH")) enemyShip = new StealthShip(getX(), getY(), gameLogic.playerShip);
-			else if (enemyType.equals("TURRET")) enemyShip = new TurretShip(getX(), getY());
 			else if (enemyType.equals("BIGLASER")) enemyShip = new BigLaserShip(getX(), getY());
 			else enemyShip = new BasicShip(getX(), getY());
 			
