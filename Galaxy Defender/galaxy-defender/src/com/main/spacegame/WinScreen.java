@@ -155,7 +155,6 @@ public class WinScreen implements Screen,InputProcessor{
 			highScore.setText(text);
 			highscoreHandler.createPlayer(name, score);
 			highscoreHandler.addPlayerToHighscore();
-			
 			Gdx.input.setOnscreenKeyboardVisible(false);
 		} else {
 			name += character;
