@@ -1,6 +1,8 @@
 package spacegame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,12 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class WinScreen implements Screen{
+public class WinScreen implements Screen,InputProcessor{
 	
+	private String text="Enter Your Name: ";
 	private Stage stage;
 	private Skin skin;
 	private TextButton continueButton;
 	private Label youWinLabel;
+	private Label highScore;
 	private MyGame myGame;
 	private Table table;
 	private TextureAtlas atlas;
@@ -30,6 +34,7 @@ public class WinScreen implements Screen{
 	public WinScreen(MyGame myGame, int level){
 		this.myGame = myGame;
 		this.level = level;
+		
 	}
 	
 	/**
@@ -40,7 +45,8 @@ public class WinScreen implements Screen{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);	
 		stage.act();
-		stage.draw();	
+		stage.draw();
+		
 	}
 
 	/**
@@ -58,6 +64,8 @@ public class WinScreen implements Screen{
 	 * Called when app is resumed on android
 	 */
 	@Override public void show() {
+		
+		
 		stage = new Stage();
 		atlas = new TextureAtlas("uiskin.atlas");
 		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
@@ -67,8 +75,16 @@ public class WinScreen implements Screen{
 		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);
 		table.setBackground(menuBackground);
 		
+		highScore=new Label(text,skin);
+		
 		youWinLabel = new Label(labelTexts[level],skin);
 		table.add(youWinLabel).spaceBottom(50).row();
+		
+		if(level==0){
+			Gdx.input.setOnscreenKeyboardVisible(true);
+			
+			table.add(highScore).spaceBottom(100).row();
+		}
 		
 		continueButton = new TextButton("Continue", skin);
 		continueButton.addListener(new ClickListener() {	       
@@ -81,7 +97,11 @@ public class WinScreen implements Screen{
 		continueButton.pad(15, 10, 15, 10);		
 		table.add(continueButton).spaceBottom(50).row();		
 		stage.addActor(table);
-		Gdx.input.setInputProcessor(stage);
+				
+		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(this);
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	/**
@@ -95,5 +115,63 @@ public class WinScreen implements Screen{
 	@Override public void pause() {}
 	@Override public void resume() {}
 	@Override public void dispose() {}
+
+	
+	@Override
+	public boolean keyTyped (char character) {
+		if (character == '\n') {
+			highScore.setText(text);
+						
+			Gdx.input.setOnscreenKeyboardVisible(false);
+		} else {
+			text += character;
+			highScore.setText(text);
+		
+		}
+		return false;
+	}
+	
+	
+	////////////// Unused methods  /////////////////
+	@Override
+	public boolean keyDown(int keycode) {return false;}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

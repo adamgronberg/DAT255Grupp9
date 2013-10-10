@@ -53,8 +53,8 @@ public class GameLogic extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		if (playerShip.getCurrentHealth()<1) {	//For testing
+			gameScreen.defeat(); //TODO switch places defeat and reset add another score variable
 			resetGame();
-			gameScreen.defeat();
 		}
 		
 		OutOfBoundsDetection.checkOutOfBounds(getChildren());
