@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class MiniTurretShip extends EnemyShip {
 	public static final float RATEOFFIRE = 100000000f; 	 //In nanoseconds
 	public static final float FIRETIME =   5000000000f;
-	private final static float SHIPSPEED=1f;
 	private final static int HEALTH=20;
 	private final static int SCOREVALUE=1;
 	public final static int HEIGHT=45;
@@ -24,7 +23,6 @@ public class MiniTurretShip extends EnemyShip {
 	public final static int LASER_HEIGHT=15;
 	public final static int LASER_WIDTH=3;
 	private static final int DAMAGE_WHEN_RAMMED = 5;
-	private boolean visible = true;
 	private long currentTime;
 	private long lastMissileTime=0;
 	private PlayerShip player;
@@ -38,6 +36,7 @@ public class MiniTurretShip extends EnemyShip {
 	 * Constructor
 	* @param x	x-led Spawn location
 	* @param y y-led Spawn location
+	* @param player PlayerShip
 	*/
 	public MiniTurretShip(float x, float y, PlayerShip player){
 		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyStealthShip, DAMAGE_WHEN_RAMMED);
@@ -67,28 +66,36 @@ public class MiniTurretShip extends EnemyShip {
 
 	@Override
 	protected void move(float delta) {
-		if(TimeUtils.nanoTime()-currentTime>FIRETIME)
-		{
+		if(TimeUtils.nanoTime()-currentTime>FIRETIME){
 			currentTime=TimeUtils.nanoTime();
-		shot=0;
-		
+			shot=0;
 		}
 		spawnProjectile();
 		setX(turretX+TurretShip.WIDTH/2-WIDTH/2);
 		setY(turretY-5);
-		
-		
-	  
 	}
+	/**
+	 * @return true if ship is alive else false
+	 */
 	public boolean isAlive(){
 		return isAlive;
 	}
+	/**
+	 * @return true if its the first time this is checked
+	 */
 	public boolean firstTimeDead(){
 		return isAliveFirst;
 	}
+	/**
+	 * @param b true if it was the first time this was checked
+	 */
 	public void setFirstTimeDead(boolean b){
 		isAliveFirst = b;
 	}
+	/**
+	 * @param x TurretShips x position
+	 * @param y TurretShips y position
+	 */
 	public void setXY(float x, float y){
 		turretX=x;
 		turretY=y;

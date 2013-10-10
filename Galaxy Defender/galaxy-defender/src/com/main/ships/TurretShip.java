@@ -165,6 +165,10 @@ public class TurretShip extends EnemyShip {
     	batch.draw(currentFrame, getX()+WIDTH, getY()-HEIGHT, 5, HEIGHT/2, 60, 60, 1, 1, getRotation());
     	batch.draw(currentFrame, getX(), getY()-HEIGHT, 25, HEIGHT/2, 60, 60, 1, 1, getRotation());
 	}
+	
+	/**
+	 * Checks if miniTurretShip is dead
+	 */
 	@Override
 	public void destroyShip(){
 		if(!miniTurretShip.isAlive()&&miniTurretShip.firstTimeDead()){
