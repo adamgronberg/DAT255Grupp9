@@ -9,15 +9,16 @@ import spacegame.GameLogic;
  * Contains Neptune spawns as well as win condition
  */
 public class Neptune extends Level{
-	
-	private static final float spawnTimes[] = {5000000000f,5000000000f,5000000000f};
-	private static final String[][] toSpawn = {{"BASIC:200:760","HEAVY:300:760","KAMIKAZE:250:760",
-								"BIGLASER:350:760","PATTERN#SCOUT#5#275000000f:300:760", "TURRET:200:740"},
-								{"BASIC:200:760","HEAVY:300:760","KAMIKAZE:250:760",
-									"BIGLASER:350:760","PATTERN#SCOUT#5#275000000f:300:760", "MULTISHOOTER:325:760"},
-									{"BASIC:200:760","HEAVY:300:760","STEALTH:150:760","KAMIKAZE:250:760",
-										"BIGLASER:350:760","PATTERN#SCOUT#5#275000000f:300:760"}};
-	
+	                                          //ANvänds inte, 1-2        2-3
+	private static final float spawnTimes[] = {5000000000f, 3000000000f,5000000000f, 3000000000f,2500000000f,3000000000f,2000000000f};
+	private static final String[][] toSpawn = {{"PATTERN#SCOUT#2#275000000f:350:750","PATTERN#SCOUT#2#275000000f:450:760"},
+								{"VPATTERN#BASIC#3#150000000f#50:40:760","VPATTERN#BASIC#3#150000000f#50:350:760", "HEAVY:150:740","HEAVY:280:780"},
+								{"PATTERN#SCOUT#2#275000000f:50:750","PATTERN#SCOUT#2#275000000f:160:760"},
+								{"VPATTERN#HEAVY#3#550000000f#50:300:760"}, // '.'
+								{"VPATTERN#HEAVY#3#550000000f#50:75:760"},  //'.'
+								{"VPATTERN#BASIC#5#150000000f#50:200:760"}, // V
+								{"VPATTERN#BASIC#9#150000000f#50:225:760"},};// V
+									
 	/**
 	 * Constructor
 	 * @param gl The game logic

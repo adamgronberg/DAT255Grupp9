@@ -11,9 +11,11 @@ import spacegame.GameLogic;
  */
 public class Saturn extends Level{
 
-	private static final float spawnTimes[] = {6000000000f,6000000000f,6000000000f};
+	private static final float spawnTimes[] = {6000000000f,3500000000f,6000000000f,4000000000f,6000000000f};
 	private static final String[][] toSpawn = {{"ASTBELT#5#10#205000000f"},
+												{"MULTISHOOTER:300:760", "STEALTH:200:700", "STEALTH:50:700"},
 												{"ASTBELT#5#10#205000000f"},
+												{"MULTISHOOTER:200:760", "STEALTH:100:700", "STEALTH:300:700"},
 												{"ASTBELT#5#10#205000000f"}};
 	
 	/**
