@@ -73,13 +73,7 @@ public class HighscoreHandler {
     	}
     }
     
-<<<<<<< HEAD
-=======
-    public Array<User> getHighscore(){
-    	return highscore;
-    }
-    
->>>>>>> origin/develop_Highscore_file
+
     /**
      * remove all highscoreholders
      */
