@@ -66,8 +66,8 @@ public class InputControl implements GestureListener, InputProcessor {
 	public boolean keyUp(int keycode) {
 		if(keycode == Input.Keys.LEFT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.LEFT)  gameLogic.playerShip.stay();
 		if(keycode == Input.Keys.RIGHT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.RIGHT)  gameLogic.playerShip.stay();
-		if(keycode == Input.Keys.W)  gameLogic.playerShip.shootMissle();
-		if(keycode == Input.Keys.Q)  gameLogic.playerShip.shootEMP();
+		if(keycode == Input.Keys.W)  gameLogic.playerShip.getWeaponHandeler().shootMissle();
+		if(keycode == Input.Keys.Q)  gameLogic.playerShip.getWeaponHandeler().shootEMP();
 		if(keycode == Input.Keys.UP)  gameLogic.startNextLevel();
 		if(keycode == Input.Keys.CONTROL_LEFT) GameScreen.toggleOptionAutoShoot();			//For testing
 		if(keycode == Input.Keys.SHIFT_LEFT) gameScreen.changeOptionControlLayout();		//For testing, only android
@@ -85,10 +85,10 @@ public class InputControl implements GestureListener, InputProcessor {
 			gameLogic.playerShip.stay();
 		}
 		else if(gameScreen.getShootMissileButton().isPressed(touchPos.x, touchPos.y)){
-			gameLogic.playerShip.shootMissle();
+			gameLogic.playerShip.getWeaponHandeler().shootMissle();
 		}
 		else if(gameScreen.getShootEMPButton().isPressed(touchPos.x, touchPos.y)){
-			gameLogic.playerShip.shootEMP();
+			gameLogic.playerShip.getWeaponHandeler().shootEMP();
 		}
 		return false;
 	}

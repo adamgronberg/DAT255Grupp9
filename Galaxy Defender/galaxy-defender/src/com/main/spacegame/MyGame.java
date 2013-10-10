@@ -54,6 +54,7 @@ public class MyGame extends Game {
 		case WINSCREEN:
 			winScreen = new WinScreen(this, gameScreen.getLevelResult());
 			winScreen.setScore(gameScreen.getGameLogicScore());
+			winScreen.setPlayer(gameScreen.getPlayerShip());
 			setScreen(winScreen);
 			
 		default:

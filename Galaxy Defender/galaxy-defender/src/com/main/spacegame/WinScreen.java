@@ -1,7 +1,7 @@
 package spacegame;
 
+import ships.PlayerShip;
 import highscore.HighscoreHandler;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -24,6 +24,7 @@ public class WinScreen implements Screen,InputProcessor{
 	private Stage stage;
 	private Skin skin;
 	private TextButton continueButton,laserButton,missileButton,empButton;
+	private PlayerShip playerShip;
 	private Label youWinLabel;
 	private Label highScore;
 	private MyGame myGame;
@@ -100,7 +101,7 @@ public class WinScreen implements Screen,InputProcessor{
 		laserButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	;
+	        	playerShip.getWeaponHandeler().upgradeLaser();
 	        }
 	    } );
 		
@@ -108,7 +109,7 @@ public class WinScreen implements Screen,InputProcessor{
 		missileButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	;
+	        	playerShip.getWeaponHandeler().increaseMissileBlastArea();
 	        }
 	    } );
 		
@@ -116,7 +117,7 @@ public class WinScreen implements Screen,InputProcessor{
 		empButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	;
+	        	playerShip.getWeaponHandeler().increaseEMPDisableTime();
 	        }
 	    } );
 			
@@ -168,7 +169,7 @@ public class WinScreen implements Screen,InputProcessor{
 	 * Saves the current score from the game
 	 * @param score
 	 */
-		public void setScore(int score){
+	public void setScore(int score){
 		this.score=score;
 	}
 	
@@ -185,5 +186,9 @@ public class WinScreen implements Screen,InputProcessor{
 	@Override	public boolean touchDragged(int screenX, int screenY, int pointer) {return false;}
 	@Override	public boolean mouseMoved(int screenX, int screenY) {return false;}
 	@Override	public boolean scrolled(int amount) {return false;}
+
+	public void setPlayer(PlayerShip playerShip) {
+		this.playerShip = playerShip;
+	}
 
 }

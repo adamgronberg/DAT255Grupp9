@@ -2,13 +2,10 @@ package ships;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.TimeUtils;
 import assets.ImageAssets;
 import spacegame.GameScreen;
 import spacegame.Sprite;
-import weapons.PlayerEMP;
-import weapons.PlayerLaser;
-import weapons.PlayerMissile;
+import weapons.PlayerWeaponHandeler;
 
 /**
  * 
@@ -19,34 +16,26 @@ import weapons.PlayerMissile;
 public class PlayerShip extends Sprite {
 	
 	public static enum Direction {LEFT, RIGHT, NONE;}
-	private static enum AvailableWeapons {MISSILE, LASER;} 	//Implemented weapons
-	private static final int WITDH = 35;						// The size of the player
-	private static final int HEIGHT = 40;					// The size of the player
+	public static final int WITDH = 35;						// The size of the player
+	public static final int HEIGHT = 40;					// The size of the player
 	private static final float SPEED = 4;					// number of pixels the player moves every act
-	private static final float SPAWN_LOCATION_Y = 0.1f; //Height where the player moves
+	private static final float SPAWN_LOCATION_Y = 0.1f; 	//Height where the player moves
 	private static final int STARTING_HEALTH  = 100;
 	
-	
+	private PlayerWeaponHandeler weaponHandeler;
 	private int maximumHealth;
-	private int currentHealth;
-	
-	private float lastLaserTime = 0;      		//For testing
-	private float lastMissileTime = 0;      	//For testing
-	private boolean missileReady = true;		//For testing
-	private float lastEMPTime = 0;      		//For testing
-	private boolean EMPReady = true;			//For testing
+	private int currentHealth;		
 	
 	private Direction movmentDirection = Direction.NONE;
-	private AvailableWeapons currentWeapon = AvailableWeapons.LASER;
-	
 	
 	/**
 	 * Constructor
 	 */
 	public PlayerShip() {
 		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2-WITDH/2, GameScreen.GAME_HEIGHT*SPAWN_LOCATION_Y,ImageAssets.playerShip);
+		weaponHandeler = new PlayerWeaponHandeler(this);
 		maximumHealth = STARTING_HEALTH;
-		currentHealth=STARTING_HEALTH;
+		currentHealth = STARTING_HEALTH;
 	}
 	
 	/**
@@ -117,7 +106,7 @@ public class PlayerShip extends Sprite {
 	 */
 	@Override
 	public void act(float delta){
-		if (GameScreen.optionAutoShoot) spawnPlayerProjectile();
+		if (GameScreen.optionAutoShoot) weaponHandeler.spawnPlayerProjectile();
 		switch(movmentDirection){
 			case LEFT:
 				setX(getX()-SPEED);
@@ -127,10 +116,7 @@ public class PlayerShip extends Sprite {
 				break;
 			case NONE:
 				break;
-			
 		}
-		if(TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) missileReady = true;
-		if(TimeUtils.nanoTime() - lastEMPTime > PlayerEMP.RATEOFFIRE) EMPReady = true;
 		if(getX()<0) setX(0);
 		else if(getX()>GameScreen.GAME_WITDH-WITDH) setX(GameScreen.GAME_WITDH-WITDH);	
 	}
@@ -141,76 +127,19 @@ public class PlayerShip extends Sprite {
 	public Direction getMovmentDirection(){
 		return movmentDirection;
 	}
-	
-	/**
-	 * Spawns player projectiles
-	 */
-	public void spawnPlayerProjectile() {
-		if(currentWeapon == AvailableWeapons.LASER && TimeUtils.nanoTime() - lastLaserTime > PlayerLaser.RATEOFFIRE) {
-			getParent().addActor( new PlayerLaser(getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, getY()+PlayerShip.HEIGHT));
-			lastLaserTime = TimeUtils.nanoTime();
-		}
-	}
-	
-	/**
-	 * Shoots a missile if the cooldown is ready
-	 */
-	public void shootMissle(){
-		if (missileReady) {
-			getParent().addActor(new PlayerMissile(getX()+PlayerShip.WITDH/2-PlayerMissile.WIDTH/2, getY()));
-			lastMissileTime = TimeUtils.nanoTime();
-			missileReady = false;
-		}
-	}
-	
-	/**
-	 * Shoots a EMP if the cooldown is ready
-	 */
-	public void shootEMP(){
-		if (EMPReady) {
-			getParent().addActor(new PlayerEMP(getX()+PlayerShip.WITDH/2-PlayerEMP.WIDTH/2, getY()));
-			lastEMPTime = TimeUtils.nanoTime();
-			EMPReady = false;
-		}
-	}
-	
-	/**
-	 * @return True if missile is ready
-	 */
-	public boolean getMissileReady(){
-		return missileReady;
-	}
-	
-	/**
-	 * @return True if EMP is ready
-	 */
-	public boolean getEMPReady(){
-		return EMPReady;
-	}
-	
-	/**
-	 * Swaps players weapon
-	 */
-	public void switchWeapon(){
-	}
 
 	/**
 	 * Vibrates the android device for the specified number of milliSeconds
 	 * @param milliSeconds
 	 */
 	public void vibrate(int milliSeconds){
-		if (GameScreen.getVibration()){
-			Gdx.input.vibrate(milliSeconds);
-		}
+		if (GameScreen.getVibration()) Gdx.input.vibrate(milliSeconds);
 	}
 	
 	/**
-	 * boast the ships combat ability 
-	 * 
-	 * @param bost determine the strength of the boast  
+	 * @return The player weaponHandeler
 	 */
-	public void uppgrade(int boast){
-		currentHealth +=boast;
+	public PlayerWeaponHandeler getWeaponHandeler(){
+		return weaponHandeler;
 	}
-
 }

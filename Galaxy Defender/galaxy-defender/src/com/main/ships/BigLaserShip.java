@@ -90,9 +90,4 @@ public class BigLaserShip extends EnemyShip {
 	}
 
 	@Override protected void shoot(float delta) {}
-
-	@Override
-	public void upgrade(int boast) {
-		// TODO Auto-generated method stub
-	}
 }

@@ -1,5 +1,7 @@
 package spacegame;
 
+import ships.PlayerShip;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -24,7 +26,6 @@ public class GameScreen implements Screen{
 	private InputControl inputController;
 	private TopInfoBar topInfoBar;
 	private MyGame myGame;
-	
 	
 	private int currentLevel;
 	private int levelResult;
@@ -162,12 +163,12 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		if(gameLogic.playerShip.getMissileReady() == true){
+		if(gameLogic.playerShip.getWeaponHandeler().getMissileReady() == true){
 			shootMissileButton.setVisible(true);
 		} 
 		else shootMissileButton.setVisible(false);
 		
-		if(gameLogic.playerShip.getEMPReady() == true){
+		if(gameLogic.playerShip.getWeaponHandeler().getEMPReady() == true){
 			shootEMPButton.setVisible(true);
 		} 
 		else shootEMPButton.setVisible(false);
@@ -196,6 +197,13 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
+	 * @return The player ship
+	 */
+	public PlayerShip getPlayerShip(){
+		return gameLogic.playerShip;
+	}
+	
+	/**
 	 * @return Current GameLogic health
 	 */
 	public int getGameLogicHealth(){
@@ -215,7 +223,7 @@ public class GameScreen implements Screen{
 		return levelResult;
 	}
 	
-	/*
+	/**
 	 * Calls victory screen and changes to next level
 	 */
 	public void victory(){
@@ -224,7 +232,7 @@ public class GameScreen implements Screen{
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
 	
-	/*
+	/**
 	 * Calls defeat screen
 	 */
 	public void defeat(){
@@ -232,7 +240,7 @@ public class GameScreen implements Screen{
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
 	
-	/*
+	/**
 	 * Activates/disables sound effects
 	 */
 	public static void toggleSound(){
@@ -240,14 +248,14 @@ public class GameScreen implements Screen{
 		else sound = true;
 	}
 	
-	/*
+	/**
 	 * returns true if sound is on
 	 */
 	public static boolean getSound(){
 		return sound;
 	}
 	
-	/*
+	/**
 	 * Activates/disables impact vibration
 	 */
 	public static void toggleVibrateOn(){
@@ -255,7 +263,7 @@ public class GameScreen implements Screen{
 		else vibrate = true;
 	}
 	
-	/*
+	/**
 	 * returns true if vibration is on
 	 */
 	public static boolean getVibration(){

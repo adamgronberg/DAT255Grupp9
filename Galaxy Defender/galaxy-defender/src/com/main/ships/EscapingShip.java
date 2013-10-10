@@ -100,6 +100,7 @@ public class EscapingShip extends EnemyShip {
 			movingLeft=true;
 		}
 	}
+
 	/**
 	 * 
 	 * @return true if ship is alive else false
@@ -115,10 +116,5 @@ public class EscapingShip extends EnemyShip {
 	public void destroyShip() {
 		isAlive = false;
 		remove();
-	}
-
-	@Override
-	public void upgrade(int boast) {
-		// TODO Auto-generated method stub
 	}
 }

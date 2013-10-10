@@ -149,14 +149,6 @@ public class TurretShip extends EnemyShip {
 	protected void shoot(float delta) {
 		spawnProjectile();
 	}
-
-	@Override
-	public void upgrade(int boast) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 	
 	/**
 	 * Adds a fire in the back of the ship
@@ -166,7 +158,6 @@ public class TurretShip extends EnemyShip {
 		super.draw(batch, parentAlpha);
 		currentFrame = onFireAnimation.getKeyFrame(stateTime, true);
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
-        
 	}
 	
 	/**
@@ -182,19 +173,16 @@ public class TurretShip extends EnemyShip {
 	}
 	
 	/**
-	 * Checks if miniTurretShip is dead
+	 * Removes health from ship and removes as actor when dead.
 	 */
 	@Override
-	public void destroyShip(){
-		if(!miniTurretShip.isAlive()&&miniTurretShip.firstTimeDead()){
-			setHealth(100);
-			miniTurretShip.setFirstTimeDead(false);
+	public int hit(int damage) {
+		if(miniTurretShip.isAlive()) return 0;
+		currentHealth = currentHealth - damage;
+		if (currentHealth<=0){
+			destroyShip();
+			return scoreValue;
 		}
-		if(!miniTurretShip.isAlive()&&!miniTurretShip.firstTimeDead()){
-			remove();
-		}
-		else{
-			setHealth(100);
-		}
+		return 0;
 	}
 }

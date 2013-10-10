@@ -63,10 +63,4 @@ public class HeavyShip extends EnemyShip {
 	protected void shoot(float delta) {
 		spawnProjectile();	
 	}
-
-	@Override
-	public void upgrade(int boast) {
-		// TODO Auto-generated method stub
-		
-	}
 }

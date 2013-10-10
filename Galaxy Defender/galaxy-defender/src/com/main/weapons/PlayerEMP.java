@@ -14,13 +14,14 @@ import assets.*;
 public class PlayerEMP extends Projectile {
 	
 	public static final float RATEOFFIRE = 2000000000f; //In nanoseconds
-	private static final float DISABLE_TIME = 75;
-	private static final float SPEED = 6f;
 	public static final float HEIGHT = 40;
 	public static final float WIDTH = 50;
+	private static final float DISABLE_TIME = 500000000f;
+	private static final float SPEED = 6f;
 	private static final int DAMAGEONHIT = 0;
 	private static final TargetTypes FACTION = TargetTypes.PLAYER;
 	private static final TargetTypes[] AFFECTEDTARGETS = {TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
+	private float disableTimeUpgrade;
 	
 	private int distanceTraveled;
 	
@@ -29,9 +30,10 @@ public class PlayerEMP extends Projectile {
 	 * @param x x-led Spawn
 	 * @param y y-led Spawn
 	 */
-	public PlayerEMP(float x, float y){
+	public PlayerEMP(float x, float y, float disableTimeUpgrade){
 		super(x, y, WIDTH, HEIGHT, DAMAGEONHIT, ImageAssets.playerIonCannon);
 		distanceTraveled = 0;
+		this.disableTimeUpgrade = disableTimeUpgrade;
 	}
 	
 	/**
@@ -43,7 +45,8 @@ public class PlayerEMP extends Projectile {
 		setY(getY()+SPEED);
 		distanceTraveled = distanceTraveled + (int)SPEED;
 		if(distanceTraveled>HEIGHT){
-			getParent().addActor(new EMPDummy(getX(), getY(), WIDTH, HEIGHT, DAMAGEONHIT, FACTION, AFFECTEDTARGETS, DISABLE_TIME));
+			getParent().addActor(new EMPDummy(getX(), getY(), WIDTH, HEIGHT, DAMAGEONHIT, FACTION, 
+					AFFECTEDTARGETS, DISABLE_TIME+disableTimeUpgrade));
 			distanceTraveled = 0;
 		}
 	}

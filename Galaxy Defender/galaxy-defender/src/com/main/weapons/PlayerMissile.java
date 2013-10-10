@@ -11,10 +11,11 @@ import effects.ExplosionEffect;
  * 
  * @author Grupp9
  *
- * Player missile. Have a small blast radius on impact and a sweet on hit effect aswell as sound
+ * Player missile. Have a small blast radius on impact and a sweet on hit effect as well as sound
  *
  */
 public class PlayerMissile extends Projectile{
+
 
 	private static final float SPEED = 5f;
 	private static final int DAMAGE = 1;
@@ -28,14 +29,18 @@ public class PlayerMissile extends Projectile{
 	public static float RATEOFFIRE = 2000000000f; //In nanoseconds
 	public static final float HEIGHT = 25;
 	public static final float WIDTH = 10;
+	private float upgradedAreaEffectH;
+	private float upgradedAreaEffectW;
 	
 	/**
 	 * Constructor
 	 * @param x x-led Spawn
 	 * @param y y-led Spawn
 	 */
-	public PlayerMissile(float x, float y){
+	public PlayerMissile(float x, float y, float areaUpgrade){
 		super(x, y, WIDTH, HEIGHT, DAMAGE, ImageAssets.playerMissile);
+		upgradedAreaEffectH = AREAEFFECT_H + areaUpgrade;
+		upgradedAreaEffectW = AREAEFFECT_W + areaUpgrade;
 	}
 	
 	/**
@@ -55,10 +60,10 @@ public class PlayerMissile extends Projectile{
 	 */
 	@Override
 	public void addOnHitEffect(MovableEntity entity) {
-		getParent().addActor( new ExplosionEffect(getX()-AREAEFFECT_W/2+WIDTH/2, 
-							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
-		getParent().addActor( new AreaOfEffectDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
-							getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H, AREA_OF_EFFECT_DAMAGE, 
+		getParent().addActor( new ExplosionEffect(getX()-upgradedAreaEffectW/2+WIDTH/2, 
+							getY()-upgradedAreaEffectH/2 + HEIGHT, upgradedAreaEffectW, upgradedAreaEffectH));
+		getParent().addActor( new AreaOfEffectDummy(getX()-upgradedAreaEffectW/2+WIDTH/2, 
+							getY()-upgradedAreaEffectH/2 + HEIGHT, upgradedAreaEffectW, upgradedAreaEffectH, AREA_OF_EFFECT_DAMAGE, 
 							FACTION, AFFECTED_TARGETS));
 		if(GameScreen.getSound()) SoundAssets.missileExplosion.play();
 		remove();

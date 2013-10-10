@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class MiniTurretShip extends EnemyShip {
 	public static final float RATEOFFIRE = 100000000f; 	 //In nanoseconds
-	public static final float FIRETIME =   5000000000f;
+	public static final float FIRETIME = 5000000000f;
 	private final static int HEALTH=20;
 	private final static int SCOREVALUE=1;
 	public final static int HEIGHT=45;
@@ -23,15 +23,14 @@ public class MiniTurretShip extends EnemyShip {
 	public final static int LASER_HEIGHT=15;
 	public final static int LASER_WIDTH=3;
 	private static final int DAMAGE_WHEN_RAMMED = 5;
-	private final static boolean DISABLED =false;
+	private final static boolean DISABLED = false;
 	private long currentTime;
-	private long lastMissileTime=0;
+	private long lastMissileTime = 0;
 	private PlayerShip player;
-	private int shot =0;
-	private float turretX =10;
-	private float turretY=10;
+	private int shot = 0;
+	private float turretX = 10;
+	private float turretY = 10;
 	private boolean isAlive = true;
-	private boolean isAliveFirst = true;
 	
 	/**
 	 * Constructor
@@ -43,7 +42,6 @@ public class MiniTurretShip extends EnemyShip {
 		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyStealthShip, DAMAGE_WHEN_RAMMED, DISABLED);
 		currentTime = TimeUtils.nanoTime();
 		this.player = player;
-		
 	}
 	
 	/**
@@ -61,10 +59,12 @@ public class MiniTurretShip extends EnemyShip {
 				lastMissileTime = TimeUtils.nanoTime();
 				shot++;
 			}
-			
 		}
 	}
 
+	/**
+	 * Moves the ship
+	 */
 	@Override
 	protected void move(float delta) {
 		if(TimeUtils.nanoTime()-currentTime>FIRETIME){
@@ -75,24 +75,14 @@ public class MiniTurretShip extends EnemyShip {
 		setX(turretX+TurretShip.WIDTH/2-WIDTH/2);
 		setY(turretY-5);
 	}
+	
 	/**
 	 * @return true if ship is alive else false
 	 */
 	public boolean isAlive(){
 		return isAlive;
 	}
-	/**
-	 * @return true if its the first time this is checked
-	 */
-	public boolean firstTimeDead(){
-		return isAliveFirst;
-	}
-	/**
-	 * @param b true if it was the first time this was checked
-	 */
-	public void setFirstTimeDead(boolean b){
-		isAliveFirst = b;
-	}
+	
 	/**
 	 * @param x TurretShips x position
 	 * @param y TurretShips y position
@@ -101,6 +91,7 @@ public class MiniTurretShip extends EnemyShip {
 		turretX=x;
 		turretY=y;
 	}
+	
 	@Override
 	public void destroyShip(){
 		isAlive = false;

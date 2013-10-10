@@ -5,6 +5,8 @@ import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.TimeUtils;
+
 import spacegame.Sprite;
 
 /**
@@ -14,7 +16,7 @@ import spacegame.Sprite;
  */
 public abstract class EnemyShip extends Sprite{
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID, TURRET};
-	private int scoreValue;
+	protected int scoreValue;
 	protected int currentHealth;
 	private int damageWhenRammed;
 	private int maximumHealth;
@@ -80,17 +82,16 @@ public abstract class EnemyShip extends Sprite{
 	 * @param disabledDuration
 	 */
 	public void disableShip(float disabledDuration){
-		disabledCurrentTime = 0;
+		disabledCurrentTime = TimeUtils.nanoTime();
 		this.disabledDuration = disabledDuration;
 	}
 	
 	/**
-	 * @return
+	 * @return 
 	 */
 	public boolean disabled(){
 		if(!disabable) return false;
-		disabledCurrentTime++;
-		if (disabledCurrentTime >= disabledDuration) return false;
+		if (TimeUtils.nanoTime() - disabledCurrentTime > disabledDuration) return false;
 		else return true;
 	}
 	
@@ -159,19 +160,5 @@ public abstract class EnemyShip extends Sprite{
 	 */
 	public int getHealth(){
 		return currentHealth;
-	}
-	
-	/**
-	 * boast the ships combat ability 
-	 * 
-	 * @param boast determine the strength of the boast  
-	 */
-	public void upgrade(int boast){
-	}
-	/**
-	 *  Set new health the ship
-	 */
-	public void setHealth(int h) {
-			currentHealth=h;
 	}
 }
