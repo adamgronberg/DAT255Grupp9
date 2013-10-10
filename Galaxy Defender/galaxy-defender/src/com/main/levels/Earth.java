@@ -11,11 +11,11 @@ import spacegame.GameLogic;
  */
 public class Earth extends Level{
 
-	private static final float spawnTimes[] = {6000000000f, 2000000000f,1000000000f,6000000000f};
+	private static final float spawnTimes[] = {6000000000f, 2000000000f,1000000000f,6000000000f,5000000000f};
 	private static final String[][] toSpawn = {{"BASIC:50:760","BASIC:100:760","BASIC:150:760","BASIC:200:760","BASIC:250:760"},
 												{"HEAVY:50:760","HEAVY:100:760","BASIC:150:760","BASIC:200:760","STEALTH:250:700"},
 												{"BIGLASER:150:760"},
-												{"HEAVY:68:760","BIGLASER:105:760","MULTISHOOTER:164:760","BASIC:245:760","STEALTH:2580:700"},
+												{"HEAVY:68:760","BIGLASER:105:760","MULTISHOOTER:164:760","BASIC:245:760","STEALTH:258:700"},
 												{"TURRET:300:700"}};
 	
 	/**
