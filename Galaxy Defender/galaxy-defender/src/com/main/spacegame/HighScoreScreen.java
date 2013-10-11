@@ -23,6 +23,8 @@ import com.badlogic.gdx.utils.Array;
  *
  */
 public class HighScoreScreen implements Screen {
+	public static final String LOG = HighScoreScreen.class.getSimpleName();
+	
 	private Stage stage;
 	private Skin skin;
 	private TextButton mainMenuButton;
@@ -46,7 +48,7 @@ public class HighScoreScreen implements Screen {
 		stage.act();
 		stage.draw();	
 	}
-
+	
 	/**
 	 * Called on screen resize
 	 * Always on launch

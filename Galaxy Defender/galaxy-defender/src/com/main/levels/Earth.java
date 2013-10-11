@@ -1,7 +1,6 @@
 package levels;
 
 import spacegame.GameLogic;
-import ships.BossShip;
 
 /**
  * 

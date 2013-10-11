@@ -1,9 +1,5 @@
 package highscore;
 
-
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -12,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 public class HighscoreHandler {
 	
 	private static final int NUMBEROFHEROES = 13;
-	private static final String FILENAME = "highscore.txt";
+	//private static final String FILENAME = "highscore.txt";
 	private static HighscoreHandler instance = null;
 	private Array<User> highscore;
 	private User currentUser;
@@ -95,23 +91,23 @@ public class HighscoreHandler {
      * save the current highscore to file
      */
     public void writeToFile() {
-    	FileHandle file = Gdx.files.local(FILENAME);
-    	if(file.exists()){
-        	file.writeString(createString(), false);
-        }
+//    	FileHandle file = Gdx.files.internal(FILENAME);
+//    	if(file.exists()){
+//        	file.writeString(createString(), false);
+//        	Gdx.app.log( HighScoreScreen.LOG, "here we go" );
+//    	}
     }
 
     /**
      * collecting the highscorelist from file 
      */
     protected void readFromFile() {
-
-    	FileHandle file = Gdx.files.internal(FILENAME);
-    	
-    	if(file.exists()){
-    		String highscoreList = file.readString();    	
-    		stringToList(highscoreList);
-    	}
+//    	FileHandle file = Gdx.files.internal(FILENAME);
+//    	if(file.exists()){
+//    		String highscoreList = file.readString();    	
+//    		stringToList(highscoreList);
+//        	Gdx.app.log( HighScoreScreen.LOG, "" + highscoreList );
+//    	}
     }
     
     /**
@@ -139,9 +135,8 @@ public class HighscoreHandler {
 	    	
 	    	for(int i=0; i<splitedeHighscoreList.length; i+=2){
 	    		createPlayer(splitedeHighscoreList[(i)],Integer.parseInt(splitedeHighscoreList[i+1]));
+	    		//addPlayerToHighscore();	    		
 	    	}
     	}
-    	
     }
-
 }
