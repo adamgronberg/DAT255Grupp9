@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.TimeUtils;
  * 
  * @author Grupp9
  *
- *	StealthShip
- *  Disappears from the screen and comes back
+ *	MiniTurretShip
+ *  Acts as a turret on a larger ship
  *
  */
 
@@ -25,7 +25,7 @@ public class MiniTurretShip extends EnemyShip {
 	private static final int DAMAGE_WHEN_RAMMED = 5;
 	private final static boolean DISABLED = false;
 	private long currentTime;
-	private long lastMissileTime = 0;
+	private long lastMissileTime;
 	private PlayerShip player;
 	private int shot = 0;
 	private float turretX = 10;
@@ -42,6 +42,7 @@ public class MiniTurretShip extends EnemyShip {
 		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyStealthShip, DAMAGE_WHEN_RAMMED, DISABLED);
 		currentTime = TimeUtils.nanoTime();
 		this.player = player;
+		lastMissileTime = TimeUtils.nanoTime();
 	}
 	
 	/**
@@ -49,7 +50,6 @@ public class MiniTurretShip extends EnemyShip {
 	 */
 	public void spawnProjectile() {
 		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE) {
-	
 			if(shot<=4){
 				float delX = getX()-player.getX();
 				float delY = getY()-player.getY();
@@ -96,6 +96,11 @@ public class MiniTurretShip extends EnemyShip {
 	public void destroyShip(){
 		isAlive = false;
 		remove();
+	}
+	
+	public void reset(){
+		currentHealth = HEALTH;
+		isAlive = true;
 	}
 
 	@Override protected void shoot(float delta) {

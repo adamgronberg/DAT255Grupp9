@@ -1,6 +1,7 @@
 package levels;
 
 import spacegame.GameLogic;
+import ships.BossShip;
 
 /**
  * 
@@ -11,7 +12,7 @@ import spacegame.GameLogic;
  */
 public class Earth extends Level{
 
-	private static final float spawnTimes[] = {6000000000f,200000000f,200000000f,200000000f,200000000f,200000000f,200000000f,5000000000f,5000000000f,4000000000f,5000000000f};
+	private static final float spawnTimes[]  = {6000000000f,200000000f,200000000f,200000000f,200000000f,200000000f,200000000f,5000000000f,5000000000f,4000000000f,5000000000f};
 	private static final String[][] toSpawn = {
 												{"BASIC:75:760", "BASIC:175:760", "BASIC:275:760", "BASIC:375:760"},
 												{"BASIC:125:760", "BASIC:225:760", "BASIC:325:760"},
@@ -31,7 +32,7 @@ public class Earth extends Level{
 	 */
 	public Earth(GameLogic gameLogic){
 		super(gameLogic, toSpawn, spawnTimes);
-		levelname = "Earth";
+		levelname = "Earth";		
 	}
 	
 	/**

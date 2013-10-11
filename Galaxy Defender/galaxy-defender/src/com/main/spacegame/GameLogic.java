@@ -34,9 +34,8 @@ public class GameLogic extends Table {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
 		this.gameScreen = gameScreen;
-		
-		level = new Neptune(this);
 		playerShip = new PlayerShip();
+		level = new Neptune(this);	
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		
 		addActor(level);

@@ -3,6 +3,7 @@ package levels;
 import ships.Asteroid;
 import ships.BasicShip;
 import ships.BigLaserShip;
+import ships.BossShip;
 import ships.EscapingShip;
 import ships.HeavyShip;
 import ships.KamikazeShip;
