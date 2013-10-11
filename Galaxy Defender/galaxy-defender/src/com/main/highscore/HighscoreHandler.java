@@ -1,8 +1,9 @@
 package highscore;
 
 
-import java.io.*;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -11,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
 public class HighscoreHandler {
 	
 	private static final int NUMBEROFHEROES = 13;
-	private static final String FILENAME = "highscore";
+	private static final String FILENAME = "highscore.txt";
 	private static HighscoreHandler instance = null;
 	private Array<User> highscore;
 	private User currentUser;
@@ -91,23 +92,48 @@ public class HighscoreHandler {
     /**
      * save the current highscore to file
      */
-    public void writeToFile(){
+    public void writeToFile() {
+    	FileHandle file = Gdx.files.local(FILENAME);
+    	file.writeString(createString(), false);
+    }
+
+    /**
+     * collecting the highscorelist from file 
+     */
+    protected void readFromFile() {
+
+    	FileHandle file = Gdx.files.internal(FILENAME);
+    	String highscoreList = file.readString();
     	
-    	try{
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILENAME));
-            for (int i = 0; i < highscore.size; i++) {
-                out.writeObject(highscore.get(i));   
-            }
-            out.close();
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("Cannot Create: " +FILENAME);
-        }
-        catch(IOException e){
-            e.printStackTrace();}
+    	stringToList(highscoreList);    	
     }
     
+    /**
+     * used for writing highscore to file
+     * 
+     * @return a string with all highscore holders and their score
+     */
+    protected String createString(){
+    	String returnString="";
+    	for(User hero: highscore){
+    		returnString +=hero.getName()+"\n"+hero.getScore()+"\n";
+    	}
+    	
+    	return returnString;
+    }
     
+    /**
+     * 
+     * @param highscoreList string that should be converted to the highscore array
+     */
+    protected void stringToList(String highscoreList){
+    	
+    	String[] splitedeHighscoreList = highscoreList.split("\n");
+    	
+    	for(int i=0; i<splitedeHighscoreList.length; i+=2){
+    		createPlayer(splitedeHighscoreList[(i)],Integer.parseInt(splitedeHighscoreList[i+1]));
+    	}
+    	
+    }
 
 }
