@@ -27,7 +27,7 @@ public class TurretShip extends EnemyShip {
 	private final static int SCOREVALUE=30;
 	private final static int HEALTH=100;
 
-	private static final boolean DISABABLE = true;
+	private static final boolean DISABABLE = false;
 
 	private MiniTurretShip miniTurretShip;
 	

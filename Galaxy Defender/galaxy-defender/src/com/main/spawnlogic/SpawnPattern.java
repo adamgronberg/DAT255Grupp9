@@ -7,9 +7,8 @@ public abstract class SpawnPattern extends MovableEntity{
 	protected float timeBetween;
 	protected float timePassedSinceSpawn = 0;
 	
-	public SpawnPattern(float width, float height, float x, float y, float timeBetween) {
-		super(width, height, x, y);
+	public SpawnPattern(float x, float y, float timeBetween) {
+		super(0, 0, x, y);
 		this.timeBetween = timeBetween;
 	}
-
 }

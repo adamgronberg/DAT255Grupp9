@@ -9,21 +9,21 @@ import spacegame.GameLogic;
  * Contains Earth spawns as well as win condition
  * 
  */
-public class Earth extends Level{
+public class Earth extends Level{	
 
 	private static final float spawnTimes[]  = {6000000000f,200000000f,200000000f,200000000f,200000000f,200000000f,200000000f,5000000000f,5000000000f,4000000000f,5000000000f};
 	private static final String[][] toSpawn = {
-												{"BASIC:75:760", "BASIC:175:760", "BASIC:275:760", "BASIC:375:760"},
-												{"BASIC:125:760", "BASIC:225:760", "BASIC:325:760"},
-												{"BASIC:75:760", "BASIC:175:760", "BASIC:275:760", "BASIC:375:760","HEAVY:10:760","HEAVY:420:760"},
-												{"BASIC:125:760", "BASIC:225:760", "BASIC:325:760"},
-												{"BASIC:75:760", "BASIC:175:760", "BASIC:275:760", "BASIC:375:760"},
-												{"BASIC:125:760", "BASIC:225:760", "BASIC:325:760"},
-												{"BASIC:75:760", "BASIC:175:760", "BASIC:275:760", "BASIC:375:760"},
-												{"VPATTERN#BIGLASER#3#300000000f#200:225:760"},
-												{"MULTISHOOTER:150:760","MULTISHOOTER:300:760"},
-												{"STEALTH:0:700","STEALTH:440:700"},
-												{"TURRET:300:700"}};
+												{"Basic:75:760", "Basic:175:760", "Basic:275:760", "Basic:375:760"},
+												{"Basic:125:760", "Basic:225:760", "Basic:325:760"},
+												{"Basic:75:760", "Basic:175:760", "Basic:275:760", "Basic:375:760","Heavy:10:760","Heavy:420:760"},
+												{"Basic:125:760", "Basic:225:760", "Basic:325:760"},
+												{"Basic:75:760", "Basic:175:760", "Basic:275:760", "Basic:375:760"},
+												{"Basic:125:760", "Basic:225:760", "Basic:325:760"},
+												{"Basic:75:760", "Basic:175:760", "Basic:275:760", "Basic:375:760"},
+												{"BigLaser:225:760:Pyramid:3:300000000f:200"},
+												{"MultiShooter:150:760","MultiShooter:300:760"},
+												{"Stealth:0:700","Stealth:440:700"},
+												{"Turret:300:700"}};
 	
 	/**
 	 * Constructor
@@ -42,7 +42,6 @@ public class Earth extends Level{
 		return levelSpawnDone && gameLogic.activeSpawns();
 	}
 
-	//Unused method
-	@Override
-	public boolean missionFailed() {return false;}
+	////// Unused method //////
+	@Override public boolean missionFailed() {return false;}
 }

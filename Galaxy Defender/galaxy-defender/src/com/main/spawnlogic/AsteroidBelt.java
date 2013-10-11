@@ -25,13 +25,13 @@ public class AsteroidBelt extends SpawnPattern{
 	 * @param timeBetween
 	 */
 	public AsteroidBelt(int numberOfRows, int asteroidsPerRow, float timeBetween){
-		super(1, 1, 0, GameScreen.GAME_HEIGHT, timeBetween);
+		super(0, GameScreen.GAME_HEIGHT, timeBetween);
 		this.numberOfRows = numberOfRows;
 		this.asteroidsPerRow = asteroidsPerRow;
 	}
 	
 	/**
-	 * 
+	 * Called when act in parent is called
 	 */
 	@Override
 	public void act(float delta){

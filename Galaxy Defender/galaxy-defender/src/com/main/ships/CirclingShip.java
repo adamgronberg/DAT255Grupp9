@@ -21,9 +21,9 @@ public class CirclingShip extends EnemyShip {
 	public final static int WIDTH = 30;
 	private final static float SHIPSPEED = 2.5f;
 	private final static int SCOREVALUE = 3;
-	private final static int HEALTH = 20;
+	private final static int HEALTH = 1;
 	private final static float ROTATION_RADIAN = 60;
-	private boolean MOVING_DOWN = false;
+	private boolean circling = false;
 	
 	
 	private boolean circleClockWise = false;
@@ -74,29 +74,16 @@ public class CirclingShip extends EnemyShip {
 	@Override
 	protected void move(float delta) {
 		
-		 if(!MOVING_DOWN){
-			 setY(getY()-SHIPSPEED);
-		 }
+		 if(!circling) setY(getY()-SHIPSPEED);
 		
-		 if(getY()<=spinPoint.y){
-			 MOVING_DOWN=true;
-		 }
-		 if(MOVING_DOWN){		
-			 if(circleClockWise){
-				System.out.println(degrees);
-				setX(spinPoint.x+(ROTATION_RADIAN*(float)Math.cos(Math.toRadians(degrees))));
-				setY(spinPoint.y+(ROTATION_RADIAN*(float)Math.sin(Math.toRadians(degrees))));
-				degrees = degrees-3f;
-
-					
-			}	
-		 	else{
-				System.out.println(degrees);
-				setX(spinPoint.x+(ROTATION_RADIAN*(float)Math.cos(Math.toRadians(degrees))));
-				setY(spinPoint.y+(ROTATION_RADIAN*(float)Math.sin(Math.toRadians(degrees))));
-		 		degrees = degrees+3f;
-
-		 	}
+		 if(getY()<=spinPoint.y) circling=true;
+		 
+		 if(circling){
+			spawnProjectile();	
+			if(circleClockWise) degrees = degrees-3f;	
+		 	else degrees = degrees+3f;
+			setX(spinPoint.x+(ROTATION_RADIAN*(float)Math.cos(Math.toRadians(degrees))));
+			setY(spinPoint.y+(ROTATION_RADIAN*(float)Math.sin(Math.toRadians(degrees))));
 		}
 	}
 
@@ -105,6 +92,5 @@ public class CirclingShip extends EnemyShip {
 	 */
 	@Override
 	protected void shoot(float delta) {
-		spawnProjectile();	
 	}
 }
