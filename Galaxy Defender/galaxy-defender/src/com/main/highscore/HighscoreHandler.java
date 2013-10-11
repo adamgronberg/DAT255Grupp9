@@ -22,6 +22,7 @@ public class HighscoreHandler {
 	 */	 
     private HighscoreHandler() {  
     	highscore = new Array<User>();
+    	readFromFile();
     }
     
     /**
@@ -58,6 +59,7 @@ public class HighscoreHandler {
     		highscore.add(currentUser);   
     	}
     	sortHighscore();
+    	writeToFile();
     }
     
     /**
@@ -94,7 +96,9 @@ public class HighscoreHandler {
      */
     public void writeToFile() {
     	FileHandle file = Gdx.files.local(FILENAME);
-    	file.writeString(createString(), false);
+    	if(file.exists()){
+        	file.writeString(createString(), false);
+        }
     }
 
     /**
@@ -103,9 +107,11 @@ public class HighscoreHandler {
     protected void readFromFile() {
 
     	FileHandle file = Gdx.files.internal(FILENAME);
-    	String highscoreList = file.readString();
     	
-    	stringToList(highscoreList);    	
+    	if(file.exists()){
+    		String highscoreList = file.readString();    	
+    		stringToList(highscoreList);
+    	}
     }
     
     /**
@@ -128,10 +134,12 @@ public class HighscoreHandler {
      */
     protected void stringToList(String highscoreList){
     	
-    	String[] splitedeHighscoreList = highscoreList.split("\n");
-    	
-    	for(int i=0; i<splitedeHighscoreList.length; i+=2){
-    		createPlayer(splitedeHighscoreList[(i)],Integer.parseInt(splitedeHighscoreList[i+1]));
+    	if(highscoreList.length()>0){
+	    	String[] splitedeHighscoreList = highscoreList.split("\n");
+	    	
+	    	for(int i=0; i<splitedeHighscoreList.length; i+=2){
+	    		createPlayer(splitedeHighscoreList[(i)],Integer.parseInt(splitedeHighscoreList[i+1]));
+	    	}
     	}
     	
     }
