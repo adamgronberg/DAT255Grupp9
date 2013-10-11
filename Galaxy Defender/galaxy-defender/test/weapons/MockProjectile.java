@@ -1,5 +1,7 @@
 /**package weapons;
 
+import spacegame.MovableEntity;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class MockProjectile extends Projectile {
@@ -9,15 +11,24 @@ public class MockProjectile extends Projectile {
 		super(x, y, width, height, damage, texture);
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	@Override
-	public void addOnHitEffect() {		
+	public TargetTypes[] getFactionTypes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public TargetTypes[] getTargetTypes() {
+	public TargetTypes getFaction() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void addOnHitEffect(MovableEntity entity) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

@@ -5,19 +5,19 @@ import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.TimeUtils;
+
 import spacegame.Sprite;
 
 /**
- * 
- * 
  * @author Grupp9
  *	
  * Base class for enemy ships. Enemy ships should extend this class
  */
-public abstract class EnemyShip extends Sprite{
-	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID};
-	private int scoreValue;
-	private int currentHealth;
+public abstract class EnemyShip extends Sprite implements Cloneable{
+	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID, TURRET};
+	protected int scoreValue;
+	protected int currentHealth;
 	private int damageWhenRammed;
 	private int maximumHealth;
 	private static final float TIMEPERFRAME = 0.045f;
@@ -26,22 +26,25 @@ public abstract class EnemyShip extends Sprite{
 	private TextureRegion currentFrame;
 	private float disabledCurrentTime;
 	private float disabledDuration;
+	private boolean disabable;
 	
 	/**
-	 * Constructor
-	 * @param x x-led Spawn location
-	 * @param y y-led Spawn location
-	 * @param width The width of the EnemyShip
-	 * @param height The height of the EnemyShip
-	 * @param health The total health of the enemy
-	 * @param scorevalue The value of killing the enemy
-	 * @param texture The image of the enemy
-	 * @param damageOnHit The damage per hit
+	 * 
+	 * @param width	enemy width
+	 * @param height	enemy height
+	 * @param x	Spawn location
+	 * @param y	Spawn location
+	 * @param health	The total health of the enemy
+	 * @param scoreValue	The value of killing the enemy
+	 * @param texture	The image of the enemy
+	 * @param damageWhenRammed	Damage on ram
 	 */
-	public EnemyShip(float width, float height,float x, float y, int health, int scoreValue, TextureRegion texture, int damageWhenRammed) {
+	public EnemyShip(float width, float height,float x, float y, int health, 
+			int scoreValue, TextureRegion texture, int damageWhenRammed, boolean disabable) {
 		super(width, height, x, y, texture);
 		this.currentHealth = health;
 		this.scoreValue = scoreValue;
+		this.disabable = disabable;
 		this.damageWhenRammed = damageWhenRammed;
 
 		maximumHealth = health;
@@ -71,6 +74,7 @@ public abstract class EnemyShip extends Sprite{
         if(currentHealth<maximumHealth){
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
         }
+        
 	}
 	
 	/**
@@ -78,25 +82,16 @@ public abstract class EnemyShip extends Sprite{
 	 * @param disabledDuration
 	 */
 	public void disableShip(float disabledDuration){
-		disabledCurrentTime = 0;
+		disabledCurrentTime = TimeUtils.nanoTime();
 		this.disabledDuration = disabledDuration;
 	}
 	
 	/**
-	 * Call this function if the target should be able to be disabled
-	 * @return
-	 */
-	protected boolean disabable(){
-		disabledCurrentTime++;
-		return disabled();
-	}
-	
-	/**
-	 * returns if the ship is disabled or not
-	 * @return
+	 * @return 
 	 */
 	public boolean disabled(){
-		if (disabledCurrentTime >= disabledDuration) return false;
+		if(!disabable) return false;
+		if (TimeUtils.nanoTime() - disabledCurrentTime > disabledDuration) return false;
 		else return true;
 	}
 	
@@ -120,7 +115,7 @@ public abstract class EnemyShip extends Sprite{
 	 */
 	@Override
 	public void act(float delta){
-		if (!disabable()){
+		if (!disabled()){
 			move(delta);
 			shoot(delta);
 		}
@@ -165,5 +160,10 @@ public abstract class EnemyShip extends Sprite{
 	 */
 	public int getHealth(){
 		return currentHealth;
+	}
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 }

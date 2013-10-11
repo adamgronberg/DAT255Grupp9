@@ -12,7 +12,6 @@ import assets.ImageAssets;
  *  Only has y led moment
  *
  */
-
 public class Asteroid extends EnemyShip {
 	private final static float SHIPSPEED=2f;
 	private final static int HEALTH=1;
@@ -20,6 +19,7 @@ public class Asteroid extends EnemyShip {
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
 	private static final int DAMAGE_WHEN_RAMMED = 15;
+	private static final boolean DISABABLE = false;
 	
 	/**
 	 * Constructor
@@ -27,7 +27,8 @@ public class Asteroid extends EnemyShip {
 	* @param y y-led Spawn location
 	*/
 	public Asteroid(float x, float y){
-		super(MathUtils.random(20,45),MathUtils.random(30,50), x, y, HEALTH, SCOREVALUE, ImageAssets.asteroids.get(MathUtils.random(0,11)), DAMAGE_WHEN_RAMMED);
+		super(MathUtils.random(20,45),MathUtils.random(30,50), x, y, HEALTH, SCOREVALUE, 
+				ImageAssets.asteroids.get(MathUtils.random(0,11)), DAMAGE_WHEN_RAMMED, DISABABLE);
 	}
 
 	@Override
@@ -36,5 +37,4 @@ public class Asteroid extends EnemyShip {
 	}
 
 	@Override protected void shoot(float delta) {}
-
 }

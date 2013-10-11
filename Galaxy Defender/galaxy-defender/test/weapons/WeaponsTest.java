@@ -6,19 +6,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import assets.ImageAssets;
 
-public class WeaponsTest extends Projectile{
+public class WeaponsTest {
 
 
-	
-	public WeaponsTest(){
-		super(0f, 0f, 0f, 0f, 1, ImageAssets.laser);
-	}
-
-
-
-	
-	
-	
 
 	
 	@Test
@@ -37,7 +27,7 @@ public class WeaponsTest extends Projectile{
 	
 	@Test
 	public void wTest(){
-		Projectile pro= new MockProjectile(0f,0f,0f,-5,1, ImageAssets.laser);
+		Projectile pro= new MockProjectile(0f,0f,0f,-5,1, ImageAssets.playerLaser);
 		Projectile pro2= new PlayerMissile(0,0);
 		
 		pro.act(1);
@@ -48,17 +38,15 @@ public class WeaponsTest extends Projectile{
 	}
 
 
-	@Override
-	public void addOnHitEffect() {
-		// TODO Auto-generated method stub	
-	}
 
 
-	@Override
+
 	public TargetTypes[] getTargetTypes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 }

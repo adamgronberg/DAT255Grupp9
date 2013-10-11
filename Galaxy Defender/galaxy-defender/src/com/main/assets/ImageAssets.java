@@ -16,11 +16,14 @@ public class ImageAssets {
 	public static TextureRegion enemyBasicShip;
 	public static TextureRegion enemyScoutShip;
 	public static TextureRegion enemyHeavyShip;
+	public static TextureRegion escapingShip;
 	public static TextureRegion enemyKamikazeShip;
 	public static TextureRegion enemyMultiShooterShip;
 	public static TextureRegion enemyBigLaserShip;
 	public static TextureRegion enemyStealthShip;
 	public static TextureRegion enemyTurretShip;
+	public static TextureRegion enemyCirclingShip;
+	public static TextureRegion enemyBossShip;
 	public static TextureRegion space;
 	public static TextureRegion mainMenu;
 	public static TextureRegion moveLeftButton;
@@ -54,6 +57,7 @@ public class ImageAssets {
 		playerLaser = atlas.findRegion("weapons/greenLaser");
 		playerIonCannon = atlas.findRegion("weapons/blueMegaLaser");
 		enemyLaser = atlas.findRegion("weapons/redLaser");
+		escapingShip = atlas.findRegion("Ships/Ship8");
 		enemyBasicShip = atlas.findRegion("Ships/Ship3");
 		enemyScoutShip = atlas.findRegion("Ships/Ship9");
 		enemyHeavyShip = atlas.findRegion("Ships/Ship17");
@@ -61,6 +65,9 @@ public class ImageAssets {
 		enemyMultiShooterShip = atlas.findRegion("Ships/Ship12");
 		enemyBigLaserShip = atlas.findRegion("Ships/Ship14");
 		enemyStealthShip = atlas.findRegion("Ships/Ship10");
+		enemyBossShip = atlas.findRegion("Ships/5");
+		enemyCirclingShip= atlas.findRegion("Ships/Ship5");
+		
 		enemyTurretShip = atlas.findRegion("Ships/Ship23");
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("gui/TopInfoBar");

@@ -85,7 +85,7 @@ public class MenuScreen implements Screen{
 		highScoreButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	myGame.switchScreen(MyGame.ScreenType.OPTIONS);
+	        	myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
 	        }
 	    } );
 		

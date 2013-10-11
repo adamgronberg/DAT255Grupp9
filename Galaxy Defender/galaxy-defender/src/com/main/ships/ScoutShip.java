@@ -22,6 +22,7 @@ public class ScoutShip extends EnemyShip{
 	private boolean movingLeft;
 	private final float movmentLenght = 50;
 	private float currentMovmentLenght;
+	private static final boolean DISABABLE = true;
 
 	
 	/**
@@ -30,7 +31,8 @@ public class ScoutShip extends EnemyShip{
 	 * @param y
 	 */
 	public ScoutShip(float x, float y){
-		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyScoutShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyScoutShip, 
+				DAMAGE_WHEN_RAMMED, DISABABLE);
 		currentMovmentLenght = 0;
 		movingLeft = true;
 	}

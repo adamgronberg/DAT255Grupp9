@@ -1,142 +1,101 @@
 package spacegame;
 
+import levels.*;
 import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.TimeUtils;
-import ships.BasicShip;
-import ships.EnemyShip.EnemyTypes;
-import ships.HeavyShip;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import ships.PlayerShip;
-import ships.ScoutShip;
-import ships.KamikazeShip;
-import ships.MultiShooterShip;
-import ships.BigLaserShip;
-import ships.StealthShip;
+import weapons.*;
+import ships.EnemyShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
-import collisiondetection.OutOfBoundsDetection;
 
 /**
  * 
  * @author Grupp9
- * TODO: Add levels instead of random spawning
- *
+ * Handles the game logic.
  */
 public class GameLogic extends Table {
 	
 	private int currentScore=0;
-	private long lastEnemyShipTime = 0;			//For testing
-	private long lastSpawnPatternTime = 0;		//For testing
-	private long lastAstroidSpawn = 0;			//For testing
-	
 	private Background backgroundSpace;
-
+	private GameScreen gameScreen;
 	public PlayerShip playerShip;
-	
+	private Level level;
+
 	/**
 	 * Constructor
-	 * TODO: Should set up unique levels and not spawn enemies randomly (Release 1 demo)
+	 * @param gameScreen
 	 */
-	public GameLogic() {
+	public GameLogic(GameScreen gameScreen) {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
+		this.gameScreen = gameScreen;
 		playerShip = new PlayerShip();
-		addActor(playerShip);
+		level = new Neptune(this);	
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
+		
+		addActor(level);
+		addActor(playerShip);
 		addActor(backgroundSpace);
-		playerShip.resetHealth();
+
 	}
 	
 	/**
-	 *  Handles object spawning and collision
+	 * checks collision detection and controls if the player is dead
 	 */
 	@Override
 	public void act(float delta) {
 		super.act(delta);
 		if (playerShip.getCurrentHealth()<1) {	//For testing
-			currentScore=0;
-			clear();
-			addActor(playerShip);
-			playerShip.resetHealth();
+			gameScreen.defeat(); //TODO switch places defeat and reset add another score variable
+			resetGame();
 		}
 		
-
-		if (TimeUtils.nanoTime() - lastEnemyShipTime > 9000000000f) spawnShip();			//For testing
-		if (TimeUtils.nanoTime() - lastAstroidSpawn > 10000000000f) spawnAstroids();			//For testing
-		if (TimeUtils.nanoTime() - lastSpawnPatternTime > 7000000000f) spawnPattern();		//For testing
-		OutOfBoundsDetection.checkOutOfBounds(getChildren());
 		CollisionDetection.checkCollisions(this);
+		
+		if(level.missionCompleted()){
+			startNextLevel();
+			gameScreen.victory();
+		}
+		
+		else if(level.missionFailed()){
+			clear();
+			playerShip.stay();
+			level = new Neptune(this);	//TODO:Should end game not start a new one
+			addActor(level);
+			addActor(playerShip);
+			gameScreen.defeat();
+			currentScore=0;
+		}
 	}
 	
 	/**
-	 * Temp spawn for asteroids
+	 * Switches level
+	 * @param level the current level
+	 * @return the next level
 	 */
-	private void spawnAstroids() {
-		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
-		float xPos = spawnLocation;
-		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 10, 2750000f, EnemyTypes.ASTEROID));
-		lastAstroidSpawn = TimeUtils.nanoTime();
-	}
-
-	/**
-	 * Spawns a BasicShip and a ScoutShip on a random x coordinate above the screen
-	 * For testing
-	 */
-	private void spawnShip() {
-		int  xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BasicShip.WIDTH);
-		addActor(new BasicShip(xPos,GameScreen.GAME_HEIGHT+BasicShip.HEIGHT));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-HeavyShip.WIDTH);
-		addActor(new HeavyShip(xPos, GameScreen.GAME_HEIGHT+HeavyShip.HEIGHT));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-MultiShooterShip.WIDTH);
-		addActor(new MultiShooterShip(xPos, GameScreen.GAME_HEIGHT+MultiShooterShip.HEIGHT));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-KamikazeShip.WIDTH);
-		addActor(new KamikazeShip(xPos, GameScreen.GAME_HEIGHT+KamikazeShip.HEIGHT, playerShip));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-BigLaserShip.WIDTH);
-		addActor(new BigLaserShip(xPos, GameScreen.GAME_HEIGHT+BigLaserShip.HEIGHT));
-		
-		xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-StealthShip.WIDTH);
-		int yPos = (int) MathUtils.random(GameScreen.GAME_HEIGHT*0.8f,GameScreen.GAME_HEIGHT-StealthShip.HEIGHT);
-		addActor(new StealthShip(xPos, yPos, playerShip));
-		
-		//xPos = (int) MathUtils.random(0,GameScreen.GAME_WITDH-TurretShip.WIDTH);
-		//int yPos =(int) GameScreen.GAME_HEIGHT-TurretShip.HEIGHT;
-		//addActor(new TurretShip(xPos, yPos));
-		
-		lastEnemyShipTime = TimeUtils.nanoTime();
+	private Level nextLevel(Level level) {
+		if(level.getName().equals("Neptune")) return new Uranus(this);
+		else if(level.getName().equals("Uranus")) return new Saturn(this);
+		else if(level.getName().equals("Saturn")) return new Jupiter(this);
+		else if(level.getName().equals("Jupiter")) return new Mars(this);
+		else if(level.getName().equals("Mars")) return new Earth(this);
+		else return new Neptune(this);
 	}
 	
-	/**
-	 * Sets up a SpawnPattern for scoutShips
-	 * For testing	TODO: Should prob be in some sort of "levelDesign" class
-	 */
-	private void spawnPattern(){		
-		float spawnLocation = MathUtils.random(0,GameScreen.GAME_WITDH-ScoutShip.WIDTH);
-		float xPos = spawnLocation;
-		addActor(new SpawnPattern(xPos, GameScreen.GAME_HEIGHT, 5, 275000000f, EnemyTypes.SCOUT));
-		lastSpawnPatternTime = TimeUtils.nanoTime();
-
-	}
 	/**
 	 * Draws all actors on stage
+	 * makes sure background is below everything and that playerShip is above
 	 */
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
 		playerShip.drawAbove(batch, parentAlpha);
-	}
-	
-	/**
-	 * Switches player weapon
-	 */
-	public void switchPlayerWeapon(){
-		playerShip.switchWeapon();
 	}
 	
 	/**
@@ -154,10 +113,73 @@ public class GameLogic extends Table {
 	}
 	
 	/**
-	 * 
 	 * @return the current health
 	 */
 	public int getPlayerHealth(){
 		return playerShip.getCurrentHealth();
+	}
+	
+	/**
+	 * @return the name of the Level
+	 */
+	public String getLevelName(){
+		return level.getName();
+	}
+	
+	/**
+	 * @return allPlayerShotts
+	 */
+	public Array<Projectile> getPlayerShotts(){
+		Array<Projectile> playerProjectile = new Array<Projectile>();
+		SnapshotArray<Actor> toSearch = getChildren();
+		for(Actor actor: toSearch){
+			if(actor instanceof Projectile){
+				
+				Projectile projectile = (Projectile)actor;
+				if(projectile.getFaction()==TargetTypes.PLAYER){
+					playerProjectile.add(projectile);
+				}
+			}
+		}
+		return  playerProjectile;
+	}
+
+	/** 
+	 * @return True if no enemies on the map 
+	 */ 
+	public boolean activeSpawns(){ 
+		Array<MovableEntity> spawns  = new Array<MovableEntity>(); 
+		SnapshotArray<Actor> toSearch = getChildren(); 
+		for(Actor actor: toSearch){ 
+			if(actor instanceof EnemyShip || actor instanceof SpawnPattern){ 
+				MovableEntity entity = (MovableEntity)actor; 
+				spawns.add(entity); 
+			} 
+		} 
+		return spawns.size == 0;
+	}
+	
+	/**
+	 * Resets everything and recreates first level
+	 */
+	public void resetGame(){
+		playerShip.stay();
+		currentScore=0;
+		clear();
+		level = new Neptune(this);
+		addActor(level);
+		addActor(playerShip);
+		playerShip.resetHealth();
+	}
+	
+	/**
+	 * Starts the next level
+	 */
+	public void startNextLevel(){
+		playerShip.stay();
+		clear();
+		level=nextLevel(level);
+		addActor(level);
+		addActor(playerShip);
 	}
 }

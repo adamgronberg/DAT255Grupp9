@@ -1,16 +1,21 @@
 package spacegame;
 
+import highscore.HighscoreHandler;
+import highscore.User;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Draws and handles input for highscore screen
@@ -18,11 +23,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  *
  */
 public class HighScoreScreen implements Screen {
+	public static final String LOG = HighScoreScreen.class.getSimpleName();
+	
 	private Stage stage;
 	private Skin skin;
 	private TextButton mainMenuButton;
 	private MyGame myGame;
 	private Table table;
+	private Label highscoreList;
 	private TextureAtlas atlas;
 	private TextureRegionDrawable menuBackground;
 
@@ -40,7 +48,7 @@ public class HighScoreScreen implements Screen {
 		stage.act();
 		stage.draw();	
 	}
-
+	
 	/**
 	 * Called on screen resize
 	 * Always on launch
@@ -64,6 +72,9 @@ public class HighScoreScreen implements Screen {
 		table = new Table(skin);
 		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);
 		table.setBackground(menuBackground);	
+		highscoreList = new Label(showHighscoreList(), skin);
+		table.add(highscoreList).spaceBottom(50).row();
+		
 		mainMenuButton = new TextButton("Main Menu", skin);
 		mainMenuButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
@@ -75,6 +86,18 @@ public class HighScoreScreen implements Screen {
 		mainMenuButton.pad(15, 10, 15, 10);	
 		table.add(mainMenuButton).spaceBottom(50).row();
 		stage.addActor(table);	
+	}
+	
+	private String showHighscoreList(){
+		HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
+		Array<User> userArray = highscoreHandler.getHighscore();
+		String hsList = "";
+		int position = 1;
+		for(User u : userArray){
+			hsList += position + ". " + u.getName() + ": " + u.getScore() + "\n";
+			position++;
+		}
+		return hsList;
 	}
 	
 	/**

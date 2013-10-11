@@ -15,6 +15,7 @@ public class KamikazeShip extends EnemyShip {
 	private final static int HEALTH=2;
 	private final static int SCOREVALUE=15;
 	private final static int DAMAGE_WHEN_RAMMED = 40;
+	private static final boolean DISABABLE = true;
 	
 	private PlayerShip playerShip;
 	
@@ -25,7 +26,8 @@ public class KamikazeShip extends EnemyShip {
 	 * @param playerShip reference to player ship needed for targeting
 	 */
 	public KamikazeShip(float x, float y, PlayerShip playerShip){
-		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyKamikazeShip, DAMAGE_WHEN_RAMMED);		
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyKamikazeShip, 
+				DAMAGE_WHEN_RAMMED, DISABABLE);		
 		this.playerShip = playerShip;
 	}
 	

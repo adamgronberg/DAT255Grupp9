@@ -1,15 +1,14 @@
 package spacegame;
 
+import ships.PlayerShip;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-
-
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
 import assets.*;
 import input.InputControl;
 
@@ -26,14 +25,19 @@ public class GameScreen implements Screen{
 	private GameLogic gameLogic;
 	private InputControl inputController;
 	private TopInfoBar topInfoBar;
+	private MyGame myGame;
 	
-	public static boolean sound = true; 			//TODO: Temp. disables/enables sound
+	private int currentLevel;
+	private int levelResult;
+	
+	private static boolean sound = true; 			//TODO: Temp. disables/enables sound
 	public static boolean optionAutoShoot = true; 	//TODO: Temp. disables/enables shoot
-	public static boolean vibrateOn = true;			//TODO: Temp. disables/enables vibrate
+	private static boolean vibrate = true;			//TODO: Temp. disables/enables vibrate
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
 	
+	public static final int MAX_LEVEL = 6;
 	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;
 	public static final float GAME_WITDH= ((float) MyGame.WIDTH);
 	public static final float INFO_SCREEN_HEIGHT=((float) MyGame.HEIGHT)*0.05f;
@@ -62,7 +66,10 @@ public class GameScreen implements Screen{
 		shootEMPButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE*2, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.emptyButton);
 		
-		gameLogic = new GameLogic();
+		currentLevel = 1;
+		levelResult = 0;
+		this.myGame = myGame;
+		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this);
 		topInfoBar = new TopInfoBar(this);
 		
@@ -72,8 +79,7 @@ public class GameScreen implements Screen{
 		stage.addActor(shootMissileButton);
 		stage.addActor(shootEMPButton);
 		stage.addActor(moveLeftButton);
-		stage.addActor(moveRightButton);		
-		if(sound) SoundAssets.spaceMusic.play();
+		stage.addActor(moveRightButton);				
 	}
 	
 	/**
@@ -157,12 +163,12 @@ public class GameScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		if(gameLogic.playerShip.getMissileReady() == true){
+		if(gameLogic.playerShip.getWeaponHandeler().getMissileReady() == true){
 			shootMissileButton.setVisible(true);
 		} 
 		else shootMissileButton.setVisible(false);
 		
-		if(gameLogic.playerShip.getEMPReady() == true){
+		if(gameLogic.playerShip.getWeaponHandeler().getEMPReady() == true){
 			shootEMPButton.setVisible(true);
 		} 
 		else shootEMPButton.setVisible(false);
@@ -191,6 +197,13 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
+	 * @return The player ship
+	 */
+	public PlayerShip getPlayerShip(){
+		return gameLogic.playerShip;
+	}
+	
+	/**
 	 * @return Current GameLogic health
 	 */
 	public int getGameLogicHealth(){
@@ -205,13 +218,72 @@ public class GameScreen implements Screen{
     public void hide() {
     	Gdx.input.setInputProcessor(null);
     }
-
+	
+	public int getLevelResult(){
+		return levelResult;
+	}
+	
+	/**
+	 * Calls victory screen and changes to next level
+	 */
+	public void victory(){
+		levelResult = currentLevel;
+		if(currentLevel < MAX_LEVEL) currentLevel++;
+		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
+	}
+	
+	/**
+	 * Calls defeat screen
+	 */
+	public void defeat(){
+		levelResult = 0;
+		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
+	}
+	
+	/**
+	 * Activates/disables sound effects
+	 */
+	public static void toggleSound(){
+		if(sound) sound = false;
+		else sound = true;
+	}
+	
+	/**
+	 * returns true if sound is on
+	 */
+	public static boolean getSound(){
+		return sound;
+	}
+	
+	/**
+	 * Activates/disables impact vibration
+	 */
+	public static void toggleVibrateOn(){
+		if(vibrate) vibrate = false;
+		else vibrate = true;
+	}
+	
+	/**
+	 * returns true if vibration is on
+	 */
+	public static boolean getVibration(){
+		return vibrate;
+	}
+		
 	@Override public void resume() {}
 	@Override public void pause() {}
 	@Override public void dispose() {}
 
 	public static void toggleOptionAutoShoot() {
-		optionAutoShoot = !optionAutoShoot;
-		
+		optionAutoShoot = !optionAutoShoot;	
+	}
+/**
+ * 
+ * @return the name of the level
+ */
+	public String getLevelName() {
+		return gameLogic.getLevelName();
 	}	
+	
+	
 }

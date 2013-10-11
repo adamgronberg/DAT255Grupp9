@@ -18,7 +18,7 @@ public class BigLaserShip extends EnemyShip {
 	private static final TargetTypes FACTION = TargetTypes.ENEMY;
 	private static final TargetTypes[] AFFECTED_TARGETS = {TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE};
 	private final static int DAMAGE_PER_TICK = 1;
-	public static final float RATEOFFIRE = 9000000000f; 	 //In nanoseconds
+	public static final float RATEOFFIRE = 8000000000f; 	 //In nanoseconds
 	public static final float DAMAGE_TICK_RATE = 300000000f;
 	public static final float FIRE_TIME = 3000000000f;
 	public final static int HEIGHT=65;
@@ -35,6 +35,7 @@ public class BigLaserShip extends EnemyShip {
 	private boolean shooting;
 	private AreaOfEffectDummy areaDummy;
 	private BigLaserEffect bigLaserEffect;
+	private static final boolean DISABABLE = true;
 
 	
 	/**
@@ -43,7 +44,8 @@ public class BigLaserShip extends EnemyShip {
 	 * @param y y-led spawn location
 	 */
 	public BigLaserShip(float x, float y){
-		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyBigLaserShip, DAMAGE_WHEN_RAMMED);
+		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyBigLaserShip,
+				DAMAGE_WHEN_RAMMED, DISABABLE);
 		lastProjectileTime = TimeUtils.nanoTime()-MathUtils.random(3000000000f,RATEOFFIRE/2);
 	}
 	
