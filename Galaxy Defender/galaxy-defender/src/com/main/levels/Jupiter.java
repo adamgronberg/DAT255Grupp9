@@ -12,7 +12,7 @@ import spacegame.GameLogic;
 public class Jupiter extends Level{
 
 	private static final float spawnTimes[] = {6000000000f};
-	private static final String[][] toSpawn = {{"Turret:300:760", "Circling:300:760:200:true"}};
+	private static final String[][] toSpawn = {{"Turret:300:760", "Circling:50:760:300:false", "Circling:350:760:300:true"}};
 	
 	/**
 	 * Constructor

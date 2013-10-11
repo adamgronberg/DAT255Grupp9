@@ -34,7 +34,7 @@ public class OptionsScreen implements Screen{
 	public OptionsScreen(MyGame myGame, GameScreen gameScreen){
 		this.myGame = myGame;
 		this.gameScreen = gameScreen;
-		music = false;
+		music = true;
 		if(music)SoundAssets.spaceMusic.play();
 	}
 	
