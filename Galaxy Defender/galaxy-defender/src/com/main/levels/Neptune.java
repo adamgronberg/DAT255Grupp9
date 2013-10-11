@@ -8,17 +8,18 @@ import spacegame.GameLogic;
  *
  * Contains Neptune spawns as well as win condition
  */
-public class Neptune extends Level{
-
-	                                          //ANvänds inte, 1-2        2-3
+public class Neptune extends Level {
+	
+	                                 
 	private static final float spawnTimes[] = {5000000000f, 3000000000f,5000000000f, 3000000000f,2500000000f,3000000000f,2000000000f};
-	private static final String[][] toSpawn = {{"PATTERN#SCOUT#2#275000000f:350:750","PATTERN#SCOUT#2#275000000f:450:760"},
-								{"VPATTERN#BASIC#3#150000000f#50:50:760","VPATTERN#BASIC#3#150000000f#50:350:760", "HEAVY:150:740","HEAVY:260:740"},
-								{"PATTERN#SCOUT#2#275000000f:50:750","PATTERN#SCOUT#2#275000000f:160:760"},
-								{"VPATTERN#HEAVY#3#550000000f#50:300:760"}, // '.'
-								{"VPATTERN#HEAVY#3#550000000f#50:75:760"},  //'.'
-								{"VPATTERN#BASIC#5#150000000f#50:200:760"}, // V
-								{"VPATTERN#BASIC#9#150000000f#50:225:760"},};// V
+	private static final String[][] toSpawn = 
+		{{"Scout:350:750:Vertical:2:275000000f","Scout:450:760:Vertical:2:275000000f"},
+		{"Basic:50:760:Pyramid:3:150000000f:50","Basic:350:760:Pyramid:3:150000000f:50", "Heavy:150:740","Heavy:260:740"},
+		{"Scout:50:750:Vertical:2:275000000f","Scout:160:760:Vertical:2:275000000f"},
+		{"Heavy:300:760:Pyramid:3:150000000f:50"}, 
+		{"Heavy:75:760:Pyramid:3:150000000f:50"},  
+		{"Heavy:200:760:Pyramid:3:150000000f:50"}, 
+		{"Heavy:225:760:Pyramid:3:150000000f:50"}};
 									
 
 	/**

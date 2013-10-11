@@ -14,7 +14,7 @@ import spacegame.Sprite;
  *	
  * Base class for enemy ships. Enemy ships should extend this class
  */
-public abstract class EnemyShip extends Sprite{
+public abstract class EnemyShip extends Sprite implements Cloneable{
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID, TURRET};
 	protected int scoreValue;
 	protected int currentHealth;
@@ -160,5 +160,10 @@ public abstract class EnemyShip extends Sprite{
 	 */
 	public int getHealth(){
 		return currentHealth;
+	}
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 }

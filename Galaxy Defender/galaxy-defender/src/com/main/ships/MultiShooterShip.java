@@ -5,7 +5,7 @@ import assets.ImageAssets;
 
 import com.badlogic.gdx.utils.TimeUtils;
 
-/*
+/**
  * Enemy ship with six laser guns
  */
 public class MultiShooterShip extends EnemyShip {

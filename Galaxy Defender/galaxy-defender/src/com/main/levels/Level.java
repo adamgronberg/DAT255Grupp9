@@ -1,21 +1,12 @@
 package levels;
 
-import ships.Asteroid;
-import ships.BasicShip;
-import ships.BigLaserShip;
-import ships.EscapingShip;
-import ships.HeavyShip;
-import ships.KamikazeShip;
-import ships.MultiShooterShip;
-import ships.ScoutShip;
-import ships.StealthShip;
-import ships.TurretShip;
+import ships.CirclingShip;
+import ships.EnemyShip;
 import spacegame.GameLogic;
 import spawnlogic.AsteroidBelt;
-import spawnlogic.VPattern;
+import spawnlogic.PyramidPattern;
 import spawnlogic.VerticalPattern;
 import collisiondetection.OutOfBoundsDetection;
-
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -78,6 +69,7 @@ public abstract class Level extends Actor {
 		if(!levelSpawnDone){
 			spawn();
 		}
+
 		OutOfBoundsDetection.checkOutOfBounds(gameLogic.getChildren());
 	}
 	
@@ -85,64 +77,50 @@ public abstract class Level extends Actor {
 	 * Decides what to spawn
 	 * @param s The string containing spawn information
 	 */
-	private void decideSpawn(String s){
+	private void decideSpawn(String s) {
 		String[] spawnInfo = s.split(":");
 		
-		if(spawnInfo[0].equals("BASIC")){
-			gameLogic.addActor(new BasicShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2])));
+		Object newObject = null;
+		
+		if(spawnInfo[0].matches("Basic|Scout|Heavy|BigLaser|Asteroid|MultiShooter")){
+			try {
+				newObject = Class.forName("ships." + spawnInfo[0] + "Ship" ).getDeclaredConstructors()[0].newInstance(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]));
+			} catch (Exception e) {e.printStackTrace();}
 		}
 		
-		else if(spawnInfo[0].equals("HEAVY")){
-			gameLogic.addActor(new HeavyShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2])));
+		else if(spawnInfo[0].matches("Stealth|Turret|Kamikaze|")){
+			try {
+				newObject = Class.forName("ships." + spawnInfo[0] + "Ship" ).getDeclaredConstructors()[0].newInstance(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), gameLogic.playerShip);
+			} catch (Exception e) {e.printStackTrace();}
 		}
 		
-		else if(spawnInfo[0].equals("SCOUT")){
-			gameLogic.addActor(new ScoutShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2])));
+		else if(spawnInfo[0].matches("Belt")){
+			newObject = new AsteroidBelt(Integer.parseInt(spawnInfo[1]), Integer.parseInt(spawnInfo[2]), Float.parseFloat(spawnInfo[3]));
 		}
 		
-		else if(spawnInfo[0].equals("ASTEROID")){
-			gameLogic.addActor(new Asteroid(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2])));
+		else if(spawnInfo[0].equals("Circling")){
+			boolean circleClockWise = false;
+			if(spawnInfo[4].equals("true")) circleClockWise = true;
+			newObject = new CirclingShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), 
+									Float.parseFloat(spawnInfo[3]), circleClockWise);
 		}
 		
-		else if(spawnInfo[0].equals("BIGLASER")){
-			gameLogic.addActor(new BigLaserShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2])));
+		if(spawnInfo.length>=4){
+			
+			if(spawnInfo[3].matches("Vertical")){
+				newObject = new VerticalPattern(Integer.parseInt(spawnInfo[4]), Float.parseFloat(spawnInfo[5]), (EnemyShip)newObject);
+			}
+			else if(spawnInfo[3].matches("Pyramid")){
+				newObject = new PyramidPattern(Integer.parseInt(spawnInfo[4]), Float.parseFloat(spawnInfo[5]), Integer.parseInt(spawnInfo[6]), (EnemyShip)newObject);
+			}
+		}	
+		
+		if(newObject == null){
+			System.out.println("Error in spawnSynch: " + spawnSynch);
+			return;
 		}
 		
-		else if(spawnInfo[0].equals("STEALTH")){
-			gameLogic.addActor(new StealthShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), gameLogic.playerShip));
-		}
-		
-		else if(spawnInfo[0].equals("TURRET")){
-			gameLogic.addActor(new TurretShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), gameLogic.playerShip));
-		}
-		
-		else if(spawnInfo[0].equals("ESCAPING")){
-			gameLogic.addActor(new EscapingShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), gameLogic));
-		}
-		
-		else if(spawnInfo[0].equals("MULTISHOOTER")){
-			gameLogic.addActor(new MultiShooterShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2])));
-		}
-		
-		else if(spawnInfo[0].equals("KAMIKAZE")){
-			gameLogic.addActor(new KamikazeShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), gameLogic.playerShip));
-		}
-		
-		else if(spawnInfo[0].startsWith("ASTBELT")){
-			String[] detailedSpawn = spawnInfo[0].split("#");
-			gameLogic.addActor(new AsteroidBelt(Integer.parseInt(detailedSpawn[1]), Integer.parseInt(detailedSpawn[2]), Float.parseFloat(detailedSpawn[3])));
-		}
-		
-		else if(spawnInfo[0].startsWith("PATTERN")){
-			String[] detailedSpawn = spawnInfo[0].split("#");
-			gameLogic.addActor(new VerticalPattern(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), 
-					Integer.parseInt(detailedSpawn[2]), Float.parseFloat(detailedSpawn[3]), detailedSpawn[1], gameLogic));
-		}
-		else if(spawnInfo[0].startsWith("VPATTERN")){
-			String[] detailedSpawn = spawnInfo[0].split("#");
-			gameLogic.addActor(new VPattern(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), 
-					Integer.parseInt(detailedSpawn[2]), Float.parseFloat(detailedSpawn[3]), detailedSpawn[1], gameLogic, Integer.parseInt(detailedSpawn[4])));
-		}
+		gameLogic.addActor((Actor) newObject);
 	}
 	
 	/**

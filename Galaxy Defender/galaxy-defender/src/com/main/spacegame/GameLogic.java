@@ -65,11 +65,12 @@ public class GameLogic extends Table {
 		
 		else if(level.missionFailed()){
 			clear();
-			level.remove();
-			level=nextLevel(level);
+			playerShip.stay();
+			level = new Neptune(this);	//TODO:Should end game not start a new one
 			addActor(level);
 			addActor(playerShip);
 			gameScreen.defeat();
+			currentScore=0;
 		}
 	}
 	
@@ -163,6 +164,7 @@ public class GameLogic extends Table {
 	 * Resets everything and recreates first level
 	 */
 	public void resetGame(){
+		playerShip.stay();
 		currentScore=0;
 		clear();
 		level = new Neptune(this);
@@ -177,7 +179,6 @@ public class GameLogic extends Table {
 	public void startNextLevel(){
 		playerShip.stay();
 		clear();
-		level.remove();
 		level=nextLevel(level);
 		addActor(level);
 		addActor(playerShip);
