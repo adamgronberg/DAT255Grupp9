@@ -39,7 +39,7 @@ public class Mars extends Level {	//Basic:225:760:Pyramid:6:300000000f:50
 	 */
 	@Override
 	public boolean missionCompleted() {
-		return levelSpawnDone && gameLogic.activeSpawns();
+		return levelSpawnDone && gameLogic.noActiveSpawns();
 	}
 	
 	/**

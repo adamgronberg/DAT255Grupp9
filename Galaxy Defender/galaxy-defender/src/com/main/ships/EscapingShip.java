@@ -70,10 +70,6 @@ public class EscapingShip extends EnemyShip {
 		}
 	}
 
-	@Override
-	protected void shoot(float delta) {
-		return;		
-	}
 	/**
 	 * Checks if any movableobject is out of bounds
 	 * @param actors
@@ -102,8 +98,7 @@ public class EscapingShip extends EnemyShip {
 	}
 
 	/**
-	 * 
-	 * @return true if ship is alive else false
+	 * @return true if ship is alive
 	 */
 	public boolean isAlive(){
 		return isAlive;
@@ -117,4 +112,6 @@ public class EscapingShip extends EnemyShip {
 		isAlive = false;
 		remove();
 	}
+	
+	@Override protected void shoot(float delta) {}
 }

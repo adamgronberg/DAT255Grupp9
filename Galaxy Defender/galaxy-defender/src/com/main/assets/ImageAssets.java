@@ -52,11 +52,11 @@ public class ImageAssets {
 		playerLaserAnimation = new Array<TextureRegion>();
 		fireAnimation = new Array<TextureRegion>();
 		
-		
 		playerShip = atlas.findRegion("Ships/PlayerShip");
 		playerLaser = atlas.findRegion("weapons/greenLaser");
 		playerIonCannon = atlas.findRegion("weapons/blueMegaLaser");
 		enemyLaser = atlas.findRegion("weapons/redLaser");
+		
 		escapingShip = atlas.findRegion("Ships/Ship8");
 		enemyBasicShip = atlas.findRegion("Ships/Ship3");
 		enemyScoutShip = atlas.findRegion("Ships/Ship9");
@@ -67,8 +67,8 @@ public class ImageAssets {
 		enemyStealthShip = atlas.findRegion("Ships/Ship10");
 		enemyBossShip = atlas.findRegion("Ships/5");
 		enemyCirclingShip= atlas.findRegion("Ships/Ship5");
-		
 		enemyTurretShip = atlas.findRegion("Ships/Ship23");
+		
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("gui/TopInfoBar");
 		space = atlas.findRegion("backgrounds/space1");

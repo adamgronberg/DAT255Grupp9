@@ -147,7 +147,7 @@ public class GameLogic extends Table {
 	/** 
 	 * @return True if no enemies on the map 
 	 */ 
-	public boolean activeSpawns(){ 
+	public boolean noActiveSpawns(){ 
 		Array<MovableEntity> spawns  = new Array<MovableEntity>(); 
 		SnapshotArray<Actor> toSearch = getChildren(); 
 		for(Actor actor: toSearch){ 

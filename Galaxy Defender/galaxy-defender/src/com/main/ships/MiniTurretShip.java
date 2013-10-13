@@ -49,16 +49,14 @@ public class MiniTurretShip extends EnemyShip {
 	 * Spawns projectiles in front of the enemies depending on where player is.
 	 */
 	public void spawnProjectile() {
-		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE) {
-			if(shot<=4){
-				float delX = getX()-player.getX();
-				float delY = getY()-player.getY();
-				float degree2 =(float)Math.atan(delX/delY);
-				float degree = (float)(180/Math.PI)*degree2;
-				getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY(),LASER_WIDTH,LASER_HEIGHT,DAMAGE_WHEN_RAMMED, -degree));
-				lastMissileTime = TimeUtils.nanoTime();
-				shot++;
-			}
+		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE && shot<=4) {
+			float delX = getX()-player.getX();
+			float delY = getY()-player.getY();
+			float degree2 =(float)Math.atan(delX/delY);
+			float degree = (float)(180/Math.PI)*degree2;
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY(),LASER_WIDTH,LASER_HEIGHT,DAMAGE_WHEN_RAMMED, -degree));
+			lastMissileTime = TimeUtils.nanoTime();
+			shot++;
 		}
 	}
 
@@ -67,12 +65,7 @@ public class MiniTurretShip extends EnemyShip {
 	 */
 	@Override
 	protected void move(float delta) {
-		if(TimeUtils.nanoTime()-currentTime>FIRETIME){
-			currentTime=TimeUtils.nanoTime();
-			shot=0;
-		}
-		spawnProjectile();
-		setX(turretX+TurretShip.WIDTH/2-WIDTH/2);
+		setX(turretX+MiniBossShip.WIDTH/2-WIDTH/2);
 		setY(turretY-5);
 	}
 	
@@ -104,5 +97,10 @@ public class MiniTurretShip extends EnemyShip {
 	}
 
 	@Override protected void shoot(float delta) {
+		if(TimeUtils.nanoTime()-currentTime>FIRETIME){
+			currentTime=TimeUtils.nanoTime();
+			shot=0;
+		}
+		spawnProjectile();
 	}
 }
