@@ -1,17 +1,25 @@
 package highscore;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 
 
 
-
+/**
+ * 
+ * @author Grupp9
+ * 
+ * Handles score writing and reading from internal save file
+ *
+ */
 public class HighscoreHandler {
 	
-	private static final int NUMBEROFHEROES = 13;
-	//private static final String FILENAME = "highscore.txt";
+
+	private static final int TOTAL_NUMBER_OF_USER = 13;
+	private static final String FILENAME = "highscore.txt";
 	private static HighscoreHandler instance = null;
 	private Array<User> highscore;
-	private User currentUser;
 	
 	/**
 	 * constructor
@@ -22,37 +30,32 @@ public class HighscoreHandler {
     }
     
     /**
-     * 
      * @return the instance of HighscoreHandler
      */
     public static HighscoreHandler getInstance() {
-            if (instance == null) {
-                        if (instance == null) {
-                                 instance = new HighscoreHandler ();
-                        }
-            }
-            return instance;
+    	if (instance == null) {
+    		instance = new HighscoreHandler ();
+        }            
+        return instance;
     }
     
     /**
-     * 
-     * @param name The name of the new player
-     * 
+     * resets the instance
      */
-    public void createPlayer(String name, int score){
-    	currentUser = new User(score,name);
+    public void deleteInstance(){    	
+    	instance = null;
     }
     
     /**
      * adding the current user to highscore list if the point is good enough
      */
-    public void addPlayerToHighscore(){
-    	if(highscore.size<NUMBEROFHEROES){
-    		highscore.add(currentUser); 
+    public void addPlayerToHighscore(User user ){
+    	if(highscore.size<TOTAL_NUMBER_OF_USER){
+    		highscore.add(user); 
     	}
-    	else if(currentUser.getScore()>highscore.get(NUMBEROFHEROES-1).getScore()){
+    	else if(user.getScore()>highscore.get(TOTAL_NUMBER_OF_USER-1).getScore()){
     		highscore.removeIndex(highscore.size-1);
-    		highscore.add(currentUser);   
+    		highscore.add(user);   
     	}
     	sortHighscore();
     	writeToFile();
@@ -71,16 +74,25 @@ public class HighscoreHandler {
     	}
     }
     
-
     /**
-     * remove all highscoreholders
+     * remove all highscoreholders 
      */
     public void resetHighscore(){
     	highscore = new Array<User>();
+    	resetFile();
     }
     
     /**
-     * 
+     * clears the file of all highscores
+     */
+    protected void resetFile(){
+    	FileHandle file = Gdx.files.local(FILENAME);
+    	if(file.exists()){
+        	file.writeString("", false);        	
+        }
+    }
+    
+    /**
      * @return the highscorelist
      */
     public Array<User> getHighscore(){
@@ -120,23 +132,20 @@ public class HighscoreHandler {
     	for(User hero: highscore){
     		returnString +=hero.getName()+"\n"+hero.getScore()+"\n";
     	}
-    	
     	return returnString;
     }
     
     /**
-     * 
-     * @param highscoreList string that should be converted to the highscore array
+     * converts a input string to a highscore array
+     * @param highscoreList string that should be converted
      */
     protected void stringToList(String highscoreList){
     	
     	if(highscoreList.length()>0){
-	    	String[] splitedeHighscoreList = highscoreList.split("\n");
-	    	
-	    	for(int i=0; i<splitedeHighscoreList.length; i+=2){
-	    		createPlayer(splitedeHighscoreList[(i)],Integer.parseInt(splitedeHighscoreList[i+1]));
-	    		//addPlayerToHighscore();	    		
+	    	String[] splitHighscoreList = highscoreList.split("\n");
+	    	for(int i=0; i<splitHighscoreList.length; i+=2){
+	    		addPlayerToHighscore(new User(Integer.parseInt(splitHighscoreList[i+1]),splitHighscoreList[(i)]));
 	    	}
-    	}
+    	}	
     }
 }

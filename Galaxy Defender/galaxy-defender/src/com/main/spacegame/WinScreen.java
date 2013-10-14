@@ -2,6 +2,8 @@ package spacegame;
 
 import ships.PlayerShip;
 import highscore.HighscoreHandler;
+import highscore.User;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -154,9 +156,7 @@ public class WinScreen implements Screen,InputProcessor{
 		HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
 		if (character == '\n') {
 			highScore.setText(text);
-			highscoreHandler.createPlayer(name, score);
-			highscoreHandler.addPlayerToHighscore();
-			Gdx.app.log( HighScoreScreen.LOG,  "namn"+name);
+			highscoreHandler.addPlayerToHighscore(new User(score, name));
 			Gdx.input.setOnscreenKeyboardVisible(false);
 		} else {
 			name += character;
@@ -174,10 +174,19 @@ public class WinScreen implements Screen,InputProcessor{
 		this.score=score;
 	}
 	
+	/** 
+	 * @return the current highscore
+	 */
 	public int getCurrentScore(){
 		return score;
 	}
 	
+	/**
+	 * @param playerShip
+	 */
+	public void setPlayer(PlayerShip playerShip) {
+		this.playerShip = playerShip;
+	}
 	
 	////////////// Unused methods  /////////////////
 	@Override	public boolean keyDown(int keycode) {return false;}
@@ -188,8 +197,6 @@ public class WinScreen implements Screen,InputProcessor{
 	@Override	public boolean mouseMoved(int screenX, int screenY) {return false;}
 	@Override	public boolean scrolled(int amount) {return false;}
 
-	public void setPlayer(PlayerShip playerShip) {
-		this.playerShip = playerShip;
-	}
+	
 
 }
