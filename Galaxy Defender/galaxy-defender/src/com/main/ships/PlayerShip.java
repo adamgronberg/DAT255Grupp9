@@ -1,7 +1,6 @@
 package ships;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import assets.ImageAssets;
 import spacegame.GameScreen;
 import spacegame.Sprite;
@@ -66,15 +65,6 @@ public class PlayerShip extends Sprite {
 	 */
 	public int getMaximumHealth(){
 		return maximumHealth;
-	}
-
-	/**
-	 * Makes sure Player is always above everything else on screen 
-	 * (Looks weird when weapons come from above it)
-	 */
-	public void drawAbove(SpriteBatch batch, float parentAlpha) {
-		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
-		batch.draw(ImageAssets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
 		
 	/**

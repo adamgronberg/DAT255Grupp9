@@ -36,7 +36,7 @@ public class Neptune extends Level {
 	 */
 	@Override
 	public boolean missionCompleted() {
-		return levelSpawnDone && gameLogic.activeSpawns();
+		return levelSpawnDone && gameLogic.noActiveSpawns();
 	}
 
 	/////// Unused method ///////

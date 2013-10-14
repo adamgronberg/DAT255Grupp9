@@ -1,5 +1,7 @@
 package levels;
 
+import java.util.LinkedList;
+
 import ships.CirclingShip;
 import ships.EnemyShip;
 import spacegame.GameLogic;
@@ -80,40 +82,62 @@ public abstract class Level extends Actor {
 	private void decideSpawn(String s) {
 		String[] spawnInfo = s.split(":");
 		
+		LinkedList<String> fifo = new LinkedList<String>();
+		
+		for(String info: spawnInfo){
+			fifo.add(info);
+		}
+
 		Object newObject = null;
 		
-		if(spawnInfo[0].matches("Basic|Scout|Heavy|BigLaser|Asteroid|MultiShooter")){
+		if(fifo.peek().matches("Basic|Scout|Heavy|BigLaser|Asteroid|MultiShooter")){
 			try {
-				newObject = Class.forName("ships." + spawnInfo[0] + "Ship" ).getDeclaredConstructors()[0].newInstance(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]));
+				newObject = Class.forName("ships." + fifo.pop() + "Ship" ).getDeclaredConstructors()[0].newInstance(
+						Float.parseFloat(fifo.pop()), Float.parseFloat(fifo.pop()));
 			} catch (Exception e) {e.printStackTrace();}
 		}
 		
-		else if(spawnInfo[0].matches("Stealth|Turret|Kamikaze|")){
+		else if(fifo.peek().matches("Stealth|MiniBoss|Kamikaze")){
 			try {
-				newObject = Class.forName("ships." + spawnInfo[0] + "Ship" ).getDeclaredConstructors()[0].newInstance(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), gameLogic.playerShip);
+				newObject = Class.forName("ships." + fifo.pop() + "Ship" ).getDeclaredConstructors()[0].newInstance(
+						Float.parseFloat(fifo.pop()), Float.parseFloat(fifo.pop()), gameLogic.playerShip);
 			} catch (Exception e) {e.printStackTrace();}
 		}
 		
-		else if(spawnInfo[0].matches("Belt")){
-			newObject = new AsteroidBelt(Integer.parseInt(spawnInfo[1]), Integer.parseInt(spawnInfo[2]), Float.parseFloat(spawnInfo[3]));
+		else if(fifo.peek().matches("Escaping")){
+			try {
+				newObject = Class.forName("ships." + fifo.pop() + "Ship" ).getDeclaredConstructors()[0].newInstance(
+						Float.parseFloat(fifo.pop()), Float.parseFloat(fifo.pop()), gameLogic);
+			} catch (Exception e) {e.printStackTrace();}
 		}
 		
-		else if(spawnInfo[0].equals("Circling")){
-			boolean circleClockWise = false;
-			if(spawnInfo[4].equals("true")) circleClockWise = true;
-			newObject = new CirclingShip(Float.parseFloat(spawnInfo[1]), Float.parseFloat(spawnInfo[2]), 
-									Float.parseFloat(spawnInfo[3]), circleClockWise);
+		else if(fifo.peek().matches("Belt")){
+			fifo.pop();
+			newObject = new AsteroidBelt(Integer.parseInt(fifo.pop()), Integer.parseInt(fifo.pop()), 
+					Float.parseFloat(fifo.pop()));
 		}
 		
-		if(spawnInfo.length>=4){
+		else if(fifo.peek().equals("Circling")){
+			fifo.pop();
+			newObject = new CirclingShip(Float.parseFloat(fifo.pop()), Float.parseFloat(fifo.pop()), 
+									Float.parseFloat(fifo.pop()), fifo.pop().equals("true"));
+		}
+		
+		if(!fifo.isEmpty()){
+
+			if(fifo.peek().matches("Vertical")){
+				fifo.pop();
+				newObject = new VerticalPattern(Integer.parseInt(fifo.pop()), 
+						Float.parseFloat(fifo.pop()), (EnemyShip)newObject);
+			}
 			
-			if(spawnInfo[3].matches("Vertical")){
-				newObject = new VerticalPattern(Integer.parseInt(spawnInfo[4]), Float.parseFloat(spawnInfo[5]), (EnemyShip)newObject);
+			else if(fifo.peek().matches("Pyramid")){
+				fifo.pop();
+				newObject = new PyramidPattern(Integer.parseInt(fifo.pop()), 
+						Float.parseFloat(fifo.pop()), Integer.parseInt(fifo.pop()), (EnemyShip)newObject);
 			}
-			else if(spawnInfo[3].matches("Pyramid")){
-				newObject = new PyramidPattern(Integer.parseInt(spawnInfo[4]), Float.parseFloat(spawnInfo[5]), Integer.parseInt(spawnInfo[6]), (EnemyShip)newObject);
-			}
-		}	
+		}
+			
 		
 		if(newObject == null){
 			System.out.println("Error in spawnSynch: " + spawnSynch);

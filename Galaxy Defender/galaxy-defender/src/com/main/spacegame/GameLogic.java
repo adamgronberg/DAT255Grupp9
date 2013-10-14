@@ -95,7 +95,6 @@ public class GameLogic extends Table {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
-		playerShip.drawAbove(batch, parentAlpha);
 	}
 	
 	/**
@@ -147,7 +146,7 @@ public class GameLogic extends Table {
 	/** 
 	 * @return True if no enemies on the map 
 	 */ 
-	public boolean activeSpawns(){ 
+	public boolean noActiveSpawns(){ 
 		Array<MovableEntity> spawns  = new Array<MovableEntity>(); 
 		SnapshotArray<Actor> toSearch = getChildren(); 
 		for(Actor actor: toSearch){ 

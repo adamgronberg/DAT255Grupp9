@@ -16,24 +16,29 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class CirclingShip extends EnemyShip {
 	
-	public static final float RATEOFFIRE = 800000000f; 	 //In nanoseconds
-	public final static int HEIGHT = 40;
-	public final static int WIDTH = 30;
+	public static final float RATEOFFIRE = 2000000000f; 	 //In nanoseconds
+	public final static int HEIGHT = 45;
+	public final static int WIDTH = 35;
+	
 	private final static float SHIPSPEED = 2.5f;
-	private final static int SCOREVALUE = 3;
+	private final static int SCOREVALUE = 2;
 	private final static int HEALTH = 1;
 	private final static float ROTATION_RADIAN = 60;
+	
 	private boolean circling = false;
-	
-	
 	private boolean circleClockWise = false;
-	
 	private float lastProjectileTime;	
 	private float degrees;
 	private Vector2 spinPoint;
 	
 	private static final int DAMAGE_WHEN_RAMMED = 30;
 	private static final boolean DISABABLE = true;
+	
+	private static final int LASER_DAMAGE = 4;
+	private static final float LASER_HEIGHT = 8;
+	private static final float LASER_WIDTH = 4;
+	
+	private static final float ROTATION_SPEED = 2f;
 	
 	/**
 	 * Constructor
@@ -60,10 +65,10 @@ public class CirclingShip extends EnemyShip {
 	/**
 	 * Spawns projectiles in front of the enemies
 	 */
-	
 	public void spawnProjectile() {
 		if(TimeUtils.nanoTime() - lastProjectileTime > RATEOFFIRE) {
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY(), 3,5,2,0));
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY(),
+					LASER_WIDTH ,LASER_HEIGHT,LASER_DAMAGE,0));
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 	}
@@ -80,17 +85,13 @@ public class CirclingShip extends EnemyShip {
 		 
 		 if(circling){
 			spawnProjectile();	
-			if(circleClockWise) degrees = degrees-3f;	
-		 	else degrees = degrees+3f;
+			if(circleClockWise) degrees = degrees-ROTATION_SPEED;	
+		 	else degrees = degrees+ROTATION_SPEED;
 			setX(spinPoint.x+(ROTATION_RADIAN*(float)Math.cos(Math.toRadians(degrees))));
 			setY(spinPoint.y+(ROTATION_RADIAN*(float)Math.sin(Math.toRadians(degrees))));
 		}
 	}
 
-	/**
-	 * Ship shoot function
-	 */
-	@Override
-	protected void shoot(float delta) {
-	}
+	///// Unused method /////
+	@Override protected void shoot(float delta) {}
 }
