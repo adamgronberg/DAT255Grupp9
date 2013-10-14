@@ -19,12 +19,25 @@ public class MiniBossShip extends EnemyShip {
 	public static final float RANDOMTIME = 900000000f;
 	public static final int HEIGHT=150;
 	public static final int WIDTH=110;
+	
 	private static final float SHIPSPEED = 1f;
 	private static final int SCOREVALUE=30;
 	private static final int HEALTH=100;
 	private static final int DAMAGE_WHEN_RAMMED = 0;
 	private static final boolean DISABABLE = false;
-
+	private static final float LOWER_Y_CAP = 550;
+	private static final float HIGHER_Y_CAP = 650;
+	
+	private static final int SIDE_LASER_DAMAGE = 8;
+	private static final float SIDE_LASER_HEIGHT = 15f;
+	private static final float SIDE_LASER_WIDTH = 2f;
+	private static final float SIDE_LASER_ROTATION = 20f;
+	private static final float SIDE_LASER_POSITION_X = 10;
+	
+	private static final int FRONT_LASER_DAMAGE = 8;
+	private static final float FRONT_LASER_HEIGHT = 25f;
+	private static final float FRONT_LASER_WIDTH = 4f;
+	
 	private MiniTurretShip miniTurretShip;
 	private boolean movingRight = true;
 	private boolean movingUp = true;
@@ -51,18 +64,27 @@ public class MiniBossShip extends EnemyShip {
 	 * Spawns projectiles from all guns
 	 */
 	public void spawnProjectile() {
-		if(TimeUtils.nanoTime() - lastProjectileTime > RATEOFFIRE) { //TODO: Move constants
-			getParent().addActor( new EnemyLaser(getX(), getY()+10, 2f, 15f,5,-20));
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/8, getY()+5, 2f, 15f,5,-20));
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/4, getY(), 2f, 15f,5,0));
-			getParent().addActor( new EnemyLaser(getX()+3*WIDTH/4, getY(), 2f, 15f,5,0));
-			getParent().addActor( new EnemyLaser(getX()+7*WIDTH/8, getY()+5, 2f, 15f,5,20));
-			getParent().addActor( new EnemyLaser(getX()+WIDTH, getY()+10, 2f, 15f,5,20));
+		if(TimeUtils.nanoTime() - lastProjectileTime > RATEOFFIRE) {
+			getParent().addActor( new EnemyLaser(getX(), getY()+SIDE_LASER_POSITION_X, SIDE_LASER_WIDTH,
+					SIDE_LASER_HEIGHT,SIDE_LASER_DAMAGE ,-SIDE_LASER_ROTATION));
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/8, getY()+SIDE_LASER_POSITION_X/2, SIDE_LASER_WIDTH,
+					SIDE_LASER_HEIGHT, SIDE_LASER_DAMAGE,-SIDE_LASER_ROTATION));
+			
+			getParent().addActor( new EnemyLaser(getX()+WIDTH, getY()+SIDE_LASER_POSITION_X, SIDE_LASER_WIDTH,
+					SIDE_LASER_HEIGHT, SIDE_LASER_DAMAGE, SIDE_LASER_ROTATION));
+			getParent().addActor( new EnemyLaser(getX()+7*WIDTH/8, getY()+SIDE_LASER_POSITION_X/2, SIDE_LASER_WIDTH,
+					SIDE_LASER_HEIGHT, SIDE_LASER_DAMAGE, SIDE_LASER_ROTATION));
+
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/4-FRONT_LASER_WIDTH/2, getY(), FRONT_LASER_WIDTH,
+					FRONT_LASER_HEIGHT, FRONT_LASER_DAMAGE,0));
+			getParent().addActor( new EnemyLaser(getX()+3*WIDTH/4-FRONT_LASER_WIDTH/2, getY(), FRONT_LASER_WIDTH,
+					FRONT_LASER_HEIGHT, FRONT_LASER_DAMAGE,0));
+			
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 	
 		if(TimeUtils.nanoTime() - lastBombTime > RATEOFBOMB){
-			getParent().addActor( new TurretShipBomb(getX()+WIDTH/2-TurretShipBomb.WIDTH/2,getY()));
+			getParent().addActorBefore(this, new TurretShipBomb(getX()+WIDTH/2-TurretShipBomb.WIDTH/2,getY()));
 			lastBombTime = TimeUtils.nanoTime();
 		}
 	}
@@ -79,7 +101,7 @@ public class MiniBossShip extends EnemyShip {
 		}
 		
 		if(miniTurretShip.isAlive()){
-			miniTurretShip.setXY(getX(), getY());
+			miniTurretShip.setPosition(getX(), getY());
 		}
 		
 		if(TimeUtils.nanoTime()-lastRandomTime>RANDOMTIME){
@@ -98,7 +120,7 @@ public class MiniBossShip extends EnemyShip {
 			movingRight = !movingRight;
 		}
 
-		if(getY()<550 || getY()>660){
+		if(getY()<LOWER_Y_CAP || getY()>HIGHER_Y_CAP){ 
 			movingUp = !movingUp;
 		}
 	}

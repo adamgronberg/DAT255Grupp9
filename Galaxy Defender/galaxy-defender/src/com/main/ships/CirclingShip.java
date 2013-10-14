@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class CirclingShip extends EnemyShip {
 	
-	public static final float RATEOFFIRE = 1000000000f; 	 //In nanoseconds
+	public static final float RATEOFFIRE = 2000000000f; 	 //In nanoseconds
 	public final static int HEIGHT = 45;
 	public final static int WIDTH = 35;
 	
@@ -34,9 +34,9 @@ public class CirclingShip extends EnemyShip {
 	private static final int DAMAGE_WHEN_RAMMED = 30;
 	private static final boolean DISABABLE = true;
 	
-	private static final int LASER_DAMAGE = 2;
-	private static final float LASER_HEIGHT = 7;
-	private static final float LASER_WIDTH = 3;
+	private static final int LASER_DAMAGE = 4;
+	private static final float LASER_HEIGHT = 8;
+	private static final float LASER_WIDTH = 4;
 	
 	private static final float ROTATION_SPEED = 2f;
 	

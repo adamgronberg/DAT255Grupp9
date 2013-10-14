@@ -45,22 +45,22 @@ public class PlayerWeaponHandeler {
 		if(TimeUtils.nanoTime() - lastLaserTime > PlayerLaser.RATEOFFIRE) {
 			switch(currentLaser){
 				case SINGLE:
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
 					break;
 				case DUAL:
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX(), playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX(), playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
 					break;
 				case TRIPPLE:
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
 					break;
 				default:
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2+PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
-					playerShip.getParent().addActor( new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2+PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
 					break;
 			}
 			lastLaserTime = TimeUtils.nanoTime();
@@ -72,7 +72,7 @@ public class PlayerWeaponHandeler {
 	 */
 	public void shootMissle(){
 		if (missileReady) {
-			playerShip.getParent().addActor(new PlayerMissile(playerShip.getX()+PlayerShip.WITDH/2-PlayerMissile.WIDTH/2, playerShip.getY(), currentUpgradedMissileArea));
+			playerShip.getParent().addActorBefore(playerShip, new PlayerMissile(playerShip.getX()+PlayerShip.WITDH/2-PlayerMissile.WIDTH/2, playerShip.getY(), currentUpgradedMissileArea));
 			lastMissileTime = TimeUtils.nanoTime();
 			missileReady = false;
 		}
@@ -83,7 +83,7 @@ public class PlayerWeaponHandeler {
 	 */
 	public void shootEMP(){
 		if (EMPReady) {
-			playerShip.getParent().addActor(new PlayerEMP(playerShip.getX()+PlayerShip.WITDH/2-PlayerEMP.WIDTH/2, playerShip.getY(), currentUpgradedDisableTime));
+			playerShip.getParent().addActorBefore(playerShip,new PlayerEMP(playerShip.getX()+PlayerShip.WITDH/2-PlayerEMP.WIDTH/2, playerShip.getY(), currentUpgradedDisableTime));
 			lastEMPTime = TimeUtils.nanoTime();
 			EMPReady = false;
 		}

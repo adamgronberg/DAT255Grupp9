@@ -36,8 +36,8 @@ public class BossShip extends EnemyShip{
 		}		
 		if(getY()>500)setY(getY()-SHIPSPEED);
 		if(getX()<100)setX(getX()+SHIPSPEED);
-		turret1.setXY(getX()+60, getY());
-		turret2.setXY(getX()+170, getY());
+		turret1.setPosition(getX()+60, getY());
+		turret2.setPosition(getX()+170, getY());
 		if(!turret1Dead){
 			if(!turret1.isAlive()){
 				turret1DeathTime = TimeUtils.nanoTime();

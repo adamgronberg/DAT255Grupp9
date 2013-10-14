@@ -22,14 +22,13 @@ public class MiniTurretShip extends EnemyShip {
 	public final static int WIDTH=35;
 	public final static int LASER_HEIGHT=15;
 	public final static int LASER_WIDTH=3;
-	private static final int DAMAGE_WHEN_RAMMED = 5;
-	private final static boolean DISABLED = false;
+	private static final int DAMAGE_WHEN_RAMMED = 0;
+	private static final int LASER_DAMAGE = 8;
+	private final static boolean DISABABLE = false;
 	private long currentTime;
 	private long lastMissileTime;
 	private PlayerShip player;
 	private int shot = 0;
-	private float turretX = 10;
-	private float turretY = 10;
 	private boolean isAlive = true;
 	
 	/**
@@ -39,7 +38,7 @@ public class MiniTurretShip extends EnemyShip {
 	* @param player PlayerShip
 	*/
 	public MiniTurretShip(float x, float y, PlayerShip player){
-		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyStealthShip, DAMAGE_WHEN_RAMMED, DISABLED);
+		super(WIDTH,HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyStealthShip, DAMAGE_WHEN_RAMMED, DISABABLE);
 		currentTime = TimeUtils.nanoTime();
 		this.player = player;
 		lastMissileTime = TimeUtils.nanoTime();
@@ -53,8 +52,8 @@ public class MiniTurretShip extends EnemyShip {
 			float delX = getX()-player.getX();
 			float delY = getY()-player.getY();
 			float degree2 =(float)Math.atan(delX/delY);
-			float degree = (float)(180/Math.PI)*degree2;
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY(),LASER_WIDTH,LASER_HEIGHT,DAMAGE_WHEN_RAMMED, -degree));
+			float degree = (180f/(float)Math.PI)*degree2;
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY(),LASER_WIDTH,LASER_HEIGHT, LASER_DAMAGE, -degree));
 			lastMissileTime = TimeUtils.nanoTime();
 			shot++;
 		}
@@ -65,8 +64,8 @@ public class MiniTurretShip extends EnemyShip {
 	 */
 	@Override
 	protected void move(float delta) {
-		setX(turretX+MiniBossShip.WIDTH/2-WIDTH/2);
-		setY(turretY-5);
+		setX(getX()+MiniBossShip.WIDTH/2-WIDTH/2);
+		setY(getY()-5);
 	}
 	
 	/**
@@ -74,15 +73,6 @@ public class MiniTurretShip extends EnemyShip {
 	 */
 	public boolean isAlive(){
 		return isAlive;
-	}
-	
-	/**
-	 * @param x TurretShips x position
-	 * @param y TurretShips y position
-	 */
-	public void setXY(float x, float y){
-		turretX=x;
-		turretY=y;
 	}
 	
 	@Override

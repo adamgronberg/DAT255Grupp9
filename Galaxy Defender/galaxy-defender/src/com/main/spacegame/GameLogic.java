@@ -95,7 +95,6 @@ public class GameLogic extends Table {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
-		playerShip.drawAbove(batch, parentAlpha);
 	}
 	
 	/**
