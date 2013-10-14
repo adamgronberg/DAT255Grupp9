@@ -71,7 +71,6 @@ public abstract class Level extends Actor {
 		if(!levelSpawnDone){
 			spawn();
 		}
-
 		OutOfBoundsDetection.checkOutOfBounds(gameLogic.getChildren());
 	}
 	
@@ -97,17 +96,10 @@ public abstract class Level extends Actor {
 			} catch (Exception e) {e.printStackTrace();}
 		}
 		
-		else if(fifo.peek().matches("Stealth|MiniBoss|Kamikaze")){
+		else if(fifo.peek().matches("Stealth|Kamikaze")){
 			try {
 				newObject = Class.forName("ships." + fifo.pop() + "Ship" ).getDeclaredConstructors()[0].newInstance(
 						Float.parseFloat(fifo.pop()), Float.parseFloat(fifo.pop()), gameLogic.playerShip);
-			} catch (Exception e) {e.printStackTrace();}
-		}
-		
-		else if(fifo.peek().matches("Escaping")){
-			try {
-				newObject = Class.forName("ships." + fifo.pop() + "Ship" ).getDeclaredConstructors()[0].newInstance(
-						Float.parseFloat(fifo.pop()), Float.parseFloat(fifo.pop()), gameLogic);
 			} catch (Exception e) {e.printStackTrace();}
 		}
 		
@@ -138,7 +130,6 @@ public abstract class Level extends Actor {
 			}
 		}
 			
-		
 		if(newObject == null){
 			System.out.println("Error in spawnSynch: " + spawnSynch);
 			return;

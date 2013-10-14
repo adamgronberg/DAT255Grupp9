@@ -27,7 +27,8 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	 * @param height		Height of explosion
 	 * @param lingerTime	The time the explosion lingers (20 ~ 1 second)
 	 */
-	public AnimatedAreaEffect(float x, float y, float width, float height, float timePerFrame, Array<TextureRegion> animationFrames) {
+	public AnimatedAreaEffect(float x, float y, float width, float height, 
+			float timePerFrame, Array<TextureRegion> animationFrames) {
 		super( width, height, x, y);
 		animation = new Animation(timePerFrame, animationFrames);
 		stateTime = 0f;
@@ -39,7 +40,8 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		currentFrame = animation.getKeyFrame(stateTime, loopFrames);
-        batch.draw(currentFrame, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
+        batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), 
+        		getWidth(), getHeight(), 1, 1, getRotation());
 	}
 	
 	/**

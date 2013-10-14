@@ -50,26 +50,17 @@ public class GameLogic extends Table {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if (playerShip.getCurrentHealth()<1) {	//For testing
+		
+		CollisionDetection.checkCollisions(this);
+		
+		if (playerShip.getCurrentHealth()<1 || level.missionFailed()) {	//For testing
 			gameScreen.defeat(); //TODO switch places defeat and reset add another score variable
 			resetGame();
 		}
 		
-		CollisionDetection.checkCollisions(this);
-		
 		if(level.missionCompleted()){
 			startNextLevel();
 			gameScreen.victory();
-		}
-		
-		else if(level.missionFailed()){
-			clear();
-			playerShip.stay();
-			level = new Neptune(this);	//TODO:Should end game not start a new one
-			addActor(level);
-			addActor(playerShip);
-			gameScreen.defeat();
-			currentScore=0;
 		}
 	}
 	
@@ -156,6 +147,18 @@ public class GameLogic extends Table {
 			} 
 		} 
 		return spawns.size == 0;
+	}
+	
+	public Array<EnemyShip> getEnemies(){
+		Array<EnemyShip> enemies  = new Array<EnemyShip>(); 
+		SnapshotArray<Actor> toSearch = getChildren(); 
+		for(Actor actor: toSearch){ 
+			if(actor instanceof EnemyShip){ 
+				EnemyShip enemy = (EnemyShip)actor; 
+				enemies.add(enemy); 
+			} 
+		} 
+		return enemies;
 	}
 	
 	/**

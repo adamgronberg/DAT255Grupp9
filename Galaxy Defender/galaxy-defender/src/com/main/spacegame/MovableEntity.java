@@ -25,13 +25,16 @@ public abstract class MovableEntity extends Actor {
 	 */
 	public MovableEntity(float width, float height, float x, float y) {
 		setBounds(x, y, width, height);
+		setOrigin(width/2, height/2);
 	}
 	
 	/**
 	 * @return The rectangle that contains the position of the player.
 	 */
 	public Rectangle getBounds() {
-		return new Rectangle(getX(), getY(), getWidth(),getHeight());
+		return new Rectangle(getX(), getY(), getWidth(), getHeight());
 	}
+	
+	
 }
 

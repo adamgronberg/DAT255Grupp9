@@ -17,14 +17,14 @@ public class BigLaserShip extends EnemyShip {
 	
 	private static final TargetTypes FACTION = TargetTypes.ENEMY;
 	private static final TargetTypes[] AFFECTED_TARGETS = {TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE};
-	private final static int DAMAGE_PER_TICK = 1;
+	private final static int DAMAGE_PER_TICK = 5;
 	public static final float RATEOFFIRE = 8000000000f; 	 //In nanoseconds
 	public static final float DAMAGE_TICK_RATE = 300000000f;
 	public static final float FIRE_TIME = 3000000000f;
 	public final static int HEIGHT=65;
 	public final static int WIDTH=40;
 	private final static float LASER_LENGTH = 900;
-	private final static float LASER_WIDTH = 5;
+	private final static float LASER_WIDTH = 25;
 	private final static float SHIPSPEED = 1f;
 	private final static int SCOREVALUE=30;
 	private final static int HEALTH=5;	
@@ -60,7 +60,7 @@ public class BigLaserShip extends EnemyShip {
 			damageTickTime = TimeUtils.nanoTime();
 			lastProjectileTime = TimeUtils.nanoTime();
 			fireTime = TimeUtils.nanoTime();
-			bigLaserEffect = new BigLaserEffect(getX()+WIDTH/2,getY()-LASER_LENGTH,LASER_WIDTH,LASER_LENGTH, true, this);
+			bigLaserEffect = new BigLaserEffect(getX()+WIDTH/2-LASER_WIDTH/2, getY()-LASER_LENGTH, LASER_WIDTH,LASER_LENGTH, true, this);
 			getParent().addActor(bigLaserEffect);
 		}
 	}

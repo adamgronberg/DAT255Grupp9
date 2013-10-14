@@ -1,9 +1,12 @@
 package ships;
 
+import spacegame.GameLogic;
 import spacegame.GameScreen;
 import weapons.EnemyLaser;
 import weapons.TurretShipBomb;
 import assets.ImageAssets;
+
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -16,7 +19,7 @@ public class MiniBossShip extends EnemyShip {
 	
 	public static final float RATEOFFIRE = 2500000000f; 	 //In nanoseconds
 	public static final float RATEOFBOMB = 4000000000f;
-	public static final float RANDOMTIME = 900000000f;
+	public static final float RANDOMTIME = 3000000000f;
 	public static final int HEIGHT=150;
 	public static final int WIDTH=110;
 	
@@ -38,6 +41,8 @@ public class MiniBossShip extends EnemyShip {
 	private static final float FRONT_LASER_HEIGHT = 25f;
 	private static final float FRONT_LASER_WIDTH = 4f;
 	
+	private static final Rectangle LEFT_SIDE = new Rectangle(0,0, GameScreen.GAME_WITDH/2, GameScreen.GAME_HEIGHT);
+	
 	private MiniTurretShip miniTurretShip;
 	private boolean movingRight = true;
 	private boolean movingUp = true;
@@ -45,9 +50,8 @@ public class MiniBossShip extends EnemyShip {
 	private float lastRandomTime;
 	private float lastBombTime = TimeUtils.nanoTime();
 	private boolean isAlive = true;
-	private int numberOfMiniTurrets = 1;
-	private int currentnumberOfMiniTurrets = 0;
-	private PlayerShip playerShip;
+	private boolean turretSpawned = false;
+	private GameLogic gameLogic;
 
 	/**
 	 * Constructor
@@ -55,9 +59,9 @@ public class MiniBossShip extends EnemyShip {
 	 * @param y
 	 * @param playerShip
 	 */
-	public MiniBossShip(float x, float y, PlayerShip playerShip) {
+	public MiniBossShip(float x, float y, GameLogic gameLogic) {
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyTurretShip, DAMAGE_WHEN_RAMMED, DISABABLE);
-		this.playerShip = playerShip;
+		this.gameLogic = gameLogic;
 	}
 	
 	/**
@@ -94,10 +98,11 @@ public class MiniBossShip extends EnemyShip {
 	 */
 	@Override
 	protected void move(float delta) {
-		if(currentnumberOfMiniTurrets<numberOfMiniTurrets){
-			miniTurretShip = new MiniTurretShip(getX(),getY(),playerShip);
+		
+		if(!turretSpawned){
+			miniTurretShip = new MiniTurretShip(getX(),getY(),gameLogic.playerShip);
 			getParent().addActor(miniTurretShip);
-			currentnumberOfMiniTurrets++;
+			turretSpawned = true;
 		}
 		
 		if(miniTurretShip.isAlive()){
@@ -108,7 +113,25 @@ public class MiniBossShip extends EnemyShip {
 			movingRight = randomBoolean();
 			movingUp = randomBoolean();
 			lastRandomTime =TimeUtils.nanoTime();
+			
+			int numberOnLeftSide = 0, numberOnRightSide = 0;
+			for(EnemyShip enemy: gameLogic.getEnemies()){
+				if(LEFT_SIDE.contains(enemy.getBounds())) numberOnLeftSide++;
+				else numberOnRightSide++;
+			}
+			
+			if(LEFT_SIDE.contains(getBounds()))numberOnLeftSide -= 2;
+			else numberOnRightSide -= 2;
+			
+			if (numberOnLeftSide > numberOnRightSide) movingRight = false;
+			else if (numberOnLeftSide < numberOnRightSide) movingRight = true;
 		}
+		
+		if(getX()<0) movingRight = true;
+		else if(getX()>GameScreen.GAME_WITDH-WIDTH) movingRight = false;
+
+		if(getY()<LOWER_Y_CAP) movingUp = true;
+		else if(getY()>HIGHER_Y_CAP) movingUp = false;
 		
 		if(movingRight) setX(getX()+SHIPSPEED);
 		else setX(getX()-SHIPSPEED);
@@ -116,13 +139,7 @@ public class MiniBossShip extends EnemyShip {
 		if(movingUp) setY(getY()+SHIPSPEED);
 		else setY(getY()-SHIPSPEED);
 		
-		if(getX()<0 || getX()>GameScreen.GAME_WITDH-WIDTH){
-			movingRight = !movingRight;
-		}
 
-		if(getY()<LOWER_Y_CAP || getY()>HIGHER_Y_CAP){ 
-			movingUp = !movingUp;
-		}
 	}
 
 	/**
