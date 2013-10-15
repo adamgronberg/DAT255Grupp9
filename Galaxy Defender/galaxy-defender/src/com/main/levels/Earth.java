@@ -23,7 +23,7 @@ public class Earth extends Level{
 												{"BigLaser:225:760:Pyramid:3:300000000f:200"},
 												{"MultiShooter:150:760","MultiShooter:300:760"},
 												{"Stealth:0:700","Stealth:440:700"},
-												{"MiniBoss:200:650"}};
+												{"Boss:-100:650"}};
 	
 	/**
 	 * Constructor
