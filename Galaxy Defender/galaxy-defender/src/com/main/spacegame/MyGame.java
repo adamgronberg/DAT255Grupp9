@@ -40,6 +40,7 @@ public class MyGame extends Game {
 		gameScreen = new GameScreen(this);
 		menuScreen = new MenuScreen(this);
 		optionsScreen = new OptionsScreen(this, gameScreen);
+		winScreen.resetCosts();
 		
 	}
 	
@@ -81,6 +82,10 @@ public class MyGame extends Game {
 		SoundAssets.dispose();
 		gameScreen.dispose();
 		menuScreen.dispose();
+	}
+	public void reducePlayerScore(int cost) {
+		gameScreen.reducePlayerScore(cost); 
+		
 	}
 	
 }

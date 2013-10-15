@@ -184,4 +184,9 @@ public class GameLogic extends Table {
 		addActor(level);
 		addActor(playerShip);
 	}
+
+	public void reducePlayerScore(int cost) {
+		currentScore-=cost;
+		
+	}
 }
