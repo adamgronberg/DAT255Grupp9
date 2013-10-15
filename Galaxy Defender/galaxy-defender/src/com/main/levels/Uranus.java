@@ -1,9 +1,10 @@
 package levels;
 
-
 import assets.ImageAssets;
+import ships.EnemyShip;
 import ships.EscapingShip;
 import spacegame.GameLogic;
+
 
 /**
  * 
@@ -13,7 +14,7 @@ import spacegame.GameLogic;
  * 
  */
 public class Uranus extends Level{
-	
+
 	private static final float spawnTimes[] = {6000000000f,5000000000f,6000000000f,300000000f,300000000f,5000000000f,5000000000f, 3000000000f};
 	private static final String[][] toSpawn = { {"Basic:225:760:Pyramid:9:150000000f:50"},
 												{"Heavy:10:760","Basic:85:760","Heavy:225:760","Basic:300:760","Heavy:440:760","Kamikaze:50:760","Kamikaze:400:760"},
@@ -34,7 +35,9 @@ public class Uranus extends Level{
 		gameLogic.setBackground(ImageAssets.uranus);
 		escapingShip = new EscapingShip(200,650, gameLogic);
 		gameLogic.addActor(escapingShip);
-		levelname="Uranus";		
+		levelname="Uranus";	
+		EnemyShip.turnOffScore();
+	
 	}
 	
 	/**
@@ -55,9 +58,20 @@ public class Uranus extends Level{
 	 */
 	@Override
 	public boolean missionCompleted() {
-		return !escapingShip.isAlive();
+		
+		 if(!escapingShip.isAlive()){
+		EnemyShip.turnOnScore();
+		gameLogic.addScore(200);
+		return true;
+		 }
+		 return false;
+		
 	}
 
-	//Unused method
-	@Override public boolean missionFailed() {return false;}
+	/**
+	 * If you don't win the level within the timelimit of 3 min you fail
+	 */
+	@Override public boolean missionFailed() {
+			return false;
+	}
 }
