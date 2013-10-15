@@ -1,5 +1,7 @@
 package ships;
 
+import java.util.Iterator;
+
 import spacegame.GameLogic;
 import spacegame.GameScreen;
 import spacegame.MovableEntity;
@@ -81,20 +83,82 @@ public class EscapingShip extends EnemyShip {
 		return false;
 	}
 	
+	/**
+	 * check how to best avoid player projectiles
+	 */
 	protected void avoidLaser(){
 		long misileCheck = 0;
 		Array<Projectile> playerProjectile = gl.getPlayerShotts();
 		
-		for(Projectile proj: playerProjectile){
-			misileCheck += Math.pow(proj.getY(),4)*(1/((getX()+WIDTH/2)-proj.getX()));
+		if(!isSideEmpty(playerProjectile)){
+			for(Projectile proj: playerProjectile){
+				misileCheck += Math.pow(proj.getY(),4)*(1/((getX()+WIDTH/2)-proj.getX()));
+			}
+			
+			if(misileCheck>0){
+				movingLeft=false;
+			}
+			else{
+				movingLeft=true;
+			}
+		}
+	}
+	
+	/**
+	 * check if one side is safe and then move ship in 
+	 * @return if one side is free from player projectiles
+	 */
+	protected boolean isSideEmpty( Array<Projectile> playerProjectile ){
+		boolean leftSideEmpty = true;
+		boolean rightSideEmpty = true;
+		Projectile projectile;
+		
+		Iterator<Projectile> it = playerProjectile.iterator();
+		while(it.hasNext()&&(leftSideEmpty||rightSideEmpty)){
+			projectile = it.next();
+			if(dangerous(projectile)){
+				return false;
+			}
+			if(projectile.getX()<GameScreen.GAME_WITDH/2){
+				leftSideEmpty=false;
+			}else{
+				rightSideEmpty=false;
+			}
 		}
 		
-		if(misileCheck>0){
-			movingLeft=false;
+		
+		
+		if((!leftSideEmpty)&&(!rightSideEmpty)){
+			return false;
+		}else if(rightSideEmpty){
+			movingLeft = false;
+		}else{
+			movingLeft = true;
 		}
-		else{
-			movingLeft=true;
-		}
+		
+		//System.out.println("re:  "+rightSideEmpty+"   ml: "+movingLeft+ "  le: "+ leftSideEmpty);
+		
+		return true;
+		
+	}
+	
+	/**
+	 * 
+	 * @param projectile
+	 * @return if projectile should be considered as a great threat
+	 */
+	protected boolean dangerous(Projectile projectile){
+		
+		return distToShip(projectile)<70;
+	}
+	
+	/**
+	 * 
+	 * @param projectile 
+	 * @return distance between projectile and the ship
+	 */
+	protected float distToShip(Projectile projectile){
+		return (float) Math.sqrt( Math.pow(projectile.getX()-this.getX()+EscapingShip.WIDTH/2, 2) + Math.pow(projectile.getY()-this.getY()+ EscapingShip.HEIGHT/2, 2));
 	}
 
 	/**
