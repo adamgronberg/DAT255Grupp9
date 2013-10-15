@@ -32,6 +32,7 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	private float disabledDuration;
 	private boolean disabable;
 	private boolean firePosInitialised = false;
+	private static boolean givesScore = true;
 	private Vector2 firePos1, firePos2, firePos3;
 	private static boolean freeze = false;
 	
@@ -147,6 +148,7 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 		currentHealth = currentHealth - damage;
 		if (currentHealth<=0){
 			destroyShip();
+			if(!givesScore) return 0;
 			return scoreValue;
 		}
 		return 0;
@@ -211,4 +213,21 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	public static void unFreeze(){
 		freeze = false;
 	}
+
+	/**
+	 * turns on getting Score from enemyShips
+	 */
+	
+	public static void turnOnScore(){
+		givesScore=true;
+	}
+	/**
+	 * turns off getting score from enemyShips
+	 */
+	
+	public static void turnOffScore(){
+		givesScore=false;
+	}
+	
+
 }

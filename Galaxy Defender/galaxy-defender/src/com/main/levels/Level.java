@@ -36,6 +36,7 @@ public abstract class Level extends Actor {
 	 */
 	public Level(GameLogic gameLogic, String[][] toSpawn, float[] spawnTimes){
 		super();
+		EnemyShip.turnOnScore();
 		this.gameLogic = gameLogic;
 		this.toSpawn = toSpawn;
 		this.spawnTimes = spawnTimes;

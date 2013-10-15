@@ -58,18 +58,20 @@ public class EscapingShip extends EnemyShip {
 	protected void changeDirectionCheck(){
 		
 		if(!bouncing){
-			avoidLaser();
+			if(isOutOfBoundsX(this)){
+				movingLeft= !movingLeft;
+				bouncing=true;
+				bouncingCounter = BOUNCING_CONST;
+			}else{
+				avoidLaser();
+			}
 		}else{
 			bouncingCounter--;
 			if(bouncingCounter<1){
 				bouncing=false;
 			}
 		}
-		if(isOutOfBoundsX(this)){
-			movingLeft= !movingLeft;
-			bouncing=true;
-			bouncingCounter = BOUNCING_CONST;
-		}
+		
 	}
 
 	/**
@@ -91,6 +93,7 @@ public class EscapingShip extends EnemyShip {
 		Array<Projectile> playerProjectile = gl.getPlayerShotts();
 		
 		if(!isSideEmpty(playerProjectile)){
+			
 			for(Projectile proj: playerProjectile){
 				misileCheck += Math.pow(proj.getY(),4)*(1/((getX()+WIDTH/2)-proj.getX()));
 			}
@@ -127,7 +130,6 @@ public class EscapingShip extends EnemyShip {
 		}
 		
 		
-		
 		if((!leftSideEmpty)&&(!rightSideEmpty)){
 			return false;
 		}else if(rightSideEmpty){
@@ -136,8 +138,7 @@ public class EscapingShip extends EnemyShip {
 			movingLeft = true;
 		}
 		
-		//System.out.println("re:  "+rightSideEmpty+"   ml: "+movingLeft+ "  le: "+ leftSideEmpty);
-		
+				
 		return true;
 		
 	}
