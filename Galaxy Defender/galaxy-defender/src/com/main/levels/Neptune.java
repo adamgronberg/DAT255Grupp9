@@ -1,5 +1,6 @@
 package levels;
 
+import assets.ImageAssets;
 import spacegame.GameLogic;
 
 /**
@@ -28,6 +29,7 @@ public class Neptune extends Level {
 	 */
 	public Neptune(GameLogic gameLogic){
 		super(gameLogic, toSpawn, spawnTimes);
+		gameLogic.setBackground(ImageAssets.neptune);
 		levelname = "Neptune";
 	}
 	

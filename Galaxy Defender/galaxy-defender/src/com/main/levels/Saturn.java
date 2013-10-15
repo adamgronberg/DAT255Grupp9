@@ -1,5 +1,6 @@
 package levels;
 
+import assets.ImageAssets;
 import spacegame.GameLogic;
 
 /**
@@ -25,6 +26,7 @@ public class Saturn extends Level {
 	 */
 	public Saturn(GameLogic gameLogic){
 		super(gameLogic, toSpawn, spawnTimes);
+		gameLogic.setBackground(ImageAssets.saturn);
 		levelname = "Saturn";
 	}
 	

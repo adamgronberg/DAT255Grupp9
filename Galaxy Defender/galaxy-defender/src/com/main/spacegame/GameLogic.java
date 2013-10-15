@@ -3,6 +3,7 @@ package spacegame;
 import levels.*;
 import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
@@ -35,8 +36,8 @@ public class GameLogic extends Table {
 		setClip(true);
 		this.gameScreen = gameScreen;
 		playerShip = new PlayerShip();
-		level = new Neptune(this);	
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
+		level = new Neptune(this);	
 		
 		addActor(level);
 		addActor(playerShip);
@@ -183,5 +184,9 @@ public class GameLogic extends Table {
 		level=nextLevel(level);
 		addActor(level);
 		addActor(playerShip);
+	}
+	
+	public void setBackground(TextureRegion background){
+		backgroundSpace.setTextureRegion(background);
 	}
 }

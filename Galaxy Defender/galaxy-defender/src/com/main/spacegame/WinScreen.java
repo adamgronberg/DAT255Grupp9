@@ -36,8 +36,8 @@ public class WinScreen implements Screen,InputProcessor{
 	private TextureRegionDrawable menuBackground;
 	private int level;
 	private int score=0;
-	private String[] labelTexts = {"You are the most useless pilot in earths history. \n We will all die because of your incompetence!"
-			,"You win level 1","You win level 2","You win level 3","You win level 4","You win level 5","You saved earth, big deal..."};
+	private String[] labelTexts = {"GAME OVER"
+			,"You saved Neptunus!\n\nThe mission on Uranus is to destroy the escaping enemy ship.","You saved Uranus!\n\nSurvive all asteroid-attacks on Saturn","You saved Saturn!\n\nDestroy the giant enemy ship to save Jupiter","You saved Jupiter!\n\nIn order to save Mars you have to make sure that\nnot a single enemy ship passes your position.","You saved Mars!\n\nDestroy the mothership in order to save Earth.","You saved our solar system! Well done!"};
 	
 	public WinScreen(MyGame myGame, int level){
 		this.myGame = myGame;

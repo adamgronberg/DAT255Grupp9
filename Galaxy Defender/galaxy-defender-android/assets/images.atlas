@@ -15,6 +15,63 @@ images2.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+backgrounds/Earth
+  rotate: false
+  xy: 1, 1
+  size: 480, 800
+  orig: 480, 800
+  offset: 0, 0
+  index: -1
+backgrounds/Jupiter
+  rotate: false
+  xy: 483, 1
+  size: 480, 800
+  orig: 480, 800
+  offset: 0, 0
+  index: -1
+
+images3.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+backgrounds/Mars
+  rotate: false
+  xy: 1, 1
+  size: 480, 800
+  orig: 480, 800
+  offset: 0, 0
+  index: -1
+backgrounds/Saturn
+  rotate: false
+  xy: 483, 1
+  size: 480, 800
+  orig: 480, 800
+  offset: 0, 0
+  index: -1
+
+images4.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+backgrounds/Uranus
+  rotate: false
+  xy: 1, 1
+  size: 480, 800
+  orig: 480, 800
+  offset: 0, 0
+  index: -1
+backgrounds/Neptune
+  rotate: false
+  xy: 483, 33
+  size: 480, 768
+  orig: 480, 768
+  offset: 0, 0
+  index: -1
+
+images5.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
 backgrounds/space1
   rotate: false
   xy: 1, 1
@@ -23,7 +80,7 @@ backgrounds/space1
   offset: 0, 0
   index: -1
 
-images3.png
+images6.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -147,7 +204,7 @@ explosion1 Frames/ExplosionFrame1
   offset: 0, 0
   index: -1
 
-images4.png
+images7.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -243,7 +300,7 @@ fire animation/fire9
   offset: 0, 0
   index: -1
 
-images5.png
+images8.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -304,7 +361,7 @@ gui/newGameButton
   offset: 0, 0
   index: -1
 
-images6.png
+images9.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -645,7 +702,7 @@ Ships/Ship3
   offset: 0, 0
   index: -1
 
-images7.png
+images10.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -671,7 +728,7 @@ Ships/Ship13
   offset: 0, 0
   index: -1
 
-images8.png
+images11.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none

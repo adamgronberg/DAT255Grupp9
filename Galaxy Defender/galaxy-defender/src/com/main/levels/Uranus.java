@@ -1,6 +1,7 @@
 package levels;
 
 
+import assets.ImageAssets;
 import ships.EscapingShip;
 import spacegame.GameLogic;
 
@@ -30,6 +31,7 @@ public class Uranus extends Level{
 	 */
 	public Uranus(GameLogic gameLogic){
 		super(gameLogic, toSpawn, spawnTimes);
+		gameLogic.setBackground(ImageAssets.uranus);
 		escapingShip = new EscapingShip(200,650, gameLogic);
 		gameLogic.addActor(escapingShip);
 		levelname="Uranus";		

@@ -34,5 +34,14 @@ public class Background extends MovableEntity {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
 		batch.draw(texture, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
 	}
+
+	/**
+	 * Sets background-image
+	 * 
+	 * @param texture
+	 */
+	public void setTextureRegion(TextureRegion texture) {
+		this.texture = texture;
+	}
 	
 }

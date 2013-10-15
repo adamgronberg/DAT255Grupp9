@@ -1,5 +1,6 @@
 package levels;
 
+import assets.ImageAssets;
 import ships.MiniBossShip;
 import spacegame.GameLogic;
 
@@ -25,6 +26,7 @@ public class Jupiter extends Level{
 	 */
 	public Jupiter(GameLogic gameLogic){
 		super(gameLogic, toSpawn, spawnTimes);
+		gameLogic.setBackground(ImageAssets.jupiter);
 		miniBossShip = new MiniBossShip(200,650, gameLogic);
 		gameLogic.addActor(miniBossShip);
 		levelname = "Jupiter";

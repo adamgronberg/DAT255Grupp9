@@ -1,5 +1,7 @@
 package levels;
 
+import assets.ImageAssets;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import ships.EnemyShip;
@@ -26,6 +28,7 @@ public class Mars extends Level {	//Basic:225:760:Pyramid:6:300000000f:50
 	 */
 	public Mars(GameLogic gameLogic){
 		super(gameLogic, toSpawn, spawnTimes);
+		gameLogic.setBackground(ImageAssets.mars);
 		levelname = "Mars";
 	}
 	

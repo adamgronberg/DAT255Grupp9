@@ -25,6 +25,12 @@ public class ImageAssets {
 	public static TextureRegion enemyCirclingShip;
 	public static TextureRegion enemyBossShip;
 	public static TextureRegion space;
+	public static TextureRegion earth;
+	public static TextureRegion mars;
+	public static TextureRegion jupiter;
+	public static TextureRegion saturn;
+	public static TextureRegion uranus;
+	public static TextureRegion neptune;
 	public static TextureRegion mainMenu;
 	public static TextureRegion moveLeftButton;
 	public static TextureRegion moveRightButton;
@@ -71,8 +77,16 @@ public class ImageAssets {
 		
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("gui/TopInfoBar");
-		space = atlas.findRegion("backgrounds/space1");
+		
 		mainMenu = atlas.findRegion("backgrounds/MainMenu");
+		space = atlas.findRegion("backgrounds/space1");
+		earth = atlas.findRegion("backgrounds/Earth");
+		mars = atlas.findRegion("backgrounds/Mars");
+		jupiter = atlas.findRegion("backgrounds/Jupiter");
+		saturn = atlas.findRegion("backgrounds/Saturn");
+		uranus = atlas.findRegion("backgrounds/Uranus");
+		neptune = atlas.findRegion("backgrounds/Neptune");
+		
 		moveRightButton = atlas.findRegion("gui/move_right");
 		moveLeftButton = atlas.findRegion("gui/move_left");
 		missileButton = atlas.findRegion("gui/missileButton");

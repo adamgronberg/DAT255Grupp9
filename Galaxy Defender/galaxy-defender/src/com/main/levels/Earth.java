@@ -1,5 +1,6 @@
 package levels;
 
+import assets.ImageAssets;
 import spacegame.GameLogic;
 
 /**
@@ -30,6 +31,7 @@ public class Earth extends Level{
 	 */
 	public Earth(GameLogic gameLogic){
 		super(gameLogic, toSpawn, spawnTimes);
+		gameLogic.setBackground(ImageAssets.earth);
 		levelname = "Earth";		
 	}
 	
