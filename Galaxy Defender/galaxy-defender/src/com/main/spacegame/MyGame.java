@@ -31,6 +31,7 @@ public class MyGame extends Game {
 		menuScreen = new MenuScreen(this);
 		optionsScreen = new OptionsScreen(this, gameScreen);		
 		setScreen(menuScreen);
+		WinScreen.resetCosts();
 	}
 	/**
 	 * Resets The Game
