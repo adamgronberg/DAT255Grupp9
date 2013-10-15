@@ -159,7 +159,7 @@ public class WinScreen implements Screen,InputProcessor{
 	@Override public void dispose() {}
 
 	/**
-	 * Player writes name and after highscore list is shown
+	 * Player writes name and after highscorelist is shown
 	 */
 	@Override
 	public boolean keyTyped (char character) {
