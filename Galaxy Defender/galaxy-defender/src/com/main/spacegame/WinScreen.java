@@ -38,6 +38,10 @@ public class WinScreen implements Screen,InputProcessor{
 	private int score=0;
 	private String[] labelTexts = {"GAME OVER"
 			,"You saved Neptunus!\n\nThe mission on Uranus is to destroy the escaping enemy ship.","You saved Uranus!\n\nSurvive all asteroid-attacks on Saturn","You saved Saturn!\n\nDestroy the giant enemy ship to save Jupiter","You saved Jupiter!\n\nIn order to save Mars you have to make sure that\nnot a single enemy ship passes your position.","You saved Mars!\n\nDestroy the mothership in order to save Earth.","You saved our solar system! Well done!"};
+
+	private static int LASERCOST=10,EMPCOST=10, MISSILECOST=10;
+	private static int costLaser= LASERCOST, costEMP=EMPCOST, costMissile=MISSILECOST;
+	
 	
 	public WinScreen(MyGame myGame, int level){
 		this.myGame = myGame;
@@ -98,34 +102,52 @@ public class WinScreen implements Screen,InputProcessor{
 	        }
 	    } );
 		
-		laserButton = new TextButton("Laser",skin);
+		laserButton = new TextButton("Upgrade Laser:\n"+costLaser,skin);
 		laserButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	playerShip.getWeaponHandeler().upgradeLaser();
+	        	if(score-costLaser>=0){
+	        		score=score-costLaser;
+	        		playerShip.getWeaponHandeler().upgradeLaser();
+	        		reducePlayerScore(costLaser);
+	        		costLaser*=costLaser;
+	        		laserButton.setText("Upgrade Laser:\n"+costLaser);
+	        	}
 	        }
 	    } );
 		
-		missileButton = new TextButton("Missile",skin);
+		missileButton = new TextButton("Upgrade Missile:\n"+costMissile,skin);
 		missileButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	playerShip.getWeaponHandeler().increaseMissileBlastArea();
+	        	if(score-costMissile>=0){
+	        		score=score-costMissile;
+		        	playerShip.getWeaponHandeler().increaseMissileBlastArea();
+		        	reducePlayerScore(costMissile);
+		        	costMissile*=costMissile;
+		        	missileButton.setText("Upgrade Missile:\n"+costMissile);
+	        	}
 	        }
 	    } );
 		
-		empButton = new TextButton("EMP",skin);
+		empButton = new TextButton("Upgrade EMP:\n"+costEMP,skin);
 		empButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	playerShip.getWeaponHandeler().increaseEMPDisableTime();
+	        	if(score-costEMP>=0){
+	        		score=score-costMissile;
+	        		playerShip.getWeaponHandeler().increaseEMPDisableTime();
+	        		reducePlayerScore(costEMP);
+	        		costEMP*=costEMP;
+	        		empButton.setText("Upgrade EMP:\n"+costEMP);
+	        	}
 	        }
 	    } );
 			
-		table.add(continueButton).width(100).height(50);
-		table2.add(laserButton).width(100).height(50).spaceRight(30);
-		table2.add(missileButton).width(100).height(50).spaceRight(30);
-		table2.add(empButton).width(100).height(50);
+		table.add(continueButton).width(130).height(50);
+		table2.add(laserButton).width(130).height(50).spaceRight(30);
+		table2.add(missileButton).width(130).height(50).spaceRight(30);
+		table2.add(empButton).width(130).height(50);
 		}
 		if(level==0 || level==6){
 		Gdx.input.setOnscreenKeyboardVisible(true);	
@@ -201,12 +223,26 @@ public class WinScreen implements Screen,InputProcessor{
 	}
 	
 	/**
-	 * Used for saving highscore in desktop version
+	 * 
+	 * @param cost the amount to reduce the score with
+	 */
+	protected void reducePlayerScore(int cost){
+		myGame.reducePlayerScore(cost);
+	}
+	
+	protected static void resetCosts(){
+	costLaser=LASERCOST;
+	costEMP=EMPCOST;
+	costMissile=MISSILECOST;		
+	}
+	
+	/**
+	 * Used for saving highscore in desktop version by pressing the right arrow key
 	 */
 	@Override	public boolean keyDown(int keycode) {
 		
 		
-		if(keycode==Input.Keys.ENTER && ((level==0)|| level==6) ){
+		if(keycode==Input.Keys.RIGHT && ((level==0)|| level==6) ){
 			HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
 			highScore.setText(text);
 			highscoreHandler.addPlayerToHighscore(new User(score, name));

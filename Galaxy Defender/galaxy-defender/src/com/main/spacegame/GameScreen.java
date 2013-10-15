@@ -283,7 +283,12 @@ public class GameScreen implements Screen{
  */
 	public String getLevelName() {
 		return gameLogic.getLevelName();
-	}	
+	}
+
+public void reducePlayerScore(int cost) {
+	gameLogic.reducePlayerScore(cost);
+	
+}	
 	
 	
 }

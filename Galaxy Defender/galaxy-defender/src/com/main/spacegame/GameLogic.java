@@ -186,7 +186,22 @@ public class GameLogic extends Table {
 		addActor(playerShip);
 	}
 	
+	/**
+	 * Set a new background
+	 * @param background
+	 */
+
 	public void setBackground(TextureRegion background){
 		backgroundSpace.setTextureRegion(background);
+	}
+
+	/**
+	 * Reduce player score with cost
+	 * @param cost
+	 */
+
+	public void reducePlayerScore(int cost) {
+		currentScore-=cost;	
+
 	}
 }
