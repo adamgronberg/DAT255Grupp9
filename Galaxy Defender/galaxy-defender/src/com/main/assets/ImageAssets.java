@@ -36,6 +36,7 @@ public class ImageAssets {
 	public static TextureRegion moveRightButton;
 	public static TextureRegion emptyButton;
 	public static TextureRegion playerLaser;
+	public static TextureRegion mine;
 	public static TextureRegion enemyLaser;
 	public static TextureRegion playerMissile;
 	public static TextureRegion playerIonCannon;
@@ -62,6 +63,7 @@ public class ImageAssets {
 		playerLaser = atlas.findRegion("weapons/greenLaser");
 		playerIonCannon = atlas.findRegion("weapons/blueMegaLaser");
 		enemyLaser = atlas.findRegion("weapons/redLaser");
+		mine = atlas.findRegion("weapons/mine");
 		
 		escapingShip = atlas.findRegion("Ships/Ship8");
 		enemyBasicShip = atlas.findRegion("Ships/Ship3");

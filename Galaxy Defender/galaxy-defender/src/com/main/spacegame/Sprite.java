@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- * @author Blasse
+ * @author Grupp9
  * Movable objects with a texture
  */
 public class Sprite extends MovableEntity {

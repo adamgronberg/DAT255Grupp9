@@ -50,6 +50,13 @@ public abstract class AnimatedAreaEffect extends MovableEntity{
 	@Override
 	public void act(float delta){
 		stateTime += delta;
-		if(animation.isAnimationFinished(stateTime)&& !loopFrames) remove();
-	}	
+		if(animation.isAnimationFinished(stateTime) && !loopFrames) remove();
+	}
+	
+	/**
+	 * @return	if the animation the complete
+	 */
+	public boolean animationComplete(){
+		return animation.isAnimationFinished(stateTime);
+	}
 }

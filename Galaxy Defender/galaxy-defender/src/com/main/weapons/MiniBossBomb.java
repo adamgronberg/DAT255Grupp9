@@ -15,34 +15,35 @@ import assets.SoundAssets;
  *  Only has y led moment
  *
  */
-public class TurretShipBomb extends Projectile{
+public class MiniBossBomb extends Projectile{
 
-	private final static float BOMBSPEED=6f;
-	public final static int HEIGHT=45;
-	public final static int WIDTH=35;
+	public static final int HEIGHT=30;
+	public static final int WIDTH=30;
+	private static final float BOMBSPEED=8f;
 	private static final float AREAEFFECT_H = 120;
 	private static final float AREAEFFECT_W = 120;
 	private static final int AREA_DAMAGE = 20;
 	private static final int DAMAGE_ON_HIT = 10;
+	private static final float EXPLODE_POINT = 50;
 	private static final TargetTypes FACTION = TargetTypes.ENEMY;
 	private static final TargetTypes[] AFFECTEDTARGETS = 
 		{TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE, TargetTypes.ALLY, TargetTypes.ENEMY_PROJECTILE, TargetTypes.ALLY_PROJECTILE};
 
-	
 	/**
 	 * Constructor
 	* @param x	x-led Spawn location
 	* @param y y-led Spawn location
 	*/
-	public TurretShipBomb(float x, float y){
-		super(x, y, WIDTH, HEIGHT, DAMAGE_ON_HIT, ImageAssets.playerMissile);
-		setRotation(-180);
+	public MiniBossBomb(float x, float y){
+		super(x, y, WIDTH, HEIGHT, DAMAGE_ON_HIT, ImageAssets.mine);
+		setRotation(0);
 	}
 
 	/**
 	 * Bombs act method
 	 */
 	public void act(float delta) {
+		setRotation(getRotation()+10f);
 		setY(getY()-BOMBSPEED);
 		checkIfDown();
 	}
@@ -67,7 +68,7 @@ public class TurretShipBomb extends Projectile{
 	 * Checks if the bomb hit the "ground", should if so explode
 	 */
 	public void checkIfDown(){
-		if(getY()<= 50){
+		if(getY()<= EXPLODE_POINT){
 			addOnHitEffect(null);
 		}
 	}

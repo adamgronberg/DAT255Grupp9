@@ -732,59 +732,66 @@ images11.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-weapons/blueMegaLaser
+weapons/mine
   rotate: false
-  xy: 1, 37
-  size: 39, 86
-  orig: 39, 86
+  xy: 1, 59
+  size: 68, 68
+  orig: 68, 68
   offset: 0, 0
   index: -1
 weapons/Missile1
   rotate: false
-  xy: 42, 67
+  xy: 1, 1
   size: 42, 56
   orig: 42, 56
   offset: 0, 0
   index: -1
+weapons/blueMegaLaser
+  rotate: false
+  xy: 71, 41
+  size: 39, 86
+  orig: 39, 86
+  offset: 0, 0
+  index: -1
 weapons/redLaser
   rotate: false
-  xy: 86, 61
+  xy: 112, 65
   size: 12, 62
   orig: 12, 62
   offset: 0, 0
   index: -1
 weapons/greenLaser
   rotate: false
-  xy: 100, 75
+  xy: 45, 9
   size: 8, 48
   orig: 8, 48
   offset: 0, 0
   index: -1
-weapons/redLaserHit1
-  rotate: false
-  xy: 1, 16
-  size: 19, 19
-  orig: 19, 19
-  offset: 0, 0
-  index: -1
-weapons/redLaserHit2
-  rotate: false
-  xy: 42, 46
-  size: 19, 19
-  orig: 19, 19
-  offset: 0, 0
-  index: -1
 weapons/greenLaserHit1
   rotate: false
-  xy: 110, 110
+  xy: 55, 44
   size: 13, 13
   orig: 13, 13
   offset: 0, 0
   index: -1
 weapons/greenLaserHit2
   rotate: false
-  xy: 1, 1
+  xy: 55, 29
   size: 13, 13
   orig: 13, 13
+  offset: 0, 0
+  index: -1
+weapons/redLaserHit1
+  rotate: false
+  xy: 55, 8
+  size: 19, 19
+  orig: 19, 19
+  offset: 0, 0
+  index: -1
+weapons/redLaserHit2
+  rotate: false
+  xy: 76, 20
+  size: 19, 19
+  orig: 19, 19
   offset: 0, 0
   index: -1

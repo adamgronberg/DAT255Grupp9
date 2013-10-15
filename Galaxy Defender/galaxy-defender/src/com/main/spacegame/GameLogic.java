@@ -13,6 +13,8 @@ import weapons.*;
 import ships.EnemyShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
+import effects.AnimatedAreaEffect;
+import effects.DeathAnimationHandeler;
 
 /**
  * 
@@ -150,6 +152,9 @@ public class GameLogic extends Table {
 		return spawns.size == 0;
 	}
 	
+	/**
+	 * @return	All current spawned enemies
+	 */
 	public Array<EnemyShip> getEnemies(){
 		Array<EnemyShip> enemies  = new Array<EnemyShip>(); 
 		SnapshotArray<Actor> toSearch = getChildren(); 
@@ -160,6 +165,21 @@ public class GameLogic extends Table {
 			} 
 		} 
 		return enemies;
+	}
+	
+	/**
+	 * @return All current played animations
+	 */
+	public int getNumberOfAnimations(){
+		Array<MovableEntity> effects  = new Array<MovableEntity>(); 
+		SnapshotArray<Actor> toSearch = getChildren(); 
+		for(Actor actor: toSearch){ 
+			if(actor instanceof AnimatedAreaEffect || actor instanceof DeathAnimationHandeler){ 
+				MovableEntity effect = (MovableEntity)actor;
+				effects.add(effect); 
+			} 
+		} 
+		return effects.size;
 	}
 	
 	/**

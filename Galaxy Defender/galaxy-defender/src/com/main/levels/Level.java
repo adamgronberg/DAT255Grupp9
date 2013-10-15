@@ -39,6 +39,7 @@ public abstract class Level extends Actor {
 		this.gameLogic = gameLogic;
 		this.toSpawn = toSpawn;
 		this.spawnTimes = spawnTimes;
+		EnemyShip.unFreeze();
 	}
 	
 	/**

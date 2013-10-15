@@ -1,6 +1,8 @@
 package levels;
 
+
 import assets.ImageAssets;
+import ships.EnemyShip;
 import ships.MiniBossShip;
 import spacegame.GameLogic;
 
@@ -50,7 +52,14 @@ public class Jupiter extends Level{
 	 */
 	@Override
 	public boolean missionCompleted() {
-		return !miniBossShip.isAlive();
+		if(!miniBossShip.isAlive()){
+			EnemyShip.Freeze();
+			if(gameLogic.getNumberOfAnimations() == 0){
+				EnemyShip.unFreeze();
+				return true;
+			}
+		}
+		return false;
 	}
 
 	////// Unused method //////

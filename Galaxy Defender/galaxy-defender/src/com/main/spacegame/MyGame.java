@@ -40,7 +40,7 @@ public class MyGame extends Game {
 		gameScreen = new GameScreen(this);
 		menuScreen = new MenuScreen(this);
 		optionsScreen = new OptionsScreen(this, gameScreen);
-		winScreen.resetCosts();
+		WinScreen.resetCosts();
 		
 	}
 	

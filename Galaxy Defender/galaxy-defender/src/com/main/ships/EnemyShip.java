@@ -33,6 +33,7 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	private boolean disabable;
 	private boolean firePosInitialised = false;
 	private Vector2 firePos1, firePos2, firePos3;
+	private static boolean freeze = false;
 	
 	/**
 	 * 
@@ -79,7 +80,6 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
         if(currentHealth<maximumHealth){
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
         }
-        
 	}
 	
 	/**
@@ -132,6 +132,7 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	 */
 	@Override
 	public void act(float delta){
+		if(freeze) return;
 		if (!disabled()){
 			move(delta);
 			shoot(delta);
@@ -169,7 +170,9 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	 *  Removes the ship
 	 */
 	public void destroyShip() {
-		if(getParent() != null) getParent().addActor(new ExplosionEffect(getX()+getWidth()/2-(getWidth()/2)/2, getY(), getWidth()/2, getWidth()/2));
+		if(getParent() != null){
+			getParent().addActor(new ExplosionEffect(getX()+getWidth()/2-(getWidth()/2)/2, getY(), getWidth()/2, getWidth()/2));
+		}
 		remove();
 	}
 	
@@ -193,5 +196,19 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	 */
 	private Vector2 randomPosition(){
 		return new Vector2(MathUtils.random(getWidth()/6f, getWidth()-getWidth()/6f), MathUtils.random(getHeight()/6f, getHeight()-getHeight()/6));
+	}
+	
+	/**
+	 * Stops all ship logic
+	 */
+	public static void Freeze(){
+		freeze = true;
+	}
+	
+	/**
+	 * Starts ship logic
+	 */
+	public static void unFreeze(){
+		freeze = false;
 	}
 }

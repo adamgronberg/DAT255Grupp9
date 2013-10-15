@@ -3,11 +3,13 @@ package ships;
 import spacegame.GameLogic;
 import spacegame.GameScreen;
 import weapons.EnemyLaser;
-import weapons.TurretShipBomb;
+import weapons.MiniBossBomb;
 import assets.ImageAssets;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import effects.DeathAnimationHandeler;
 
 /**
  * 
@@ -17,15 +19,16 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class MiniBossShip extends EnemyShip {
 	
-	public static final float RATEOFFIRE = 2500000000f; 	 //In nanoseconds
-	public static final float RATEOFBOMB = 4000000000f;
-	public static final float RANDOMTIME = 3000000000f;
+	private static final float RATE_OF_LASER = 2500000000f; 	 //In nanoseconds
+	private static final float RATE_OF_BOMB = 4000000000f;
+	private static final float RANDOM_TIME = 3000000000f;
+
 	public static final int HEIGHT=150;
 	public static final int WIDTH=110;
 	
 	private static final float SHIPSPEED = 1f;
 	private static final int SCOREVALUE=30;
-	private static final int HEALTH=100;
+	private static final int HEALTH=80;
 	private static final int DAMAGE_WHEN_RAMMED = 0;
 	private static final boolean DISABABLE = false;
 	private static final float LOWER_Y_CAP = 550;
@@ -68,7 +71,7 @@ public class MiniBossShip extends EnemyShip {
 	 * Spawns projectiles from all guns
 	 */
 	public void spawnProjectile() {
-		if(TimeUtils.nanoTime() - lastProjectileTime > RATEOFFIRE) {
+		if(TimeUtils.nanoTime() - lastProjectileTime > RATE_OF_LASER) {
 			getParent().addActor( new EnemyLaser(getX(), getY()+SIDE_LASER_POSITION_X, SIDE_LASER_WIDTH,
 					SIDE_LASER_HEIGHT,SIDE_LASER_DAMAGE ,-SIDE_LASER_ROTATION));
 			getParent().addActor( new EnemyLaser(getX()+WIDTH/8, getY()+SIDE_LASER_POSITION_X/2, SIDE_LASER_WIDTH,
@@ -87,8 +90,8 @@ public class MiniBossShip extends EnemyShip {
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 	
-		if(TimeUtils.nanoTime() - lastBombTime > RATEOFBOMB){
-			getParent().addActorBefore(this, new TurretShipBomb(getX()+WIDTH/2-TurretShipBomb.WIDTH/2,getY()));
+		if(TimeUtils.nanoTime() - lastBombTime > RATE_OF_BOMB){
+			getParent().addActorBefore(this, new MiniBossBomb(getX()+WIDTH/2-MiniBossBomb.WIDTH/2,getY()));
 			lastBombTime = TimeUtils.nanoTime();
 		}
 	}
@@ -109,7 +112,7 @@ public class MiniBossShip extends EnemyShip {
 			miniTurretShip.setPosition(getX(), getY());
 		}
 		
-		if(TimeUtils.nanoTime()-lastRandomTime>RANDOMTIME){
+		if(TimeUtils.nanoTime()-lastRandomTime>RANDOM_TIME){
 			movingRight = randomBoolean();
 			movingUp = randomBoolean();
 			lastRandomTime =TimeUtils.nanoTime();
@@ -138,8 +141,6 @@ public class MiniBossShip extends EnemyShip {
 		
 		if(movingUp) setY(getY()+SHIPSPEED);
 		else setY(getY()-SHIPSPEED);
-		
-
 	}
 
 	/**
@@ -155,9 +156,11 @@ public class MiniBossShip extends EnemyShip {
 	 */
 	@Override
 	public int hit(int damage) {
-		if(miniTurretShip.isAlive()) return 0;
+		//if(miniTurretShip.isAlive()) return 0;
+		if(!isAlive) return 0;
 		currentHealth = currentHealth - damage;
 		if (currentHealth<=0){
+			isAlive = false;
 			destroyShip();
 			return scoreValue;
 		}
@@ -176,8 +179,7 @@ public class MiniBossShip extends EnemyShip {
 	 */
 	@Override
 	public void destroyShip() {
-		isAlive = false;
-		remove();
+		getParent().addActor(new DeathAnimationHandeler(getWidth(), getHeight(), getX(), getY()));
 	}
 	
 	/**
@@ -187,14 +189,4 @@ public class MiniBossShip extends EnemyShip {
 	private static boolean randomBoolean(){
 		return Math.random() < 0.5;
 	}
-	
-//	/**	//TODO: Make this a seperate animation
-//	 * Adds a fire in the back of the ship
-//	 */
-//	@Override
-//	public void draw(SpriteBatch batch, float parentAlpha) {
-//		super.draw(batch, parentAlpha);
-//		currentFrame = onFireAnimation.getKeyFrame(stateTime, true);
-//       drawDamagedAnimation(batch, parentAlpha, currentFrame);
-//	}
 }
