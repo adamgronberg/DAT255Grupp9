@@ -32,6 +32,16 @@ public class MyGame extends Game {
 		optionsScreen = new OptionsScreen(this, gameScreen);		
 		setScreen(menuScreen);
 	}
+	/**
+	 * Resets The Game
+	 */
+	
+	public void resetGame(){
+		gameScreen = new GameScreen(this);
+		menuScreen = new MenuScreen(this);
+		optionsScreen = new OptionsScreen(this, gameScreen);
+		
+	}
 	
 	/**
 	 * switches to selected screen

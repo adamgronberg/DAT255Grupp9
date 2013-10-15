@@ -5,6 +5,7 @@ import highscore.HighscoreHandler;
 import highscore.User;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -41,7 +42,7 @@ public class WinScreen implements Screen,InputProcessor{
 	public WinScreen(MyGame myGame, int level){
 		this.myGame = myGame;
 		this.level = level;	
-	}
+		}
 	
 	/**
 	 * Render loop. 
@@ -85,12 +86,10 @@ public class WinScreen implements Screen,InputProcessor{
 		youWinLabel = new Label(labelTexts[level],skin);
 		table.add(youWinLabel).spaceBottom(50).row();
 		
-		if(level==0 || level==6){
-			Gdx.input.setOnscreenKeyboardVisible(true);	
-			table.add(highScore).spaceBottom(100).row();
-			highScore.setText(text);
-		}
+		if((level!=0) && (level!=6)){
 		
+		
+				
 		continueButton = new TextButton("Continue", skin);
 		continueButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
@@ -127,8 +126,19 @@ public class WinScreen implements Screen,InputProcessor{
 		table2.add(laserButton).width(100).height(50).spaceRight(30);
 		table2.add(missileButton).width(100).height(50).spaceRight(30);
 		table2.add(empButton).width(100).height(50);
+		}
+		if(level==0 || level==6){
+		Gdx.input.setOnscreenKeyboardVisible(true);	
+		
+		table.add(highScore).spaceBottom(100).row();
+		highScore.setText(text);
+		}
+		
+		
 		stage.addActor(table);
 		stage.addActor(table2);
+		
+	
 				
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(stage);
@@ -149,7 +159,7 @@ public class WinScreen implements Screen,InputProcessor{
 	@Override public void dispose() {}
 
 	/**
-	 * Player writes name and is eventually saved in the highscore-list
+	 * Player writes name and after highscore list is shown
 	 */
 	@Override
 	public boolean keyTyped (char character) {
@@ -158,6 +168,8 @@ public class WinScreen implements Screen,InputProcessor{
 			highScore.setText(text);
 			highscoreHandler.addPlayerToHighscore(new User(score, name));
 			Gdx.input.setOnscreenKeyboardVisible(false);
+			myGame.resetGame();
+			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
 		} else {
 			name += character;
 			text += character;
@@ -188,8 +200,26 @@ public class WinScreen implements Screen,InputProcessor{
 		this.playerShip = playerShip;
 	}
 	
+	/**
+	 * Used for saving highscore in desktop version
+	 */
+	@Override	public boolean keyDown(int keycode) {
+		
+		
+		if(keycode==Input.Keys.ENTER && ((level==0)|| level==6) ){
+			HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
+			highScore.setText(text);
+			highscoreHandler.addPlayerToHighscore(new User(score, name));
+			Gdx.input.setOnscreenKeyboardVisible(false);
+			myGame.resetGame();
+			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
+			return true;
+		}
+			
+		return false;}
+	
+
 	////////////// Unused methods  /////////////////
-	@Override	public boolean keyDown(int keycode) {return false;}
 	@Override	public boolean keyUp(int keycode) {return false;}
 	@Override	public boolean touchDown(int screenX, int screenY, int pointer, int button) {return false;}
 	@Override	public boolean touchUp(int screenX, int screenY, int pointer, int button) {	return false;}
