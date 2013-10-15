@@ -96,7 +96,7 @@ public abstract class Level extends Actor {
 			} catch (Exception e) {e.printStackTrace();}
 		}
 		
-		else if(fifo.peek().matches("Stealth|Kamikaze")){
+		else if(fifo.peek().matches("Stealth|Kamikaze|Boss")){
 			try {
 				newObject = Class.forName("ships." + fifo.pop() + "Ship" ).getDeclaredConstructors()[0].newInstance(
 						Float.parseFloat(fifo.pop()), Float.parseFloat(fifo.pop()), gameLogic.playerShip);
