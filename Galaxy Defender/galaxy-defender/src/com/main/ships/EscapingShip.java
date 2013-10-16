@@ -55,6 +55,9 @@ public class EscapingShip extends EnemyShip {
 		}
 	}
 	
+	/**
+	 * calculate best way for the ship to go
+	 */
 	protected void changeDirectionCheck(){
 		
 		if(!bouncing){
@@ -129,7 +132,10 @@ public class EscapingShip extends EnemyShip {
 			}
 		}
 		
+<<<<<<< HEAD
 		
+=======
+>>>>>>> stuff necesary for sync
 		if((!leftSideEmpty)&&(!rightSideEmpty)){
 			return false;
 		}else if(rightSideEmpty){
