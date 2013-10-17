@@ -15,15 +15,18 @@ import spacegame.GameLogic;
  */
 public class Uranus extends Level{
 
-	private static final float spawnTimes[] = {6000000000f,5000000000f,6000000000f,300000000f,300000000f,5000000000f,5000000000f, 3000000000f};
-	private static final String[][] toSpawn = { {"Basic:225:760:Pyramid:9:150000000f:50"},
-												{"Heavy:10:760","Basic:85:760","Heavy:225:760","Basic:300:760","Heavy:440:760","Kamikaze:50:760","Kamikaze:400:760"},
-												{"Basic:75:760", "Basic:175:760", "Basic:275:760", "Basic:375:760"},
-												{"Basic:125:760", "Basic:225:760", "Basic:325:760"},
-												{"Basic:75:760", "Basic:175:760", "Basic:275:760", "Basic:375:760"},
-												{"Kamikaze:10:760","Kamikaze:225:760","Kamikaze:440:760"},
-												{"Scout:80:760:Vertical:5:275000000f", "Scout:225:760:Vertical:5:275000000f","Scout:370:760:Vertical:5:275000000f"},
-												{"Basic:225:760:Pyramid:3:300000000f:50"} };															
+	
+	private static final float spawnTimes[] = {3000000000f,3000000000f,3000000000f,300000000f,300000000f,3000000000f,3000000000f, 3000000000f};
+	
+	private static final String[][] toSpawn = { {"Kamikaze:100:760:Pyramid:3:150000000f:50","Kamikaze:430:760:Pyramid:3:150000000f:50"},
+		{"Basic:85:760","Basic:300:760","Kamikaze:50:760","Kamikaze:400:760","Stealth:440:700"},
+		{"Basic:75:760", "Basic:175:760", "Basic:275:760", "Basic:375:760"},
+		{"Basic:125:760", "Basic:225:760", "Basic:325:760","Stealth:440:700"},
+		{"Basic:75:760", "Basic:175:760", "Basic:275:760", "Basic:375:760"},
+		{"Kamikaze:10:760","Kamikaze:225:760","Kamikaze:440:760","Stealth:0:700","Stealth:440:700"},
+		{"Scout:80:760:Vertical:5:275000000f", "Scout:225:760:Vertical:5:275000000f","Scout:370:760:Vertical:5:275000000f"},
+		{"Basic:225:760:Pyramid:3:300000000f:50","Stealth:440:700"} };
+
 	EscapingShip escapingShip;
 	
 	/**

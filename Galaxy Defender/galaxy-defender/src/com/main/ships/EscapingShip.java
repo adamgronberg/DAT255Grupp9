@@ -132,10 +132,6 @@ public class EscapingShip extends EnemyShip {
 			}
 		}
 		
-<<<<<<< HEAD
-		
-=======
->>>>>>> stuff necesary for sync
 		if((!leftSideEmpty)&&(!rightSideEmpty)){
 			return false;
 		}else if(rightSideEmpty){
