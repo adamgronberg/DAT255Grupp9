@@ -1,7 +1,7 @@
 package weapons;
 
 import ships.PlayerShip;
-
+import spacegame.GameLogic;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.TimeUtils;
  * Handles player weapons
  */
 public class PlayerWeaponHandeler {
+	
+	private static final int STARTING_LASER_COST = 20, STARTING_EMP_COST = 10, STARTING_MISSILE_COST = 10;
+	private int currentUpgradeCostLaser = STARTING_LASER_COST, currentUpgradeCostEMP = STARTING_EMP_COST, currentUpgradeCostMissile = STARTING_MISSILE_COST;
 	
 	private static enum Lasers {SINGLE, DUAL, TRIPPLE, QUAD;} 	//Implemented weapons
 	private Lasers currentLaser = Lasers.SINGLE;
@@ -27,13 +30,16 @@ public class PlayerWeaponHandeler {
 	private boolean missileReady = true;		
 	private boolean EMPReady = true;
 	private PlayerShip playerShip;
+	private GameLogic gameLogic;
 	
 	/**
 	 * Constructor
 	 * @param playerShip The player ship
+	 * @param gameLogic	
 	 */
-	public PlayerWeaponHandeler(PlayerShip playerShip) {
+	public PlayerWeaponHandeler(GameLogic gameLogic, PlayerShip playerShip) {
 		this.playerShip = playerShip;
+		this.gameLogic = gameLogic;
 	}
 
 	/**
@@ -48,18 +54,18 @@ public class PlayerWeaponHandeler {
 					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
 					break;
 				case DUAL:
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX(), playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX(), playerShip.getY()+PlayerShip.HEIGHT));
 					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
 					break;
 				case TRIPPLE:
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
 					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
 					break;
 				default:
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2+PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2+PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
+					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
 					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
 					break;
 			}
@@ -108,7 +114,11 @@ public class PlayerWeaponHandeler {
 	 * @param nanoTime	The time to increase with
 	 */
 	public void increaseEMPDisableTime(){
-		currentUpgradedDisableTime = currentUpgradedDisableTime + EMP_INCREASE_PER_UPGRADE;
+		if(gameLogic.getCurrentScore() - currentUpgradeCostEMP >= 0){
+			gameLogic.decreaseCurrentScore(currentUpgradeCostEMP);
+			currentUpgradeCostEMP = 2*currentUpgradeCostEMP;
+			currentUpgradedDisableTime = currentUpgradedDisableTime + EMP_INCREASE_PER_UPGRADE;
+		}
 	}
 	
 	/**
@@ -116,23 +126,64 @@ public class PlayerWeaponHandeler {
 	 * @param nanoTime	The time to increase with
 	 */
 	public void increaseMissileBlastArea(){
-		currentUpgradedMissileArea = currentUpgradedMissileArea + MISSILE_INCREASE_PER_UPGRADE;
+		if(gameLogic.getCurrentScore() - currentUpgradeCostMissile >= 0){
+			gameLogic.decreaseCurrentScore(currentUpgradeCostMissile);
+			currentUpgradeCostMissile = 2*currentUpgradeCostMissile;
+			currentUpgradedMissileArea = currentUpgradedMissileArea + MISSILE_INCREASE_PER_UPGRADE;
+		}
 	}
 	
 	/**
 	 * Upgrades the laser to the next level
 	 */
 	public void upgradeLaser(){
-		switch(currentLaser){
-			case SINGLE:
-				currentLaser = Lasers.DUAL;
-				break;
-			case DUAL:
-				currentLaser = Lasers.TRIPPLE;
-				break;
-			default:
-				currentLaser = Lasers.QUAD;
-				break;
+		if(gameLogic.getCurrentScore() - currentUpgradeCostLaser >= 0){
+
+			switch(currentLaser){
+				case SINGLE:
+					currentLaser = Lasers.DUAL;
+					break;
+				case DUAL:
+					currentLaser = Lasers.TRIPPLE;
+					break;
+				case TRIPPLE:
+					currentLaser = Lasers.QUAD;
+					break;
+				default:
+					return;
+			}		
+			gameLogic.decreaseCurrentScore(currentUpgradeCostLaser);
+			currentUpgradeCostLaser = 2*currentUpgradeCostLaser+2*currentUpgradeCostLaser;
 		}
+	}
+	
+	/**
+	 * Resets the upgrade cost for weapons
+	 */
+	public void resetUpgradeCosts(){
+		currentUpgradeCostLaser = STARTING_LASER_COST;
+		currentUpgradeCostEMP = STARTING_EMP_COST;
+		currentUpgradeCostMissile = STARTING_MISSILE_COST;		
+	}
+	
+	/**
+	 * @return	the current emp cost
+	 */
+	public int getEmpUpgradeCost(){
+		return currentUpgradeCostEMP;
+	}
+	
+	/**
+	 * @return	the current laser cost
+	 */
+	public int getLaserUpgradeCost(){
+		return currentUpgradeCostLaser;
+	}
+	
+	/**
+	 * @return	the current missile cost
+	 */
+	public int getMissileUpgradeCost(){
+		return currentUpgradeCostMissile;
 	}
 }

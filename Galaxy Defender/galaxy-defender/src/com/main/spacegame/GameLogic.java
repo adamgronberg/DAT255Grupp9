@@ -37,7 +37,7 @@ public class GameLogic extends Table {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
 		this.gameScreen = gameScreen;
-		playerShip = new PlayerShip();
+		playerShip = new PlayerShip(this);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
 		level = new Neptune(this);	
 		
@@ -95,14 +95,22 @@ public class GameLogic extends Table {
 	 * add the score to the total score
 	 */
 	public void addScore(int score){
-		currentScore=currentScore+score;
+		currentScore+=score;
 	}
 	
 	/**
 	 * @return the current score
 	 */
-	public int getScore(){
+	public int getCurrentScore(){
 		return currentScore;
+	}
+	
+	/**
+	 * Decrease the current score
+	 * @param score	the amount to decrease with
+	 */
+	public void decreaseCurrentScore(int score){
+		currentScore -= score;
 	}
 	
 	/**
@@ -187,6 +195,7 @@ public class GameLogic extends Table {
 	 */
 	public void resetGame(){
 		playerShip.stay();
+		playerShip.getWeaponHandeler().resetUpgradeCosts();
 		currentScore=0;
 		clear();
 		level = new Neptune(this);
@@ -219,9 +228,7 @@ public class GameLogic extends Table {
 	 * Reduce player score with cost
 	 * @param cost
 	 */
-
 	public void reducePlayerScore(int cost) {
 		currentScore-=cost;	
-
 	}
 }

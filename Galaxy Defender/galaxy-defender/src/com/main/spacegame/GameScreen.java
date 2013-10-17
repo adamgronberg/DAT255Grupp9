@@ -1,6 +1,5 @@
 package spacegame;
 
-import ships.PlayerShip;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -182,14 +181,14 @@ public class GameScreen implements Screen{
 	 * @return Current GameLogic score
 	 */
 	public int getGameLogicScore(){
-		return gameLogic.getScore();
+		return gameLogic.getCurrentScore();
 	}
 	
 	/**
 	 * @return The player ship
 	 */
-	public PlayerShip getPlayerShip(){
-		return gameLogic.playerShip;
+	public GameLogic getGameLogic(){
+		return gameLogic;
 	}
 	
 	/**

@@ -35,7 +35,6 @@ public class MyGame extends Game{
 		SoundAssets.load();
 		createScreens();
 		setScreen(menuScreen);
-		EndLevelScreen.resetCosts();
 	}
 	
 	/**
@@ -43,7 +42,6 @@ public class MyGame extends Game{
 	 */
 	public void resetGame(){
 		createScreens();
-		EndLevelScreen.resetCosts();
 	}
 	
 	/**
@@ -75,8 +73,7 @@ public class MyGame extends Game{
 			break;
 		case WINSCREEN:
 			winScreen = new EndLevelScreen(this, gameScreen.getLevelResult());
-			winScreen.setScore(gameScreen.getGameLogicScore());
-			winScreen.setPlayer(gameScreen.getPlayerShip());
+			winScreen.setGameLogic(gameScreen.getGameLogic());
 			setScreen(winScreen);
 		default:
 			break;

@@ -2,6 +2,7 @@ package ships;
 
 import com.badlogic.gdx.Gdx;
 import assets.ImageAssets;
+import spacegame.GameLogic;
 import spacegame.GameScreen;
 import spacegame.Sprite;
 import weapons.PlayerWeaponHandeler;
@@ -31,9 +32,19 @@ public class PlayerShip extends Sprite {
 	/**
 	 * Constructor
 	 */
+	public PlayerShip(GameLogic gameLogic) {
+		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2-WITDH/2, GameScreen.GAME_HEIGHT*SPAWN_LOCATION_Y,ImageAssets.playerShip);
+		weaponHandeler = new PlayerWeaponHandeler(gameLogic, this);
+		maximumHealth = STARTING_HEALTH;
+		currentHealth = STARTING_HEALTH;
+	}
+	
+	/**
+	 * Constructor
+	 * Ship without weapons
+	 */
 	public PlayerShip() {
 		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2-WITDH/2, GameScreen.GAME_HEIGHT*SPAWN_LOCATION_Y,ImageAssets.playerShip);
-		weaponHandeler = new PlayerWeaponHandeler(this);
 		maximumHealth = STARTING_HEALTH;
 		currentHealth = STARTING_HEALTH;
 	}
