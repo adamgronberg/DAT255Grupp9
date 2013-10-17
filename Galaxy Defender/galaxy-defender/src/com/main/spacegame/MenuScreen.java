@@ -1,6 +1,7 @@
 package spacegame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,13 +22,12 @@ public class MenuScreen implements Screen{
 	
 	private Stage stage;
 	private Skin skin;
-	private TextButton newGameButton;
-	private TextButton highScoreButton;
-	private TextButton optionsButton;
+	private TextButton newGameButton,resumeButton,highScoreButton,optionsButton;
 	private MyGame myGame;
 	private Table table;
 	private TextureAtlas atlas;
 	private TextureRegionDrawable menuBackground;
+	public static boolean activeGame;
 	
 	/**
 	 * Constructor
@@ -35,6 +35,7 @@ public class MenuScreen implements Screen{
 	 */
 	public MenuScreen(MyGame myGame){
 		this.myGame = myGame;
+		activeGame = false;
 	}
 	
 	/**
@@ -56,7 +57,6 @@ public class MenuScreen implements Screen{
 	public void resize(int width, int height) {
 		stage.setViewport(MyGame.WIDTH, MyGame.HEIGHT, true);
 		stage.getCamera().translate(-stage.getGutterWidth(), -stage.getGutterHeight(), 0);
-		Gdx.input.setInputProcessor(stage);
 	}
 
 	/**
@@ -65,7 +65,16 @@ public class MenuScreen implements Screen{
 	 */
 	@Override
 	public void show() {
-		stage = new Stage();
+		stage = new Stage(){
+	        @Override
+	        public boolean keyDown(int keyCode) {
+	            if (keyCode == Keys.BACK) {
+	                Gdx.app.exit();
+	            }
+	            return super.keyDown(keyCode);
+	        }
+	    };
+		Gdx.input.setInputProcessor(stage);
 		atlas = new TextureAtlas("uiskin.atlas");
 		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);	
 		skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
@@ -77,7 +86,16 @@ public class MenuScreen implements Screen{
 		newGameButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
+	        	activeGame = true;
 	        	myGame.switchScreen(MyGame.ScreenType.GAME);
+	        }
+	    } );
+		
+		resumeButton = new TextButton("Resume Game",skin);
+		resumeButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	if(activeGame)myGame.switchScreen(MyGame.ScreenType.GAME);
 	        }
 	    } );
 		
@@ -96,14 +114,12 @@ public class MenuScreen implements Screen{
 	        	myGame.switchScreen(MyGame.ScreenType.OPTIONS);
 	        }
 	    } );
-			
-		newGameButton.pad(15, 10, 15, 10);
-		highScoreButton.pad(15, 15, 15, 15);
-		optionsButton.pad(15, 23, 15, 23);		
-		table.add(newGameButton).spaceBottom(50).row();
-		table.add(highScoreButton).spaceBottom(50).row();
-		table.add(optionsButton).spaceBottom(50).row();		
-		stage.addActor(table);			
+					
+		table.add(newGameButton).height(50).width(120).spaceBottom(50).row();
+		table.add(highScoreButton).height(50).width(120).spaceBottom(50).row();
+		table.add(optionsButton).height(50).width(120).spaceBottom(50).row();
+		table.add(resumeButton).height(50).width(120);
+		stage.addActor(table);
 	}
 
 	/**
@@ -115,6 +131,7 @@ public class MenuScreen implements Screen{
 		Gdx.input.setInputProcessor(null);		
 	}
 
+	//// Unused methods ////
 	@Override public void pause() {}
 	@Override public void resume() {}
 	@Override public void dispose() {}

@@ -66,7 +66,7 @@ public class GameScreen implements Screen{
 		levelResult = 0;
 		this.myGame = myGame;
 		gameLogic = new GameLogic(this);
-		inputController = new InputControl(gameLogic, this);
+		inputController = new InputControl(gameLogic, this, myGame);
 		topInfoBar = new TopInfoBar(this);
 		updateOptionControlLayout();
 		
@@ -208,6 +208,9 @@ public class GameScreen implements Screen{
     	Gdx.input.setInputProcessor(null);
     }
 	
+	/**
+	 * @return	TODO: wtf does this do?
+	 */
 	public int getLevelResult(){
 		return levelResult;
 	}
@@ -225,30 +228,36 @@ public class GameScreen implements Screen{
 	 * Calls defeat screen
 	 */
 	public void defeat(){
+		MenuScreen.activeGame = false;
 		levelResult = 0;
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
-	
 
-		
-	@Override public void resume() {}
-	@Override public void pause() {}
-	@Override public void dispose() {}
-
+	/**
+	 * Disable/enable autoshoot
+	 */
 	public static void toggleOptionAutoShoot() {
 		optionAutoShoot = !optionAutoShoot;	
 	}
-/**
- * 
- * @return the name of the level
- */
+	/**
+	 * 
+	 * @return the name of the level
+	 */
 	public String getLevelName() {
 		return gameLogic.getLevelName();
 	}
 
+	/**
+	 * Reduces the player score by a amount
+	 * @param cost the amount to reduce with
+	 */
 	public void reducePlayerScore(int cost) {
-		gameLogic.reducePlayerScore(cost);	
-	}	
+		gameLogic.reducePlayerScore(cost);
+	}
 	
+	//// Unused methods ////
+	@Override public void resume() {}
+	@Override public void pause() {}
+	@Override public void dispose() {}
 	
 }

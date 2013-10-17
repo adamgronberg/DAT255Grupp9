@@ -3,6 +3,7 @@ package spacegame;
 import assets.SoundAssets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -67,7 +68,15 @@ public class OptionsScreen implements Screen{
 	 * Called when app is resumed on android
 	 */
 	@Override public void show() {
-		stage = new Stage();
+		stage = new Stage(){
+	        @Override
+	        public boolean keyDown(int keyCode) {
+	            if (keyCode == Keys.BACK) {
+	                myGame.switchScreen(MyGame.ScreenType.MENU);
+	            }
+	            return super.keyDown(keyCode);
+	        }
+	    };
 		atlas = new TextureAtlas("uiskin.atlas");
 		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
 		

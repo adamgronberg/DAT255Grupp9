@@ -3,9 +3,7 @@ package spacegame;
 import ships.PlayerShip;
 import highscore.HighscoreHandler;
 import highscore.User;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -21,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class WinScreen implements Screen,InputProcessor{
+public class EndLevelScreen implements Screen,InputProcessor{
 	
 	private String text="Enter Your Name: ";
 	private String name="";
@@ -45,7 +43,7 @@ public class WinScreen implements Screen,InputProcessor{
 	private static int costLaser= LASERCOST, costEMP=EMPCOST, costMissile=MISSILECOST;
 	
 	
-	public WinScreen(MyGame myGame, int level){
+	public EndLevelScreen(MyGame myGame, int level){
 		this.myGame = myGame;
 		this.level = level;	
 		}
@@ -77,7 +75,15 @@ public class WinScreen implements Screen,InputProcessor{
 	 */
 	@Override public void show() {
 			
-		stage = new Stage();
+		stage = new Stage(){
+	        @Override
+	        public boolean keyDown(int keyCode) {
+	            if (keyCode == Keys.BACK) {
+	                myGame.switchScreen(MyGame.ScreenType.MENU);
+	            }
+	            return super.keyDown(keyCode);
+	        }
+	    };
 		atlas = new TextureAtlas("uiskin.atlas");
 		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
 		
@@ -95,70 +101,80 @@ public class WinScreen implements Screen,InputProcessor{
 		table.add(nextLevelLabel).spaceBottom(50).row();
 		
 		if((level!=0) && (level!=6)){
-		
-		
+			laserButton = new TextButton("Upgrade Laser:\n"+costLaser,skin);
+			laserButton.addListener(new ClickListener() {	       
+		        public void clicked(InputEvent event,float x,float y )
+		        {
+		        	if(score-costLaser>=0){
+		        		score=score-costLaser;
+		        		playerShip.getWeaponHandeler().upgradeLaser();
+		        		reducePlayerScore(costLaser);
+		        		costLaser*=costLaser;
+		        		laserButton.setText("Upgrade Laser:\n"+costLaser);
+		        	}
+		        }
+		    } );
+			
+			missileButton = new TextButton("Upgrade Missile:\n"+costMissile,skin);
+			missileButton.addListener(new ClickListener() {	       
+		        public void clicked(InputEvent event,float x,float y )
+		        {
+		        	if(score-costMissile>=0){
+		        		score=score-costMissile;
+			        	playerShip.getWeaponHandeler().increaseMissileBlastArea();
+			        	reducePlayerScore(costMissile);
+			        	costMissile*=costMissile;
+			        	missileButton.setText("Upgrade Missile:\n"+costMissile);
+		        	}
+		        }
+		    } );
+			
+			empButton = new TextButton("Upgrade EMP:\n"+costEMP,skin);
+			empButton.addListener(new ClickListener() {	       
+		        public void clicked(InputEvent event,float x,float y )
+		        {
+		        	if(score-costEMP>=0){
+		        		score=score-costMissile;
+		        		playerShip.getWeaponHandeler().increaseEMPDisableTime();
+		        		reducePlayerScore(costEMP);
+		        		costEMP*=costEMP;
+		        		empButton.setText("Upgrade EMP:\n"+costEMP);
+		        	}
+		        }
+		    } );
 				
+			
+			table2.add(laserButton).width(130).height(50).spaceRight(30);
+			table2.add(missileButton).width(130).height(50).spaceRight(30);
+			table2.add(empButton).width(130).height(50);
+		}
+		
 		continueButton = new TextButton("Continue", skin);
 		continueButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
 	        	myGame.switchScreen(MyGame.ScreenType.GAME);
+	        	if(level==0 ||level==6){
+		        	HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
+		        	if(name.length()!=0){
+						highscoreHandler.addPlayerToHighscore(new User(score, name));
+					}else  {
+						highscoreHandler.addPlayerToHighscore(new User(score, "Hero"));
+					}
+		        	myGame.resetGame();
+					myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);	               
+	        	}	        	
 	        }
 	    } );
 		
-		laserButton = new TextButton("Upgrade Laser:\n"+costLaser,skin);
-		laserButton.addListener(new ClickListener() {	       
-	        public void clicked(InputEvent event,float x,float y )
-	        {
-	        	if(score-costLaser>=0){
-	        		score=score-costLaser;
-	        		playerShip.getWeaponHandeler().upgradeLaser();
-	        		reducePlayerScore(costLaser);
-	        		costLaser*=costLaser;
-	        		laserButton.setText("Upgrade Laser:\n"+costLaser);
-	        	}
-	        }
-	    } );
 		
-		missileButton = new TextButton("Upgrade Missile:\n"+costMissile,skin);
-		missileButton.addListener(new ClickListener() {	       
-	        public void clicked(InputEvent event,float x,float y )
-	        {
-	        	if(score-costMissile>=0){
-	        		score=score-costMissile;
-		        	playerShip.getWeaponHandeler().increaseMissileBlastArea();
-		        	reducePlayerScore(costMissile);
-		        	costMissile*=costMissile;
-		        	missileButton.setText("Upgrade Missile:\n"+costMissile);
-	        	}
-	        }
-	    } );
-		
-		empButton = new TextButton("Upgrade EMP:\n"+costEMP,skin);
-		empButton.addListener(new ClickListener() {	       
-	        public void clicked(InputEvent event,float x,float y )
-	        {
-	        	if(score-costEMP>=0){
-	        		score=score-costMissile;
-	        		playerShip.getWeaponHandeler().increaseEMPDisableTime();
-	        		reducePlayerScore(costEMP);
-	        		costEMP*=costEMP;
-	        		empButton.setText("Upgrade EMP:\n"+costEMP);
-	        	}
-	        }
-	    } );
-			
-		table.add(continueButton).width(130).height(50);
-		table2.add(laserButton).width(130).height(50).spaceRight(30);
-		table2.add(missileButton).width(130).height(50).spaceRight(30);
-		table2.add(empButton).width(130).height(50);
-		}
 		if(level==0 || level==6){
-		Gdx.input.setOnscreenKeyboardVisible(true);	
-		
-		table.add(highScore).spaceBottom(100).row();
-		highScore.setText(text);
+			Gdx.input.setOnscreenKeyboardVisible(true);	
+			
+			table.add(highScore).spaceBottom(100).row();
+			highScore.setText(text);
 		}
+		table.add(continueButton).width(130).height(50);
 		
 		
 		stage.addActor(table);
@@ -189,21 +205,9 @@ public class WinScreen implements Screen,InputProcessor{
 	 */
 	@Override
 	public boolean keyTyped (char character) {
-		HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
 		if (character == '\n') {
-			if(name.length()!=0){
-				highScore.setText(text);
-				highscoreHandler.addPlayerToHighscore(new User(score, name));
-				Gdx.input.setOnscreenKeyboardVisible(false);
-			}else  {
-				highscoreHandler.addPlayerToHighscore(new User(score, "Hero"));
-				Gdx.input.setOnscreenKeyboardVisible(false);
-				
-			}
-			
-			myGame.resetGame();
-			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
-		} else if(Character.isLetterOrDigit(character)) {
+			Gdx.input.setOnscreenKeyboardVisible(false);
+		} else if(Character.isLetterOrDigit(character)&& name.length()<13) {
 			name += character;
 			text += character;
 			highScore.setText(text);
@@ -252,26 +256,16 @@ public class WinScreen implements Screen,InputProcessor{
 	 * by pressing the right arrow key
 	 * 
 	 **/
-	@Override	public boolean keyDown(int keycode) {
+	@Override	
+	public boolean keyDown(int keycode) {
 		
 		if(keycode==Keys.DEL && name.length()!=0){
 			name =name.substring(0,name.length()-1);
 			text =text.substring(0,text.length()-1);
 			highScore.setText(text);
-			}
-			
-		if(keycode==Input.Keys.RIGHT && ((level==0)|| level==6) ){
-			HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
-			highScore.setText(text);
-			highscoreHandler.addPlayerToHighscore(new User(score, name));
-			Gdx.input.setOnscreenKeyboardVisible(false);
-			myGame.resetGame();
-			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
-			return true;
 		}
-			
 		return false;
-		}
+	}
 	
 
 	////////////// Unused methods  /////////////////
