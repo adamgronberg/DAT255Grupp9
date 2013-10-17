@@ -42,6 +42,7 @@ public class MyGame extends Game{
 	 * Resets The Game
 	 */
 	public void resetGame(){
+		createScreens();
 		EndLevelScreen.resetCosts();
 	}
 	
