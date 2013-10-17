@@ -4,7 +4,6 @@ import ships.PlayerShip;
 import highscore.HighscoreHandler;
 import highscore.User;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -208,7 +207,7 @@ public class EndLevelScreen implements Screen,InputProcessor{
 	public boolean keyTyped (char character) {
 		if (character == '\n') {
 			Gdx.input.setOnscreenKeyboardVisible(false);
-		} else if(Character.isLetterOrDigit(character)) {
+		} else if(Character.isLetterOrDigit(character)&& name.length()<13) {
 			name += character;
 			text += character;
 			highScore.setText(text);
@@ -257,27 +256,16 @@ public class EndLevelScreen implements Screen,InputProcessor{
 	 * by pressing the right arrow key
 	 * 
 	 **/
-	@Override	public boolean keyDown(int keycode) {
+	@Override	
+	public boolean keyDown(int keycode) {
 		
 		if(keycode==Keys.DEL && name.length()!=0){
 			name =name.substring(0,name.length()-1);
 			text =text.substring(0,text.length()-1);
 			highScore.setText(text);
-			}
-			
-		if(keycode==Input.Keys.RIGHT && ((level==0)|| level==6) ){
-			HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
-			highScore.setText(text);
-			highscoreHandler.addPlayerToHighscore(new User(score, name));
-			Gdx.input.setOnscreenKeyboardVisible(false);
-			myGame.resetGame();
-			MenuScreen.activeGame = false;
-			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
-			return true;
 		}
-			
 		return false;
-		}
+	}
 	
 
 	////////////// Unused methods  /////////////////

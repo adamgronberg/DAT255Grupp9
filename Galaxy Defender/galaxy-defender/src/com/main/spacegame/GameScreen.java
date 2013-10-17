@@ -228,6 +228,7 @@ public class GameScreen implements Screen{
 	 * Calls defeat screen
 	 */
 	public void defeat(){
+		MenuScreen.activeGame = false;
 		levelResult = 0;
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
