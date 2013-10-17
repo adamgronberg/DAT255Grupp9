@@ -1,5 +1,8 @@
 package highscore;
 
+
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
@@ -103,24 +106,39 @@ public class HighscoreHandler {
      * save the current highscore to file
      */
     public void writeToFile() {
-//    	FileHandle file = Gdx.files.internal(FILENAME);
-//    	if(file.exists()){
-//        	file.writeString(createString(), false);
-//        	Gdx.app.log( HighScoreScreen.LOG, "here we go" );
-//    	}
+    	FileHandle file = Gdx.files.local(FILENAME);
+    	if(!file.exists()){
+    		try {
+				file.file().createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+    	file.writeString(createString(), false);
     }
 
     /**
      * collecting the highscorelist from file 
      */
     protected void readFromFile() {
-//    	FileHandle file = Gdx.files.internal(FILENAME);
-//    	if(file.exists()){
-//    		String highscoreList = file.readString();    	
-//    		stringToList(highscoreList);
-//        	Gdx.app.log( HighScoreScreen.LOG, "" + highscoreList );
-//    	}
+    	FileHandle file = Gdx.files.local(FILENAME);
+    	if(!file.exists()){
+    		try {
+				file.file().createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	String highscoreList = file.readString();    	
+		stringToList(highscoreList);
+    	//Gdx.app.log( HighScoreScreen.LOG, "" + highscoreList );
     }
+    
+    
+ 
     
     /**
      * used for writing highscore to file
