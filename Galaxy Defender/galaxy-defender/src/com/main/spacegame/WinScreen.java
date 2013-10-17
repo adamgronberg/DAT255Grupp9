@@ -6,6 +6,7 @@ import highscore.User;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -187,12 +188,19 @@ public class WinScreen implements Screen,InputProcessor{
 	public boolean keyTyped (char character) {
 		HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
 		if (character == '\n') {
-			highScore.setText(text);
-			highscoreHandler.addPlayerToHighscore(new User(score, name));
-			Gdx.input.setOnscreenKeyboardVisible(false);
+			if(name.length()!=0){
+				highScore.setText(text);
+				highscoreHandler.addPlayerToHighscore(new User(score, name));
+				Gdx.input.setOnscreenKeyboardVisible(false);
+			}else  {
+				highscoreHandler.addPlayerToHighscore(new User(score, "Hero"));
+				Gdx.input.setOnscreenKeyboardVisible(false);
+				
+			}
+			
 			myGame.resetGame();
 			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
-		} else {
+		} else if(Character.isLetterOrDigit(character)) {
 			name += character;
 			text += character;
 			highScore.setText(text);
@@ -237,11 +245,18 @@ public class WinScreen implements Screen,InputProcessor{
 	}
 	
 	/**
-	 * Used for saving highscore in desktop version by pressing the right arrow key
-	 */
+	 * Used for deleting errors when writing highscore name and saving highscore in desktopversion
+	 * by pressing the right arrow key
+	 * 
+	 **/
 	@Override	public boolean keyDown(int keycode) {
 		
-		
+		if(keycode==Keys.DEL && name.length()!=0){
+			name =name.substring(0,name.length()-1);
+			text =text.substring(0,text.length()-1);
+			highScore.setText(text);
+			}
+			
 		if(keycode==Input.Keys.RIGHT && ((level==0)|| level==6) ){
 			HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
 			highScore.setText(text);
@@ -252,7 +267,8 @@ public class WinScreen implements Screen,InputProcessor{
 			return true;
 		}
 			
-		return false;}
+		return false;
+		}
 	
 
 	////////////// Unused methods  /////////////////
