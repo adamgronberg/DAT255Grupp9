@@ -28,7 +28,7 @@ public class WinScreen implements Screen,InputProcessor{
 	private Skin skin;
 	private TextButton continueButton,laserButton,missileButton,empButton;
 	private PlayerShip playerShip;
-	private Label youWinLabel;
+	private Label endLevelLabel,nextLevelLabel;
 	private Label highScore;
 	private MyGame myGame;
 	private Table table,table2;
@@ -36,9 +36,10 @@ public class WinScreen implements Screen,InputProcessor{
 	private TextureRegionDrawable menuBackground;
 	private int level;
 	private int score=0;
-	private String[] labelTexts = {"GAME OVER"
-			,"You saved Neptunus!\n\nThe mission on Uranus is to destroy the escaping enemy ship.","You saved Uranus!\n\nSurvive all asteroid-attacks on Saturn","You saved Saturn!\n\nDestroy the giant enemy ship to save Jupiter","You saved Jupiter!\n\nIn order to save Mars you have to make sure that\nnot a single enemy ship passes your position.","You saved Mars!\n\nDestroy the mothership in order to save Earth.","You saved our solar system! Well done!"};
-
+	private String[] endLevelTexts = {"GAME OVER","You saved Neptunus!","You saved Uranus!","You saved Saturn!","You saved Jupiter!","You saved Mars!","You saved our solar system! Well done!"};
+	private String[] nextLevelTexts = {"","The mission on Uranus is to destroy the escaping enemy ship","Survive all asteroid-attacks on Saturn","Destroy the giant enemy ship to save Jupiter","In order to save Mars you have to make sure that\nnot a single enemy ship passes your position"
+										,"Destroy the mothership in order to save Earth",""};
+			
 	private static int LASERCOST=10,EMPCOST=10, MISSILECOST=10;
 	private static int costLaser= LASERCOST, costEMP=EMPCOST, costMissile=MISSILECOST;
 	
@@ -87,8 +88,10 @@ public class WinScreen implements Screen,InputProcessor{
 		table2.setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT/2);
 		
 		highScore=new Label(text,skin);
-		youWinLabel = new Label(labelTexts[level],skin);
-		table.add(youWinLabel).spaceBottom(50).row();
+		endLevelLabel = new Label(endLevelTexts[level],skin);
+		nextLevelLabel = new Label(nextLevelTexts[level],skin);
+		table.add(endLevelLabel).spaceBottom(50).row();
+		table.add(nextLevelLabel).spaceBottom(50).row();
 		
 		if((level!=0) && (level!=6)){
 		
