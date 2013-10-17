@@ -1,6 +1,7 @@
 package spacegame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -56,7 +57,6 @@ public class MenuScreen implements Screen{
 	public void resize(int width, int height) {
 		stage.setViewport(MyGame.WIDTH, MyGame.HEIGHT, true);
 		stage.getCamera().translate(-stage.getGutterWidth(), -stage.getGutterHeight(), 0);
-		Gdx.input.setInputProcessor(stage);
 	}
 
 	/**
@@ -65,7 +65,16 @@ public class MenuScreen implements Screen{
 	 */
 	@Override
 	public void show() {
-		stage = new Stage();
+		stage = new Stage(){
+	        @Override
+	        public boolean keyDown(int keyCode) {
+	            if (keyCode == Keys.BACK) {
+	                Gdx.app.exit();
+	            }
+	            return super.keyDown(keyCode);
+	        }
+	    };
+		Gdx.input.setInputProcessor(stage);
 		atlas = new TextureAtlas("uiskin.atlas");
 		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);	
 		skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
@@ -103,7 +112,7 @@ public class MenuScreen implements Screen{
 		table.add(newGameButton).spaceBottom(50).row();
 		table.add(highScoreButton).spaceBottom(50).row();
 		table.add(optionsButton).spaceBottom(50).row();		
-		stage.addActor(table);			
+		stage.addActor(table);
 	}
 
 	/**
@@ -115,6 +124,7 @@ public class MenuScreen implements Screen{
 		Gdx.input.setInputProcessor(null);		
 	}
 
+	//// Unused methods ////
 	@Override public void pause() {}
 	@Override public void resume() {}
 	@Override public void dispose() {}

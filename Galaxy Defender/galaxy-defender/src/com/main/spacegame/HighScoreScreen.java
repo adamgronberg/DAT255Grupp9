@@ -5,6 +5,7 @@ import highscore.User;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,7 +24,6 @@ import com.badlogic.gdx.utils.Array;
  *
  */
 public class HighScoreScreen implements Screen {
-	public static final String LOG = HighScoreScreen.class.getSimpleName();
 	
 	private Stage stage;
 	private Skin skin;
@@ -34,6 +34,10 @@ public class HighScoreScreen implements Screen {
 	private TextureAtlas atlas;
 	private TextureRegionDrawable menuBackground;
 
+	/**
+	 * Constructor
+	 * @param myGame
+	 */
 	public HighScoreScreen(MyGame myGame){
 		this.myGame = myGame;
 	}
@@ -57,7 +61,6 @@ public class HighScoreScreen implements Screen {
 	public void resize(int width, int height) {
 		stage.setViewport(MyGame.WIDTH, MyGame.HEIGHT, true);
 		stage.getCamera().translate(-stage.getGutterWidth(), -stage.getGutterHeight(), 0);
-		Gdx.input.setInputProcessor(stage);
 	}
 
 	/**
@@ -65,7 +68,16 @@ public class HighScoreScreen implements Screen {
 	 * Called when app is resumed on android
 	 */
 	@Override public void show() {
-		stage = new Stage();
+		stage = new Stage(){
+	        @Override
+	        public boolean keyDown(int keyCode) {
+	            if (keyCode == Keys.BACK) {
+	                myGame.switchScreen(MyGame.ScreenType.MENU);
+	            }
+	            return super.keyDown(keyCode);
+	        }
+	    };
+		Gdx.input.setInputProcessor(stage);
 		atlas = new TextureAtlas("uiskin.atlas");
 		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);	
 		skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);

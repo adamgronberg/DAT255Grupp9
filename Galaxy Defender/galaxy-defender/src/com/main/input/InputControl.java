@@ -2,12 +2,14 @@ package input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import ships.PlayerShip;
 import spacegame.GameLogic;
 import spacegame.GameScreen;
+import spacegame.MyGame;
 
 
 /**
@@ -19,6 +21,7 @@ public class InputControl implements GestureListener, InputProcessor {
 
 	private GameLogic gameLogic;
 	private GameScreen gameScreen;
+	private MyGame myGame;
 	
 	private static final float FLING_SENSITIVITY = 1500f;
 	
@@ -27,9 +30,10 @@ public class InputControl implements GestureListener, InputProcessor {
 	 * @param gameLogic
 	 * @param gameScreen
 	 */
-	public InputControl(GameLogic gameLogic, GameScreen gameScreen){
+	public InputControl(GameLogic gameLogic, GameScreen gameScreen, MyGame myGame){
 		this.gameLogic = gameLogic;
 		this.gameScreen = gameScreen;
+		this.myGame = myGame;
 	}
 	
 	/**
@@ -54,10 +58,12 @@ public class InputControl implements GestureListener, InputProcessor {
 	 */
 	@Override
 	public boolean keyDown(int keycode) {
+		if(keycode == Keys.BACK) myGame.switchScreen(MyGame.ScreenType.MENU);
 		if(keycode == Input.Keys.LEFT)  gameLogic.playerShip.moveLeft();
 		if(keycode == Input.Keys.RIGHT)  gameLogic.playerShip.moveRight();
 		return false;
 	}
+	
 	/**
 	 * Input for desktop
 	 * Handles on key up switching weapon and options
