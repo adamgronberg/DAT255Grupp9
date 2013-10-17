@@ -31,7 +31,7 @@ public class OptionsScreen implements Screen{
 	
 	private static boolean sound = false;
 	private static boolean vibrate = false;
-	private static boolean music;
+	private static boolean music = false;
 	private static boolean controlLayout1 = true;
 
 	public OptionsScreen(MyGame myGame, GameScreen gameScreen){

@@ -68,6 +68,7 @@ public class GameScreen implements Screen{
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this);
 		topInfoBar = new TopInfoBar(this);
+		updateOptionControlLayout();
 		
 		stage = new Stage();
 		stage.addActor(gameLogic);
