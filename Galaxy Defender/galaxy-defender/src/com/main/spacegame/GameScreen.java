@@ -1,7 +1,6 @@
 package spacegame;
 
 import ships.PlayerShip;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import assets.*;
 import input.InputControl;
-
 
 /**
  * 
@@ -30,10 +28,10 @@ public class GameScreen implements Screen{
 	private int currentLevel;
 	private int levelResult;
 	
-	public static boolean optionAutoShoot = true;
+	public static boolean optionAutoShoot = true; //TODO: For testing
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
-	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
+	public ControlLayout currentLayout = OptionsScreen.getLayout();
 	
 	public static final int MAX_LEVEL = 6;
 	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;
@@ -100,28 +98,20 @@ public class GameScreen implements Screen{
 		return vector;
 	}
 	
-	/**
-	 * Returns the current layout
-	 * @return
-	 */
-	public ControlLayout getCurrentLayout(){
-		return currentLayout;
-	}
+
 	
 	/**
 	 * Change android layout
 	 */
-	public void changeOptionControlLayout(){
-		switch(currentLayout){
+	public void updateOptionControlLayout(){
+		switch(OptionsScreen.getLayout()){
 			case LAYOUT1:
-				currentLayout = ControlLayout.LAYOUT2;
-				moveRightButton.setX(GameScreen.MOVMENT_BUTTON_SIZE);
-				shootMissileButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
-				break;
-			case LAYOUT2:
-				currentLayout = ControlLayout.LAYOUT1;
 				moveRightButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
 				shootMissileButton.setX(GAME_WITDH/2 - GameScreen.MOVMENT_BUTTON_SIZE/2);
+				break;
+			case LAYOUT2:
+				moveRightButton.setX(GameScreen.MOVMENT_BUTTON_SIZE);
+				shootMissileButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
 				break;
 		}
 	}	
@@ -255,10 +245,9 @@ public class GameScreen implements Screen{
 		return gameLogic.getLevelName();
 	}
 
-public void reducePlayerScore(int cost) {
-	gameLogic.reducePlayerScore(cost);
-	
-}	
+	public void reducePlayerScore(int cost) {
+		gameLogic.reducePlayerScore(cost);	
+	}	
 	
 	
 }

@@ -1,7 +1,6 @@
 package spacegame;
 
 import assets.SoundAssets;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
@@ -21,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 public class OptionsScreen implements Screen{
 	
-	private boolean music,control1;
 	private Stage stage;
 	private Skin skin;
 	private TextButton mainMenuButton, soundButton, musicButton,vibrateButton, layoutButton;
@@ -33,6 +31,8 @@ public class OptionsScreen implements Screen{
 	
 	private static boolean sound = false;
 	private static boolean vibrate = false;
+	private static boolean music;
+	private static boolean controlLayout1 = true;
 
 	public OptionsScreen(MyGame myGame, GameScreen gameScreen){
 		this.myGame = myGame;
@@ -111,11 +111,13 @@ public class OptionsScreen implements Screen{
 	        }
 	    } );
 		
-		layoutButton = new TextButton("Change Control Layout",skin);
+		layoutButton = new TextButton(getLayoutText(),skin);
 		layoutButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	gameScreen.changeOptionControlLayout();
+	        	controlLayout1 = !controlLayout1;
+	        	gameScreen.updateOptionControlLayout();
+	        	layoutButton.setText(getLayoutText());
 	        }
 	    } );
 		
@@ -159,8 +161,11 @@ public class OptionsScreen implements Screen{
 		else return "Music On";
 	}
 	
-	private String getControlText(){
-		if(control1) return "Set Control Layout 2";
+	/**
+	 * Returns text for layoutButton
+	 */
+	private String getLayoutText(){
+		if(controlLayout1) return "Set Control Layout 2";
 		else return "Set Control Layout 1";
 	}
 	/**
@@ -214,6 +219,14 @@ public class OptionsScreen implements Screen{
 		return vibrate;
 	}
 
+	/**
+	 * Returns the current control button layout as an Enum
+	 */
+	public static GameScreen.ControlLayout getLayout(){
+		if(controlLayout1) return GameScreen.ControlLayout.LAYOUT1;
+		else return GameScreen.ControlLayout.LAYOUT2;
+	}
+	
 	@Override public void pause() {}
 	@Override public void resume() {}
 	@Override public void dispose() {}
