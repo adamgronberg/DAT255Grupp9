@@ -273,6 +273,7 @@ public class EndLevelScreen implements Screen,InputProcessor{
 			highscoreHandler.addPlayerToHighscore(new User(score, name));
 			Gdx.input.setOnscreenKeyboardVisible(false);
 			myGame.resetGame();
+			MenuScreen.activeGame = false;
 			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
 			return true;
 		}

@@ -22,13 +22,12 @@ public class MenuScreen implements Screen{
 	
 	private Stage stage;
 	private Skin skin;
-	private TextButton newGameButton;
-	private TextButton highScoreButton;
-	private TextButton optionsButton;
+	private TextButton newGameButton,resumeButton,highScoreButton,optionsButton;
 	private MyGame myGame;
 	private Table table;
 	private TextureAtlas atlas;
 	private TextureRegionDrawable menuBackground;
+	public static boolean activeGame;
 	
 	/**
 	 * Constructor
@@ -36,6 +35,7 @@ public class MenuScreen implements Screen{
 	 */
 	public MenuScreen(MyGame myGame){
 		this.myGame = myGame;
+		activeGame = false;
 	}
 	
 	/**
@@ -86,7 +86,16 @@ public class MenuScreen implements Screen{
 		newGameButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
+	        	activeGame = true;
 	        	myGame.switchScreen(MyGame.ScreenType.GAME);
+	        }
+	    } );
+		
+		resumeButton = new TextButton("Resume Game",skin);
+		resumeButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	if(activeGame)myGame.switchScreen(MyGame.ScreenType.GAME);
 	        }
 	    } );
 		
@@ -105,13 +114,11 @@ public class MenuScreen implements Screen{
 	        	myGame.switchScreen(MyGame.ScreenType.OPTIONS);
 	        }
 	    } );
-			
-		newGameButton.pad(15, 10, 15, 10);
-		highScoreButton.pad(15, 15, 15, 15);
-		optionsButton.pad(15, 23, 15, 23);		
-		table.add(newGameButton).spaceBottom(50).row();
-		table.add(highScoreButton).spaceBottom(50).row();
-		table.add(optionsButton).spaceBottom(50).row();		
+					
+		table.add(newGameButton).height(50).width(120).spaceBottom(50).row();
+		table.add(highScoreButton).height(50).width(120).spaceBottom(50).row();
+		table.add(optionsButton).height(50).width(120).spaceBottom(50).row();
+		table.add(resumeButton).height(50).width(120);
 		stage.addActor(table);
 	}
 
