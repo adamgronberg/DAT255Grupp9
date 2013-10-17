@@ -5,6 +5,7 @@ import assets.ImageAssets;
 import spacegame.GameScreen;
 import spacegame.Sprite;
 import weapons.PlayerWeaponHandeler;
+import spacegame.OptionsScreen;
 
 /**
  * 
@@ -123,7 +124,7 @@ public class PlayerShip extends Sprite {
 	 * @param milliSeconds
 	 */
 	public void vibrate(int milliSeconds){
-		if (GameScreen.getVibration()) Gdx.input.vibrate(milliSeconds);
+		if (OptionsScreen.getVibration()) Gdx.input.vibrate(milliSeconds);
 	}
 	
 	/**

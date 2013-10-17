@@ -30,9 +30,7 @@ public class GameScreen implements Screen{
 	private int currentLevel;
 	private int levelResult;
 	
-	private static boolean sound = false; 			//TODO: Temp. disables/enables sound
-	public static boolean optionAutoShoot = true; 	//TODO: Temp. disables/enables shoot
-	private static boolean vibrate = false;			//TODO: Temp. disables/enables vibrate
+	public static boolean optionAutoShoot = true;
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
@@ -240,35 +238,7 @@ public class GameScreen implements Screen{
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
 	
-	/**
-	 * Activates/disables sound effects
-	 */
-	public static void toggleSound(){
-		if(sound) sound = false;
-		else sound = true;
-	}
-	
-	/**
-	 * returns true if sound is on
-	 */
-	public static boolean getSound(){
-		return sound;
-	}
-	
-	/**
-	 * Activates/disables impact vibration
-	 */
-	public static void toggleVibrateOn(){
-		if(vibrate) vibrate = false;
-		else vibrate = true;
-	}
-	
-	/**
-	 * returns true if vibration is on
-	 */
-	public static boolean getVibration(){
-		return vibrate;
-	}
+
 		
 	@Override public void resume() {}
 	@Override public void pause() {}

@@ -1,11 +1,11 @@
 package weapons;
 
-import spacegame.GameScreen;
 import spacegame.MovableEntity;
 import dummies.AreaOfEffectDummy;
 import assets.ImageAssets;
 import assets.SoundAssets;
 import effects.ExplosionEffect;
+import spacegame.OptionsScreen;
 
 /**
  * 
@@ -65,7 +65,7 @@ public class PlayerMissile extends Projectile{
 		getParent().addActor( new AreaOfEffectDummy(getX()-upgradedAreaEffectW/2+WIDTH/2, 
 							getY()-upgradedAreaEffectH/2 + HEIGHT, upgradedAreaEffectW, upgradedAreaEffectH, AREA_OF_EFFECT_DAMAGE, 
 							FACTION, AFFECTED_TARGETS));
-		if(GameScreen.getSound()) SoundAssets.missileExplosion.play();
+		if(OptionsScreen.getSound()) SoundAssets.missileExplosion.play();
 		remove();
 	}
 	

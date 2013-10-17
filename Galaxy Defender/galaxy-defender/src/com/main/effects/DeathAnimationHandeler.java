@@ -6,9 +6,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-
-import spacegame.GameScreen;
 import spacegame.MovableEntity;
+import spacegame.OptionsScreen;
 
 public class DeathAnimationHandeler extends MovableEntity {
 
@@ -45,7 +44,7 @@ public class DeathAnimationHandeler extends MovableEntity {
 	@Override
 	public void act(float delta){
 		if(TimeUtils.nanoTime()-currentTimeBetweenExplosion>TIME_BETWEEN_EXPLOSIONS){
-			if(GameScreen.getSound()) SoundAssets.bossExplosion.play();
+			if(OptionsScreen.getSound()) SoundAssets.bossExplosion.play();
 			getParent().addActor(animations.get(currentExposion));
 			currentExposion++;
 			if(currentExposion == NUMBER_OF_EXPLOSIONS) {

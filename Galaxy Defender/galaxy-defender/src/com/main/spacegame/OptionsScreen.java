@@ -21,7 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 public class OptionsScreen implements Screen{
 	
-	private boolean music;
+	private boolean music,control1;
 	private Stage stage;
 	private Skin skin;
 	private TextButton mainMenuButton, soundButton, musicButton,vibrateButton, layoutButton;
@@ -30,6 +30,9 @@ public class OptionsScreen implements Screen{
 	private Table table;
 	private TextureAtlas atlas;
 	private TextureRegionDrawable menuBackground;
+	
+	private static boolean sound = false;
+	private static boolean vibrate = false;
 
 	public OptionsScreen(MyGame myGame, GameScreen gameScreen){
 		this.myGame = myGame;
@@ -57,7 +60,6 @@ public class OptionsScreen implements Screen{
 	public void resize(int width, int height) {
 		stage.setViewport(MyGame.WIDTH, MyGame.HEIGHT, true);
 		stage.getCamera().translate(-stage.getGutterWidth(), -stage.getGutterHeight(), 0);
-		Gdx.input.setInputProcessor(stage);
 	}
 
 	/**
@@ -78,7 +80,7 @@ public class OptionsScreen implements Screen{
 		soundButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	GameScreen.toggleSound();
+	        	toggleSound();
 	        	soundButton.setText(getSoundText());
 	        }
 	    } );
@@ -104,7 +106,7 @@ public class OptionsScreen implements Screen{
 		vibrateButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
-	        	GameScreen.toggleVibrateOn();
+	        	toggleVibrate();
 	        	vibrateButton.setText(getVibrateText());
 	        }
 	    } );
@@ -129,14 +131,15 @@ public class OptionsScreen implements Screen{
 		table.add(vibrateButton).spaceBottom(50).row();
 		table.add(layoutButton);
 		
-		stage.addActor(table);	
+		stage.addActor(table);
+		Gdx.input.setInputProcessor(stage);
 	}
 	
 	/**
 	 * Returns text for soundButton
 	 */
 	private String getSoundText(){
-		if(GameScreen.getSound()) return "Sound Off";
+		if(sound) return "Sound Off";
 		else return "Sound On";
 	}
 	
@@ -144,7 +147,7 @@ public class OptionsScreen implements Screen{
 	 * Returns text for vibrateButton
 	 */
 	private String getVibrateText(){
-		if(GameScreen.getVibration()) return "Vibration Off";
+		if(vibrate) return "Vibration Off";
 		else return "Vibration On";
 	}
 	
@@ -156,6 +159,10 @@ public class OptionsScreen implements Screen{
 		else return "Music On";
 	}
 	
+	private String getControlText(){
+		if(control1) return "Set Control Layout 2";
+		else return "Set Control Layout 1";
+	}
 	/**
 	 * Toggles music
 	 */
@@ -175,6 +182,36 @@ public class OptionsScreen implements Screen{
 	 */
 	@Override public void hide() {
 		Gdx.input.setInputProcessor(null);
+	}
+	
+	/**
+	 * Activates/disables sound effects
+	 */
+	public static void toggleSound(){
+		if(sound) sound = false;
+		else sound = true;
+	}
+	
+	/**
+	 * returns true if sound is on
+	 */
+	public static boolean getSound(){
+		return sound;
+	}
+	
+	/**
+	 * Activates/disables impact vibration
+	 */
+	public static void toggleVibrate(){
+		if(vibrate) vibrate = false;
+		else vibrate = true;
+	}
+	
+	/**
+	 * returns true if vibration is on
+	 */
+	public static boolean getVibration(){
+		return vibrate;
 	}
 
 	@Override public void pause() {}
