@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Array;
 public class HighscoreHandler {
 	
 
-	private static final int TOTAL_NUMBER_OF_USER = 13;
+	public static final int TOTAL_NUMBER_OF_USER = 13;
 	private static final String FILENAME = "highscore.txt";
 	private static HighscoreHandler instance = null;
 	private Array<User> highscore;

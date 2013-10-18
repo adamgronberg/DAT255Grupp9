@@ -45,7 +45,6 @@ public class GameLogic extends Table {
 		addActor(activeLevel);
 		addActor(playerShip);
 		addActor(backgroundSpace);
-
 	}
 	
 	/**
@@ -60,7 +59,6 @@ public class GameLogic extends Table {
 		if (playerShip.getCurrentHealth()<1 || activeLevel.missionFailed()) {	//For testing
 			currentLevelNumber = 0;
 			gameScreen.callDefeatScreen(); //TODO switch places defeat and reset add another score variable
-			resetGame();
 		}
 		
 		if(activeLevel.missionCompleted()){
@@ -119,13 +117,6 @@ public class GameLogic extends Table {
 	 */
 	public void decreaseCurrentScore(int score){
 		currentScore -= score;
-	}
-	
-	/**
-	 * @return the current health
-	 */
-	public int getPlayerHealth(){
-		return playerShip.getCurrentHealth();
 	}
 	
 	/**
