@@ -1,12 +1,13 @@
 package spacegame;
 
+import assets.ImageAssets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -20,22 +21,93 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 public class MenuScreen implements Screen{
 	
-	private Stage stage;
-	private Skin skin;
+	private Stage stage;	
 	private TextButton newGameButton,resumeButton,highScoreButton,optionsButton;
-	private MyGame myGame;
 	private Table table;
-	private TextureAtlas atlas;
-	private TextureRegionDrawable menuBackground;
+	private Label screenTitle;
 	public static boolean activeGame;
+	private static final String SCREEN_TITLE = "Galaxy Defender: Solar";
 	
 	/**
 	 * Constructor
 	 * @param myGame reference to main game class
 	 */
-	public MenuScreen(MyGame myGame){
-		this.myGame = myGame;
+	public MenuScreen(final MyGame myGame){
 		activeGame = false;
+		Skin skin = ImageAssets.skin;
+		
+		createResources(myGame, skin);
+	    createButtons(myGame, skin);
+	
+	    table.add(screenTitle).spaceBottom(50).row();
+	    table.add(resumeButton).height(50).width(120).spaceBottom(50).row();
+		table.add(newGameButton).height(50).width(120).spaceBottom(50).row();
+		table.add(highScoreButton).height(50).width(120).spaceBottom(50).row();
+		table.add(optionsButton).height(50).width(120);
+		stage.addActor(table);
+	}
+	
+	/**
+	 * Creates different resources such as stage and labels
+	 * @param myGame
+	 */
+	private void createResources(final MyGame myGame, Skin skin) {
+		stage = new Stage(){
+	        @Override
+	        public boolean keyDown(int keyCode) {
+	            if (keyCode == Keys.BACK) {
+	                Gdx.app.exit();
+	            }
+	            return super.keyDown(keyCode);
+	        }
+	    };
+	    
+	    screenTitle = new Label(SCREEN_TITLE, skin);
+	    
+		table = new Table(skin);
+		TextureRegionDrawable menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
+		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);
+		table.setBackground(menuBackground);
+	}
+	
+	/**
+	 * Creates the different buttons
+	 * @param myGame
+	 */
+	private void createButtons(final MyGame myGame, Skin skin){
+		newGameButton = new TextButton("New Game", skin);
+		newGameButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	if(activeGame) myGame.resetGame();
+	        	activeGame = true; 		
+	        	myGame.switchScreen(MyGame.ScreenType.GAME);
+	        }
+	    } );
+		
+		resumeButton = new TextButton("Resume Game",skin);
+		resumeButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	if(activeGame)myGame.switchScreen(MyGame.ScreenType.GAME);
+	        }
+	    } );
+		
+		highScoreButton = new TextButton("Highscore", skin);
+		highScoreButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
+	        }
+	    } );
+		
+		optionsButton = new TextButton("Options", skin);
+		optionsButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	myGame.switchScreen(MyGame.ScreenType.OPTIONS);
+	        }
+	    } );
 	}
 	
 	/**
@@ -65,61 +137,10 @@ public class MenuScreen implements Screen{
 	 */
 	@Override
 	public void show() {
-		stage = new Stage(){
-	        @Override
-	        public boolean keyDown(int keyCode) {
-	            if (keyCode == Keys.BACK) {
-	                Gdx.app.exit();
-	            }
-	            return super.keyDown(keyCode);
-	        }
-	    };
+		if(activeGame) resumeButton.setVisible(true);
+		else resumeButton.setVisible(false);
+		
 		Gdx.input.setInputProcessor(stage);
-		atlas = new TextureAtlas("uiskin.atlas");
-		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);	
-		skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
-		table = new Table(skin);
-		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);
-		table.setBackground(menuBackground);
-		
-		newGameButton = new TextButton("New Game", skin);
-		newGameButton.addListener(new ClickListener() {	       
-	        public void clicked(InputEvent event,float x,float y )
-	        {
-	        	activeGame = true;
-	        	myGame.switchScreen(MyGame.ScreenType.GAME);
-	        }
-	    } );
-		
-		resumeButton = new TextButton("Resume Game",skin);
-		resumeButton.addListener(new ClickListener() {	       
-	        public void clicked(InputEvent event,float x,float y )
-	        {
-	        	if(activeGame)myGame.switchScreen(MyGame.ScreenType.GAME);
-	        }
-	    } );
-		
-		highScoreButton = new TextButton("Highscore", skin);
-		highScoreButton.addListener(new ClickListener() {	       
-	        public void clicked(InputEvent event,float x,float y )
-	        {
-	        	myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
-	        }
-	    } );
-		
-		optionsButton = new TextButton("Options", skin);
-		optionsButton.addListener(new ClickListener() {	       
-	        public void clicked(InputEvent event,float x,float y )
-	        {
-	        	myGame.switchScreen(MyGame.ScreenType.OPTIONS);
-	        }
-	    } );
-					
-		table.add(newGameButton).height(50).width(120).spaceBottom(50).row();
-		table.add(highScoreButton).height(50).width(120).spaceBottom(50).row();
-		table.add(optionsButton).height(50).width(120).spaceBottom(50).row();
-		table.add(resumeButton).height(50).width(120);
-		stage.addActor(table);
 	}
 
 	/**

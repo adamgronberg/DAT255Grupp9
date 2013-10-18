@@ -2,6 +2,8 @@ package spacegame;
 
 import highscore.HighscoreHandler;
 import highscore.User;
+import assets.ImageAssets;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
@@ -27,13 +29,10 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	private String text="Enter Your Name: ";
 	private String name="";
 	private Stage stage;
-	private Skin skin;
 	private TextButton continueButton,laserButton,missileButton,empButton;
 	private GameLogic gameLogic;
 	private Label enterNameField, endLevelLabel,nextLevelLabel,currentScoreLabel;
-	private MyGame myGame;
 	private Table table,table2;
-	private TextureRegionDrawable menuBackground;
 	private static final String[] END_LEVEL_TEXTS = {"GAME OVER","You saved Neptunus!","You saved Uranus!","You saved Saturn!","You saved Jupiter!","You saved Mars!","You saved our solar system! Well done!"};
 	private static final String[] NEXT_LEVEL_TEXTS = {"","The mission on Uranus is to destroy the escaping enemy ship","Survive all asteroid-attacks on Saturn","Destroy the giant enemy ship to save Jupiter","In order to save Mars you have to make sure that\nnot a single enemy ship passes your position"
 										,"Destroy the mothership in order to save Earth",""};
@@ -43,11 +42,11 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	 * @param myGame
 	 * @param level
 	 */
-	public EndLevelScreen(final MyGame myGame, final GameLogic gameLogic){
-		this.myGame = myGame;
+	public EndLevelScreen(MyGame myGame, GameLogic gameLogic){
 		this.gameLogic = gameLogic;
-	    createResorces();
-	    createButtons();
+		Skin skin = ImageAssets.skin;
+		createResources(myGame, skin);
+	    createButtons(myGame, skin);
 		stage.addActor(table);
 		stage.addActor(table2);
 	}
@@ -55,7 +54,7 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	/**
 	 * Creates stage, skin, tables and labels
 	 */
-	private void createResorces() {
+	private void createResources(final MyGame myGame, Skin skin) {
 		
 		stage = new Stage(){
 	        @Override
@@ -67,9 +66,8 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	        }
 	    };
 		
-		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
+	    TextureRegionDrawable menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
 		
-		skin = new Skin(Gdx.files.internal("uiskin.json"), assets.ImageAssets.atlasSkin);
 		table = new Table(skin);
 		table2 = new Table(skin);
 
@@ -189,8 +187,8 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	/**
 	 * Creates the different buttons
 	 */
-	private void createButtons(){
-		laserButton = new TextButton("Upgrade Laser:\n" + gameLogic.playerShip.getWeaponHandeler().getLaserUpgradeCost(),skin);
+	private void createButtons(final MyGame myGame, Skin skin){
+		laserButton = new TextButton("Upgrade Laser:\n" + gameLogic.playerShip.getWeaponHandeler().getLaserUpgradeCost(), skin);
 		laserButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
@@ -200,7 +198,7 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	        }
 	    } );
 		
-		missileButton = new TextButton("Upgrade Missile:\n"+gameLogic.playerShip.getWeaponHandeler().getMissileUpgradeCost(),skin);
+		missileButton = new TextButton("Upgrade Missile:\n"+gameLogic.playerShip.getWeaponHandeler().getMissileUpgradeCost(), skin);
 		missileButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
@@ -210,7 +208,7 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	        }
 	    } );
 		
-		empButton = new TextButton("Upgrade EMP:\n"+ gameLogic.playerShip.getWeaponHandeler().getEmpUpgradeCost(),skin);
+		empButton = new TextButton("Upgrade EMP:\n"+ gameLogic.playerShip.getWeaponHandeler().getEmpUpgradeCost(), skin);
 		empButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x,float y )
 	        {
@@ -226,7 +224,6 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	        {
 	        	int currentLevelNumber = gameLogic.getCurrentLevelNumber();
 	        	Gdx.input.setOnscreenKeyboardVisible(false);
-	        	myGame.switchScreen(MyGame.ScreenType.GAME);
 	        	if(currentLevelNumber==0 ||currentLevelNumber==6){
 		        	HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
 		        	if(name.length()!=0){
@@ -236,7 +233,8 @@ public class EndLevelScreen implements Screen, InputProcessor{
 					}
 		        	myGame.resetGame();
 					myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);	               
-	        	}	        	
+	        	}
+	        	else myGame.switchScreen(MyGame.ScreenType.GAME);
 	        }
 	    } );
 	}

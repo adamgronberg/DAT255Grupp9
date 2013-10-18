@@ -59,7 +59,7 @@ public class GameScreen implements Screen{
 		this.myGame = myGame;
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this, myGame);
-		topInfoBar = new TopInfoBar(this);
+		topInfoBar = new TopInfoBar(gameLogic);
 		updateOptionControlLayout();
 		
 		stage = new Stage();
@@ -90,8 +90,6 @@ public class GameScreen implements Screen{
 		stage.getCamera().unproject(vector);
 		return vector;
 	}
-	
-
 	
 	/**
 	 * Change android layout
@@ -171,24 +169,10 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
-	 * @return Current GameLogic score
-	 */
-	public int getGameLogicScore(){
-		return gameLogic.getCurrentScore();
-	}
-	
-	/**
 	 * @return The player ship
 	 */
 	public GameLogic getGameLogic(){
 		return gameLogic;
-	}
-	
-	/**
-	 * @return Current GameLogic health
-	 */
-	public int getGameLogicHealth(){
-		return gameLogic.getPlayerHealth();
 	}
 	
 	/**
@@ -214,18 +198,9 @@ public class GameScreen implements Screen{
 		MenuScreen.activeGame = false;
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
-
-	/**
-	 * 
-	 * @return the name of the level
-	 */
-	public String getLevelName() {
-		return gameLogic.getLevelName();
-	}
 	
 	//// Unused methods ////
 	@Override public void resume() {}
 	@Override public void pause() {}
 	@Override public void dispose() {}
-	
 }

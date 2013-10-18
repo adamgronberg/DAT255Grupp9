@@ -3,6 +3,7 @@ package assets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -48,6 +49,7 @@ public class ImageAssets {
 	public static Array<TextureRegion> enemyLaserAnimation;
 	public static Array<TextureRegion> playerLaserAnimation;
 	public static Array<TextureRegion> fireAnimation;
+	public static Skin skin;
 
 	/**
 	 * Loads all assets from imageAtlas
@@ -55,6 +57,7 @@ public class ImageAssets {
 	public static void load() {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
 		atlasSkin = new TextureAtlas("uiskin.atlas");
+		skin = new Skin(Gdx.files.internal("uiskin.json"), assets.ImageAssets.atlasSkin);
 		
 		explosionAnimation = new Array<TextureRegion>();
 		enemyLaserAnimation = new Array<TextureRegion>();
