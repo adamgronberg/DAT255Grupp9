@@ -51,6 +51,8 @@ public class MyGame extends Game{
 		gameScreen = new GameScreen(this);
 		menuScreen = new MenuScreen(this);
 		optionsScreen = new OptionsScreen(this, gameScreen);
+		highScoreScreen = new HighScoreScreen(this);
+		winScreen = new EndLevelScreen(this, gameScreen.getGameLogic());
 	}
 	
 	/**
@@ -68,12 +70,9 @@ public class MyGame extends Game{
 			setScreen(optionsScreen);
 			break;
 		case HIGHSCORE:
-			highScoreScreen = new HighScoreScreen(this);
 			setScreen(highScoreScreen);
 			break;
 		case WINSCREEN:
-			winScreen = new EndLevelScreen(this, gameScreen.getLevelResult());
-			winScreen.setGameLogic(gameScreen.getGameLogic());
 			setScreen(winScreen);
 		default:
 			break;
@@ -89,12 +88,5 @@ public class MyGame extends Game{
 		SoundAssets.dispose();
 		gameScreen.dispose();
 		menuScreen.dispose();
-	}
-	
-	/**
-	 * @param cost the amount to reduce with
-	 */
-	public void reducePlayerScore(int cost) {
-		gameScreen.reducePlayerScore(cost); 
 	}
 }

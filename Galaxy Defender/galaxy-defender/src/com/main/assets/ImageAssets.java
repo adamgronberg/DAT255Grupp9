@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
  */
 public class ImageAssets {
 	public static TextureAtlas atlas;
+	public static TextureAtlas atlasSkin;
 	public static TextureRegion playerShip;
 	public static TextureRegion enemyBasicShip;
 	public static TextureRegion enemyScoutShip;
@@ -53,6 +54,7 @@ public class ImageAssets {
 	 */
 	public static void load() {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
+		atlasSkin = new TextureAtlas("uiskin.atlas");
 		
 		explosionAnimation = new Array<TextureRegion>();
 		enemyLaserAnimation = new Array<TextureRegion>();

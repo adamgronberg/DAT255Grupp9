@@ -24,11 +24,6 @@ public class GameScreen implements Screen{
 	private TopInfoBar topInfoBar;
 	private MyGame myGame;
 	
-	private int currentLevel;
-	private int levelResult;
-	
-	public static boolean optionAutoShoot = true; //TODO: For testing
-	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
 	public ControlLayout currentLayout = OptionsScreen.getLayout();
 	
@@ -61,8 +56,6 @@ public class GameScreen implements Screen{
 		shootEMPButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE*2, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.emptyButton);
 		
-		currentLevel = 1;
-		levelResult = 0;
 		this.myGame = myGame;
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this, myGame);
@@ -208,50 +201,26 @@ public class GameScreen implements Screen{
     }
 	
 	/**
-	 * @return	TODO: wtf does this do?
-	 */
-	public int getLevelResult(){
-		return levelResult;
-	}
-	
-	/**
 	 * Calls victory screen and changes to next level
 	 */
-	public void victory(){
-		levelResult = currentLevel;
-		if(currentLevel < MAX_LEVEL) currentLevel++;
+	public void callVictoryScreen(){
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
 	
 	/**
 	 * Calls defeat screen
 	 */
-	public void defeat(){
+	public void callDefeatScreen(){
 		MenuScreen.activeGame = false;
-		levelResult = 0;
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
 
-	/**
-	 * Disable/enable autoshoot
-	 */
-	public static void toggleOptionAutoShoot() {
-		optionAutoShoot = !optionAutoShoot;	
-	}
 	/**
 	 * 
 	 * @return the name of the level
 	 */
 	public String getLevelName() {
 		return gameLogic.getLevelName();
-	}
-
-	/**
-	 * Reduces the player score by a amount
-	 * @param cost the amount to reduce with
-	 */
-	public void reducePlayerScore(int cost) {
-		gameLogic.reducePlayerScore(cost);
 	}
 	
 	//// Unused methods ////

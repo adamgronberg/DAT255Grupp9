@@ -8,7 +8,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -19,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
- * Screen that shows when a level ha either completed or the player lost
+ * Screen that shows when a level either is completed or the player lost
  * @author Grupp9
  *
  */
@@ -31,15 +30,12 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	private Skin skin;
 	private TextButton continueButton,laserButton,missileButton,empButton;
 	private GameLogic gameLogic;
-	private Label endLevelLabel,nextLevelLabel;
-	private Label highScore;
+	private Label enterNameField, endLevelLabel,nextLevelLabel,currentScoreLabel;
 	private MyGame myGame;
 	private Table table,table2;
-	private TextureAtlas atlas;
 	private TextureRegionDrawable menuBackground;
-	private int level;
-	private String[] endLevelTexts = {"GAME OVER","You saved Neptunus!","You saved Uranus!","You saved Saturn!","You saved Jupiter!","You saved Mars!","You saved our solar system! Well done!"};
-	private String[] nextLevelTexts = {"","The mission on Uranus is to destroy the escaping enemy ship","Survive all asteroid-attacks on Saturn","Destroy the giant enemy ship to save Jupiter","In order to save Mars you have to make sure that\nnot a single enemy ship passes your position"
+	private static final String[] END_LEVEL_TEXTS = {"GAME OVER","You saved Neptunus!","You saved Uranus!","You saved Saturn!","You saved Jupiter!","You saved Mars!","You saved our solar system! Well done!"};
+	private static final String[] NEXT_LEVEL_TEXTS = {"","The mission on Uranus is to destroy the escaping enemy ship","Survive all asteroid-attacks on Saturn","Destroy the giant enemy ship to save Jupiter","In order to save Mars you have to make sure that\nnot a single enemy ship passes your position"
 										,"Destroy the mothership in order to save Earth",""};
 	
 	/**
@@ -47,13 +43,49 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	 * @param myGame
 	 * @param level
 	 */
-	public EndLevelScreen(MyGame myGame, int level){
+	public EndLevelScreen(final MyGame myGame, final GameLogic gameLogic){
 		this.myGame = myGame;
-		this.level = level;	
+		this.gameLogic = gameLogic;
+	    createResorces();
+	    createButtons();
+		stage.addActor(table);
+		stage.addActor(table2);
 	}
 	
 	/**
-	 * Render loop. 
+	 * Creates stage, skin, tables and labels
+	 */
+	private void createResorces() {
+		
+		stage = new Stage(){
+	        @Override
+	        public boolean keyDown(int keyCode) {
+	            if (keyCode == Keys.BACK) {
+	                myGame.switchScreen(MyGame.ScreenType.MENU);
+	            }
+	            return super.keyDown(keyCode);
+	        }
+	    };
+		
+		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
+		
+		skin = new Skin(Gdx.files.internal("uiskin.json"), assets.ImageAssets.atlasSkin);
+		table = new Table(skin);
+		table2 = new Table(skin);
+
+		enterNameField = new Label(text,skin);
+		endLevelLabel = new Label("", skin);
+		nextLevelLabel = new Label("", skin);
+		currentScoreLabel = new Label("" ,skin);
+		
+		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);		
+		table2.setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT/2);
+		table.setBackground(menuBackground);
+		
+	}
+
+	/**
+	 * Render loop.
 	 */
 	@Override
 	public void render(float delta) {	
@@ -74,98 +106,32 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	}
 
 	/**
-	 * Shows screen and adds input control 
-	 * Called when app is resumed on android
+	 * Adds the correct actors to the screen 
 	 */
 	@Override public void show() {
-			
-		stage = new Stage(){
-	        @Override
-	        public boolean keyDown(int keyCode) {
-	            if (keyCode == Keys.BACK) {
-	                myGame.switchScreen(MyGame.ScreenType.MENU);
-	            }
-	            return super.keyDown(keyCode);
-	        }
-	    };
-		atlas = new TextureAtlas("uiskin.atlas");
-		menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
+		int currentLevelNumber = gameLogic.getCurrentLevelNumber();
 		
-		skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
-		table = new Table(skin);
-		table2 = new Table(skin);
-		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);		
-		table.setBackground(menuBackground);
-		table2.setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT/2);
-		
-		highScore=new Label(text,skin);
-		endLevelLabel = new Label(endLevelTexts[level],skin);
-		nextLevelLabel = new Label(nextLevelTexts[level],skin);
 		table.add(endLevelLabel).spaceBottom(50).row();
 		table.add(nextLevelLabel).spaceBottom(50).row();
+		table.add(currentScoreLabel).spaceBottom(50).row();
+
+		endLevelLabel.setText(END_LEVEL_TEXTS[currentLevelNumber]);
+		nextLevelLabel.setText(NEXT_LEVEL_TEXTS[currentLevelNumber]);
+		currentScoreLabel.setText("Your Score: " + gameLogic.getCurrentScore());
 		
-		if((level!=0) && (level!=6)){
-			
-			laserButton = new TextButton("Upgrade Laser:\n" + gameLogic.playerShip.getWeaponHandeler().getLaserUpgradeCost(),skin);
-			laserButton.addListener(new ClickListener() {	       
-		        public void clicked(InputEvent event,float x,float y )
-		        {
-		        	gameLogic.playerShip.getWeaponHandeler().upgradeLaser();
-		        	laserButton.setText("Upgrade Laser:\n"+gameLogic.playerShip.getWeaponHandeler().getLaserUpgradeCost());
-		        }
-		    } );
-			
-			missileButton = new TextButton("Upgrade Missile:\n"+gameLogic.playerShip.getWeaponHandeler().getMissileUpgradeCost(),skin);
-			missileButton.addListener(new ClickListener() {	       
-		        public void clicked(InputEvent event,float x,float y )
-		        {
-		        	gameLogic.playerShip.getWeaponHandeler().increaseMissileBlastArea();
-			        missileButton.setText("Upgrade Missile:\n" + gameLogic.playerShip.getWeaponHandeler().getMissileUpgradeCost());
-		        }
-		    } );
-			
-			empButton = new TextButton("Upgrade EMP:\n"+ gameLogic.playerShip.getWeaponHandeler().getEmpUpgradeCost(),skin);
-			empButton.addListener(new ClickListener() {	       
-		        public void clicked(InputEvent event,float x,float y )
-		        {
-		        	gameLogic.playerShip.getWeaponHandeler().increaseEMPDisableTime();
-		        	empButton.setText("Upgrade EMP:\n" + gameLogic.playerShip.getWeaponHandeler().getEmpUpgradeCost());
-		        }
-		    } );
-				
+		if((currentLevelNumber!=0) && (currentLevelNumber!=6)){
 			table2.add(laserButton).width(130).height(50).spaceRight(30);
 			table2.add(missileButton).width(130).height(50).spaceRight(30);
 			table2.add(empButton).width(130).height(50);
 		}
-		
-		continueButton = new TextButton("Continue", skin);
-		continueButton.addListener(new ClickListener() {	       
-	        public void clicked(InputEvent event,float x,float y )
-	        {
-	        	myGame.switchScreen(MyGame.ScreenType.GAME);
-	        	if(level==0 ||level==6){
-		        	HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
-		        	if(name.length()!=0){
-						highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), name));
-					}else  {
-						highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), "Hero"));
-					}
-		        	myGame.resetGame();
-					myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);	               
-	        	}	        	
-	        }
-	    } );
-		
-		
-		if(level==0 || level==6){
-			Gdx.input.setOnscreenKeyboardVisible(true);	
-			table.add(highScore).spaceBottom(100).row();
-			highScore.setText(text);
+				
+		if(currentLevelNumber==0 || currentLevelNumber==6){
+			Gdx.input.setOnscreenKeyboardVisible(true);
+			table.add(enterNameField).spaceBottom(100).row();
+			enterNameField.setText(text);
 		}
-		table.add(continueButton).width(130).height(50);
 		
-		stage.addActor(table);
-		stage.addActor(table2);
+		table.add(continueButton).width(130).height(50);
 				
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(stage);
@@ -174,10 +140,11 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	}
 
 	/**
-	 * Disables input from this screen
-	 * Called when screen is not visible
+	 * Disables input from this screen and resets tables
 	 */
 	@Override public void hide() {
+		table.reset();
+		table2.reset();
 		Gdx.input.setInputProcessor(null);
 	}
 
@@ -191,40 +158,87 @@ public class EndLevelScreen implements Screen, InputProcessor{
 		} else if(Character.isLetterOrDigit(character)&& name.length()<13) {
 			name += character;
 			text += character;
-			highScore.setText(text);
+			enterNameField.setText(text);
 		}
 		return false;
-	}
-	
-	/**
-	 * @param playerShip
-	 */
-	public void setGameLogic(GameLogic gameLogic) {
-		this.gameLogic = gameLogic;
-	}
-	
-	/**
-	 * 
-	 * @param cost the amount to reduce the score with
-	 */
-	protected void reducePlayerScore(int cost){
-		myGame.reducePlayerScore(cost);
 	}
 	
 	/**
 	 * Used for deleting errors when writing highscore name and saving highscore in desktopversion
 	 * by pressing the right arrow key
 	 * 
-	 **/
+	 */
 	@Override	
 	public boolean keyDown(int keycode) {
 		
 		if(keycode==Keys.DEL && name.length()!=0){
 			name = name.substring(0,name.length()-1);
 			text = text.substring(0,text.length()-1);
-			highScore.setText(text);
+			enterNameField.setText(text);
 		}
 		return false;
+	}
+	
+	/**
+	 * Updates the current score label
+	 */
+	private void updateCurrentScoreLabel(){
+		currentScoreLabel.setText("Current Score: " + gameLogic.getCurrentScore());
+	}
+	
+	/**
+	 * Creates the different buttons
+	 */
+	private void createButtons(){
+		laserButton = new TextButton("Upgrade Laser:\n" + gameLogic.playerShip.getWeaponHandeler().getLaserUpgradeCost(),skin);
+		laserButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	gameLogic.playerShip.getWeaponHandeler().upgradeLaser();
+	        	laserButton.setText("Upgrade Laser:\n"+gameLogic.playerShip.getWeaponHandeler().getLaserUpgradeCost());
+	        	updateCurrentScoreLabel();
+	        }
+	    } );
+		
+		missileButton = new TextButton("Upgrade Missile:\n"+gameLogic.playerShip.getWeaponHandeler().getMissileUpgradeCost(),skin);
+		missileButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	gameLogic.playerShip.getWeaponHandeler().increaseMissileBlastArea();
+		        missileButton.setText("Upgrade Missile:\n" + gameLogic.playerShip.getWeaponHandeler().getMissileUpgradeCost());
+		        updateCurrentScoreLabel();
+	        }
+	    } );
+		
+		empButton = new TextButton("Upgrade EMP:\n"+ gameLogic.playerShip.getWeaponHandeler().getEmpUpgradeCost(),skin);
+		empButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	gameLogic.playerShip.getWeaponHandeler().increaseEMPDisableTime();
+	        	empButton.setText("Upgrade EMP:\n" + gameLogic.playerShip.getWeaponHandeler().getEmpUpgradeCost());
+	        	updateCurrentScoreLabel();
+	        }
+	    } );
+		
+		continueButton = new TextButton("Continue", skin);
+		continueButton.addListener(new ClickListener() {	       
+	        public void clicked(InputEvent event,float x,float y )
+	        {
+	        	int currentLevelNumber = gameLogic.getCurrentLevelNumber();
+	        	Gdx.input.setOnscreenKeyboardVisible(false);
+	        	myGame.switchScreen(MyGame.ScreenType.GAME);
+	        	if(currentLevelNumber==0 ||currentLevelNumber==6){
+		        	HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
+		        	if(name.length()!=0){
+						highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), name));
+					}else  {
+						highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), "Hero"));
+					}
+		        	myGame.resetGame();
+					myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);	               
+	        	}	        	
+	        }
+	    } );
 	}
 	
 

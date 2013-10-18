@@ -23,11 +23,12 @@ import effects.DeathAnimationHandeler;
  */
 public class GameLogic extends Table {
 	
-	private int currentScore=0;
+	private int currentScore = 0;
+	private int currentLevelNumber = 0;
 	private Background backgroundSpace;
 	private GameScreen gameScreen;
 	public PlayerShip playerShip;
-	private Level level;
+	private Level activeLevel;
 
 	/**
 	 * Constructor
@@ -39,9 +40,9 @@ public class GameLogic extends Table {
 		this.gameScreen = gameScreen;
 		playerShip = new PlayerShip(this);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
-		level = new Neptune(this);	
+		activeLevel = new Neptune(this);	
 		
-		addActor(level);
+		addActor(activeLevel);
 		addActor(playerShip);
 		addActor(backgroundSpace);
 
@@ -56,15 +57,22 @@ public class GameLogic extends Table {
 		
 		CollisionDetection.checkCollisions(this);
 		
-		if (playerShip.getCurrentHealth()<1 || level.missionFailed()) {	//For testing
-			gameScreen.defeat(); //TODO switch places defeat and reset add another score variable
+		if (playerShip.getCurrentHealth()<1 || activeLevel.missionFailed()) {	//For testing
+			currentLevelNumber = 0;
+			gameScreen.callDefeatScreen(); //TODO switch places defeat and reset add another score variable
 			resetGame();
 		}
 		
-		if(level.missionCompleted()){
+		if(activeLevel.missionCompleted()){
 			startNextLevel();
-			gameScreen.victory();
 		}
+	}
+	
+	/**
+	 * @return	The number of the current level
+	 */
+	public int getCurrentLevelNumber(){
+		return currentLevelNumber;
 	}
 	
 	/**
@@ -124,7 +132,7 @@ public class GameLogic extends Table {
 	 * @return the name of the Level
 	 */
 	public String getLevelName(){
-		return level.getName();
+		return activeLevel.getName();
 	}
 	
 	/**
@@ -198,8 +206,8 @@ public class GameLogic extends Table {
 		playerShip.getWeaponHandeler().resetUpgradeCosts();
 		currentScore=0;
 		clear();
-		level = new Neptune(this);
-		addActor(level);
+		activeLevel = new Neptune(this);
+		addActor(activeLevel);
 		addActor(playerShip);
 		playerShip.resetHealth();
 	}
@@ -208,10 +216,12 @@ public class GameLogic extends Table {
 	 * Starts the next level
 	 */
 	public void startNextLevel(){
+		currentLevelNumber = (currentLevelNumber + 1) % 7;
+		gameScreen.callVictoryScreen();
 		playerShip.stay();
 		clear();
-		level=nextLevel(level);
-		addActor(level);
+		activeLevel=nextLevel(activeLevel);
+		addActor(activeLevel);
 		addActor(playerShip);
 	}
 	
@@ -219,16 +229,7 @@ public class GameLogic extends Table {
 	 * Set a new background
 	 * @param background
 	 */
-
 	public void setBackground(TextureRegion background){
 		backgroundSpace.setTextureRegion(background);
-	}
-
-	/**
-	 * Reduce player score with cost
-	 * @param cost
-	 */
-	public void reducePlayerScore(int cost) {
-		currentScore-=cost;	
 	}
 }

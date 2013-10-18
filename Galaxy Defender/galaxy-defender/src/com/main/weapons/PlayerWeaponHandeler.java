@@ -15,6 +15,7 @@ public class PlayerWeaponHandeler {
 	private static final int STARTING_LASER_COST = 20, STARTING_EMP_COST = 10, STARTING_MISSILE_COST = 10;
 	private int currentUpgradeCostLaser = STARTING_LASER_COST, currentUpgradeCostEMP = STARTING_EMP_COST, currentUpgradeCostMissile = STARTING_MISSILE_COST;
 	
+	private static boolean ifAutoShooting = true; //TODO: For testing
 	private static enum Lasers {SINGLE, DUAL, TRIPPLE, QUAD;} 	//Implemented weapons
 	private Lasers currentLaser = Lasers.SINGLE;
 	
@@ -49,27 +50,29 @@ public class PlayerWeaponHandeler {
 		if(TimeUtils.nanoTime() - lastMissileTime > PlayerMissile.RATEOFFIRE) missileReady = true;
 		if(TimeUtils.nanoTime() - lastEMPTime > PlayerEMP.RATEOFFIRE) EMPReady = true;
 		if(TimeUtils.nanoTime() - lastLaserTime > PlayerLaser.RATEOFFIRE) {
-			switch(currentLaser){
-				case SINGLE:
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
-					break;
-				case DUAL:
-					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX(), playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
-					break;
-				case TRIPPLE:
-					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
-					break;
-				default:
-					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2+PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
-					playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
-					playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
-					break;
+			if (ifAutoShooting){ 
+				switch(currentLaser){
+					case SINGLE:
+						playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
+						break;
+					case DUAL:
+						playerShip.getParent().addActor(new PlayerLaser(playerShip.getX(), playerShip.getY()+PlayerShip.HEIGHT));
+						playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
+						break;
+					case TRIPPLE:
+						playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT));
+						playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+						playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+						break;
+					default:
+						playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2-PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
+						playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()+PlayerShip.WITDH/2+PlayerLaser.WIDTH*2, playerShip.getY()+PlayerShip.HEIGHT));
+						playerShip.getParent().addActor(new PlayerLaser(playerShip.getX()-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+						playerShip.getParent().addActorBefore(playerShip, new PlayerLaser(playerShip.getX()+PlayerShip.WITDH-PlayerLaser.WIDTH/2, playerShip.getY()+PlayerShip.HEIGHT-PlayerLaser.HEIGHT*2));
+						break;		
+				}
+				lastLaserTime = TimeUtils.nanoTime();
 			}
-			lastLaserTime = TimeUtils.nanoTime();
 		}
 	}
 	
@@ -185,5 +188,19 @@ public class PlayerWeaponHandeler {
 	 */
 	public int getMissileUpgradeCost(){
 		return currentUpgradeCostMissile;
+	}
+	
+	/**
+	 * Disable/enable autoshoot
+	 */
+	public static void toggleOptionAutoShoot() {
+		ifAutoShooting = !ifAutoShooting;	
+	}
+	
+	/**
+	 * @return	If the ship is auto shooting or not
+	 */
+	public static boolean getIfAutoShooting(){
+		return ifAutoShooting;
 	}
 }
