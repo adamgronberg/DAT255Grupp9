@@ -14,7 +14,7 @@ public class PlayerWeaponLogic {
 	private static final int LEVEL_2_LASER_COST = 30, LEVEL_3_LASER_COST = 400, LEVEL_4_LASER_COST = 800;
 	private int currentUpgradeCostLaser = LEVEL_2_LASER_COST, currentUpgradeCostEMP = STARTING_EMP_COST, currentUpgradeCostMissile = STARTING_MISSILE_COST;
 	
-	private static boolean ifAutoShooting = true; //TODO: For testing
+	private static boolean ifAutoShooting = true; 				//TODO: For testing
 	private static enum Lasers {SINGLE, DUAL, TRIPPLE, QUAD;} 	//Implemented weapons
 	private Lasers currentLaser = Lasers.SINGLE;
 	
