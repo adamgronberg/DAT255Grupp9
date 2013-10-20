@@ -5,6 +5,10 @@ import com.badlogic.gdx.utils.TimeUtils;
 import effects.ExplosionEffect;
 import assets.ImageAssets;
 
+/**
+ * Final boss! TODO: Make him more fun and have a epic ending
+ * @author Grupp9
+ */
 public class BossShip extends EnemyShip{
 	
 	public final static int HEIGHT=180;
@@ -24,6 +28,12 @@ public class BossShip extends EnemyShip{
 	private float turret1DeathTime,turret2DeathTime,spawnTimer,degrees;
 	private MiniTurretShip turret1,turret2;
 
+	/**
+	 * Constructor
+	 * @param x
+	 * @param y
+	 * @param playerShip
+	 */
 	public BossShip(float x, float y,PlayerShip playerShip) {
 		super(WIDTH, HEIGHT, x, y, HEALTH, SCOREVALUE, ImageAssets.enemyBossShip, DAMAGE_WHEN_RAMMED,
 				DISABLEABLE);
@@ -32,6 +42,9 @@ public class BossShip extends EnemyShip{
 		degrees = 0f;
 	}
 
+	/**
+	 * Move logic
+	 */
 	@Override
 	protected void move(float delta) {
 		if(!turretsSpawnedOnce){
@@ -105,10 +118,10 @@ public class BossShip extends EnemyShip{
 		}
 	}
 
-	@Override
-	protected void shoot(float delta) {	
-	}
 
+	/**
+	 * On hit logic
+	 */
 	@Override
 	public int hit(int damage) {
 		if(damage == TURRET_EXPLOSION_DAMAGE){
@@ -120,4 +133,7 @@ public class BossShip extends EnemyShip{
 		}
 		return 0;
 	}
+	
+	//// Unused methods ////
+	@Override protected void shoot(float delta) {}
 }

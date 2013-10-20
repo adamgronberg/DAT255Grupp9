@@ -8,7 +8,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import spacegame.MovableEntity;
 
-public class DeathAnimationHandeler extends MovableEntity {
+/**
+ * The death effect for bigger enemies
+ * @author Grupp9
+ */
+public class BigDeathAnimation extends MovableEntity {
 
 	private Array<ExplosionEffect> animations;
 	private static final int NUMBER_OF_EXPLOSIONS = 11;
@@ -18,13 +22,13 @@ public class DeathAnimationHandeler extends MovableEntity {
 	private float ExplosionSize = 50;
 	
 	/**
-	 * 
-	 * @param width
-	 * @param height
-	 * @param x
+	 * Constructor
+	 * @param width	The width of the area to explode on
+	 * @param height	The height of the area to explode on
+	 * @param x	
 	 * @param y
 	 */
-	public DeathAnimationHandeler(float width, float height, float x, float y) {
+	public BigDeathAnimation(float width, float height, float x, float y) {
 		super(width, height, x, y);
 		animations = new Array<ExplosionEffect>();
 		for(int i = 0; i < NUMBER_OF_EXPLOSIONS-1; i++){
@@ -38,7 +42,7 @@ public class DeathAnimationHandeler extends MovableEntity {
 	}
 	
 	/**
-	 * Updates its linger time
+	 * Random positions to explode on
 	 */
 	@Override
 	public void act(float delta){
@@ -54,7 +58,7 @@ public class DeathAnimationHandeler extends MovableEntity {
 	}
 
 	/**
-	 * Random fire position
+	 * Random explosion position
 	 */
 	private Vector2 randomPosition(){
 		return new Vector2(MathUtils.random(0, getWidth()), 

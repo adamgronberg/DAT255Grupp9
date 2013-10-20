@@ -5,11 +5,9 @@ import weapons.HasFaction;
 import weapons.TargetTypes;
 
 /**
- * 
- * @author Grupp9
- *
  * Used on weapons to add a area of effect dummy
- * A rectangle with area damage
+ * A rectangle with area
+ * @author Grupp9
  */
 public class AreaOfEffectDummy extends MovableEntity implements HasFaction{
 	

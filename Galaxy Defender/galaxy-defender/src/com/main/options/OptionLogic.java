@@ -10,21 +10,21 @@ import com.badlogic.gdx.Preferences;
 /**
  * The logic behind setting and getting options and the texts for option screen
  * @author Grupp9
- *
  */
 public class OptionLogic {
 	
-	private static Preferences options;
+	private static Preferences data;
+	private static String SOUND = "soundOption", MUSIC = "musicOption", VIBRATE = "vibrateOption", LAYOUT = "layoutOption";
 	
 	/**
 	 * Loads options into preferences. Sets default values if no saved options
 	 */
 	public static void loadOptions(){
-		options = Gdx.app.getPreferences("galaxydefender.options");
-		if(!options.contains("sound")) options.putBoolean("sound", false);
-		if(!options.contains("music")) options.putBoolean("music", false); 
-		if(!options.contains("vibrate")) options.putBoolean("vibrate", false); 
-		if(!options.contains("layout")) options.putInteger("layout", 1); 
+		data = Gdx.app.getPreferences("galaxydefender.data");
+		if(!data.contains(SOUND)) data.putBoolean(SOUND, false);
+		if(!data.contains(MUSIC)) data.putBoolean(MUSIC, false); 
+		if(!data.contains(VIBRATE)) data.putBoolean(VIBRATE, false); 
+		if(!data.contains(LAYOUT)) data.putInteger(LAYOUT, 1); 
 	}
 	
 	/**
@@ -51,62 +51,62 @@ public class OptionLogic {
 	 * @return	Sound on/off
 	 */
 	public static boolean getSoundOption() {
-		return options.getBoolean("sound");
+		return data.getBoolean(SOUND);
 	}
 	
 	/**
 	 * @return Music on/off
 	 */
 	public static boolean getMusicOption() {
-		return options.getBoolean("music");
+		return data.getBoolean(MUSIC);
 	}
 	
 	/**
 	 * @return	Vibrate on/off
 	 */
 	public static boolean getVibrateOption() {
-		return options.getBoolean("vibrate");
+		return data.getBoolean(VIBRATE);
 	}
 	
 	/**
 	 * @return	Current layout
 	 */
 	public static int getLayoutOption() {
-		return options.getInteger("layout");
+		return data.getInteger(LAYOUT);
 	}
 	
 	/**
 	 * Toggle music on/off
 	 */
 	public static void toggleMusicOption(){
-		options.putBoolean("music", !options.getBoolean("music"));
-		options.flush();
+		data.putBoolean(MUSIC, !data.getBoolean(MUSIC));
+		data.flush();
 	}
 	
 	/**
 	 * Toggle sound on/off
 	 */
 	public static void toggleSoundOption(){
-		options.putBoolean("sound", !options.getBoolean("sound"));
-		options.flush();
+		data.putBoolean(SOUND, !data.getBoolean(SOUND));
+		data.flush();
 	}
 	
 	/**
 	 * Toggle vibrate on/off
 	 */
 	public static void toggleVibrateOption(){
-		options.putBoolean("vibrate", !options.getBoolean("vibrate"));
-		options.flush();
+		data.putBoolean(VIBRATE, !data.getBoolean(VIBRATE));
+		data.flush();
 	}
 	
 	/**
 	 * Sets layout to next in order
 	 */
 	public static void nextlayout(){
-	 	int layoutNumber = options.getInteger("layout");
+	 	int layoutNumber = data.getInteger(LAYOUT);
 	 	layoutNumber = layoutNumber%2+1; //Have 2 layouts, will always have a number between 1 and 2
-	 	options.putInteger("layout", layoutNumber);
-	 	options.flush();
+	 	data.putInteger(LAYOUT, layoutNumber);
+	 	data.flush();
 	}
 	
 	/**

@@ -8,12 +8,9 @@ import assets.ImageAssets;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
- * 
+ * StealthShip
+ * Disappears from the screen and comes back
  * @author Grupp9
- *
- *	StealthShip
- *  Disappears from the screen and comes back
- *
  */
 
 public class StealthShip extends EnemyShip {
@@ -32,6 +29,7 @@ public class StealthShip extends EnemyShip {
 	private PlayerShip player;
 	private int shot =0;
 	private static final boolean DISABABLE = true;
+	
 	/**
 	 * Constructor
 	* @param x	x-led Spawn location
@@ -60,6 +58,9 @@ public class StealthShip extends EnemyShip {
 		}
 	}
 
+	/**
+	 * Ships move logic
+	 */
 	@Override
 	protected void move(float delta) {
 		
@@ -87,5 +88,6 @@ public class StealthShip extends EnemyShip {
 			}
 	}
 
+	//// unused methods ////
 	@Override protected void shoot(float delta) {}
 }

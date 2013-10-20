@@ -9,13 +9,11 @@ import assets.ImageAssets;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import effects.DeathAnimationHandeler;
+import effects.BigDeathAnimation;
 
 /**
- * 
+ * Big Ship with a little ship on it. TODO: make it more interesting and so it spawns its own small ships instead of the level
  * @author Grupp9
- * Big Ship with a little ship on it.
- *
  */
 public class MiniBossShip extends EnemyShip {
 	
@@ -27,7 +25,7 @@ public class MiniBossShip extends EnemyShip {
 	public static final int WIDTH=110;
 	
 	private static final float SHIPSPEED = 1f;
-	private static final int SCOREVALUE=30;
+	private static final int SCOREVALUE=500;
 	private static final int HEALTH=80;
 	private static final int DAMAGE_WHEN_RAMMED = 0;
 	private static final boolean DISABABLE = false;
@@ -156,7 +154,6 @@ public class MiniBossShip extends EnemyShip {
 	 */
 	@Override
 	public int hit(int damage) {
-		//if(miniTurretShip.isAlive()) return 0;
 		if(!isAlive) return 0;
 		currentHealth = currentHealth - damage;
 		if (currentHealth<=0){
@@ -179,7 +176,7 @@ public class MiniBossShip extends EnemyShip {
 	 */
 	@Override
 	public void destroyShip() {
-		getParent().addActor(new DeathAnimationHandeler(getWidth(), getHeight(), getX(), getY()));
+		getParent().addActor(new BigDeathAnimation(getWidth(), getHeight(), getX(), getY()));
 	}
 	
 	/**

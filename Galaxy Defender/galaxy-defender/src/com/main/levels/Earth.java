@@ -4,11 +4,8 @@ import assets.ImageAssets;
 import spacegame.GameLogic;
 
 /**
- * 
- * @author Grupp9
- *
  * Contains Earth spawns as well as win condition
- * 
+ * @author Grupp9
  */
 public class Earth extends Level{	
 

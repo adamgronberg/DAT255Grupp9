@@ -6,13 +6,11 @@ import assets.ImageAssets;
 import screens.GameScreen;
 import spacegame.GameLogic;
 import spacegame.Sprite;
-import weapons.PlayerWeaponHandeler;
+import weapons.PlayerWeaponLogic;
 
 /**
- * 
+ * The player ship. Methods for moving ,drawing and more...
  * @author Grupp9
- *
- * The player ship. Methods for moving ,drawing and shooting
  */
 public class PlayerShip extends Sprite {
 	
@@ -23,7 +21,7 @@ public class PlayerShip extends Sprite {
 	private static final float SPAWN_LOCATION_Y = 0.1f; 	//Height where the player moves
 	private static final int STARTING_HEALTH  = 100;
 	
-	private PlayerWeaponHandeler weaponHandeler;
+	private PlayerWeaponLogic weaponHandeler;
 	private int maximumHealth;
 	private int currentHealth;		
 	
@@ -34,7 +32,7 @@ public class PlayerShip extends Sprite {
 	 */
 	public PlayerShip(GameLogic gameLogic) {
 		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2-WITDH/2, GameScreen.GAME_HEIGHT*SPAWN_LOCATION_Y,ImageAssets.playerShip);
-		weaponHandeler = new PlayerWeaponHandeler(gameLogic, this);
+		weaponHandeler = new PlayerWeaponLogic(gameLogic, this);
 		maximumHealth = STARTING_HEALTH;
 		currentHealth = STARTING_HEALTH;
 	}
@@ -141,7 +139,7 @@ public class PlayerShip extends Sprite {
 	/**
 	 * @return The player weaponHandeler
 	 */
-	public PlayerWeaponHandeler getWeaponHandeler(){
+	public PlayerWeaponLogic getWeaponHandeler(){
 		return weaponHandeler;
 	}
 }

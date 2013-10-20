@@ -4,11 +4,8 @@ import assets.ImageAssets;
 import spacegame.GameLogic;
 
 /**
- * 
- * @author Grupp9
- *
  * Contains Saturn spawns as well as win condition
- * 
+ * @author Grupp9
  */
 public class Saturn extends Level {
 
@@ -38,7 +35,6 @@ public class Saturn extends Level {
 		return levelSpawnDone && gameLogic.noActiveSpawns();
 	}
 
-	//Unused method
-	@Override
-	public boolean missionFailed() {return false;}
+	//// Unused method ////
+	@Override public boolean missionFailed() {return false;}
 }

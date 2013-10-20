@@ -16,11 +16,9 @@ import assets.*;
 import input.InputControl;
 
 /**
- * 
- * @author Grupp9
- *
  * Draws everything on GameScreen and handles input
  * Tells all actors to draw and act
+ * @author Grupp9
  */
 public class GameScreen implements Screen{
 	private Stage stage;
@@ -158,7 +156,7 @@ public class GameScreen implements Screen{
 		
 		stage.act(delta);				//Tells all actors to act
 		stage.draw();					//Tells all actors to draw
-		}
+	}
 	
 	/**
 	 * Shows screen and adds input control 

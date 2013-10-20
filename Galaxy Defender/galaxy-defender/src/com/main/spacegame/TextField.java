@@ -5,9 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 /**
- * 
- * @author Grupp9
  * Displays a text field on the screen
+ * @author Grupp9
  */
 public class TextField {
 	 

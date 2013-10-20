@@ -8,11 +8,8 @@ import assets.SoundAssets;
 import effects.ExplosionEffect;
 
 /**
- * 
- * @author Grupp9
- *
  * Player missile. Have a small blast radius on impact and a sweet on hit effect as well as sound
- *
+ * @author Grupp9
  */
 public class PlayerMissile extends Projectile{
 
@@ -77,6 +74,9 @@ public class PlayerMissile extends Projectile{
 		return AFFECTED_TARGETS;
 	}
 
+	/**
+	 * Faction of projectile
+	 */
 	@Override
 	public TargetTypes getFaction() {
 		return FACTION;

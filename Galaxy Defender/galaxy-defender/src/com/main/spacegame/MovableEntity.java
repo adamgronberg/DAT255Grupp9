@@ -6,11 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
 /**
- * 
+ * Movable actor on stage.
  * @author Group9
- *
- *
- *	Movable actor on stage.
  */
 public abstract class MovableEntity extends Actor {
 	

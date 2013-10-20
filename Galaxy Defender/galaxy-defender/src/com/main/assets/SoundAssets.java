@@ -5,9 +5,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 /**
- * 
+ * Loads all sound assets
  * @author Grupp9
- * Loads all sound assets on start
  */
 public class SoundAssets {
 	public static Music spaceMusic;
@@ -29,6 +28,7 @@ public class SoundAssets {
 	 */
 	public static void dispose(){
 		spaceMusic.dispose();
+		bossExplosion.dispose();
 		missileExplosion.dispose();
 	}
 }

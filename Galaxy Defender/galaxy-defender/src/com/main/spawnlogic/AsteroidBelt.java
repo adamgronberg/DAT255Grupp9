@@ -7,10 +7,8 @@ import screens.GameScreen;
 import ships.Asteroid;
 
 /**
- * 
+ * Spawning pattern for a asteroid belt
  * @author Grupp9
- *
- *	Spawning pattern for a asteroid belt
  */
 public class AsteroidBelt extends SpawnPattern{
 
@@ -19,7 +17,7 @@ public class AsteroidBelt extends SpawnPattern{
 	private int currentRow = 0;
 	
 	/**
-	 * 
+	 * Constructor
 	 * @param spawnX
 	 * @param spawnY
 	 * @param totalNumber

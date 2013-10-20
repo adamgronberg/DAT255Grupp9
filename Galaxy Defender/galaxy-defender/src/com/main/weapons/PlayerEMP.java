@@ -5,11 +5,8 @@ import spacegame.MovableEntity;
 import assets.*;
 
 /**
- * 
- * @author Grupp9
- * 
  * EMP shoots a wave that disables all enemies on contact of a set amount of time
- *
+ * @author Grupp9
  */
 public class PlayerEMP extends Projectile {
 	

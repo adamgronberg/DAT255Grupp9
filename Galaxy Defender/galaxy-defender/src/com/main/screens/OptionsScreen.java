@@ -19,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 /**
  * Draws buttons and handles input for options screen
  * @author Group 9
- *
  */
 public class OptionsScreen implements Screen{
 	

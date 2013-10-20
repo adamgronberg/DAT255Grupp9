@@ -6,16 +6,12 @@ import assets.ImageAssets;
 import com.badlogic.gdx.math.MathUtils;
 
 /**
- * 
- * @author Grupp9
- *  
  * Enemy standard green laser
- *
+ * @author Grupp9
  */
 
 public class EnemyLaser extends Projectile {
 	
-	 //In nanoseconds
 	public static final float HEIGHT = 25;
 	public static final float WIDTH = 3;
 	private static final int DAMAGE_ON_HIT = 15;
@@ -37,6 +33,15 @@ public class EnemyLaser extends Projectile {
 		speedY = 6;
 	}
 	
+	/**
+	 * Constructor
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param damageOnHit
+	 * @param degree
+	 */
 	public EnemyLaser(float x, float y,float width, float height, int damageOnHit, float degree){
 		super(x, y, width, height, damageOnHit, ImageAssets.enemyLaser);
 		setRotation(degree);
@@ -72,6 +77,9 @@ public class EnemyLaser extends Projectile {
 		return AFFECTEDTARGETS;
 	}
 
+	/**
+	 * The different target types
+	 */
 	@Override
 	public TargetTypes getFaction() {
 		return FACTION;

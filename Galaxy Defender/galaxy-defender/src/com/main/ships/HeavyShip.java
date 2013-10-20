@@ -6,12 +6,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
- * 
+ * The Basic enemy
+ * Only has y led moment more HP and a laser cannon
  * @author Grupp9
- *
- *	The Basic enemy
- *  Only has y led moment more HP and a laser cannon
- *
  */
 public class HeavyShip extends EnemyShip {
 	

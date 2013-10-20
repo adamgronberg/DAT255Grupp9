@@ -6,10 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 /**
- * 
- * @author Grupp9
- * 
  * TODO: Could use this class to add the different map backgrounds
+ * @author Grupp9
  */
 public class Background extends MovableEntity {
 	

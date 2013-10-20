@@ -6,6 +6,10 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import screens.GameScreen;
 import spacegame.MovableEntity;
 
+/**
+ * Checks for projectiles and enemies out of bounds
+ * @author Grupp9
+ */
 public class OutOfBoundsDetection {
 
 	/**
@@ -31,10 +35,5 @@ public class OutOfBoundsDetection {
 				OutOfBoundsDetection.isOutOfBoundsY(entity);
 			}
 		}
-	}
-	
-	
-	
-	
-	
+	}	
 }

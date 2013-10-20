@@ -7,11 +7,8 @@ import spacegame.GameLogic;
 
 
 /**
- * 
- * @author Grupp9
- *
  * Contains Uranus spawns as well as win condition
- * 
+ * @author Grupp9
  */
 public class Uranus extends Level{
 

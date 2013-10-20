@@ -7,11 +7,8 @@ import ships.MiniBossShip;
 import spacegame.GameLogic;
 
 /**
- * 
- * @author Grupp9
- *
  * Contains Jupiter spawns as well as win condition
- * 
+ * @author Grupp9
  */
 public class Jupiter extends Level{
 

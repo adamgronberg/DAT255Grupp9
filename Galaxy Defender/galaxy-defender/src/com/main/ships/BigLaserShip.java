@@ -88,6 +88,7 @@ public class BigLaserShip extends EnemyShip {
 			}
 		}
 	}
-
+	
+	//// Unused methods ////
 	@Override protected void shoot(float delta) {}
 }

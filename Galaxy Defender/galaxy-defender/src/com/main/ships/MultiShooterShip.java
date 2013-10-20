@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * Enemy ship with six laser guns
+ * @author Grupp9
  */
 public class MultiShooterShip extends EnemyShip {
 	

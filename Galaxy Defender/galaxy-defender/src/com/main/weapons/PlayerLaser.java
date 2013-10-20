@@ -5,11 +5,8 @@ import effects.PlayerLaserEffect;
 import assets.*;
 
 /**
- * 
- * @author Grupp9
- * 
  * Player standard green laser
- *
+ * @author Grupp9
  */
 public class PlayerLaser extends Projectile {
 	
@@ -59,6 +56,9 @@ public class PlayerLaser extends Projectile {
 		return AFFECTEDTARGETS;
 	}
 
+	/**
+	 * The faction of the laser
+	 */
 	@Override
 	public TargetTypes getFaction() {
 		return FACTION;

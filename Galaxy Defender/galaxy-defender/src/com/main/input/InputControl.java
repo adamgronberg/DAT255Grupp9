@@ -11,13 +11,12 @@ import screens.GameScreen;
 import ships.PlayerShip;
 import spacegame.GameLogic;
 import spacegame.MyGame;
-import weapons.PlayerWeaponHandeler;
+import weapons.PlayerWeaponLogic;
 
 
 /**
- * 
+ * Handles all user input desktop/android when in game
  * @author Grupp9
- * Handles all user input desktop/android
  */
 public class InputControl implements GestureListener, InputProcessor {
 
@@ -47,9 +46,7 @@ public class InputControl implements GestureListener, InputProcessor {
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
 		if (velocityY < -FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.startNextLevel();
-		//if (velocityY > FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.startNextLevel();
-		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) PlayerWeaponHandeler.toggleOptionAutoShoot();	//For testing
-		//if (velocityX > FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.changeOptionControlLayout();
+		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) PlayerWeaponLogic.toggleOptionAutoShoot();	//For testing
 		return false;
 	}
 	
@@ -77,8 +74,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		if(keycode == Input.Keys.W)  gameLogic.playerShip.getWeaponHandeler().shootMissle();
 		if(keycode == Input.Keys.Q)  gameLogic.playerShip.getWeaponHandeler().shootEMP();
 		if(keycode == Input.Keys.UP)  gameLogic.startNextLevel();
-		if(keycode == Input.Keys.CONTROL_LEFT) PlayerWeaponHandeler.toggleOptionAutoShoot();			//For testing
-		//if(keycode == Input.Keys.SHIFT_LEFT) gameScreen.changeOptionControlLayout();		//For testing, only android
+		if(keycode == Input.Keys.CONTROL_LEFT) PlayerWeaponLogic.toggleOptionAutoShoot();			//For testing
 		return false;
 	}
 

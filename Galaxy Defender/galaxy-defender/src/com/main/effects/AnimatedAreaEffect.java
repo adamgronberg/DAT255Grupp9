@@ -8,9 +8,8 @@ import spacegame.MovableEntity;
 
 
 /**
- * 
- * @author Grupp9
  * Adds a animated effect
+ * @author Grupp9
  */
 public abstract class AnimatedAreaEffect extends MovableEntity{
 	

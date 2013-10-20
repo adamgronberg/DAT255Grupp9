@@ -7,9 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * 
+ * Contains all image assets
  * @author Grupp9
- * Contains all image assets and animations
  */
 public class ImageAssets {
 	public static TextureAtlas atlas;
@@ -52,7 +51,7 @@ public class ImageAssets {
 	public static Skin skin;
 
 	/**
-	 * Loads all assets from imageAtlas
+	 * Loads all assets from imageAtlas and skins
 	 */
 	public static void load() {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
@@ -63,6 +62,7 @@ public class ImageAssets {
 		enemyLaserAnimation = new Array<TextureRegion>();
 		playerLaserAnimation = new Array<TextureRegion>();
 		fireAnimation = new Array<TextureRegion>();
+		asteroids = new Array<TextureRegion>(); 
 		
 		playerShip = atlas.findRegion("Ships/PlayerShip");
 		playerLaser = atlas.findRegion("weapons/greenLaser");
@@ -99,8 +99,6 @@ public class ImageAssets {
 		missileButton = atlas.findRegion("gui/missileButton");
 		emptyButton = atlas.findRegion("gui/EMPButton");
 		
-
-		asteroids = new Array<TextureRegion>(); 
 		for(int i = 1; i <= 12; i++){
 			asteroids.add(atlas.findRegion("Ships/Asteroid" + i));
 		}
@@ -126,5 +124,7 @@ public class ImageAssets {
 	 */
 	public static void dispose() {
 		atlas.dispose();
+		atlasSkin.dispose();
+		skin.dispose();
 	}
 }

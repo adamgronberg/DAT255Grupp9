@@ -3,12 +3,9 @@ package ships;
 import assets.ImageAssets;
 
 /**
- * 
+ * The Basic enemy
+ * Only has y led moment
  * @author Grupp9
- *
- *	The Basic enemy
- *  Only has y led moment
- *
  */
 public class BasicShip extends EnemyShip {
 	private final static float SHIPSPEED=2f;
@@ -38,7 +35,7 @@ public class BasicShip extends EnemyShip {
 		setY(getY()-SHIPSPEED);
 		
 	}
-
-	@Override
-	protected void shoot(float delta) {}
+	
+	//// Unused methods ////
+	@Override protected void shoot(float delta) {}
 }

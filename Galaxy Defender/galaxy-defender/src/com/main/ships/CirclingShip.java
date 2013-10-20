@@ -7,12 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
- * 
+ * An enemy that moves in a circle after getting to a position on the map
+ * Shoots lasers
  * @author Grupp9
- *
- *	An enemy that moves in a circle after getting to a position on the map
- *  Shoots lasers
- *
  */
 public class CirclingShip extends EnemyShip {
 	
@@ -92,6 +89,6 @@ public class CirclingShip extends EnemyShip {
 		}
 	}
 
-	///// Unused method /////
+	//// Unused method ////
 	@Override protected void shoot(float delta) {}
 }

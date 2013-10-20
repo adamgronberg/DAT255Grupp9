@@ -7,9 +7,6 @@ package weapons;
  */
 public interface HasFaction {
 	
-	 /**
-	 * @return true if the projectile is harmful for the player
-	 */
 	public TargetTypes[] getFactionTypes();
 	public TargetTypes getFaction();
 }

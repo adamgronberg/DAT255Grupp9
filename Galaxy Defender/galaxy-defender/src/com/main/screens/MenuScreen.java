@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 /**
  * Draws and handles input for main menu
  * @author Group 9
- *
  */
 public class MenuScreen implements Screen{
 	

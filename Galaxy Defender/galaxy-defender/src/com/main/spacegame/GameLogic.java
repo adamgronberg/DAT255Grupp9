@@ -16,12 +16,11 @@ import ships.EnemyShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
 import effects.AnimatedAreaEffect;
-import effects.DeathAnimationHandeler;
+import effects.BigDeathAnimation;
 
 /**
- * 
- * @author Grupp9
  * Handles the game logic.
+ * @author Grupp9
  */
 public class GameLogic extends Table {
 	
@@ -183,7 +182,7 @@ public class GameLogic extends Table {
 		Array<MovableEntity> effects  = new Array<MovableEntity>(); 
 		SnapshotArray<Actor> toSearch = getChildren(); 
 		for(Actor actor: toSearch){ 
-			if(actor instanceof AnimatedAreaEffect || actor instanceof DeathAnimationHandeler){ 
+			if(actor instanceof AnimatedAreaEffect || actor instanceof BigDeathAnimation){ 
 				MovableEntity effect = (MovableEntity)actor;
 				effects.add(effect); 
 			} 

@@ -2,9 +2,7 @@ package screens;
 
 import spacegame.GameLogic;
 import spacegame.MyGame;
-import spacegame.MyGame.ApplicationType;
-import highscore.HighscoreHandler;
-import highscore.User;
+import highscore.HighscoreLogic;
 import assets.ImageAssets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -24,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 /**
  * Screen that shows when a level either is completed or the player lost
  * @author Grupp9
- *
  */
 public class EndLevelScreen implements Screen, InputProcessor{
 	
@@ -35,7 +32,6 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	private GameLogic gameLogic;
 	private Label enterNameField, endLevelLabel,nextLevelLabel,currentScoreLabel;
 	private Table table,table2;
-	private static ApplicationType applicationType;
 	private static final String[] END_LEVEL_TEXTS = {"GAME OVER","You saved Neptunus!","You saved Uranus!","You saved Saturn!","You saved Jupiter!","You saved Mars!","You saved our solar system! Well done!"};
 	private static final String[] NEXT_LEVEL_TEXTS = {"","The mission on Uranus is to destroy the escaping enemy ship","Survive all asteroid-attacks on Saturn","Destroy the giant enemy ship to save Jupiter","In order to save Mars you have to make sure that\nnot a single enemy ship passes your position"
 										,"Destroy the mothership in order to save Earth",""};
@@ -47,43 +43,11 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	 */
 	public EndLevelScreen(MyGame myGame, GameLogic gameLogic){
 		this.gameLogic = gameLogic;
-		applicationType = myGame.getApplicationType();
 		Skin skin = ImageAssets.skin;
 		createResources(myGame, skin);
 	    createButtons(myGame, skin);
 		stage.addActor(table);
 		stage.addActor(table2);
-	}
-	
-	/**
-	 * Creates stage, skin, tables and labels
-	 */
-	private void createResources(final MyGame myGame, Skin skin) {
-		
-		stage = new Stage(){
-	        @Override
-	        public boolean keyDown(int keyCode) {
-	            if (keyCode == Keys.BACK) {
-	                myGame.switchScreen(MyGame.ScreenType.MENU);
-	            }
-	            return super.keyDown(keyCode);
-	        }
-	    };
-		
-	    TextureRegionDrawable menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
-		
-		table = new Table(skin);
-		table2 = new Table(skin);
-
-		enterNameField = new Label(text,skin);
-		endLevelLabel = new Label("", skin);
-		nextLevelLabel = new Label("", skin);
-		currentScoreLabel = new Label("" ,skin);
-		
-		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);		
-		table2.setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT/2);
-		table.setBackground(menuBackground);
-		
 	}
 
 	/**
@@ -189,6 +153,35 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	}
 	
 	/**
+	 * Creates stage, skin, tables and labels
+	 */
+	private void createResources(final MyGame myGame, Skin skin) {
+		stage = new Stage(){
+	        @Override
+	        public boolean keyDown(int keyCode) {
+	            if (keyCode == Keys.BACK) {
+	                myGame.switchScreen(MyGame.ScreenType.MENU);
+	            }
+	            return super.keyDown(keyCode);
+	        }
+	    };
+		
+	    TextureRegionDrawable menuBackground = new TextureRegionDrawable(assets.ImageAssets.mainMenu);
+		
+		table = new Table(skin);
+		table2 = new Table(skin);
+
+		enterNameField = new Label(text,skin);
+		endLevelLabel = new Label("", skin);
+		nextLevelLabel = new Label("", skin);
+		currentScoreLabel = new Label("" ,skin);
+		
+		table.setBounds(0, 0,MyGame.WIDTH,MyGame.HEIGHT);		
+		table2.setBounds(0, 0, MyGame.WIDTH, MyGame.HEIGHT/2);
+		table.setBackground(menuBackground);	
+	}
+	
+	/**
 	 * Creates the different buttons
 	 */
 	private void createButtons(final MyGame myGame, Skin skin){
@@ -229,14 +222,12 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	        	int currentLevelNumber = gameLogic.getCurrentLevelNumber();
 	        	Gdx.input.setOnscreenKeyboardVisible(false);
 	        	if(currentLevelNumber==0 ||currentLevelNumber==6){
-	        		if(applicationType == ApplicationType.ANDROID){
-	        			HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
-	        			if(name.length()!=0){
-	        				highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), name));
-	        			}else  {
-	        				highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), "Hero"));
-	        			}	
-	        		}
+	        		if(name.length()!=0){
+	        			HighscoreLogic.saveUserToHighScore(name, gameLogic.getCurrentScore());
+	        		}else  {
+	        			HighscoreLogic.saveUserToHighScore("Hero", gameLogic.getCurrentScore());
+	        		}	
+	        		
 	        		myGame.resetGame();
         			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
 	        	}
@@ -246,7 +237,7 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	}
 	
 
-	////////////// Unused methods  /////////////////
+	//// Unused methods  ////
 	@Override public boolean keyUp(int keycode) {return false;}
 	@Override public boolean touchDown(int screenX, int screenY, int pointer, int button) {return false;}
 	@Override public boolean touchUp(int screenX, int screenY, int pointer, int button) {	return false;}

@@ -4,10 +4,8 @@ import assets.ImageAssets;
 import spacegame.GameLogic;
 
 /**
- * 
- * @author Grupp9
- *
  * Contains Neptune spawns as well as win condition
+ * @author Grupp9
  */
 public class Neptune extends Level {
 	

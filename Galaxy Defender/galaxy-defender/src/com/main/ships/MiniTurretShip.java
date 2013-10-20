@@ -5,14 +5,10 @@ import assets.ImageAssets;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
- * 
+ * MiniTurretShip
+ * Acts as a turret on a larger ship
  * @author Grupp9
- *
- *	MiniTurretShip
- *  Acts as a turret on a larger ship
- *
  */
-
 public class MiniTurretShip extends EnemyShip {
 	public static final float RATEOFFIRE = 100000000f; 	 //In nanoseconds
 	public static final float FIRETIME = 5000000000f;
@@ -75,17 +71,26 @@ public class MiniTurretShip extends EnemyShip {
 		return isAlive;
 	}
 	
+	/**
+	 * removes the ship and sets it to dead
+	 */
 	@Override
 	public void destroyShip(){
 		isAlive = false;
 		remove();
 	}
 	
+	/**
+	 * resets the ships health and sets it alive
+	 */
 	public void reset(){
 		currentHealth = HEALTH;
 		isAlive = true;
 	}
 
+	/**
+	 * Ships shoot logic
+	 */
 	@Override protected void shoot(float delta) {
 		if(TimeUtils.nanoTime()-currentTime>FIRETIME){
 			currentTime=TimeUtils.nanoTime();

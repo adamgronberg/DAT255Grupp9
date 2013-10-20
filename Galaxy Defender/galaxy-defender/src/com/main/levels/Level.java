@@ -13,9 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
- * 
- * @author Grupp9
  * Abstract level, contains general spawning logic 
+ * @author Grupp9
  */
 public abstract class Level extends Actor {
 	
@@ -78,7 +77,7 @@ public abstract class Level extends Actor {
 	
 	/**
 	 * Decides what to spawn
-	 * @param s The string containing spawn information
+	 * @param s The string containing spawn information	TODO: make this use even more reflection! (have fun....)
 	 */
 	private void decideSpawn(String s) {
 		String[] spawnInfo = s.split(":");

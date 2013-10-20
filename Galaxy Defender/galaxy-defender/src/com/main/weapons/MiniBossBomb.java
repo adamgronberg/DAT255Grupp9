@@ -8,12 +8,8 @@ import assets.ImageAssets;
 import assets.SoundAssets;
 
 /**
- * 
+ * Bomb that mini boss uses
  * @author Grupp9
- *
- *	Asteroids
- *  Only has y led moment
- *
  */
 public class MiniBossBomb extends Projectile{
 

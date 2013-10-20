@@ -5,17 +5,15 @@ import spacegame.MovableEntity;
 import spacegame.Sprite;
 
 /**
- * 
- * @author Grupp9
- * 
  * Base class for weapons. Player and enemy weapons should extend this class
+ * @author Grupp9
  */
 public abstract class Projectile extends Sprite implements HasFaction{
 	
 	protected int damageOnHit; 
 	
 	/**
-	 * COnstructor
+	 * Constructor
 	 * @param x	Spawn location x
 	 * @param y spawn location y
 	 * @param width	Width of projectile

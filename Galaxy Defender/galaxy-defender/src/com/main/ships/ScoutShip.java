@@ -4,10 +4,8 @@ import assets.ImageAssets;
 import screens.GameScreen;
 
 /**
- * 
- * @author Grupp9
- *
  *	A ship that moves in y led as well as x led
+ * @author Grupp9
  */
 public class ScoutShip extends EnemyShip{
 	
@@ -26,7 +24,7 @@ public class ScoutShip extends EnemyShip{
 
 	
 	/**
-	 * 
+	 * Constructor
 	 * @param x
 	 * @param y
 	 */
@@ -60,5 +58,6 @@ public class ScoutShip extends EnemyShip{
 		setY(getY()-SHIPSPEED_Y);
 	}
 
+	//// Unused methods ////
 	@Override protected void shoot(float delta) {}
 }

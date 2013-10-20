@@ -5,12 +5,10 @@ import spacegame.GameLogic;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
- * 
- * @author Grupp9
- *
  * Handles player weapons
+ * @author Grupp9
  */
-public class PlayerWeaponHandeler {
+public class PlayerWeaponLogic {
 	
 	private static final int STARTING_LASER_COST = 20, STARTING_EMP_COST = 10, STARTING_MISSILE_COST = 10;
 	private int currentUpgradeCostLaser = STARTING_LASER_COST, currentUpgradeCostEMP = STARTING_EMP_COST, currentUpgradeCostMissile = STARTING_MISSILE_COST;
@@ -38,7 +36,7 @@ public class PlayerWeaponHandeler {
 	 * @param playerShip The player ship
 	 * @param gameLogic	
 	 */
-	public PlayerWeaponHandeler(GameLogic gameLogic, PlayerShip playerShip) {
+	public PlayerWeaponLogic(GameLogic gameLogic, PlayerShip playerShip) {
 		this.playerShip = playerShip;
 		this.gameLogic = gameLogic;
 	}

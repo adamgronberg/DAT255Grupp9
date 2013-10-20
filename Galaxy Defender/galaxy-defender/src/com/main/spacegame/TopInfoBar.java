@@ -8,9 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import assets.ImageAssets;
 
 /**
- * 
- * @author Grupp9
  * Bar above screen shoowing Map/Score/Health
+ * @author Grupp9
  */
 public class TopInfoBar extends Table{
 	
@@ -27,6 +26,10 @@ public class TopInfoBar extends Table{
 	
 	private Background background;
 	
+	/**
+	 * Constructor
+	 * @param gameLogic
+	 */
 	public TopInfoBar(GameLogic gameLogic){
 		this.gameLogic = gameLogic;
 		setBounds(0, GameScreen.GAME_HEIGHT, GameScreen.GAME_WITDH, GameScreen.INFO_SCREEN_HEIGHT);
@@ -36,7 +39,6 @@ public class TopInfoBar extends Table{
 		levelName = new TextField(LEVEL_PLACEMENT_X, PLACEMENT_Y);
 		addActor(background);
 	}
-	
 	
 	/**
 	 * Draws all actors on stage
@@ -50,6 +52,4 @@ public class TopInfoBar extends Table{
 		levelName.draw(batch, gameLogic.getLevelName());
 		super.draw(batch, parentAlpha);
 	}
-	
-	
 }

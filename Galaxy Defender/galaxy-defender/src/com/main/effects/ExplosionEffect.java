@@ -2,11 +2,9 @@ package effects;
 
 import assets.ImageAssets;
 
-
 /**
- * 
- * @author Grupp9
  * Plays a animation designed for missile
+ * @author Grupp9
  */
 public class ExplosionEffect extends AnimatedAreaEffect{
 

@@ -9,6 +9,11 @@ import weapons.Projectile;
 import assets.ImageAssets;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Ship that tries to dodge your projectiles
+ * @author Grupp9
+ *
+ */
 public class EscapingShip extends EnemyShip {
 	private final static float SHIPSPEED=2.1f;
 	private final static int HEALTH=7;
@@ -43,6 +48,9 @@ public class EscapingShip extends EnemyShip {
 		
 	}
 
+	/**
+	 * Move logic
+	 */
 	@Override
 	protected void move(float delta) {
 		
@@ -180,5 +188,6 @@ public class EscapingShip extends EnemyShip {
 		remove();
 	}
 	
+	//// Unused methods ////
 	@Override protected void shoot(float delta) {}
 }

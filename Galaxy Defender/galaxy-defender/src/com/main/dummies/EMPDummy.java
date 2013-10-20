@@ -5,9 +5,8 @@ import spacegame.MovableEntity;
 import weapons.TargetTypes;
 
 /**
- * 
+ * Dummy for EMP contains the disable time
  * @author Grupp9
- * DUmmy for EMP
  */
 public class EMPDummy extends AreaOfEffectDummy{
 
@@ -30,7 +29,7 @@ public class EMPDummy extends AreaOfEffectDummy{
 	}
 
 	/**
-	 * 
+	 * The targets affected by the emp
 	 * @param enemy
 	 */
 	@Override

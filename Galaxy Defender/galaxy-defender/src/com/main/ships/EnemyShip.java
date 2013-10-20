@@ -14,9 +14,8 @@ import effects.ExplosionEffect;
 import spacegame.Sprite;
 
 /**
- * @author Grupp9
- *	
  * Base class for enemy ships. Enemy ships should extend this class
+ * @author Grupp9
  */
 public abstract class EnemyShip extends Sprite implements Cloneable{
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID, TURRET};
@@ -37,15 +36,16 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	private static boolean freeze = false;
 	
 	/**
-	 * 
-	 * @param width	enemy width
-	 * @param height	enemy height
-	 * @param x	Spawn location
-	 * @param y	Spawn location
-	 * @param health	The total health of the enemy
-	 * @param scoreValue	The value of killing the enemy
-	 * @param texture	The image of the enemy
-	 * @param damageWhenRammed	Damage on ram
+	 * Constructor
+	 * @param width Width of the ship
+	 * @param height	Height of the ship
+	 * @param x	x-led
+	 * @param y	y-led
+	 * @param health	starting health
+	 * @param scoreValue	score value of ship
+	 * @param texture	texture of the ship
+	 * @param damageWhenRammed	damage when rammed
+	 * @param disabable	if you can disable the ship
 	 */
 	public EnemyShip(float width, float height,float x, float y, int health, 
 			int scoreValue, TextureRegion texture, int damageWhenRammed, boolean disabable) {
@@ -93,7 +93,7 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	}
 	
 	/**
-	 * @return 
+	 * @return uf the ship can act or not
 	 */
 	public boolean disabled(){
 		if(!disabable) return false;
@@ -217,14 +217,13 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	/**
 	 * turns on getting Score from enemyShips
 	 */
-	
 	public static void turnOnScore(){
 		givesScore=true;
 	}
+	
 	/**
 	 * turns off getting score from enemyShips
 	 */
-	
 	public static void turnOffScore(){
 		givesScore=false;
 	}

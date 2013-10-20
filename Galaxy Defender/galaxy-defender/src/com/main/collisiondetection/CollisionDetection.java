@@ -12,10 +12,8 @@ import weapons.Projectile;
 import weapons.TargetTypes;
 
 /**
- * 
- * @author Grupp9
- *
  * Handles collision between different entities
+ * @author Grupp9
  */
 public class CollisionDetection {
 	
@@ -31,14 +29,6 @@ public class CollisionDetection {
 	private static Iterator<Projectile> iterP;
 	
 	private static Projectile projectile;
-	/**
-	 * returns the amount of enemyships
-	 * @return
-	 */
-	
-	public static int getEnemyShipAmount(){
-		return enemyShips.size;
-	}
 	
 	/**
 	 * Tests if obj1 and obj2 collided
@@ -46,7 +36,6 @@ public class CollisionDetection {
 	 * @param movableObj2
 	 * @return true if the objects collided
 	 */
-	
 	private static boolean collisionControl(MovableEntity movableObj1, MovableEntity movableObj2){
 		return movableObj1.getBounds().overlaps(movableObj2.getBounds());
 	}
