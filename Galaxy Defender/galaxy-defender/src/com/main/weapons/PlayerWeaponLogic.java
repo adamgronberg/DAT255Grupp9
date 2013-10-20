@@ -10,8 +10,9 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class PlayerWeaponLogic {
 	
-	private static final int STARTING_LASER_COST = 20, STARTING_EMP_COST = 10, STARTING_MISSILE_COST = 10;
-	private int currentUpgradeCostLaser = STARTING_LASER_COST, currentUpgradeCostEMP = STARTING_EMP_COST, currentUpgradeCostMissile = STARTING_MISSILE_COST;
+	private static final int STARTING_EMP_COST = 10, STARTING_MISSILE_COST = 10;
+	private static final int LEVEL_2_LASER_COST = 30, LEVEL_3_LASER_COST = 400, LEVEL_4_LASER_COST = 800;
+	private int currentUpgradeCostLaser = LEVEL_2_LASER_COST, currentUpgradeCostEMP = STARTING_EMP_COST, currentUpgradeCostMissile = STARTING_MISSILE_COST;
 	
 	private static boolean ifAutoShooting = true; //TODO: For testing
 	private static enum Lasers {SINGLE, DUAL, TRIPPLE, QUAD;} 	//Implemented weapons
@@ -136,25 +137,27 @@ public class PlayerWeaponLogic {
 	
 	/**
 	 * Upgrades the laser to the next level
+	 * TODO: Should show maximum reached when fully upgraded
 	 */
 	public void upgradeLaser(){
 		if(gameLogic.getCurrentScore() - currentUpgradeCostLaser >= 0){
-
+			gameLogic.decreaseCurrentScore(currentUpgradeCostLaser);
 			switch(currentLaser){
 				case SINGLE:
+					currentUpgradeCostLaser = LEVEL_3_LASER_COST;
 					currentLaser = Lasers.DUAL;
 					break;
 				case DUAL:
+					currentUpgradeCostLaser = LEVEL_4_LASER_COST;
 					currentLaser = Lasers.TRIPPLE;
 					break;
 				case TRIPPLE:
+					currentUpgradeCostLaser = 1000000000;
 					currentLaser = Lasers.QUAD;
 					break;
 				default:
 					return;
 			}		
-			gameLogic.decreaseCurrentScore(currentUpgradeCostLaser);
-			currentUpgradeCostLaser = 2*currentUpgradeCostLaser+2*currentUpgradeCostLaser;
 		}
 	}
 	
@@ -162,7 +165,7 @@ public class PlayerWeaponLogic {
 	 * Resets the upgrade cost for weapons
 	 */
 	public void resetUpgradeCosts(){
-		currentUpgradeCostLaser = STARTING_LASER_COST;
+		currentUpgradeCostLaser = LEVEL_2_LASER_COST;
 		currentUpgradeCostEMP = STARTING_EMP_COST;
 		currentUpgradeCostMissile = STARTING_MISSILE_COST;		
 	}

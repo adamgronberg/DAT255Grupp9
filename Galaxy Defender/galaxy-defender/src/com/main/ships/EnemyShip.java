@@ -228,5 +228,9 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 		givesScore=false;
 	}
 	
+	public void setScoreValue(int value){
+		scoreValue = value;
+	}
+	
 
 }

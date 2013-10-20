@@ -8,7 +8,6 @@ import assets.ImageAssets;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
- * StealthShip
  * Disappears from the screen and comes back
  * @author Grupp9
  */
@@ -17,7 +16,7 @@ public class StealthShip extends EnemyShip {
 	public static final float RATEOFFIRE = 100000000f; 	 //In nanoseconds
 	private final static float SHIPSPEED=1f;
 	private final static int HEALTH=1;
-	private final static int SCOREVALUE=1;
+	private final static int SCOREVALUE=20;
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
 	public final static int LASER_HEIGHT=15;
@@ -46,7 +45,7 @@ public class StealthShip extends EnemyShip {
 	 */
 	public void spawnProjectile() {
 		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE) {
-			if(shot<=4){
+			if(shot<=3){
 				float delX = getX()-player.getX();
 				float delY = getY()-player.getY();
 				float degree2 =(float)Math.atan(delX/delY);

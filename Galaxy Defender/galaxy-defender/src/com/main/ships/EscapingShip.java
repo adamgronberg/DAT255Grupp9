@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Array;
 public class EscapingShip extends EnemyShip {
 	private final static float SHIPSPEED=2.1f;
 	private final static int HEALTH=7;
-	private final static int SCOREVALUE=40;
+	private final static int SCOREVALUE=300;
 	
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;

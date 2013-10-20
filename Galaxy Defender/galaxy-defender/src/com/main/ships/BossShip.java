@@ -14,8 +14,8 @@ public class BossShip extends EnemyShip{
 	public final static int HEIGHT=180;
 	public final static int WIDTH=300;
 	private final static float SHIPSPEED = 1f;
-	private final static int SCOREVALUE=300;
-	private final static int HEALTH=1000;
+	private final static int SCOREVALUE=800;
+	private final static int HEALTH=250;
 	private final static int TURRET_EXPLOSION_DAMAGE=50;
 	private static final int DAMAGE_WHEN_RAMMED = 40;
 	private static final boolean DISABLEABLE = false;
@@ -90,26 +90,24 @@ public class BossShip extends EnemyShip{
 		}
 		if(getX() >0 && getY()<550 && TimeUtils.nanoTime()-spawnTimer > SPAWN_TIMER){
 			int shipType = MathUtils.random(1, 4);
+			EnemyShip toSpawn;
 			switch(shipType){
 			case 1:
-				getParent().addActor(new TargetLaserShip(getX()+130,getY(),playerShip));
-				spawnTimer = TimeUtils.nanoTime();
+				toSpawn = new TargetLaserShip(getX()+130, getY(),playerShip);
 				break;			
 			case 2:
-				getParent().addActor(new KamikazeShip(getX()+150,getY(),playerShip));
-				spawnTimer = TimeUtils.nanoTime();
+				toSpawn = new KamikazeShip(getX()+150, getY(),playerShip);
 				break;
 			case 3:
-				getParent().addActor(new TargetLaserShip(getX()+200,getY(),playerShip));
-				spawnTimer = TimeUtils.nanoTime();
-				break;
-			case 4:
-				getParent().addActor(new KamikazeShip(getX()+50,getY(),playerShip));
-				spawnTimer = TimeUtils.nanoTime();
+				toSpawn = new TargetLaserShip(getX()+200, getY(),playerShip);
 				break;
 			default:
+				toSpawn = new KamikazeShip(getX()+50, getY(),playerShip);
 				break;
-			}						
+			}
+			toSpawn.setScoreValue(0);
+			getParent().addActor(toSpawn);
+			spawnTimer = TimeUtils.nanoTime();
 		}
 		if(reachedPosX && reachedPosY){
 			setX(100+(ROTATION_RADIAN*(float)Math.cos(Math.toRadians(degrees))));

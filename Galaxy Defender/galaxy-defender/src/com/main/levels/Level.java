@@ -34,12 +34,11 @@ public abstract class Level extends Actor {
 	 * @param spawnTimes	The time between each spawn wave
 	 */
 	public Level(GameLogic gameLogic, String[][] toSpawn, float[] spawnTimes){
-		super();
 		EnemyShip.turnOnScore();
+		EnemyShip.unFreeze();
 		this.gameLogic = gameLogic;
 		this.toSpawn = toSpawn;
 		this.spawnTimes = spawnTimes;
-		EnemyShip.unFreeze();
 	}
 	
 	/**

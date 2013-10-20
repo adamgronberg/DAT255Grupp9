@@ -10,10 +10,10 @@ import com.badlogic.gdx.utils.TimeUtils;
  * @author Grupp9
  */
 public class MiniTurretShip extends EnemyShip {
-	public static final float RATEOFFIRE = 100000000f; 	 //In nanoseconds
+	public static final float RATEOFFIRE = 150000000f; 	 //In nanoseconds
 	public static final float FIRETIME = 5000000000f;
 	private final static int HEALTH=20;
-	private final static int SCOREVALUE=1;
+	private final static int SCOREVALUE=10;
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
 	public final static int LASER_HEIGHT=15;
@@ -44,7 +44,7 @@ public class MiniTurretShip extends EnemyShip {
 	 * Spawns projectiles in front of the enemies depending on where player is.
 	 */
 	public void spawnProjectile() {
-		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE && shot<=4) {
+		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE && shot<=3) {
 			float delX = getX()-player.getX();
 			float delY = getY()-player.getY();
 			float degree2 =(float)Math.atan(delX/delY);

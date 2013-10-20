@@ -142,6 +142,11 @@ public class EndLevelScreen implements Screen, InputProcessor{
 			text = text.substring(0,text.length()-1);
 			enterNameField.setText(text);
 		}
+		if(keycode==Keys.P){
+			gameLogic.addScore(5000);	//cheat!!!
+			updateCurrentScoreLabel();
+			name = "";
+		}
 		return false;
 	}
 	

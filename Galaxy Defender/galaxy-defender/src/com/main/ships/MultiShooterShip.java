@@ -16,7 +16,7 @@ public class MultiShooterShip extends EnemyShip {
 	public final static int WIDTH=40;
 	private final static float SHIPSPEED = 1f;
 	private final static int SCOREVALUE=30;
-	private final static int HEALTH=5;
+	private final static int HEALTH=4;
 	
 	private float lastProjectileTime;
 	private static final int DAMAGE_WHEN_RAMMED = 40;

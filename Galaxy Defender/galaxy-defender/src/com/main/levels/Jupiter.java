@@ -29,6 +29,7 @@ public class Jupiter extends Level{
 		miniBossShip = new MiniBossShip(200,650, gameLogic);
 		gameLogic.addActor(miniBossShip);
 		levelname = "Jupiter";
+		EnemyShip.turnOffScore();
 	}
 	
 	/**
@@ -52,7 +53,7 @@ public class Jupiter extends Level{
 		if(!miniBossShip.isAlive()){
 			EnemyShip.Freeze();
 			if(gameLogic.getNumberOfAnimations() == 0){
-				EnemyShip.unFreeze();
+				gameLogic.addScore(400);
 				return true;
 			}
 		}

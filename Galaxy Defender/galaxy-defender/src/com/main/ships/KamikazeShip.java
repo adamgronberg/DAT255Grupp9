@@ -13,7 +13,7 @@ public class KamikazeShip extends EnemyShip {
 	private final static float SHIPSPEED_X = 0.8f;
 	private final static float SHIPSPEED_Y = 3f;
 	private final static int HEALTH=2;
-	private final static int SCOREVALUE=15;
+	private final static int SCOREVALUE=10;
 	private final static int DAMAGE_WHEN_RAMMED = 40;
 	private static final boolean DISABABLE = true;
 	

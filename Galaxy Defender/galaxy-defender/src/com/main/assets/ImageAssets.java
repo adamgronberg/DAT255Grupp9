@@ -25,6 +25,7 @@ public class ImageAssets {
 	public static TextureRegion enemyTurretShip;
 	public static TextureRegion enemyCirclingShip;
 	public static TextureRegion enemyBossShip;
+	public static TextureRegion enemyTargetLaserShip;
 	public static TextureRegion space;
 	public static TextureRegion earth;
 	public static TextureRegion mars;
@@ -81,6 +82,7 @@ public class ImageAssets {
 		enemyBossShip = atlas.findRegion("Ships/5");
 		enemyCirclingShip= atlas.findRegion("Ships/Ship5");
 		enemyTurretShip = atlas.findRegion("Ships/Ship23");
+		enemyTargetLaserShip = atlas.findRegion("Ships/Ship6");
 		
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("gui/TopInfoBar");

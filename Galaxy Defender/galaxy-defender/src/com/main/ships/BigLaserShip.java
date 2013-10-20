@@ -26,7 +26,7 @@ public class BigLaserShip extends EnemyShip {
 	private final static float LASER_LENGTH = 900;
 	private final static float LASER_WIDTH = 25;
 	private final static float SHIPSPEED = 1f;
-	private final static int SCOREVALUE=30;
+	private final static int SCOREVALUE=20;
 	private final static int HEALTH=5;	
 	private static final int DAMAGE_WHEN_RAMMED = 40;
 	private float lastProjectileTime;
@@ -61,7 +61,7 @@ public class BigLaserShip extends EnemyShip {
 			lastProjectileTime = TimeUtils.nanoTime();
 			fireTime = TimeUtils.nanoTime();
 			bigLaserEffect = new BigLaserEffect(getX()+WIDTH/2-LASER_WIDTH/2, getY()-LASER_LENGTH, LASER_WIDTH,LASER_LENGTH, true, this);
-			getParent().addActor(bigLaserEffect);
+			if(getParent()!=null) getParent().addActor(bigLaserEffect);
 		}
 	}
 	
