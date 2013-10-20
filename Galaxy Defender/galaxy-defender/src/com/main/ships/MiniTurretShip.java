@@ -19,7 +19,7 @@ public class MiniTurretShip extends EnemyShip {
 	public final static int LASER_HEIGHT=15;
 	public final static int LASER_WIDTH=3;
 	private static final int DAMAGE_WHEN_RAMMED = 0;
-	private static final int LASER_DAMAGE = 8;
+	private static final int LASER_DAMAGE = 4;
 	private final static boolean DISABABLE = false;
 	private long currentTime;
 	private long lastMissileTime;

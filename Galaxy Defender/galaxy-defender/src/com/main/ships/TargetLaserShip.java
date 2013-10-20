@@ -21,7 +21,7 @@ public class TargetLaserShip extends EnemyShip {
 	public final static int LASER_HEIGHT=15;
 	public final static int LASER_WIDTH=3;
 	private static final int DAMAGE_WHEN_RAMMED = 2;
-	private static final int DAMAGE_ON_HIT = 5;
+	private static final int DAMAGE_ON_HIT = 4;
 	private long lastMissileTime=0;
 	private PlayerShip player;
 	private static final boolean DISABLEABLE = true;

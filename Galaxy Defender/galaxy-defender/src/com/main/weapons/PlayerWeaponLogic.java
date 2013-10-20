@@ -22,7 +22,7 @@ public class PlayerWeaponLogic {
 	private float currentUpgradedMissileArea = 0;
 	
 	public static final float EMP_INCREASE_PER_UPGRADE = 500000000f;
-	public static final float MISSILE_INCREASE_PER_UPGRADE = 50f;
+	public static final float MISSILE_INCREASE_PER_UPGRADE = 30f;
 	
 	private float lastLaserTime = 0;
 	private float lastMissileTime = 0;      	

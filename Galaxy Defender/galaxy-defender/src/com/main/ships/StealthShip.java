@@ -21,7 +21,7 @@ public class StealthShip extends EnemyShip {
 	public final static int WIDTH=35;
 	public final static int LASER_HEIGHT=15;
 	public final static int LASER_WIDTH=3;
-	private static final int DAMAGE_WHEN_RAMMED = 5;
+	private static final int DAMAGE_WHEN_RAMMED = 4;
 	private boolean visible = true;
 	private long currentTime;
 	private long lastMissileTime=0;
@@ -44,7 +44,7 @@ public class StealthShip extends EnemyShip {
 	 * Spawns projectiles in front of the enemies depending on where player is.
 	 */
 	public void spawnProjectile() {
-		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE) {
+		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE && getY() > 200) {
 			if(shot<=3){
 				float delX = getX()-player.getX();
 				float delY = getY()-player.getY();

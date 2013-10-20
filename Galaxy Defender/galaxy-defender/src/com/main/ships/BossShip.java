@@ -14,7 +14,7 @@ public class BossShip extends EnemyShip{
 	public final static int HEIGHT=180;
 	public final static int WIDTH=300;
 	private final static float SHIPSPEED = 1f;
-	private final static int SCOREVALUE=800;
+	private final static int SCOREVALUE=1000;
 	private final static int HEALTH=250;
 	private final static int TURRET_EXPLOSION_DAMAGE=50;
 	private static final int DAMAGE_WHEN_RAMMED = 40;
