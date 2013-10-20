@@ -1,9 +1,9 @@
 package ships;
 
+import options.OptionLogic;
 import com.badlogic.gdx.Gdx;
 import assets.ImageAssets;
 import screens.GameScreen;
-import screens.OptionsScreen;
 import spacegame.GameLogic;
 import spacegame.Sprite;
 import weapons.PlayerWeaponHandeler;
@@ -135,7 +135,7 @@ public class PlayerShip extends Sprite {
 	 * @param milliSeconds
 	 */
 	public void vibrate(int milliSeconds){
-		if (OptionsScreen.getVibration()) Gdx.input.vibrate(milliSeconds);
+		if (OptionLogic.getVibrateOption()) Gdx.input.vibrate(milliSeconds);
 	}
 	
 	/**

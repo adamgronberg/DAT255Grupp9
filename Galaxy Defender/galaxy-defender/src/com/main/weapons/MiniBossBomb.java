@@ -1,6 +1,6 @@
 package weapons;
 
-import screens.OptionsScreen;
+import options.OptionLogic;
 import spacegame.MovableEntity;
 import dummies.AreaOfEffectDummy;
 import effects.ExplosionEffect;
@@ -60,7 +60,7 @@ public class MiniBossBomb extends Projectile{
 		getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H));
 		getParent().addActor( new AreaOfEffectDummy(getX()-AREAEFFECT_W/2+WIDTH/2, 
 		getY()-AREAEFFECT_H/2 + HEIGHT, AREAEFFECT_W, AREAEFFECT_H, AREA_DAMAGE, FACTION, AFFECTEDTARGETS));
-		if(OptionsScreen.getSound()) SoundAssets.missileExplosion.play();
+		if(OptionLogic.getSoundOption()) SoundAssets.missileExplosion.play();
 		remove();
 	}
 

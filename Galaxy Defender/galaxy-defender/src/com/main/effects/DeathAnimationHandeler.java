@@ -1,13 +1,11 @@
 package effects;
 
+import options.OptionLogic;
 import assets.SoundAssets;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-
-import screens.OptionsScreen;
 import spacegame.MovableEntity;
 
 public class DeathAnimationHandeler extends MovableEntity {
@@ -45,7 +43,7 @@ public class DeathAnimationHandeler extends MovableEntity {
 	@Override
 	public void act(float delta){
 		if(TimeUtils.nanoTime()-currentTimeBetweenExplosion>TIME_BETWEEN_EXPLOSIONS){
-			if(OptionsScreen.getSound()) SoundAssets.bossExplosion.play();
+			if(OptionLogic.getSoundOption()) SoundAssets.bossExplosion.play();
 			getParent().addActor(animations.get(currentExposion));
 			currentExposion++;
 			if(currentExposion == NUMBER_OF_EXPLOSIONS) {

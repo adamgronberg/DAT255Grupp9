@@ -46,8 +46,8 @@ public class HighScoreScreen implements Screen {
 		
 		table.add(screenTitle).spaceBottom(50).row();
 		table.add(highscoreList).spaceBottom(50).row();
-		table.add(mainMenuButton).spaceBottom(50).row();
-		table.add(resetHighScoreButton).spaceBottom(50).row();
+		table.add(resetHighScoreButton).height(50).width(130).spaceBottom(50).row();
+		table.add(mainMenuButton).height(50).width(130);
 		stage.addActor(table);	
 	}
 	

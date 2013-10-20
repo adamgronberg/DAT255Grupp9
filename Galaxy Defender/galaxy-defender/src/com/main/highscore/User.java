@@ -25,17 +25,9 @@ public class User {
 	
 	/**
 	 * 
-	 * @return the score the player cerently have
+	 * @return the score the player currently have
 	 */
 	public int getScore(){
 		return score;
-	}
-	
-	/**
-	 * 
-	 * @param amount Amount of points added to already earned points 
-	 */
-	public void addScore(int amount){
-		score += amount; 
 	}
 }

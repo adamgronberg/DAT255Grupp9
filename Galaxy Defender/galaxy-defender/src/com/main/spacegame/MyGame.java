@@ -1,5 +1,6 @@
 package spacegame;
 
+import options.OptionLogic;
 import screens.EndLevelScreen;
 import screens.GameScreen;
 import screens.HighScoreScreen;
@@ -12,7 +13,6 @@ import com.badlogic.gdx.Gdx;
 
 /**
  * Starts the first screen and loads all assets.
- *  
  *  
  * @author Grupp9
  * 
@@ -46,10 +46,26 @@ public class MyGame extends Game{
 	@Override
 	public void create() {
 		Gdx.input.setCatchBackKey(true);
+		OptionLogic.loadOptions();
 		ImageAssets.load();
 		SoundAssets.load();
 		createScreens();
+		OptionLogic.musicOnOff();
 		setScreen(menuScreen);
+	}
+	
+	/**
+	 * Disposes all assets and closes game
+	 */
+	@Override
+	public void dispose() {
+		ImageAssets.dispose();
+		SoundAssets.dispose();
+		gameScreen = null;
+		menuScreen = null;
+		optionsScreen = null;
+		highScoreScreen = null;
+		winScreen = null;
 	}
 	
 	/**
@@ -59,6 +75,9 @@ public class MyGame extends Game{
 		createScreens();
 	}
 	
+	/**
+	 * @return	The type platform the application is running on (for testing on desktop)
+	 */
 	public ApplicationType getApplicationType(){
 		return applicationType;
 	}
@@ -96,16 +115,5 @@ public class MyGame extends Game{
 		default:
 			break;
 		}
-	}
-	
-	/**
-	 * Disposes all assets and closes game
-	 */
-	@Override
-	public void dispose() {
-		ImageAssets.dispose();
-		SoundAssets.dispose();
-		gameScreen.dispose();
-		menuScreen.dispose();
 	}
 }

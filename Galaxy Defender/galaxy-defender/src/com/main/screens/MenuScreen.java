@@ -41,10 +41,10 @@ public class MenuScreen implements Screen{
 	    createButtons(myGame, skin);
 	
 	    table.add(screenTitle).spaceBottom(50).row();
-	    table.add(resumeButton).height(50).width(120).spaceBottom(50).row();
-		table.add(newGameButton).height(50).width(120).spaceBottom(50).row();
-		table.add(highScoreButton).height(50).width(120).spaceBottom(50).row();
-		table.add(optionsButton).height(50).width(120);
+	    table.add(resumeButton).height(50).width(130).spaceBottom(50).row();
+		table.add(newGameButton).height(50).width(130).spaceBottom(50).row();
+		table.add(highScoreButton).height(50).width(130).spaceBottom(50).row();
+		table.add(optionsButton).height(50).width(130);
 		stage.addActor(table);
 	}
 	

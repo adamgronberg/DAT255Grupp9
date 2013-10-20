@@ -1,5 +1,6 @@
 package screens;
 
+import options.OptionLogic;
 import spacegame.GameLogic;
 import spacegame.InteractionButton;
 import spacegame.MyGame;
@@ -29,7 +30,6 @@ public class GameScreen implements Screen{
 	private MyGame myGame;
 	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
-	public ControlLayout currentLayout = OptionsScreen.getLayout();
 	
 	public static final int MAX_LEVEL = 6;
 	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;
@@ -64,7 +64,7 @@ public class GameScreen implements Screen{
 		gameLogic = new GameLogic(this);
 		inputController = new InputControl(gameLogic, this, myGame);
 		topInfoBar = new TopInfoBar(gameLogic);
-		updateOptionControlLayout();
+		moveControlLayout();
 		
 		stage = new Stage();
 		stage.addActor(gameLogic);
@@ -98,8 +98,8 @@ public class GameScreen implements Screen{
 	/**
 	 * Change android layout
 	 */
-	public void updateOptionControlLayout(){
-		switch(OptionsScreen.getLayout()){
+	public void moveControlLayout(){
+		switch(OptionLogic.getLayout()){
 			case LAYOUT1:
 				moveRightButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
 				shootMissileButton.setX(GAME_WITDH/2 - GameScreen.MOVMENT_BUTTON_SIZE/2);
