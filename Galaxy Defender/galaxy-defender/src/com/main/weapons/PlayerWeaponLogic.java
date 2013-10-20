@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class PlayerWeaponLogic {
 	
-	private static final int STARTING_EMP_COST = 10, STARTING_MISSILE_COST = 10;
+	private static final int STARTING_EMP_COST = 10, STARTING_MISSILE_COST = 15;
 	private static final int LEVEL_2_LASER_COST = 30, LEVEL_3_LASER_COST = 400, LEVEL_4_LASER_COST = 800;
 	private int currentUpgradeCostLaser = LEVEL_2_LASER_COST, currentUpgradeCostEMP = STARTING_EMP_COST, currentUpgradeCostMissile = STARTING_MISSILE_COST;
 	
@@ -22,7 +22,7 @@ public class PlayerWeaponLogic {
 	private float currentUpgradedMissileArea = 0;
 	
 	public static final float EMP_INCREASE_PER_UPGRADE = 500000000f;
-	public static final float MISSILE_INCREASE_PER_UPGRADE = 30f;
+	public static final float MISSILE_INCREASE_PER_UPGRADE = 10f;
 	
 	private float lastLaserTime = 0;
 	private float lastMissileTime = 0;      	
