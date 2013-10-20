@@ -24,8 +24,6 @@ public class InputControl implements GestureListener, InputProcessor {
 	private GameScreen gameScreen;
 	private MyGame myGame;
 	
-	private static final float FLING_SENSITIVITY = 1500f;
-	
 	/**
 	 * Constructor
 	 * @param gameLogic
@@ -36,20 +34,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		this.gameScreen = gameScreen;
 		this.myGame = myGame;
 	}
-	
-	/**
-	 * Fling up or down to swap weapons
-	 * Fling left to activate/deactivate optionAutoShoot
-	 * Fling right to swap control layout
-	 * TODO: The fling don't register if you are moving at the same time, I can't solve this. Might have to scrap "fling" weapon switch
-	 */
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button) {
-		if (velocityY < -FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.startNextLevel();
-		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) PlayerWeaponLogic.toggleOptionAutoShoot();	//For testing
-		return false;
-	}
-	
+		
 	/**
 	 * 	Input for desktop. 
 	 *  Handles on key down moment and shooting if optionAutoShoot is disabled
@@ -73,7 +58,7 @@ public class InputControl implements GestureListener, InputProcessor {
 		if(keycode == Input.Keys.RIGHT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.RIGHT)  gameLogic.playerShip.stay();
 		if(keycode == Input.Keys.W)  gameLogic.playerShip.getWeaponHandeler().shootMissle();
 		if(keycode == Input.Keys.Q)  gameLogic.playerShip.getWeaponHandeler().shootEMP();
-		if(keycode == Input.Keys.UP)  gameLogic.startNextLevel();
+		if(keycode == Input.Keys.UP)  gameLogic.startNextLevel();									//Cheat!! =o
 		if(keycode == Input.Keys.CONTROL_LEFT) PlayerWeaponLogic.toggleOptionAutoShoot();			//For testing
 		return false;
 	}
@@ -135,4 +120,5 @@ public class InputControl implements GestureListener, InputProcessor {
 	@Override public boolean mouseMoved(int screenX, int screenY) {return false;}
 	@Override public boolean scrolled(int amount) {return false;}
 	@Override public boolean panStop(float x, float y, int pointer, int button) {return false;}
+	@Override public boolean fling(float velocityX, float velocityY, int button) {return false;}
 }

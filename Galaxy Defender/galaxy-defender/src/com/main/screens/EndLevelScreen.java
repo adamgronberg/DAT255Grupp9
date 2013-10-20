@@ -33,7 +33,8 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	private Label enterNameField, endLevelLabel,nextLevelLabel,currentScoreLabel;
 	private Table table,table2;
 	private static final String[] END_LEVEL_TEXTS = {"GAME OVER","You saved Neptunus!","You saved Uranus!","You saved Saturn!","You saved Jupiter!","You saved Mars!","You saved our solar system! Well done!"};
-	private static final String[] NEXT_LEVEL_TEXTS = {"","The mission on Uranus is to destroy the escaping enemy ship","Survive all asteroid-attacks on Saturn","Destroy the giant enemy ship to save Jupiter","In order to save Mars you have to make sure that\nnot a single enemy ship passes your position"
+	private static final String[] NEXT_LEVEL_TEXTS = {"","The mission on Uranus is to destroy the escaping enemy ship.\nYou won't be awarded for shooting down other ships!",
+														 "Survive all asteroid-attacks on Saturn","Destroy the giant enemy ship to save Jupiter\nYou won't be awarded for shooting down other ships!","In order to save Mars you have to make sure that\nnot a single enemy ship passes your position"
 										,"Destroy the mothership in order to save Earth",""};
 	
 	/**
