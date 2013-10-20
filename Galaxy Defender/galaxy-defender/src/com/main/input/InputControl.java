@@ -6,9 +6,10 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+
+import screens.GameScreen;
 import ships.PlayerShip;
 import spacegame.GameLogic;
-import spacegame.GameScreen;
 import spacegame.MyGame;
 import weapons.PlayerWeaponHandeler;
 

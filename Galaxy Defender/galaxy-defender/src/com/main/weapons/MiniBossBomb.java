@@ -1,11 +1,11 @@
 package weapons;
 
+import screens.OptionsScreen;
 import spacegame.MovableEntity;
 import dummies.AreaOfEffectDummy;
 import effects.ExplosionEffect;
 import assets.ImageAssets;
 import assets.SoundAssets;
-import spacegame.OptionsScreen;
 
 /**
  * 

@@ -12,6 +12,6 @@ public class Main {
 		cfg.width = 480;
 		cfg.height = 800;
 		
-		new LwjglApplication(new MyGame(), cfg);
+		new LwjglApplication(new MyGame(MyGame.ApplicationType.DESKTOP), cfg);
 	}
 }

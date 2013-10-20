@@ -111,7 +111,6 @@ public class HighscoreHandler {
     		try {
 				file.file().createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
@@ -128,17 +127,12 @@ public class HighscoreHandler {
     		try {
 				file.file().createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
     	String highscoreList = file.readString();    	
 		stringToList(highscoreList);
-    	//Gdx.app.log( HighScoreScreen.LOG, "" + highscoreList );
     }
-    
-    
- 
     
     /**
      * used for writing highscore to file

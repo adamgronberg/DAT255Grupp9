@@ -1,5 +1,7 @@
-package spacegame;
+package screens;
 
+import spacegame.MyGame;
+import spacegame.MyGame.ApplicationType;
 import highscore.HighscoreHandler;
 import highscore.User;
 import assets.ImageAssets;
@@ -29,6 +31,7 @@ public class HighScoreScreen implements Screen {
 	private Table table;
 	private Label highscoreList, screenTitle;	
 	private static final String SCREEN_TITLE = "HighScore:";
+	private static ApplicationType applicationType;
 
 	/**
 	 * Constructor
@@ -37,6 +40,7 @@ public class HighScoreScreen implements Screen {
 	public HighScoreScreen(MyGame myGame){
 
 		Skin skin = ImageAssets.skin;
+		applicationType = myGame.getApplicationType();
 		createResources(myGame, skin);
 		createButtons(myGame, skin);
 		
@@ -87,9 +91,11 @@ public class HighScoreScreen implements Screen {
 		resetHighScoreButton.addListener(new ClickListener() {	       
 	        public void clicked(InputEvent event,float x, float y)
 	        {
-	    		HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
-	    		highscoreHandler.resetHighscore();
-	    		highscoreList.setText(getHighscoreList());
+	    		if(applicationType == ApplicationType.ANDROID) {
+	    			HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
+	    			highscoreHandler.resetHighscore();
+	    			highscoreList.setText(getHighscoreList());
+	    		}
 	        }
 	    } );
 		
@@ -123,7 +129,7 @@ public class HighScoreScreen implements Screen {
 	 * Called when app is resumed on android
 	 */
 	@Override public void show() {
-		highscoreList.setText(getHighscoreList());
+		if(applicationType == ApplicationType.ANDROID) highscoreList.setText(getHighscoreList());
 		Gdx.input.setInputProcessor(stage);
 	}
 	

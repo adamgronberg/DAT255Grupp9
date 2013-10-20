@@ -1,7 +1,7 @@
 package ships;
 
+import screens.GameScreen;
 import spacegame.GameLogic;
-import spacegame.GameScreen;
 import weapons.EnemyLaser;
 import weapons.MiniBossBomb;
 import assets.ImageAssets;

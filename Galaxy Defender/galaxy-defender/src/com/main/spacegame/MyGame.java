@@ -1,5 +1,10 @@
 package spacegame;
 
+import screens.EndLevelScreen;
+import screens.GameScreen;
+import screens.HighScoreScreen;
+import screens.MenuScreen;
+import screens.OptionsScreen;
 import assets.ImageAssets;
 import assets.SoundAssets;
 import com.badlogic.gdx.Game;
@@ -18,13 +23,23 @@ public class MyGame extends Game{
 	
 	public final static int WIDTH = 480;
 	public final static int HEIGHT = 800;
+	private ApplicationType applicationType;
 	private GameScreen gameScreen;
 	private MenuScreen menuScreen;
 	private OptionsScreen optionsScreen;
 	private HighScoreScreen highScoreScreen;
 	private EndLevelScreen winScreen;
 	public static enum ScreenType{GAME,MENU,OPTIONS,HIGHSCORE,WINSCREEN}
+	public static enum ApplicationType{DESKTOP, ANDROID}
 	
+	/**
+	 * Sets the application type (android or desktop)
+	 * @param applicationType
+	 */
+	public MyGame(ApplicationType applicationType) {
+		this.applicationType = applicationType;
+	}
+
 	/**
 	 * Load assets and creates and adds the MenuScreen
 	 */
@@ -42,6 +57,10 @@ public class MyGame extends Game{
 	 */
 	public void resetGame(){
 		createScreens();
+	}
+	
+	public ApplicationType getApplicationType(){
+		return applicationType;
 	}
 	
 	/**

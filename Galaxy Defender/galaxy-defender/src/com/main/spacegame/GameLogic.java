@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
+
+import screens.GameScreen;
 import ships.PlayerShip;
 import weapons.*;
 import ships.EnemyShip;

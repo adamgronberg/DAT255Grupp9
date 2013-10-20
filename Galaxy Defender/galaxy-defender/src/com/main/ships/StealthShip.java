@@ -2,7 +2,7 @@ package ships;
 
 import com.badlogic.gdx.math.MathUtils;
 
-import spacegame.GameScreen;
+import screens.GameScreen;
 import weapons.EnemyLaser;
 import assets.ImageAssets;
 import com.badlogic.gdx.utils.TimeUtils;

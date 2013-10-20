@@ -3,7 +3,7 @@ package collisiondetection;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 
-import spacegame.GameScreen;
+import screens.GameScreen;
 import spacegame.MovableEntity;
 
 public class OutOfBoundsDetection {

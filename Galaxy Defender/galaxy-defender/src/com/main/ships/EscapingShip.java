@@ -2,8 +2,8 @@ package ships;
 
 import java.util.Iterator;
 
+import screens.GameScreen;
 import spacegame.GameLogic;
-import spacegame.GameScreen;
 import spacegame.MovableEntity;
 import weapons.Projectile;
 import assets.ImageAssets;

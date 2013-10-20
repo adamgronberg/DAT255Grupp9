@@ -1,5 +1,6 @@
-package spacegame;
+package screens;
 
+import spacegame.MyGame;
 import assets.ImageAssets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

@@ -2,11 +2,11 @@ package ships;
 
 import com.badlogic.gdx.Gdx;
 import assets.ImageAssets;
+import screens.GameScreen;
+import screens.OptionsScreen;
 import spacegame.GameLogic;
-import spacegame.GameScreen;
 import spacegame.Sprite;
 import weapons.PlayerWeaponHandeler;
-import spacegame.OptionsScreen;
 
 /**
  * 

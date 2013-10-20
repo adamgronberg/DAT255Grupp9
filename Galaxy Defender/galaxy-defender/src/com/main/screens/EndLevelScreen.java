@@ -1,9 +1,11 @@
-package spacegame;
+package screens;
 
+import spacegame.GameLogic;
+import spacegame.MyGame;
+import spacegame.MyGame.ApplicationType;
 import highscore.HighscoreHandler;
 import highscore.User;
 import assets.ImageAssets;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
@@ -33,6 +35,7 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	private GameLogic gameLogic;
 	private Label enterNameField, endLevelLabel,nextLevelLabel,currentScoreLabel;
 	private Table table,table2;
+	private static ApplicationType applicationType;
 	private static final String[] END_LEVEL_TEXTS = {"GAME OVER","You saved Neptunus!","You saved Uranus!","You saved Saturn!","You saved Jupiter!","You saved Mars!","You saved our solar system! Well done!"};
 	private static final String[] NEXT_LEVEL_TEXTS = {"","The mission on Uranus is to destroy the escaping enemy ship","Survive all asteroid-attacks on Saturn","Destroy the giant enemy ship to save Jupiter","In order to save Mars you have to make sure that\nnot a single enemy ship passes your position"
 										,"Destroy the mothership in order to save Earth",""};
@@ -44,6 +47,7 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	 */
 	public EndLevelScreen(MyGame myGame, GameLogic gameLogic){
 		this.gameLogic = gameLogic;
+		applicationType = myGame.getApplicationType();
 		Skin skin = ImageAssets.skin;
 		createResources(myGame, skin);
 	    createButtons(myGame, skin);
@@ -225,14 +229,16 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	        	int currentLevelNumber = gameLogic.getCurrentLevelNumber();
 	        	Gdx.input.setOnscreenKeyboardVisible(false);
 	        	if(currentLevelNumber==0 ||currentLevelNumber==6){
-		        	HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
-		        	if(name.length()!=0){
-						highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), name));
-					}else  {
-						highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), "Hero"));
-					}
-		        	myGame.resetGame();
-					myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);	               
+	        		if(applicationType == ApplicationType.ANDROID){
+	        			HighscoreHandler highscoreHandler = HighscoreHandler.getInstance();
+	        			if(name.length()!=0){
+	        				highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), name));
+	        			}else  {
+	        				highscoreHandler.addPlayerToHighscore(new User(gameLogic.getCurrentScore(), "Hero"));
+	        			}	
+	        		}
+	        		myGame.resetGame();
+        			myGame.switchScreen(MyGame.ScreenType.HIGHSCORE);
 	        	}
 	        	else myGame.switchScreen(MyGame.ScreenType.GAME);
 	        }

@@ -2,8 +2,9 @@ package spawnlogic;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import screens.GameScreen;
 import ships.Asteroid;
-import spacegame.GameScreen;
 
 /**
  * 

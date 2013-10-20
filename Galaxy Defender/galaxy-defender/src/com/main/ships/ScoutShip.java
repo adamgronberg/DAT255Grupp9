@@ -1,7 +1,7 @@
 package ships;
 
 import assets.ImageAssets;
-import spacegame.GameScreen;
+import screens.GameScreen;
 
 /**
  * 
