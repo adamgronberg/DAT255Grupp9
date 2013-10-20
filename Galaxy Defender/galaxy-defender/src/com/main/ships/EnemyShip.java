@@ -5,14 +5,17 @@ import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import effects.ExplosionEffect;
 
 import spacegame.Sprite;
 
 /**
- * @author Grupp9
- *	
  * Base class for enemy ships. Enemy ships should extend this class
+ * @author Grupp9
  */
 public abstract class EnemyShip extends Sprite implements Cloneable{
 	public static enum EnemyTypes {HEAVY, BASIC, SCOUT, ASTEROID, TURRET};
@@ -27,17 +30,22 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	private float disabledCurrentTime;
 	private float disabledDuration;
 	private boolean disabable;
+	private boolean firePosInitialised = false;
+	private static boolean givesScore = true;
+	private Vector2 firePos1, firePos2, firePos3;
+	private static boolean freeze = false;
 	
 	/**
-	 * 
-	 * @param width	enemy width
-	 * @param height	enemy height
-	 * @param x	Spawn location
-	 * @param y	Spawn location
-	 * @param health	The total health of the enemy
-	 * @param scoreValue	The value of killing the enemy
-	 * @param texture	The image of the enemy
-	 * @param damageWhenRammed	Damage on ram
+	 * Constructor
+	 * @param width Width of the ship
+	 * @param height	Height of the ship
+	 * @param x	x-led
+	 * @param y	y-led
+	 * @param health	starting health
+	 * @param scoreValue	score value of ship
+	 * @param texture	texture of the ship
+	 * @param damageWhenRammed	damage when rammed
+	 * @param disabable	if you can disable the ship
 	 */
 	public EnemyShip(float width, float height,float x, float y, int health, 
 			int scoreValue, TextureRegion texture, int damageWhenRammed, boolean disabable) {
@@ -46,7 +54,6 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 		this.scoreValue = scoreValue;
 		this.disabable = disabable;
 		this.damageWhenRammed = damageWhenRammed;
-
 		maximumHealth = health;
 		onFireAnimation = new Animation(TIMEPERFRAME, ImageAssets.fireAnimation);
 		stateTime = 0f;
@@ -74,7 +81,6 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
         if(currentHealth<maximumHealth){
         	drawDamagedAnimation(batch, parentAlpha, currentFrame);
         }
-        
 	}
 	
 	/**
@@ -87,7 +93,7 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	}
 	
 	/**
-	 * @return 
+	 * @return uf the ship can act or not
 	 */
 	public boolean disabled(){
 		if(!disabable) return false;
@@ -102,11 +108,23 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	 * @param currentFrame
 	 */
 	protected void drawDamagedAnimation(SpriteBatch batch, float parentAlpha, TextureRegion currentFrame){
-    	batch.draw(currentFrame, getX()+getWidth()*0.5f, getY()+getHeight()*0.5f, 
-    			getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
-    	if(((float)currentHealth/(float)maximumHealth) < 0.4f){
-    		batch.draw(currentFrame, getX()+getWidth()*0.2f, getY()+getHeight()*0.2f, 
-    				getWidth()/2, getHeight()/2, 15, 30, 1, 1, getRotation());
+		if(!firePosInitialised){
+			firePos1 = randomPosition(); 
+			firePos2 = randomPosition(); 
+			firePos3 = randomPosition();
+			firePosInitialised = true;
+		}
+		
+    	batch.draw(currentFrame, getX()+firePos1.x-15/2, getY()+firePos1.y-25/2, 
+    			getOriginX(), getOriginY(), 15, 25, 1, 1, getRotation());
+    	
+    	if(((float)currentHealth/(float)maximumHealth) < 0.6f){
+    		batch.draw(currentFrame, getX()+firePos2.x-20/2, getY()+firePos2.y-35/2, 
+    				getOriginX(), getOriginY(), 20, 35, 1, 1, getRotation());
+    	}
+    	if(((float)currentHealth/(float)maximumHealth) < 0.3f){
+    		batch.draw(currentFrame, getX()+firePos3.x/2-25/2, getY()+firePos3.y-40/2, 
+    				getOriginX(), getOriginY(), 25, 40, 1, 1, getRotation());
     	}
 	}
 	
@@ -115,6 +133,7 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	 */
 	@Override
 	public void act(float delta){
+		if(freeze) return;
 		if (!disabled()){
 			move(delta);
 			shoot(delta);
@@ -129,6 +148,7 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 		currentHealth = currentHealth - damage;
 		if (currentHealth<=0){
 			destroyShip();
+			if(!givesScore) return 0;
 			return scoreValue;
 		}
 		return 0;
@@ -152,6 +172,9 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 	 *  Removes the ship
 	 */
 	public void destroyShip() {
+		if(getParent() != null){
+			getParent().addActor(new ExplosionEffect(getX()+getWidth()/2-(getWidth()/2)/2, getY(), getWidth()/2, getWidth()/2));
+		}
 		remove();
 	}
 	
@@ -162,8 +185,52 @@ public abstract class EnemyShip extends Sprite implements Cloneable{
 		return currentHealth;
 	}
 	
+	/**
+	 * Clones the object
+	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
+	
+	/**
+	 * Random fire position
+	 */
+	private Vector2 randomPosition(){
+		return new Vector2(MathUtils.random(getWidth()/6f, getWidth()-getWidth()/6f), MathUtils.random(getHeight()/6f, getHeight()-getHeight()/6));
+	}
+	
+	/**
+	 * Stops all ship logic
+	 */
+	public static void Freeze(){
+		freeze = true;
+	}
+	
+	/**
+	 * Starts ship logic
+	 */
+	public static void unFreeze(){
+		freeze = false;
+	}
+
+	/**
+	 * turns on getting Score from enemyShips
+	 */
+	public static void turnOnScore(){
+		givesScore=true;
+	}
+	
+	/**
+	 * turns off getting score from enemyShips
+	 */
+	public static void turnOffScore(){
+		givesScore=false;
+	}
+	
+	public void setScoreValue(int value){
+		scoreValue = value;
+	}
+	
+
 }

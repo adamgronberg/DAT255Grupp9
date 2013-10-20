@@ -4,11 +4,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import ships.EnemyShip;
 
 /**
- * 
- * @author Grupp9
- *
  * A spawns like a V 
- *
+ * @author Grupp9
  */
 public class PyramidPattern extends SpawnPattern{
 

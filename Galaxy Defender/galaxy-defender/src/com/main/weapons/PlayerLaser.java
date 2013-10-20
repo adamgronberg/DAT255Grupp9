@@ -5,15 +5,12 @@ import effects.PlayerLaserEffect;
 import assets.*;
 
 /**
- * 
- * @author Grupp9
- * 
  * Player standard green laser
- *
+ * @author Grupp9
  */
 public class PlayerLaser extends Projectile {
 	
-	public static final float RATEOFFIRE = 375000000f; //In nanoseconds
+	public static final float RATEOFFIRE = 400000000f; //In nanoseconds
 	private static final float SPEED = 6f;
 	public static final float HEIGHT = 10;
 	public static final float WIDTH = 3;
@@ -59,6 +56,9 @@ public class PlayerLaser extends Projectile {
 		return AFFECTEDTARGETS;
 	}
 
+	/**
+	 * The faction of the laser
+	 */
 	@Override
 	public TargetTypes getFaction() {
 		return FACTION;

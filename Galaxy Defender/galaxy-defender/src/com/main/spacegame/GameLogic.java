@@ -3,28 +3,33 @@ package spacegame;
 import levels.*;
 import assets.ImageAssets;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
+
+import screens.GameScreen;
 import ships.PlayerShip;
 import weapons.*;
 import ships.EnemyShip;
 import spawnlogic.SpawnPattern;
 import collisiondetection.CollisionDetection;
+import effects.AnimatedAreaEffect;
+import effects.BigDeathAnimation;
 
 /**
- * 
- * @author Grupp9
  * Handles the game logic.
+ * @author Grupp9
  */
 public class GameLogic extends Table {
 	
-	private int currentScore=0;
+	private int currentScore = 0;
+	private int currentLevelNumber = 0;
 	private Background backgroundSpace;
 	private GameScreen gameScreen;
 	public PlayerShip playerShip;
-	private Level level;
+	private Level activeLevel;
 
 	/**
 	 * Constructor
@@ -34,14 +39,13 @@ public class GameLogic extends Table {
 		setBounds(0, 0, GameScreen.GAME_WITDH, GameScreen.GAME_HEIGHT);
 		setClip(true);
 		this.gameScreen = gameScreen;
-		playerShip = new PlayerShip();
-		level = new Neptune(this);	
+		playerShip = new PlayerShip(this);
 		backgroundSpace = new Background(getX(), getY(),getWidth(), getHeight(), ImageAssets.space);
+		activeLevel = new Neptune(this);	
 		
-		addActor(level);
+		addActor(activeLevel);
 		addActor(playerShip);
 		addActor(backgroundSpace);
-
 	}
 	
 	/**
@@ -50,27 +54,24 @@ public class GameLogic extends Table {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if (playerShip.getCurrentHealth()<1) {	//For testing
-			gameScreen.defeat(); //TODO switch places defeat and reset add another score variable
-			resetGame();
-		}
 		
 		CollisionDetection.checkCollisions(this);
 		
-		if(level.missionCompleted()){
-			startNextLevel();
-			gameScreen.victory();
+		if (playerShip.getCurrentHealth()<1 || activeLevel.missionFailed()) {	//For testing
+			currentLevelNumber = 0;
+			gameScreen.callDefeatScreen(); //TODO switch places defeat and reset add another score variable
 		}
 		
-		else if(level.missionFailed()){
-			clear();
-			playerShip.stay();
-			level = new Neptune(this);	//TODO:Should end game not start a new one
-			addActor(level);
-			addActor(playerShip);
-			gameScreen.defeat();
-			currentScore=0;
+		if(activeLevel.missionCompleted()){
+			startNextLevel();
 		}
+	}
+	
+	/**
+	 * @return	The number of the current level
+	 */
+	public int getCurrentLevelNumber(){
+		return currentLevelNumber;
 	}
 	
 	/**
@@ -95,35 +96,35 @@ public class GameLogic extends Table {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		backgroundSpace.drawBelow(batch, parentAlpha);
 		super.draw(batch, parentAlpha);
-		playerShip.drawAbove(batch, parentAlpha);
 	}
 	
 	/**
 	 * add the score to the total score
 	 */
 	public void addScore(int score){
-		currentScore=currentScore+score;
+		currentScore+=score;
 	}
 	
 	/**
 	 * @return the current score
 	 */
-	public int getScore(){
+	public int getCurrentScore(){
 		return currentScore;
 	}
 	
 	/**
-	 * @return the current health
+	 * Decrease the current score
+	 * @param score	the amount to decrease with
 	 */
-	public int getPlayerHealth(){
-		return playerShip.getCurrentHealth();
+	public void decreaseCurrentScore(int score){
+		currentScore -= score;
 	}
 	
 	/**
 	 * @return the name of the Level
 	 */
 	public String getLevelName(){
-		return level.getName();
+		return activeLevel.getName();
 	}
 	
 	/**
@@ -147,7 +148,7 @@ public class GameLogic extends Table {
 	/** 
 	 * @return True if no enemies on the map 
 	 */ 
-	public boolean activeSpawns(){ 
+	public boolean noActiveSpawns(){ 
 		Array<MovableEntity> spawns  = new Array<MovableEntity>(); 
 		SnapshotArray<Actor> toSearch = getChildren(); 
 		for(Actor actor: toSearch){ 
@@ -160,14 +161,45 @@ public class GameLogic extends Table {
 	}
 	
 	/**
+	 * @return	All current spawned enemies
+	 */
+	public Array<EnemyShip> getEnemies(){
+		Array<EnemyShip> enemies  = new Array<EnemyShip>(); 
+		SnapshotArray<Actor> toSearch = getChildren(); 
+		for(Actor actor: toSearch){ 
+			if(actor instanceof EnemyShip){ 
+				EnemyShip enemy = (EnemyShip)actor; 
+				enemies.add(enemy); 
+			} 
+		} 
+		return enemies;
+	}
+	
+	/**
+	 * @return All current played animations
+	 */
+	public int getNumberOfAnimations(){
+		Array<MovableEntity> effects  = new Array<MovableEntity>(); 
+		SnapshotArray<Actor> toSearch = getChildren(); 
+		for(Actor actor: toSearch){ 
+			if(actor instanceof AnimatedAreaEffect || actor instanceof BigDeathAnimation){ 
+				MovableEntity effect = (MovableEntity)actor;
+				effects.add(effect); 
+			} 
+		} 
+		return effects.size;
+	}
+	
+	/**
 	 * Resets everything and recreates first level
 	 */
 	public void resetGame(){
 		playerShip.stay();
+		playerShip.getWeaponHandeler().resetUpgradeCosts();
 		currentScore=0;
 		clear();
-		level = new Neptune(this);
-		addActor(level);
+		activeLevel = new Neptune(this);
+		addActor(activeLevel);
 		addActor(playerShip);
 		playerShip.resetHealth();
 	}
@@ -176,10 +208,20 @@ public class GameLogic extends Table {
 	 * Starts the next level
 	 */
 	public void startNextLevel(){
+		currentLevelNumber = (currentLevelNumber + 1) % 7;
+		gameScreen.callVictoryScreen();
 		playerShip.stay();
 		clear();
-		level=nextLevel(level);
-		addActor(level);
+		activeLevel=nextLevel(activeLevel);
+		addActor(activeLevel);
 		addActor(playerShip);
+	}
+	
+	/**
+	 * Set a new background
+	 * @param background
+	 */
+	public void setBackground(TextureRegion background){
+		backgroundSpace.setTextureRegion(background);
 	}
 }

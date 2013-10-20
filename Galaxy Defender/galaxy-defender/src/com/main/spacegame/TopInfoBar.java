@@ -1,14 +1,15 @@
 package spacegame;
 
+import screens.GameScreen;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import assets.ImageAssets;
 
 /**
- * 
- * @author Grupp9
  * Bar above screen shoowing Map/Score/Health
+ * @author Grupp9
  */
 public class TopInfoBar extends Table{
 	
@@ -20,21 +21,24 @@ public class TopInfoBar extends Table{
 	
 	private TextField scoreField;
 	private TextField healthBar;
-	private GameScreen gameScreen;
 	private TextField levelName;
+	private GameLogic gameLogic;
 	
 	private Background background;
 	
-	public TopInfoBar(GameScreen gameScreen){
-		this.gameScreen = gameScreen;
+	/**
+	 * Constructor
+	 * @param gameLogic
+	 */
+	public TopInfoBar(GameLogic gameLogic){
+		this.gameLogic = gameLogic;
 		setBounds(0, GameScreen.GAME_HEIGHT, GameScreen.GAME_WITDH, GameScreen.INFO_SCREEN_HEIGHT);
 		background = new Background(getX(), getY(), getWidth(), getHeight(), ImageAssets.topInfoBar);
 		scoreField = new TextField(SCORE_PLACEMENT_X, PLACEMENT_Y);
 		healthBar = new TextField(HEALTH_PLACEMENT_X, PLACEMENT_Y);
 		levelName = new TextField(LEVEL_PLACEMENT_X, PLACEMENT_Y);
 		addActor(background);
-		}
-	
+	}
 	
 	/**
 	 * Draws all actors on stage
@@ -43,11 +47,9 @@ public class TopInfoBar extends Table{
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(Color.WHITE);
 		background.drawBelow(batch, parentAlpha);
-		scoreField.draw(batch, "Score " +gameScreen.getGameLogicScore());
-		healthBar.draw(batch, "Health " +gameScreen.getGameLogicHealth()+"%");
-		levelName.draw(batch, "" +gameScreen.getLevelName());
+		scoreField.draw(batch, "Score " + gameLogic.getCurrentScore());
+		healthBar.draw(batch, "Health " + gameLogic.playerShip.getCurrentHealth() + "%");
+		levelName.draw(batch, gameLogic.getLevelName());
 		super.draw(batch, parentAlpha);
 	}
-	
-	
 }

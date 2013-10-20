@@ -1,16 +1,23 @@
 package ships;
 
+import java.util.Iterator;
+
+import screens.GameScreen;
 import spacegame.GameLogic;
-import spacegame.GameScreen;
 import spacegame.MovableEntity;
 import weapons.Projectile;
 import assets.ImageAssets;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Ship that tries to dodge your projectiles
+ * @author Grupp9
+ *
+ */
 public class EscapingShip extends EnemyShip {
 	private final static float SHIPSPEED=2.1f;
-	private final static int HEALTH=7;
-	private final static int SCOREVALUE=40;
+	private final static int HEALTH=8;
+	private final static int SCOREVALUE=300;
 	
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
@@ -41,6 +48,9 @@ public class EscapingShip extends EnemyShip {
 		
 	}
 
+	/**
+	 * Move logic
+	 */
 	@Override
 	protected void move(float delta) {
 		
@@ -53,27 +63,28 @@ public class EscapingShip extends EnemyShip {
 		}
 	}
 	
+	/**
+	 * calculate best way for the ship to go
+	 */
 	protected void changeDirectionCheck(){
 		
 		if(!bouncing){
-			avoidLaser();
+			if(isOutOfBoundsX(this)){
+				movingLeft= !movingLeft;
+				bouncing=true;
+				bouncingCounter = BOUNCING_CONST;
+			}else{
+				avoidLaser();
+			}
 		}else{
 			bouncingCounter--;
 			if(bouncingCounter<1){
 				bouncing=false;
 			}
 		}
-		if(isOutOfBoundsX(this)){
-			movingLeft= !movingLeft;
-			bouncing=true;
-			bouncingCounter = BOUNCING_CONST;
-		}
+		
 	}
 
-	@Override
-	protected void shoot(float delta) {
-		return;		
-	}
 	/**
 	 * Checks if any movableobject is out of bounds
 	 * @param actors
@@ -85,25 +96,84 @@ public class EscapingShip extends EnemyShip {
 		return false;
 	}
 	
+	/**
+	 * check how to best avoid player projectiles
+	 */
 	protected void avoidLaser(){
 		long misileCheck = 0;
 		Array<Projectile> playerProjectile = gl.getPlayerShotts();
 		
-		for(Projectile proj: playerProjectile){
-			misileCheck += Math.pow(proj.getY(),4)*(1/((getX()+WIDTH/2)-proj.getX()));
+		if(!isSideEmpty(playerProjectile)){
+			
+			for(Projectile proj: playerProjectile){
+				misileCheck += Math.pow(proj.getY(),4)*(1/((getX()+WIDTH/2)-proj.getX()));
+			}
+			
+			if(misileCheck>0){
+				movingLeft=false;
+			}
+			else{
+				movingLeft=true;
+			}
+		}
+	}
+	
+	/**
+	 * check if one side is safe and then move ship in 
+	 * @return if one side is free from player projectiles
+	 */
+	protected boolean isSideEmpty( Array<Projectile> playerProjectile ){
+		boolean leftSideEmpty = true;
+		boolean rightSideEmpty = true;
+		Projectile projectile;
+		
+		Iterator<Projectile> it = playerProjectile.iterator();
+		while(it.hasNext()&&(leftSideEmpty||rightSideEmpty)){
+			projectile = it.next();
+			if(dangerous(projectile)){
+				return false;
+			}
+			if(projectile.getX()<GameScreen.GAME_WITDH/2){
+				leftSideEmpty=false;
+			}else{
+				rightSideEmpty=false;
+			}
 		}
 		
-		if(misileCheck>0){
-			movingLeft=false;
+		if((!leftSideEmpty)&&(!rightSideEmpty)){
+			return false;
+		}else if(rightSideEmpty){
+			movingLeft = false;
+		}else{
+			movingLeft = true;
 		}
-		else{
-			movingLeft=true;
-		}
+		
+				
+		return true;
+		
+	}
+	
+	/**
+	 * 
+	 * @param projectile
+	 * @return if projectile should be considered as a great threat
+	 */
+	protected boolean dangerous(Projectile projectile){
+		
+		return distToShip(projectile)<70;
+	}
+	
+	/**
+	 * 
+	 * @param projectile 
+	 * @return distance between projectile and the ship
+	 */
+	protected float distToShip(Projectile projectile){
+		return (float) Math.sqrt( Math.pow(projectile.getX()-this.getX()+EscapingShip.WIDTH/2, 2) + Math.pow(projectile.getY()-this.getY()+ EscapingShip.HEIGHT/2, 2));
 	}
 
 	/**
-	 * 
-	 * @return true if ship is alive else false
+	 * @return true if ship is alive
 	 */
 	public boolean isAlive(){
 		return isAlive;
@@ -117,4 +187,7 @@ public class EscapingShip extends EnemyShip {
 		isAlive = false;
 		remove();
 	}
+	
+	//// Unused methods ////
+	@Override protected void shoot(float delta) {}
 }

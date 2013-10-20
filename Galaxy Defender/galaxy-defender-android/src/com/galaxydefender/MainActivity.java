@@ -20,8 +20,4 @@ public class MainActivity extends AndroidApplication {
         
         initialize(new MyGame(), cfg);
     }
-    
-//    public void onBackPressed() {
-//     
-//    }
 }

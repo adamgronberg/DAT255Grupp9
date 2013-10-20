@@ -5,15 +5,12 @@ import spacegame.MovableEntity;
 import assets.*;
 
 /**
- * 
- * @author Grupp9
- * 
  * EMP shoots a wave that disables all enemies on contact of a set amount of time
- *
+ * @author Grupp9
  */
 public class PlayerEMP extends Projectile {
 	
-	public static final float RATEOFFIRE = 2000000000f; //In nanoseconds
+	public static final float RATEOFFIRE = 1500000000f; //In nanoseconds
 	public static final float HEIGHT = 40;
 	public static final float WIDTH = 50;
 	private static final float DISABLE_TIME = 500000000f;

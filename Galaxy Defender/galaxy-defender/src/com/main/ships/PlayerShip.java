@@ -1,17 +1,16 @@
 package ships;
 
+import options.OptionLogic;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import assets.ImageAssets;
-import spacegame.GameScreen;
+import screens.GameScreen;
+import spacegame.GameLogic;
 import spacegame.Sprite;
-import weapons.PlayerWeaponHandeler;
+import weapons.PlayerWeaponLogic;
 
 /**
- * 
+ * The player ship. Methods for moving ,drawing and more...
  * @author Grupp9
- *
- * The player ship. Methods for moving ,drawing and shooting
  */
 public class PlayerShip extends Sprite {
 	
@@ -22,7 +21,7 @@ public class PlayerShip extends Sprite {
 	private static final float SPAWN_LOCATION_Y = 0.1f; 	//Height where the player moves
 	private static final int STARTING_HEALTH  = 100;
 	
-	private PlayerWeaponHandeler weaponHandeler;
+	private PlayerWeaponLogic weaponHandeler;
 	private int maximumHealth;
 	private int currentHealth;		
 	
@@ -31,9 +30,19 @@ public class PlayerShip extends Sprite {
 	/**
 	 * Constructor
 	 */
+	public PlayerShip(GameLogic gameLogic) {
+		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2-WITDH/2, GameScreen.GAME_HEIGHT*SPAWN_LOCATION_Y,ImageAssets.playerShip);
+		weaponHandeler = new PlayerWeaponLogic(gameLogic, this);
+		maximumHealth = STARTING_HEALTH;
+		currentHealth = STARTING_HEALTH;
+	}
+	
+	/**
+	 * Constructor
+	 * Ship without weapons
+	 */
 	public PlayerShip() {
 		super(WITDH, HEIGHT, GameScreen.GAME_WITDH/2-WITDH/2, GameScreen.GAME_HEIGHT*SPAWN_LOCATION_Y,ImageAssets.playerShip);
-		weaponHandeler = new PlayerWeaponHandeler(this);
 		maximumHealth = STARTING_HEALTH;
 		currentHealth = STARTING_HEALTH;
 	}
@@ -67,15 +76,6 @@ public class PlayerShip extends Sprite {
 	public int getMaximumHealth(){
 		return maximumHealth;
 	}
-
-	/**
-	 * Makes sure Player is always above everything else on screen 
-	 * (Looks weird when weapons come from above it)
-	 */
-	public void drawAbove(SpriteBatch batch, float parentAlpha) {
-		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
-		batch.draw(ImageAssets.playerShip, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
-	}
 		
 	/**
 	 * Tries to move the player to the Right. 
@@ -106,7 +106,7 @@ public class PlayerShip extends Sprite {
 	 */
 	@Override
 	public void act(float delta){
-		if (GameScreen.optionAutoShoot) weaponHandeler.spawnPlayerProjectile();
+		weaponHandeler.spawnPlayerProjectile();
 		switch(movmentDirection){
 			case LEFT:
 				setX(getX()-SPEED);
@@ -133,13 +133,13 @@ public class PlayerShip extends Sprite {
 	 * @param milliSeconds
 	 */
 	public void vibrate(int milliSeconds){
-		if (GameScreen.getVibration()) Gdx.input.vibrate(milliSeconds);
+		if (OptionLogic.getVibrateOption()) Gdx.input.vibrate(milliSeconds);
 	}
 	
 	/**
 	 * @return The player weaponHandeler
 	 */
-	public PlayerWeaponHandeler getWeaponHandeler(){
+	public PlayerWeaponLogic getWeaponHandeler(){
 		return weaponHandeler;
 	}
 }

@@ -1,6 +1,6 @@
 package weapons;
 
-import spacegame.GameScreen;
+import options.OptionLogic;
 import spacegame.MovableEntity;
 import dummies.AreaOfEffectDummy;
 import assets.ImageAssets;
@@ -8,25 +8,22 @@ import assets.SoundAssets;
 import effects.ExplosionEffect;
 
 /**
- * 
- * @author Grupp9
- *
  * Player missile. Have a small blast radius on impact and a sweet on hit effect as well as sound
- *
+ * @author Grupp9
  */
 public class PlayerMissile extends Projectile{
 
 
 	private static final float SPEED = 5f;
-	private static final int DAMAGE = 1;
-	private static final int AREA_OF_EFFECT_DAMAGE = 2;
-	private static final float AREAEFFECT_H = 85;
-	private static final float AREAEFFECT_W = 75;
+	private static final int DAMAGE = 2;
+	private static final int AREA_OF_EFFECT_DAMAGE = 1;
+	private static final float AREAEFFECT_H = 90;
+	private static final float AREAEFFECT_W = 90;
 	private static final TargetTypes FACTION = TargetTypes.PLAYER;
 	private static final TargetTypes[] AFFECTED_TARGETS = 
 		{TargetTypes.ENEMY, TargetTypes.ENEMY_PROJECTILE};
 	
-	public static float RATEOFFIRE = 2000000000f; //In nanoseconds
+	public static float RATEOFFIRE = 2500000000f; //In nanoseconds
 	public static final float HEIGHT = 25;
 	public static final float WIDTH = 10;
 	private float upgradedAreaEffectH;
@@ -65,7 +62,7 @@ public class PlayerMissile extends Projectile{
 		getParent().addActor( new AreaOfEffectDummy(getX()-upgradedAreaEffectW/2+WIDTH/2, 
 							getY()-upgradedAreaEffectH/2 + HEIGHT, upgradedAreaEffectW, upgradedAreaEffectH, AREA_OF_EFFECT_DAMAGE, 
 							FACTION, AFFECTED_TARGETS));
-		if(GameScreen.getSound()) SoundAssets.missileExplosion.play();
+		if(OptionLogic.getSoundOption()) SoundAssets.missileExplosion.play();
 		remove();
 	}
 	
@@ -77,6 +74,9 @@ public class PlayerMissile extends Projectile{
 		return AFFECTED_TARGETS;
 	}
 
+	/**
+	 * Faction of projectile
+	 */
 	@Override
 	public TargetTypes getFaction() {
 		return FACTION;

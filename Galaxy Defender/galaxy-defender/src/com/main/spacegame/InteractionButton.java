@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 /**
- * 
+ * Draws a texture on screen that can be pressed (Better then the buttons chippset did) =)
  * @author Grupp9
- * Draws a texture on screen
  */
 public class InteractionButton extends Sprite {
 	
@@ -34,7 +33,4 @@ public class InteractionButton extends Sprite {
 	public boolean isPressed(float x, float y){
 		return getBounds().contains(x, y);
 	}
-	
-	
-	
 }

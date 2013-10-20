@@ -3,9 +3,8 @@ package effects;
 import assets.ImageAssets;
 
 /**
- * 
+ * Plays a animation designed for enemy laser
  * @author Grupp9
- * Plays a animation designed for missile
  */
 public class EnemyLaserEffect extends AnimatedAreaEffect{
 

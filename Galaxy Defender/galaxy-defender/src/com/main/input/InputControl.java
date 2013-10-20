@@ -2,51 +2,39 @@ package input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+
+import screens.GameScreen;
 import ships.PlayerShip;
 import spacegame.GameLogic;
-import spacegame.GameScreen;
+import spacegame.MyGame;
+import weapons.PlayerWeaponLogic;
 
 
 /**
- * 
+ * Handles all user input desktop/android when in game
  * @author Grupp9
- * Handles all user input desktop/android
  */
 public class InputControl implements GestureListener, InputProcessor {
 
 	private GameLogic gameLogic;
 	private GameScreen gameScreen;
-	
-	private static final float FLING_SENSITIVITY = 1500f;
+	private MyGame myGame;
 	
 	/**
 	 * Constructor
 	 * @param gameLogic
 	 * @param gameScreen
 	 */
-	public InputControl(GameLogic gameLogic, GameScreen gameScreen){
+	public InputControl(GameLogic gameLogic, GameScreen gameScreen, MyGame myGame){
 		this.gameLogic = gameLogic;
 		this.gameScreen = gameScreen;
+		this.myGame = myGame;
 	}
-	
-	/**
-	 * Fling up or down to swap weapons
-	 * Fling left to activate/deactivate optionAutoShoot
-	 * Fling right to swap control layout
-	 * TODO: The fling don't register if you are moving at the same time, I can't solve this. Might have to scrap "fling" weapon switch
-	 */
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button) {
-		if (velocityY < -FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.startNextLevel();
-		//if (velocityY > FLING_SENSITIVITY && velocityX < FLING_SENSITIVITY/2 && velocityX > -FLING_SENSITIVITY/2) gameLogic.startNextLevel();
-		if (velocityX < -FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) GameScreen.toggleOptionAutoShoot();	//For testing
-		if (velocityX > FLING_SENSITIVITY && velocityY < FLING_SENSITIVITY/2 && velocityY > -FLING_SENSITIVITY/2) gameScreen.changeOptionControlLayout();
-		return false;
-	}
-	
+		
 	/**
 	 * 	Input for desktop. 
 	 *  Handles on key down moment and shooting if optionAutoShoot is disabled
@@ -54,10 +42,12 @@ public class InputControl implements GestureListener, InputProcessor {
 	 */
 	@Override
 	public boolean keyDown(int keycode) {
+		if(keycode == Keys.BACK) myGame.switchScreen(MyGame.ScreenType.MENU);
 		if(keycode == Input.Keys.LEFT)  gameLogic.playerShip.moveLeft();
 		if(keycode == Input.Keys.RIGHT)  gameLogic.playerShip.moveRight();
 		return false;
 	}
+	
 	/**
 	 * Input for desktop
 	 * Handles on key up switching weapon and options
@@ -68,9 +58,8 @@ public class InputControl implements GestureListener, InputProcessor {
 		if(keycode == Input.Keys.RIGHT && gameLogic.playerShip.getMovmentDirection() == PlayerShip.Direction.RIGHT)  gameLogic.playerShip.stay();
 		if(keycode == Input.Keys.W)  gameLogic.playerShip.getWeaponHandeler().shootMissle();
 		if(keycode == Input.Keys.Q)  gameLogic.playerShip.getWeaponHandeler().shootEMP();
-		if(keycode == Input.Keys.UP)  gameLogic.startNextLevel();
-		if(keycode == Input.Keys.CONTROL_LEFT) GameScreen.toggleOptionAutoShoot();			//For testing
-		if(keycode == Input.Keys.SHIFT_LEFT) gameScreen.changeOptionControlLayout();		//For testing, only android
+		if(keycode == Input.Keys.UP)  gameLogic.startNextLevel();									//Cheat!! =o
+		if(keycode == Input.Keys.CONTROL_LEFT) PlayerWeaponLogic.toggleOptionAutoShoot();			//For testing
 		return false;
 	}
 
@@ -131,4 +120,5 @@ public class InputControl implements GestureListener, InputProcessor {
 	@Override public boolean mouseMoved(int screenX, int screenY) {return false;}
 	@Override public boolean scrolled(int amount) {return false;}
 	@Override public boolean panStop(float x, float y, int pointer, int button) {return false;}
+	@Override public boolean fling(float velocityX, float velocityY, int button) {return false;}
 }

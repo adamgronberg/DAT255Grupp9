@@ -6,10 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 /**
- * 
- * @author Grupp9
- * 
  * TODO: Could use this class to add the different map backgrounds
+ * @author Grupp9
  */
 public class Background extends MovableEntity {
 	
@@ -33,6 +31,15 @@ public class Background extends MovableEntity {
 	public void drawBelow(SpriteBatch batch, float parentAlpha) {
 		batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a);		
 		batch.draw(texture, getX(), getY(), getWidth()/2, getHeight()/2, getWidth(), getHeight(), 1, 1, getRotation());
+	}
+
+	/**
+	 * Sets background-image
+	 * 
+	 * @param texture
+	 */
+	public void setTextureRegion(TextureRegion texture) {
+		this.texture = texture;
 	}
 	
 }

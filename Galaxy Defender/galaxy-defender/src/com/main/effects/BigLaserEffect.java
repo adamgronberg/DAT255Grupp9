@@ -3,13 +3,17 @@ package effects;
 import assets.ImageAssets;
 import ships.BigLaserShip;
 
+/**
+ * Effect for BigLaserShip
+ * @author Grupp9
+ */
 public class BigLaserEffect extends AnimatedAreaEffect{
 	
 	private static final float TIMEPERFRAME = 0.015f;
 	private BigLaserShip ship;
 
 	/**
-	 * 
+	 * Constructor
 	 * @param x x-led spawn location
 	 * @param y y-led spawn location
 	 * @param width x-led size of effect

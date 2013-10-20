@@ -2,36 +2,33 @@ package ships;
 
 import com.badlogic.gdx.math.MathUtils;
 
-import spacegame.GameScreen;
+import screens.GameScreen;
 import weapons.EnemyLaser;
 import assets.ImageAssets;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
- * 
+ * Disappears from the screen and comes back
  * @author Grupp9
- *
- *	StealthShip
- *  Disappears from the screen and comes back
- *
  */
 
 public class StealthShip extends EnemyShip {
 	public static final float RATEOFFIRE = 100000000f; 	 //In nanoseconds
 	private final static float SHIPSPEED=1f;
 	private final static int HEALTH=1;
-	private final static int SCOREVALUE=1;
+	private final static int SCOREVALUE=20;
 	public final static int HEIGHT=45;
 	public final static int WIDTH=35;
 	public final static int LASER_HEIGHT=15;
 	public final static int LASER_WIDTH=3;
-	private static final int DAMAGE_WHEN_RAMMED = 5;
+	private static final int DAMAGE_WHEN_RAMMED = 4;
 	private boolean visible = true;
 	private long currentTime;
 	private long lastMissileTime=0;
 	private PlayerShip player;
 	private int shot =0;
 	private static final boolean DISABABLE = true;
+	
 	/**
 	 * Constructor
 	* @param x	x-led Spawn location
@@ -47,8 +44,8 @@ public class StealthShip extends EnemyShip {
 	 * Spawns projectiles in front of the enemies depending on where player is.
 	 */
 	public void spawnProjectile() {
-		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE) {
-			if(shot<=4){
+		if(TimeUtils.nanoTime() - lastMissileTime > RATEOFFIRE && getY() > 200) {
+			if(shot<=3){
 				float delX = getX()-player.getX();
 				float delY = getY()-player.getY();
 				float degree2 =(float)Math.atan(delX/delY);
@@ -60,6 +57,9 @@ public class StealthShip extends EnemyShip {
 		}
 	}
 
+	/**
+	 * Ships move logic
+	 */
 	@Override
 	protected void move(float delta) {
 		
@@ -87,5 +87,6 @@ public class StealthShip extends EnemyShip {
 			}
 	}
 
+	//// unused methods ////
 	@Override protected void shoot(float delta) {}
 }

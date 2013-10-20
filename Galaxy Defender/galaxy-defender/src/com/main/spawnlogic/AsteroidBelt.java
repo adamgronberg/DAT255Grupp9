@@ -2,14 +2,13 @@ package spawnlogic;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import screens.GameScreen;
 import ships.Asteroid;
-import spacegame.GameScreen;
 
 /**
- * 
+ * Spawning pattern for a asteroid belt
  * @author Grupp9
- *
- *	Spawning pattern for a asteroid belt
  */
 public class AsteroidBelt extends SpawnPattern{
 
@@ -18,7 +17,7 @@ public class AsteroidBelt extends SpawnPattern{
 	private int currentRow = 0;
 	
 	/**
-	 * 
+	 * Constructor
 	 * @param spawnX
 	 * @param spawnY
 	 * @param totalNumber

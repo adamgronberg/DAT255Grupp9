@@ -3,15 +3,16 @@ package assets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * 
+ * Contains all image assets
  * @author Grupp9
- * Contains all image assets and animations
  */
 public class ImageAssets {
 	public static TextureAtlas atlas;
+	public static TextureAtlas atlasSkin;
 	public static TextureRegion playerShip;
 	public static TextureRegion enemyBasicShip;
 	public static TextureRegion enemyScoutShip;
@@ -24,12 +25,20 @@ public class ImageAssets {
 	public static TextureRegion enemyTurretShip;
 	public static TextureRegion enemyCirclingShip;
 	public static TextureRegion enemyBossShip;
+	public static TextureRegion enemyTargetLaserShip;
 	public static TextureRegion space;
+	public static TextureRegion earth;
+	public static TextureRegion mars;
+	public static TextureRegion jupiter;
+	public static TextureRegion saturn;
+	public static TextureRegion uranus;
+	public static TextureRegion neptune;
 	public static TextureRegion mainMenu;
 	public static TextureRegion moveLeftButton;
 	public static TextureRegion moveRightButton;
 	public static TextureRegion emptyButton;
 	public static TextureRegion playerLaser;
+	public static TextureRegion mine;
 	public static TextureRegion enemyLaser;
 	public static TextureRegion playerMissile;
 	public static TextureRegion playerIonCannon;
@@ -40,23 +49,28 @@ public class ImageAssets {
 	public static Array<TextureRegion> enemyLaserAnimation;
 	public static Array<TextureRegion> playerLaserAnimation;
 	public static Array<TextureRegion> fireAnimation;
+	public static Skin skin;
 
 	/**
-	 * Loads all assets from imageAtlas
+	 * Loads all assets from imageAtlas and skins
 	 */
 	public static void load() {
 		atlas = new TextureAtlas(Gdx.files.internal("images.atlas"));
+		atlasSkin = new TextureAtlas("uiskin.atlas");
+		skin = new Skin(Gdx.files.internal("uiskin.json"), assets.ImageAssets.atlasSkin);
 		
 		explosionAnimation = new Array<TextureRegion>();
 		enemyLaserAnimation = new Array<TextureRegion>();
 		playerLaserAnimation = new Array<TextureRegion>();
 		fireAnimation = new Array<TextureRegion>();
-		
+		asteroids = new Array<TextureRegion>(); 
 		
 		playerShip = atlas.findRegion("Ships/PlayerShip");
 		playerLaser = atlas.findRegion("weapons/greenLaser");
 		playerIonCannon = atlas.findRegion("weapons/blueMegaLaser");
 		enemyLaser = atlas.findRegion("weapons/redLaser");
+		mine = atlas.findRegion("weapons/mine");
+		
 		escapingShip = atlas.findRegion("Ships/Ship8");
 		enemyBasicShip = atlas.findRegion("Ships/Ship3");
 		enemyScoutShip = atlas.findRegion("Ships/Ship9");
@@ -67,19 +81,26 @@ public class ImageAssets {
 		enemyStealthShip = atlas.findRegion("Ships/Ship10");
 		enemyBossShip = atlas.findRegion("Ships/5");
 		enemyCirclingShip= atlas.findRegion("Ships/Ship5");
-		
 		enemyTurretShip = atlas.findRegion("Ships/Ship23");
+		enemyTargetLaserShip = atlas.findRegion("Ships/Ship6");
+		
 		playerMissile = atlas.findRegion("weapons/Missile1");
 		topInfoBar = atlas.findRegion("gui/TopInfoBar");
-		space = atlas.findRegion("backgrounds/space1");
+		
 		mainMenu = atlas.findRegion("backgrounds/MainMenu");
+		space = atlas.findRegion("backgrounds/space1");
+		earth = atlas.findRegion("backgrounds/Earth");
+		mars = atlas.findRegion("backgrounds/Mars");
+		jupiter = atlas.findRegion("backgrounds/Jupiter");
+		saturn = atlas.findRegion("backgrounds/Saturn");
+		uranus = atlas.findRegion("backgrounds/Uranus");
+		neptune = atlas.findRegion("backgrounds/Neptune");
+		
 		moveRightButton = atlas.findRegion("gui/move_right");
 		moveLeftButton = atlas.findRegion("gui/move_left");
 		missileButton = atlas.findRegion("gui/missileButton");
 		emptyButton = atlas.findRegion("gui/EMPButton");
 		
-
-		asteroids = new Array<TextureRegion>(); 
 		for(int i = 1; i <= 12; i++){
 			asteroids.add(atlas.findRegion("Ships/Asteroid" + i));
 		}
@@ -105,5 +126,7 @@ public class ImageAssets {
 	 */
 	public static void dispose() {
 		atlas.dispose();
+		atlasSkin.dispose();
+		skin.dispose();
 	}
 }

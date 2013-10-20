@@ -1,7 +1,10 @@
-package spacegame;
+package screens;
 
-import ships.PlayerShip;
-
+import options.OptionLogic;
+import spacegame.GameLogic;
+import spacegame.InteractionButton;
+import spacegame.MyGame;
+import spacegame.TopInfoBar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -12,13 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import assets.*;
 import input.InputControl;
 
-
 /**
- * 
- * @author Grupp9
- *
  * Draws everything on GameScreen and handles input
  * Tells all actors to draw and act
+ * @author Grupp9
  */
 public class GameScreen implements Screen{
 	private Stage stage;
@@ -27,15 +27,7 @@ public class GameScreen implements Screen{
 	private TopInfoBar topInfoBar;
 	private MyGame myGame;
 	
-	private int currentLevel;
-	private int levelResult;
-	
-	private static boolean sound = true; 			//TODO: Temp. disables/enables sound
-	public static boolean optionAutoShoot = true; 	//TODO: Temp. disables/enables shoot
-	private static boolean vibrate = true;			//TODO: Temp. disables/enables vibrate
-	
 	public static enum ControlLayout {LAYOUT1, LAYOUT2}
-	public ControlLayout currentLayout = ControlLayout.LAYOUT2;
 	
 	public static final int MAX_LEVEL = 6;
 	public static final float GAME_HEIGHT= ((float) MyGame.HEIGHT)*0.95f;
@@ -66,12 +58,11 @@ public class GameScreen implements Screen{
 		shootEMPButton = new InteractionButton(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE*2, 0, 
 				GameScreen.MOVMENT_BUTTON_SIZE, GameScreen.MOVMENT_BUTTON_SIZE, ImageAssets.emptyButton);
 		
-		currentLevel = 1;
-		levelResult = 0;
 		this.myGame = myGame;
 		gameLogic = new GameLogic(this);
-		inputController = new InputControl(gameLogic, this);
-		topInfoBar = new TopInfoBar(this);
+		inputController = new InputControl(gameLogic, this, myGame);
+		topInfoBar = new TopInfoBar(gameLogic);
+		moveControlLayout();
 		
 		stage = new Stage();
 		stage.addActor(gameLogic);
@@ -103,27 +94,17 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
-	 * Returns the current layout
-	 * @return
-	 */
-	public ControlLayout getCurrentLayout(){
-		return currentLayout;
-	}
-	
-	/**
 	 * Change android layout
 	 */
-	public void changeOptionControlLayout(){
-		switch(currentLayout){
+	public void moveControlLayout(){
+		switch(OptionLogic.getLayout()){
 			case LAYOUT1:
-				currentLayout = ControlLayout.LAYOUT2;
-				moveRightButton.setX(GameScreen.MOVMENT_BUTTON_SIZE);
-				shootMissileButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
-				break;
-			case LAYOUT2:
-				currentLayout = ControlLayout.LAYOUT1;
 				moveRightButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
 				shootMissileButton.setX(GAME_WITDH/2 - GameScreen.MOVMENT_BUTTON_SIZE/2);
+				break;
+			case LAYOUT2:
+				moveRightButton.setX(GameScreen.MOVMENT_BUTTON_SIZE);
+				shootMissileButton.setX(GAME_WITDH - GameScreen.MOVMENT_BUTTON_SIZE);
 				break;
 		}
 	}	
@@ -175,7 +156,7 @@ public class GameScreen implements Screen{
 		
 		stage.act(delta);				//Tells all actors to act
 		stage.draw();					//Tells all actors to draw
-		}
+	}
 	
 	/**
 	 * Shows screen and adds input control 
@@ -190,24 +171,10 @@ public class GameScreen implements Screen{
 	}
 	
 	/**
-	 * @return Current GameLogic score
-	 */
-	public int getGameLogicScore(){
-		return gameLogic.getScore();
-	}
-	
-	/**
 	 * @return The player ship
 	 */
-	public PlayerShip getPlayerShip(){
-		return gameLogic.playerShip;
-	}
-	
-	/**
-	 * @return Current GameLogic health
-	 */
-	public int getGameLogicHealth(){
-		return gameLogic.getPlayerHealth();
+	public GameLogic getGameLogic(){
+		return gameLogic;
 	}
 	
 	/**
@@ -219,71 +186,23 @@ public class GameScreen implements Screen{
     	Gdx.input.setInputProcessor(null);
     }
 	
-	public int getLevelResult(){
-		return levelResult;
-	}
-	
 	/**
 	 * Calls victory screen and changes to next level
 	 */
-	public void victory(){
-		levelResult = currentLevel;
-		if(currentLevel < MAX_LEVEL) currentLevel++;
+	public void callVictoryScreen(){
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
 	
 	/**
 	 * Calls defeat screen
 	 */
-	public void defeat(){
-		levelResult = 0;
+	public void callDefeatScreen(){
+		MenuScreen.activeGame = false;
 		myGame.switchScreen(MyGame.ScreenType.WINSCREEN);
 	}
 	
-	/**
-	 * Activates/disables sound effects
-	 */
-	public static void toggleSound(){
-		if(sound) sound = false;
-		else sound = true;
-	}
-	
-	/**
-	 * returns true if sound is on
-	 */
-	public static boolean getSound(){
-		return sound;
-	}
-	
-	/**
-	 * Activates/disables impact vibration
-	 */
-	public static void toggleVibrateOn(){
-		if(vibrate) vibrate = false;
-		else vibrate = true;
-	}
-	
-	/**
-	 * returns true if vibration is on
-	 */
-	public static boolean getVibration(){
-		return vibrate;
-	}
-		
+	//// Unused methods ////
 	@Override public void resume() {}
 	@Override public void pause() {}
 	@Override public void dispose() {}
-
-	public static void toggleOptionAutoShoot() {
-		optionAutoShoot = !optionAutoShoot;	
-	}
-/**
- * 
- * @return the name of the level
- */
-	public String getLevelName() {
-		return gameLogic.getLevelName();
-	}	
-	
-	
 }

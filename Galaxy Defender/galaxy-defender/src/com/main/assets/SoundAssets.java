@@ -5,19 +5,20 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 /**
- * 
+ * Loads all sound assets
  * @author Grupp9
- * Loads all sound assets on start
  */
 public class SoundAssets {
 	public static Music spaceMusic;
 	public static Sound missileExplosion;
+	public static Sound bossExplosion;
 	
 	/**
 	 * Loads sounds
 	 */
 	public static void load(){
 		missileExplosion = Gdx.audio.newSound(Gdx.files.internal("missileExplosion.wav"));
+		bossExplosion = Gdx.audio.newSound(Gdx.files.internal("bossExplosion.mp3"));
 		spaceMusic = Gdx.audio.newMusic(Gdx.files.internal("space_music.mp3"));
 		spaceMusic.setLooping(true);
 	}
@@ -27,6 +28,7 @@ public class SoundAssets {
 	 */
 	public static void dispose(){
 		spaceMusic.dispose();
+		bossExplosion.dispose();
 		missileExplosion.dispose();
 	}
 }

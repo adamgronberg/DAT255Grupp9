@@ -4,11 +4,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import ships.EnemyShip;
 
 /**
- * 
- * @author Grupp9
- *
  * A vertical spawning pattern
- *
+ * @author Grupp9
  */
 public class VerticalPattern extends SpawnPattern{
 

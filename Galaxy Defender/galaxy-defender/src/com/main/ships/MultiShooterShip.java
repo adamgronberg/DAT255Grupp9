@@ -7,15 +7,17 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * Enemy ship with six laser guns
+ * @author Grupp9
  */
 public class MultiShooterShip extends EnemyShip {
 	
-	public static final float RATEOFFIRE = 2500000000f; 	 //In nanoseconds
+	public static final float RATEOFFIRE = 2000000000f; 	 //In nanoseconds
 	public final static int HEIGHT=65;
 	public final static int WIDTH=40;
 	private final static float SHIPSPEED = 1f;
 	private final static int SCOREVALUE=30;
-	private final static int HEALTH=5;
+	private final static int HEALTH=4;
+	private static final int DAMAGE = 5;
 	
 	private float lastProjectileTime;
 	private static final int DAMAGE_WHEN_RAMMED = 40;
@@ -36,12 +38,12 @@ public class MultiShooterShip extends EnemyShip {
 	 */
 	public void spawnProjectile() {
 		if(TimeUtils.nanoTime() - lastProjectileTime > RATEOFFIRE) {
-			getParent().addActor( new EnemyLaser(getX(), getY()+10, 2f, 15f,5,-45));
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/8, getY()+5, 2f, 15f,5,-45));
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/4, getY(), 2f, 15f,5,0));
-			getParent().addActor( new EnemyLaser(getX()+3*WIDTH/4, getY(), 2f, 15f,5,0));
-			getParent().addActor( new EnemyLaser(getX()+7*WIDTH/8, getY()+5, 2f, 15f,5,45));
-			getParent().addActor( new EnemyLaser(getX()+WIDTH, getY()+10, 2f, 15f,5,45));
+			getParent().addActor( new EnemyLaser(getX(), getY()+10, 2f, 15f,DAMAGE,-45));
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/8, getY()+5, 2f, 15f,DAMAGE,-45));
+			getParent().addActor( new EnemyLaser(getX()+WIDTH/4, getY(), 2f, 15f,DAMAGE,0));
+			getParent().addActor( new EnemyLaser(getX()+3*WIDTH/4, getY(), 2f, 15f,DAMAGE,0));
+			getParent().addActor( new EnemyLaser(getX()+7*WIDTH/8, getY()+5, 2f, 15f,DAMAGE,45));
+			getParent().addActor( new EnemyLaser(getX()+WIDTH, getY()+10, 2f, 15f,DAMAGE,45));
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 	}
