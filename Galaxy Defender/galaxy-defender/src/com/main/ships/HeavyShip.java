@@ -40,7 +40,7 @@ public class HeavyShip extends EnemyShip {
 	 */
 	public void spawnProjectile() {
 		if(TimeUtils.nanoTime() - lastProjectileTime > RATEOFFIRE) {
-			getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY()));
+			if(getParent()!= null) getParent().addActor( new EnemyLaser(getX()+WIDTH/2-EnemyLaser.WIDTH/2, getY()));
 			lastProjectileTime = TimeUtils.nanoTime();
 		}
 	}

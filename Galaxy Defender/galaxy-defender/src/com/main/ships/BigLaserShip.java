@@ -17,10 +17,10 @@ public class BigLaserShip extends EnemyShip {
 	
 	private static final TargetTypes FACTION = TargetTypes.ENEMY;
 	private static final TargetTypes[] AFFECTED_TARGETS = {TargetTypes.PLAYER, TargetTypes.PLAYER_PROJECTILE};
-	private final static int DAMAGE_PER_TICK = 5;
+	private final static int DAMAGE_PER_TICK = 10;
 	public static final float RATEOFFIRE = 8000000000f; 	 //In nanoseconds
-	public static final float DAMAGE_TICK_RATE = 100000000f;
-	public static final float FIRE_TIME = 2500000000f;
+	public static final float DAMAGE_TICK_RATE = 300000000f;
+	public static final float FIRE_TIME = 3000000000f;
 	public final static int HEIGHT=65;
 	public final static int WIDTH=40;
 	private final static float LASER_LENGTH = 900;
