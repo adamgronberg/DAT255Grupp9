@@ -19,7 +19,7 @@ public class Saturn extends Level {
 												{"BigLaser:80:760:Pyramid:3:300000000f:60", "BigLaser:330:760:Pyramid:3:300000000f:60"},
 												{"Belt:7:10:205000000f"},
 												{"MultiShooter:225:760:Pyramid:3:300000000f:100"},
-												{"Belt:10:15:205000000f"}};
+												{"Belt:9:13:205000000f"}};
 	/**
 	 * Constructor
 	 * @param gl The game logic

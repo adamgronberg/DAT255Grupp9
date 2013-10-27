@@ -25,7 +25,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 public class EndLevelScreen implements Screen, InputProcessor{
 	
-	private String text="Enter Your Name: ";
+	private String ENTER_YOUR_NAME = "Enter Your Name: ";
+	private String text=ENTER_YOUR_NAME;
 	private String name="";
 	private Stage stage;
 	private TextButton continueButton,laserButton,missileButton,empButton;
@@ -76,6 +77,8 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	 * Adds the correct actors to the screen 
 	 */
 	@Override public void show() {
+		name = "";
+		text = ENTER_YOUR_NAME;
 		int currentLevelNumber = gameLogic.getCurrentLevelNumber();
 		
 		table.add(endLevelLabel).spaceBottom(50).row();
@@ -143,10 +146,9 @@ public class EndLevelScreen implements Screen, InputProcessor{
 			text = text.substring(0,text.length()-1);
 			enterNameField.setText(text);
 		}
-		if(keycode==Keys.P){
+		if(keycode==Keys.DOWN){
 			gameLogic.addScore(5000);	//cheat!!!
 			updateCurrentScoreLabel();
-			name = "";
 		}
 		return false;
 	}
@@ -167,6 +169,9 @@ public class EndLevelScreen implements Screen, InputProcessor{
 	        public boolean keyDown(int keyCode) {
 	            if (keyCode == Keys.BACK) {
 	                myGame.switchScreen(MyGame.ScreenType.MENU);
+	            }
+	            if(keyCode == Keys.MENU){
+	            	Gdx.input.setOnscreenKeyboardVisible(true);
 	            }
 	            return super.keyDown(keyCode);
 	        }
