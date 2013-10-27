@@ -19,6 +19,9 @@ local.properties
 
 # Eclipse project files
 
+# Open office
+.odt#
+
 # OS-generated files
 Thumbs.db
 *.db
