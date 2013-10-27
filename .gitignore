@@ -20,7 +20,7 @@ local.properties
 # Eclipse project files
 
 # Open office
-.odt#
+*~lock.*
 
 # OS-generated files
 Thumbs.db
