@@ -16,10 +16,10 @@ public class Mars extends Level {
 	private static final float spawnTimes[] = {6000000000f, 3500000000f, 3500000000f, 4000000000f, 3750000000f,3250000000f};
 	private static final String[][] toSpawn = {{"Heavy:225:760:Pyramid:5:500000000f:60"},
 												{"MultiShooter:220:760","Scout:100:750:Vertical:2:275000000f","Scout:380:750:Vertical:2:275000000f"},
-												{"BigLaser:70:760","BigLaser:340:760","Scout:150:750:Vertical:5:275000000f","Scout:250:750:Vertical:10:275000000f","Scout:350:750:Vertical:5:275000000f"},
-												{"Basic:225:760:Pyramid:6:300000000f:50"},
+												{"BigLaser:70:760","BigLaser:340:760","Scout:150:750:Vertical:5:275000000f","Scout:250:750:Vertical:5:275000000f","Scout:350:750:Vertical:5:275000000f"},
+												{"Basic:225:760:Pyramid:5:300000000f:50"},
 												{"Heavy:100:760","Heavy:200:760","Heavy:300:760"},
-												{"Basic:225:760:Pyramid:6:300000000f:50"}};
+												{"Basic:225:760:Pyramid:5:300000000f:50"}};
 	/**
 	 * Constructor
 	 * @param gl The game logic

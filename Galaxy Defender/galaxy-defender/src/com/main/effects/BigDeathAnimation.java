@@ -20,6 +20,7 @@ public class BigDeathAnimation extends MovableEntity {
 	private static final float TIME_BETWEEN_EXPLOSIONS = 400000000f;
 	private float currentTimeBetweenExplosion = 0;
 	private float ExplosionSize = 50;
+	private boolean animationComplete = false;
 	
 	/**
 	 * Constructor
@@ -51,6 +52,7 @@ public class BigDeathAnimation extends MovableEntity {
 			getParent().addActor(animations.get(currentExposion));
 			currentExposion++;
 			if(currentExposion == NUMBER_OF_EXPLOSIONS) {
+				animationComplete = true;
 				remove();
 			}
 			currentTimeBetweenExplosion = TimeUtils.nanoTime();
@@ -63,5 +65,12 @@ public class BigDeathAnimation extends MovableEntity {
 	private Vector2 randomPosition(){
 		return new Vector2(MathUtils.random(0, getWidth()), 
 				MathUtils.random(0, getHeight()));
+	}
+	
+	/**
+	 * @return	if the animation is done or not
+	 */
+	public boolean isCompleted(){
+		return animationComplete;
 	}
 }

@@ -40,13 +40,18 @@ public class Earth extends Level{
 	}
 	
 	/**
-	 * Survive all asteroid belts
+	 * Destroy the boss and kill all his minions!!!!
 	 */
 	@Override
 	public boolean missionCompleted() {
-		return levelSpawnDone && gameLogic.noActiveSpawns() && gameLogic.getNumberOfAnimations() == 0;
+		if(levelSpawnDone && gameLogic.noActiveSpawns()){
+			if(gameLogic.getNumberOfAnimations() == 0){
+				return true;
+			}
+		}
+		return false;
 	}
 
-	////// Unused method //////
+	//// Unused method ////
 	@Override public boolean missionFailed() {return false;}
 }

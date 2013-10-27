@@ -2,6 +2,8 @@ package ships;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import effects.BigDeathAnimation;
 import effects.ExplosionEffect;
 import assets.ImageAssets;
 
@@ -27,6 +29,8 @@ public class BossShip extends EnemyShip{
 	private boolean turret1Dead,turret2Dead,turretsSpawnedOnce,reachedPosX,reachedPosY = false;
 	private float turret1DeathTime,turret2DeathTime,spawnTimer,degrees;
 	private MiniTurretShip turret1,turret2;
+	private BigDeathAnimation deathAnimaion;
+	private boolean isAlive = true;
 
 	/**
 	 * Constructor
@@ -47,6 +51,10 @@ public class BossShip extends EnemyShip{
 	 */
 	@Override
 	protected void move(float delta) {
+		if(deathAnimaion != null) {
+			if (deathAnimaion.isCompleted()) remove();
+			return;
+		}
 		if(!turretsSpawnedOnce){
 			turret1 = new MiniTurretShip(getX()+60,getY(),playerShip);
 			turret2 = new MiniTurretShip(getX()+170,getY(),playerShip);
@@ -115,17 +123,29 @@ public class BossShip extends EnemyShip{
 			degrees = degrees+ROTATION_SPEED;
 		}
 	}
-
+	
+	/**
+	 *  Removes the ship
+	 */
+	@Override
+	public void destroyShip() {
+		deathAnimaion = new BigDeathAnimation(getWidth(), getHeight(), getX(), getY());
+		getParent().addActor(deathAnimaion);
+		getParent().removeActor(turret1);
+		getParent().removeActor(turret2);
+	}
 
 	/**
 	 * On hit logic
 	 */
 	@Override
 	public int hit(int damage) {
+		if(!isAlive) return 0;
 		if(damage == TURRET_EXPLOSION_DAMAGE){
 			currentHealth = currentHealth - TURRET_EXPLOSION_DAMAGE;
 		}
 		if (currentHealth<=0){
+			isAlive = false;
 			destroyShip();
 			return scoreValue;
 		}
